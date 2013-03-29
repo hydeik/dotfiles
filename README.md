@@ -1,4 +1,4 @@
 dotfiles
 ========
 
-My dotfiles
+Setup files in my HOME directory.
