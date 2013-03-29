@@ -1,10 +1,8 @@
-## -*- mode: sh; coding: euc-jp -*-
+ï»¿## -*- mode: sh; coding: utf-8 -*-
 ##
-## File .zshenv
+## File ~/.zshenv
 ## Set the environment variables for zsh.
-## Last modified: <2004/05/15 20:45:34 ÅÚÍËÆü>
-
-######## ´Ä¶­ÊÑ¿ô ########
+##
 
 ##
 ## Load system environment variables
@@ -16,11 +14,9 @@ fi
 ##
 ## HTTP proxy (if necessary)
 ##
-
-# KUINS-III (Kyoto Univ)
-# export http_proxy=http://proxy.kuins.net:8080/
-# export ftp_proxy=ftp-proxy.kuins.net
-# export RSYNC_PROXY=proxy.kuins.net:8080
+# export http_proxy=
+# export ftp_proxy=
+# export RSYNC_PROXY=
 
 ##==============================================================================
 ## Set path environment
@@ -41,8 +37,7 @@ path=(
     # Fink
     /sw/bin(N)
     # *nix local, HomeBrew
-    /usr/local/calc/openmpi/bin(N)
-    /usr/local/share/python
+    /usr/local/share/python(N)
     /usr/local/bin(N)
     /usr/local/sbin(N)
     # System
@@ -56,7 +51,7 @@ path=(
     /usr/i18n/bin(N)
     /usr/kerberos/bin(N)
     /usr/kerberos/sbin(N)
-    #$path[@]
+    $path[@]
 )
 
 ## manpath / MANPATH
@@ -128,7 +123,7 @@ export UID
 SHELL=`which zsh`; export SHELL
 
 ##
-## ÆþÎÏ¥í¥±¡¼¥ë
+## Language, Locale
 ##
 if [[ $ARCHI == "cygwin" ]]; then
     export LC_ALL="ja"
@@ -136,8 +131,6 @@ if [[ $ARCHI == "cygwin" ]]; then
 else
     case "$HOST" in
         freya*) export LC_ALL="ja_JP.UTF-8"; \
-                export LANG="ja_JP.UTF-8";;
-        loki*)  export LC_ALL="ja_JP.UTF-8"; \
                 export LANG="ja_JP.UTF-8";;
         loki*)  export LC_ALL="ja_JP.UTF-8"; \
                 export LANG="ja_JP.UTF-8";;
@@ -153,7 +146,6 @@ fi
 
 
 #### PAGER
-# less -M ¤Ï¥Ú¡¼¥¸¤Î¥¹¥Æ¡¼¥¿¥¹(²¿¥Ú¡¼¥¸ÌÜ¤«)¤ÎÉ½¼¨
 for cmd in lv w3m less more ; do
     if [[ -x `which $cmd` ]] ; then 
         pager=$cmd
@@ -162,6 +154,7 @@ for cmd in lv w3m less more ; do
 done
 case "$pager" in
     lv)   export PAGER="lv -c"; export MANPAGER="lv -c";;
+    # less -M: show page status
     less) export PAGER="less -M"; export MANPAGER="less -M";;
     *)    export PAGER=$pager; export MANPAGER=$pager;;
 esac
@@ -188,17 +181,6 @@ if [[ -x `where vim`  ]]; then
 else
     export EDITOR="vi"
 fi
-
-##
-## Ruby
-##
-# export RUBYOPT='-Ke -rkconv'    # Ruby ¤ËÅÏ¤¹¥Ç¥Õ¥©¥ë¥È¥ª¥×¥·¥ç¥ó
-if [[ -x `which gem` ]]; then
-    export RUBYOPT=rubygems    # Ruby ¤ËÅÏ¤¹¥Ç¥Õ¥©¥ë¥È¥ª¥×¥·¥ç¥ó
-    export PATH=/var/lib/gems/1.8/bin:$PATH
-fi
-export RUBYPATH=$HOME/ruby:/var/lib/gems/1.8/       # Ruby ¥¹¥¯¥ê¥×¥ÈÃµº÷PATH(ÄÉ²Ã)
-export RUBYLIB=$HOME/ruby/lib:/usr/lib/ruby/gems/1.8    # Ruby ¥é¥¤¥Ö¥é¥ê¤ÎÃµº÷¥Ñ¥¹(ÄÉ²Ã)
 
 ##
 ## Python
@@ -246,16 +228,7 @@ pythonpath=(
 #fi
 
 
-## PETSc and SLEPc
-export PETSC_DIR=$HOME/opt/petsc
-export SLEPC_DIR=$HOME/opt/slepc
-
 ## Computational programs
-
-#  rel_multiplet
-# if [[ -d $HOME/program/rel_multiplet/bin ]] && test ! `echo $PATH | ${GREP} -q $HOME/program/rel_multiplet/bin` ; then
-#     export PATH=$HOME/program/rel_multiplet/bin:$PATH
-# fi
 
 # rscat
 if [[ -z $RSCATDIR ]]; then
@@ -310,10 +283,5 @@ ADFROOT=${HOME}/opt/adf2012.01/adfhome
 if [ -e "${ADFROOT}/adfrc.sh" ]; then
     source ${ADFROOT}/adfrc.sh 
 fi
-# export ADFHOME=${HOME}/opt/adf2012.01/adfhome
-# export ADFBIN=$ADFHOME/bin
-# export ADFRESOURCES=$ADFHOME/atomicdata
-# export SCMLICENSE=${HOME}/opt/adf2012.01/license.txt
-# export SCM_TMPDIR=/var/tmp
 
-## # End of file; ###
+### End of file; ###
