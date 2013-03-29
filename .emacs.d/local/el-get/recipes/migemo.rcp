@@ -1,5 +1,0 @@
-(:name migemo
-       :type git
-       :website "https://gist.github.com/tomoya/457761"
-       :description "[My recipe] migemo.el provided by Satoru Toyama"
-       :url "https://gist.github.com/457761.git")
