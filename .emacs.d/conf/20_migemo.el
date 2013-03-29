@@ -1,6 +1,6 @@
 ;;; -*- mode: emacs-lisp; coding: utf-8-unix -*-;;
 ;;;
-;;; File: ~/.emacs.d/inits/20_migemo.el
+;;; File: ~/.emacs.d/conf/20_migemo.el
 ;;; Description: Setup migemo
 ;;;
 

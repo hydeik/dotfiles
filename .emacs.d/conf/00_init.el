@@ -1,6 +1,6 @@
 ;;; -*- mode: emacs-lisp; coding: utf-8-unix -*-;;
 ;;;
-;;; File: ~/.emacs.d/inits/00_init.el
+;;; File: ~/.emacs.d/conf/00_init.el
 ;;; Description: Basic customization
 ;;;
 
