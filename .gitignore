@@ -1,0 +1,7 @@
+*.swp
+*~
+*.elc
+*_flymake*
+*.pyc
+.emacs.d/el-get
+.emacs.d/auto-save-list
