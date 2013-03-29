@@ -1,33 +1,33 @@
-### -*- mode: sh; coding: euc-jp -*- ###
+#!/usr/bin/env zsh
+# -*- mode: sh; coding: utf-8-unix; indent-tabs-mode: nil -*-
 ### 
 ### File .zshrc
 ###   Setup file for zsh
 ###   Originaly written by ippei@cms.mtl.kyoto-u.ac.jp (2004-04-28)
-###   Last modified: <2006/03/17 20:59:27 Fri> by Hidekazu Ikeno
 
-# ¥á¥â
-# cd -[tab] ¤Ç¥Ç¥£¥ì¥¯¥È¥ê¥¹¥¿¥Ã¥¯¤ò¸Æ¤Ó½Ğ¤»¤ë
-# <1-20> ¥Ñ¥¿¡¼¥ó¥Ş¥Ã¥Á
-#   ESC C-h ¤Ç¶èÀÚ¤êÊ¸»ú¤Ş¤Ç¤Î¥Ğ¥Ã¥¯¥¹¥Ú¡¼¥¹
-# killall¥³¥Ş¥ó¥É
-# ***/ ¥·¥à¥ê¥ó¥¯¤òÃ©¤ë
-# C-x g ¥ï¥¤¥ë¥É¥«¡¼¥ÉÅ¸³«·ë²Ì¤ò¤ß¤ë
+# ãƒ¡ãƒ¢
+# cd -[tab] ã§ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚¹ã‚¿ãƒƒã‚¯ã‚’å‘¼ã³å‡ºã›ã‚‹
+# <1-20> ãƒ‘ã‚¿ãƒ¼ãƒ³ãƒãƒƒãƒ
+#   ESC C-h ã§åŒºåˆ‡ã‚Šæ–‡å­—ã¾ã§ã®ãƒãƒƒã‚¯ã‚¹ãƒšãƒ¼ã‚¹
+# killallã‚³ãƒãƒ³ãƒ‰
+# ***/ ã‚·ãƒ ãƒªãƒ³ã‚¯ã‚’è¾¿ã‚‹
+# C-x g ãƒ¯ã‚¤ãƒ«ãƒ‰ã‚«ãƒ¼ãƒ‰å±•é–‹çµæœã‚’ã¿ã‚‹
 #    a=aiueo
 #    echo $a[1]
 
-# ¸Ä¿ÍÅª¥­¡¼¥Ğ¥¤¥ó¥É¤Ë»È¤¨¤ë C-¥­¡¼¥Ğ¥¤¥ó¥É
+# å€‹äººçš„ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ã«ä½¿ãˆã‚‹ C-ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰
 # C-o, C-q, C-s
-# C-t ¤ÎÊ¸»úÆş¤ì¤«¤¨¤Ï»È¤¤¾¡¼ê¤¬ÎÉ¤¯¤Ê¤¤¤Î¤Ç¤¤¤é¤Ê¤¤
-# C-c, C-g ¤ÏÆşÎÏÃæ¤Î¥³¥Ş¥ó¥É¤¬¾Ã¤¨¤Æ¤·¤Ş¤¦¤Î¤ò²¿¤È¤«¤¹¤ë
-# C-i ¤Ï TAB ¤ÎÊı¤¬¥é¥¯
-# C-w ²şÎÉ
-# C-v ÆÃ¼ìÊ¸»ú¤òÃÖ¤¯¡£C-v C-i ¤Ê¤é¥¿¥ÖÊ¸»ú¡¢C-v C-j ¤Ê¤é²ş¹ÔÊ¸»ú¤òÃÖ¤±¤ë
-# C-x ·Ï¥³¥Ş¥ó¥É¤òÄ´¤Ù¤ë¡£(C-x g ¤ß¤¿¤¤¤Ê)
-#### C-j or C-m ¤É¤Á¤é¤«¤ÇÎÉ¤¤¡£¢ª¤ï¤±¤Ç¤Ï¤Ê¤¤¡£skkinput ¤Ç C-j ¤ò»È¤¦
+# C-t ã®æ–‡å­—å…¥ã‚Œã‹ãˆã¯ä½¿ã„å‹æ‰‹ãŒè‰¯ããªã„ã®ã§ã„ã‚‰ãªã„
+# C-c, C-g ã¯å…¥åŠ›ä¸­ã®ã‚³ãƒãƒ³ãƒ‰ãŒæ¶ˆãˆã¦ã—ã¾ã†ã®ã‚’ä½•ã¨ã‹ã™ã‚‹
+# C-i ã¯ TAB ã®æ–¹ãŒãƒ©ã‚¯
+# C-w æ”¹è‰¯
+# C-v ç‰¹æ®Šæ–‡å­—ã‚’ç½®ãã€‚C-v C-i ãªã‚‰ã‚¿ãƒ–æ–‡å­—ã€C-v C-j ãªã‚‰æ”¹è¡Œæ–‡å­—ã‚’ç½®ã‘ã‚‹
+# C-x ç³»ã‚³ãƒãƒ³ãƒ‰ã‚’èª¿ã¹ã‚‹ã€‚(C-x g ã¿ãŸã„ãª)
+#### C-j or C-m ã©ã¡ã‚‰ã‹ã§è‰¯ã„ã€‚â†’ã‚ã‘ã§ã¯ãªã„ã€‚skkinput ã§ C-j ã‚’ä½¿ã†
 
 ############################################################
-## ´Ä¶­ÊÑ¿ô¤Ï¼ç¤Ë ~/.zshenv ¤Ëµ­½Ò
-# ~/.zshrc ¤Ëµ­½Ò¤¹¤ë¤Î¤Ï¡¢¥¤¥ó¥¿¥é¥¯¥Æ¥£¥Ö¥·¥§¥ë¤È¤·¤Æ¤ÎÀßÄê
+## ç’°å¢ƒå¤‰æ•°ã¯ä¸»ã« ~/.zshenv ã«è¨˜è¿°
+# ~/.zshrc ã«è¨˜è¿°ã™ã‚‹ã®ã¯ã€ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒ†ã‚£ãƒ–ã‚·ã‚§ãƒ«ã¨ã—ã¦ã®è¨­å®š
 # if [[ -r $HOME/.zshenv ]]; then
 #     source $HOME/.zshenv
 # fi
@@ -35,88 +35,88 @@
 hosts=( localhost `hostname` )
 #printers=( lw ph clw )
 umask 002
-#cdpath=( ~ )                    # cd ¤Î¥µ¡¼¥Á¥Ñ¥¹
+#cdpath=( ~ )                    # cd ã®ã‚µãƒ¼ãƒãƒ‘ã‚¹
 
 #### zsh-completion
-fpath=( ~/.zsh/functions $fpath[@] )       # zsh´Ø¿ô¤Î¥µ¡¼¥Á¥Ñ¥¹
+fpath=( ~/.zsh/functions $fpath[@] )       # zshé–¢æ•°ã®ã‚µãƒ¼ãƒãƒ‘ã‚¹
 if [[ -d "$HOME/.zsh/cache" ]]; then
     zstyle ':completion:*' use-cache yes
     zstyle ':completion:*' cache-path $HOME/.zsh/cache
 fi
 
-# ¥«¥ì¥ó¥È¥Ç¥£¥ì¥¯¥È¥ê¤Ë¸õÊä¤¬¤Ê¤¤¾ì¹ç¤Î¤ß cdpath ¾å¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ò¸õÊä
+# ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«å€™è£œãŒãªã„å ´åˆã®ã¿ cdpath ä¸Šã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å€™è£œ
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 # cf. zstyle ':completion:*:path-directories' hidden true
-# cf. cdpath ¾å¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ÏÊä´°¸õÊä¤«¤é³°¤ì¤ë
+# cf. cdpath ä¸Šã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯è£œå®Œå€™è£œã‹ã‚‰å¤–ã‚Œã‚‹
 
-## Êä´°»ş¤ËÂç¾®Ê¸»ú¤ò¶èÊÌ¤·¤Ê¤¤
+## è£œå®Œæ™‚ã«å¤§å°æ–‡å­—ã‚’åŒºåˆ¥ã—ãªã„
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 #### history
-HISTFILE="$HOME/.zsh_history"      # ÍúÎò¥Õ¥¡¥¤¥ë
-HISTSIZE=10000                  # ¥á¥â¥ê¾å¤ËÊİÂ¸¤µ¤ì¤ë $HISTFILE ¤ÎºÇÂç¥µ¥¤¥º¡©
-SAVEHIST=10000                  # ÊİÂ¸¤µ¤ì¤ëºÇÂçÍúÎò¿ô
+HISTFILE="$HOME/.zsh_history"      # å±¥æ­´ãƒ•ã‚¡ã‚¤ãƒ«
+HISTSIZE=10000                  # ãƒ¡ãƒ¢ãƒªä¸Šã«ä¿å­˜ã•ã‚Œã‚‹ $HISTFILE ã®æœ€å¤§ã‚µã‚¤ã‚ºï¼Ÿ
+SAVEHIST=10000                  # ä¿å­˜ã•ã‚Œã‚‹æœ€å¤§å±¥æ­´æ•°
 
 #### option, limit, bindkey
-setopt extended_history         # ¥³¥Ş¥ó¥É¤Î³«»Ï»ş¹ï¤È·Ğ²á»ş´Ö¤òÅĞÏ¿
-setopt hist_ignore_dups         # Ä¾Á°¤Î¥³¥Ş¥ó¥É¤ÈÆ±°ì¤Ê¤é¤ĞÅĞÏ¿¤·¤Ê¤¤
-setopt hist_ignore_all_dups     # ÅĞÏ¿ºÑ¥³¥Ş¥ó¥É¹Ô¤Ï¸Å¤¤Êı¤òºï½ü
-setopt hist_reduce_blanks       # Í¾Ê¬¤Ê¶õÇò¤ÏµÍ¤á¤ÆÅĞÏ¿(¶õÇò¿ô°ã¤¤ÅĞÏ¿¤òËÉ¤°)
-#setopt append_history          # zsh ¤ò½ªÎ»¤µ¤»¤¿½ç¤Ë¥Õ¥¡¥¤¥ë¤Ëµ­Ï¿(¥Ç¥Õ¥©¥ë¥È)
-#setopt inc_append_history      # Æ±¾å¡¢¤¿¤À¤·¥³¥Ş¥ó¥É¤òÆşÎÏ¤·¤¿»şÅÀ¤Çµ­Ï¿
-setopt share_history            # ¥Ò¥¹¥È¥ê¤Î¶¦Í­¡£(append·Ï¤È°Û¤Ê¤êºÆÆÉ¤ß¹ş¤ßÉÔÍ×¡¢¤³¤ì¤òÀßÄê¤¹¤ì¤Ğ append ·Ï¤ÏÉÔÍ×)
-setopt hist_no_store            # history¥³¥Ş¥ó¥É¤ÏÅĞÏ¿¤·¤Ê¤¤
-setopt hist_ignore_space        # ¥³¥Ş¥ó¥É¹ÔÀèÆ¬¤¬¶õÇò¤Î»şÅĞÏ¿¤·¤Ê¤¤(Ä¾¸å¤Ê¤é¤Ğ¸Æ¤Ù¤ë)
+setopt extended_history         # ã‚³ãƒãƒ³ãƒ‰ã®é–‹å§‹æ™‚åˆ»ã¨çµŒéæ™‚é–“ã‚’ç™»éŒ²
+setopt hist_ignore_dups         # ç›´å‰ã®ã‚³ãƒãƒ³ãƒ‰ã¨åŒä¸€ãªã‚‰ã°ç™»éŒ²ã—ãªã„
+setopt hist_ignore_all_dups     # ç™»éŒ²æ¸ˆã‚³ãƒãƒ³ãƒ‰è¡Œã¯å¤ã„æ–¹ã‚’å‰Šé™¤
+setopt hist_reduce_blanks       # ä½™åˆ†ãªç©ºç™½ã¯è©°ã‚ã¦ç™»éŒ²(ç©ºç™½æ•°é•ã„ç™»éŒ²ã‚’é˜²ã)
+#setopt append_history          # zsh ã‚’çµ‚äº†ã•ã›ãŸé †ã«ãƒ•ã‚¡ã‚¤ãƒ«ã«è¨˜éŒ²(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ)
+#setopt inc_append_history      # åŒä¸Šã€ãŸã ã—ã‚³ãƒãƒ³ãƒ‰ã‚’å…¥åŠ›ã—ãŸæ™‚ç‚¹ã§è¨˜éŒ²
+setopt share_history            # ãƒ’ã‚¹ãƒˆãƒªã®å…±æœ‰ã€‚(appendç³»ã¨ç•°ãªã‚Šå†èª­ã¿è¾¼ã¿ä¸è¦ã€ã“ã‚Œã‚’è¨­å®šã™ã‚Œã° append ç³»ã¯ä¸è¦)
+setopt hist_no_store            # historyã‚³ãƒãƒ³ãƒ‰ã¯ç™»éŒ²ã—ãªã„
+setopt hist_ignore_space        # ã‚³ãƒãƒ³ãƒ‰è¡Œå…ˆé ­ãŒç©ºç™½ã®æ™‚ç™»éŒ²ã—ãªã„(ç›´å¾Œãªã‚‰ã°å‘¼ã¹ã‚‹)
 
 
-setopt list_packed              # Êä´°¸õÊä¥ê¥¹¥È¤òµÍ¤á¤ÆÉ½¼¨
-setopt list_types               # Êä´°¸õÊä¤Ë¥Õ¥¡¥¤¥ë¤Î¼ïÎà¤âÉ½¼¨¤¹¤ë
-setopt print_eight_bit          # Êä´°¸õÊä¥ê¥¹¥È¤ÎÆüËÜ¸ì¤òÅ¬ÀµÉ½¼¨
-#setopt menu_complete           # 1²óÌÜ¤ÎTAB ¤ÇÊä´°¸õÊä¤òÁŞÆş¡£É½¼¨¤À¤±¤ÎÊı¤¬¹¥¤­
-setopt no_clobber               # ¾å½ñ¤­¥ê¥À¥¤¥ì¥¯¥È¤Î¶Ø»ß
-setopt no_unset                 # Ì¤ÄêµÁÊÑ¿ô¤Î»ÈÍÑ¤Î¶Ø»ß
-setopt no_hup                   # logout»ş¤Ë¥Ğ¥Ã¥¯¥°¥é¥¦¥ó¥É¥¸¥ç¥Ö¤ò kill ¤·¤Ê¤¤
-setopt no_beep                  # ¥³¥Ş¥ó¥ÉÆşÎÏ¥¨¥é¡¼¤ÇBEEP¤òÌÄ¤é¤µ¤Ê¤¤
+setopt list_packed              # è£œå®Œå€™è£œãƒªã‚¹ãƒˆã‚’è©°ã‚ã¦è¡¨ç¤º
+setopt list_types               # è£œå®Œå€™è£œã«ãƒ•ã‚¡ã‚¤ãƒ«ã®ç¨®é¡ã‚‚è¡¨ç¤ºã™ã‚‹
+setopt print_eight_bit          # è£œå®Œå€™è£œãƒªã‚¹ãƒˆã®æ—¥æœ¬èªã‚’é©æ­£è¡¨ç¤º
+#setopt menu_complete           # 1å›ç›®ã®TAB ã§è£œå®Œå€™è£œã‚’æŒ¿å…¥ã€‚è¡¨ç¤ºã ã‘ã®æ–¹ãŒå¥½ã
+setopt no_clobber               # ä¸Šæ›¸ããƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã®ç¦æ­¢
+setopt no_unset                 # æœªå®šç¾©å¤‰æ•°ã®ä½¿ç”¨ã®ç¦æ­¢
+setopt no_hup                   # logoutæ™‚ã«ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ã‚¸ãƒ§ãƒ–ã‚’ kill ã—ãªã„
+setopt no_beep                  # ã‚³ãƒãƒ³ãƒ‰å…¥åŠ›ã‚¨ãƒ©ãƒ¼ã§BEEPã‚’é³´ã‚‰ã•ãªã„
 
-setopt extended_glob            # ³ÈÄ¥¥°¥í¥Ö
-setopt numeric_glob_sort        # ¿ô»ú¤ò¿ôÃÍ¤È²ò¼á¤·¤Æ¾º½ç¥½¡¼¥È¤Ç½ĞÎÏ
-setopt auto_cd                  # Âè1°ú¿ô¤¬¥Ç¥£¥ì¥¯¥È¥ê¤À¤È cd ¤òÊä´°
-setopt correct                  # ¥¹¥Ú¥ë¥ß¥¹Êä´°
-setopt no_checkjobs             # exit »ş¤Ë¥Ğ¥Ã¥¯¥°¥é¥¦¥ó¥É¥¸¥ç¥Ö¤ò³ÎÇ§¤·¤Ê¤¤
-#setopt ignore_eof              # C-d¤Çlogout¤·¤Ê¤¤(C-d¤òÊä´°¤Ç»È¤¦¿ÍÍÑ)
-setopt auto_pushd               # cd -[TAB] ¤Ç¤³¤ì¤Ş¤Ç¤Ë°ÜÆ°¤·¤¿¥Ç¥£¥ì¥¯¥È¥ê°ìÍ÷¤òÉ½¼¨
-setopt pushd_to_home            # °ú¿ô¤Ê¤·pushd¤Ç$HOME¤ËÌá¤ë(Ä¾Á°dir¤Ø¤Ï cd - ¤Ç)
-setopt pushd_ignore_dups        # ¥Ç¥£¥ì¥¯¥È¥ê¥¹¥¿¥Ã¥¯¤Ë½ÅÊ£¤¹¤ëÊª¤Ï¸Å¤¤Êı¤òºï½ü
-#setopt pushd_silent   # pushd, popd ¤ÎÅÙ¤Ë¥Ç¥£¥ì¥¯¥È¥ê¥¹¥¿¥Ã¥¯¤ÎÃæ¿È¤òÉ½¼¨¤·¤Ê¤¤
-setopt interactive_comments     # ¥³¥Ş¥ó¥ÉÆşÎÏÃæ¤Î¥³¥á¥ó¥È¤òÇ§¤á¤ë
-#setopt rm_star_silent          # rm * ¤ÇËÜÅö¤ËÎÉ¤¤¤«Ê¹¤«¤º¤Ë¼Â¹Ô
-#setopt rm_star_wait            # rm * ¤Î»ş¤Ë 10ÉÃ´Ö²¿¤â¤·¤Ê¤¤
-#setopt chase_links             # ¥ê¥ó¥¯Àè¤Î¥Ñ¥¹¤ËÊÑ´¹¤·¤Æ¤«¤é¼Â¹Ô¡£
-# setopt sun_keyboard_hack      # SUN¥­¡¼¥Ü¡¼¥É¤Ç¤ÎÉÑ½Ğ typo ` ¤ò¥«¥Ğ¡¼¤¹¤ë
+setopt extended_glob            # æ‹¡å¼µã‚°ãƒ­ãƒ–
+setopt numeric_glob_sort        # æ•°å­—ã‚’æ•°å€¤ã¨è§£é‡ˆã—ã¦æ˜‡é †ã‚½ãƒ¼ãƒˆã§å‡ºåŠ›
+setopt auto_cd                  # ç¬¬1å¼•æ•°ãŒãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã ã¨ cd ã‚’è£œå®Œ
+setopt correct                  # ã‚¹ãƒšãƒ«ãƒŸã‚¹è£œå®Œ
+setopt no_checkjobs             # exit æ™‚ã«ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ã‚¸ãƒ§ãƒ–ã‚’ç¢ºèªã—ãªã„
+#setopt ignore_eof              # C-dã§logoutã—ãªã„(C-dã‚’è£œå®Œã§ä½¿ã†äººç”¨)
+setopt auto_pushd               # cd -[TAB] ã§ã“ã‚Œã¾ã§ã«ç§»å‹•ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä¸€è¦§ã‚’è¡¨ç¤º
+setopt pushd_to_home            # å¼•æ•°ãªã—pushdã§$HOMEã«æˆ»ã‚‹(ç›´å‰dirã¸ã¯ cd - ã§)
+setopt pushd_ignore_dups        # ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚¹ã‚¿ãƒƒã‚¯ã«é‡è¤‡ã™ã‚‹ç‰©ã¯å¤ã„æ–¹ã‚’å‰Šé™¤
+#setopt pushd_silent   # pushd, popd ã®åº¦ã«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚¹ã‚¿ãƒƒã‚¯ã®ä¸­èº«ã‚’è¡¨ç¤ºã—ãªã„
+setopt interactive_comments     # ã‚³ãƒãƒ³ãƒ‰å…¥åŠ›ä¸­ã®ã‚³ãƒ¡ãƒ³ãƒˆã‚’èªã‚ã‚‹
+#setopt rm_star_silent          # rm * ã§æœ¬å½“ã«è‰¯ã„ã‹èã‹ãšã«å®Ÿè¡Œ
+#setopt rm_star_wait            # rm * ã®æ™‚ã« 10ç§’é–“ä½•ã‚‚ã—ãªã„
+#setopt chase_links             # ãƒªãƒ³ã‚¯å…ˆã®ãƒ‘ã‚¹ã«å¤‰æ›ã—ã¦ã‹ã‚‰å®Ÿè¡Œã€‚
+# setopt sun_keyboard_hack      # SUNã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã§ã®é »å‡º typo ` ã‚’ã‚«ãƒãƒ¼ã™ã‚‹
 
 
-#limit   coredumpsize    0       # ¥³¥¢¥Õ¥¡¥¤¥ë¤òÅÇ¤«¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+#limit   coredumpsize    0       # ã‚³ã‚¢ãƒ•ã‚¡ã‚¤ãƒ«ã‚’åã‹ãªã„ã‚ˆã†ã«ã™ã‚‹
 
 stty    erase   '^H'
 stty    intr    '^C'
 stty    susp    '^Z'
 
 #### bindkey
-# bindkey "³äÅö¤Æ¤¿¤¤¥­¡¼" ¼Â¹Ô¤µ¤»¤ëµ¡Ç½¤ÎÌ¾Á°
-bindkey -e    # emacs É÷¥­¡¼¥Ğ¥¤¥ó¥É(´Ä¶­ÊÑ¿ô EDITOR ¤âÈ¿±Ç¤¹¤ë¤¬¡¢¤³¤Ã¤Á¤¬Í¥Àè)
+# bindkey "å‰²å½“ã¦ãŸã„ã‚­ãƒ¼" å®Ÿè¡Œã•ã›ã‚‹æ©Ÿèƒ½ã®åå‰
+bindkey -e    # emacs é¢¨ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰(ç’°å¢ƒå¤‰æ•° EDITOR ã‚‚åæ˜ ã™ã‚‹ãŒã€ã“ã£ã¡ãŒå„ªå…ˆ)
 bindkey '^I'    complete-word   # complete on tab, leave expansion to _expand
 
-bindkey '^P' history-beginning-search-backward # ÀèÆ¬¥Ş¥Ã¥Á¤Î¥Ò¥¹¥È¥ê¥µ¡¼¥Á
-bindkey '^N' history-beginning-search-forward # ÀèÆ¬¥Ş¥Ã¥Á¤Î¥Ò¥¹¥È¥ê¥µ¡¼¥Á
+bindkey '^P' history-beginning-search-backward # å…ˆé ­ãƒãƒƒãƒã®ãƒ’ã‚¹ãƒˆãƒªã‚µãƒ¼ãƒ
+bindkey '^N' history-beginning-search-forward # å…ˆé ­ãƒãƒƒãƒã®ãƒ’ã‚¹ãƒˆãƒªã‚µãƒ¼ãƒ
 
-# tcshÉ÷ÀèÆ¬¥Ş¥Ã¥Á¤Î¥Ò¥¹¥È¥ê¥µ¡¼¥Á(¥«¡¼¥½¥ë¤¬¹ÔËö)
+# tcshé¢¨å…ˆé ­ãƒãƒƒãƒã®ãƒ’ã‚¹ãƒˆãƒªã‚µãƒ¼ãƒ(ã‚«ãƒ¼ã‚½ãƒ«ãŒè¡Œæœ«)
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
-# run-help ¤¬¸Æ¤Ğ¤ì¤¿»ş¡¢zsh ¤ÎÆâÉô¥³¥Ş¥ó¥É¤Î¾ì¹ç¤Ï³ºÅö¤¹¤ë zsh ¤Î¥Ş¥Ë¥å¥¢¥ëÉ½¼¨
+# run-help ãŒå‘¼ã°ã‚ŒãŸæ™‚ã€zsh ã®å†…éƒ¨ã‚³ãƒãƒ³ãƒ‰ã®å ´åˆã¯è©²å½“ã™ã‚‹ zsh ã®ãƒãƒ‹ãƒ¥ã‚¢ãƒ«è¡¨ç¤º
 [ -n "`alias run-help`" ] && unalias run-help
 autoload run-help
 
@@ -132,62 +132,62 @@ fi
 autoload -U compinit
 compinit
 
-#compdef _tex platex             # platex ¤Ë .tex ¤ò
+#compdef _tex platex             # platex ã« .tex ã‚’
 
 
 
 ############################################################
-# tcsh É÷Ì£¤ÎÃ±¸ìºï½ü
+# tcsh é¢¨å‘³ã®å˜èªå‰Šé™¤
 #tcsh-backward-delete-word () {
     #local WORDCHARS="${WORDCHARS:s#/#}"
     #zle backward-delete-word
 #}
-#zle -N tcsh-backward-delete-word # ´Ø¿ô¤ò widget ¤ËÊÑ¤¨¤Æ
-#bindkey '^W' tcsh-backward-delete-word # bindkey ¤Ç³äÅö¤Æ¤ë
+#zle -N tcsh-backward-delete-word # é–¢æ•°ã‚’ widget ã«å¤‰ãˆã¦
+#bindkey '^W' tcsh-backward-delete-word # bindkey ã§å‰²å½“ã¦ã‚‹
 
-# Ã±¸ìÃ±°Ì¤Ç¤Î¥Ğ¥Ã¥¯¥¹¥Ú¡¼¥¹
+# å˜èªå˜ä½ã§ã®ãƒãƒƒã‚¯ã‚¹ãƒšãƒ¼ã‚¹
 export WORDCHARS='*?_.[]~=&;!#$%^(){}<>'
 # M-h : default run-help
 bindkey "^[h" backward-kill-word
 bindkey "^[?" run-help
 
 # redo
-#     M-h ¤Î¥Ç¥Õ¥©¥ë¥È run-help ¤ÏÊØÍø¤é¤·¤¤
+#     M-h ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ run-help ã¯ä¾¿åˆ©ã‚‰ã—ã„
 #     $ bindkey G backward-kill-word
 #     "^W" backward-kill-word
 #     "^[^H" backward-kill-word
 #     "^[^?" backward-kill-word
 
 ############################################################
-## ¥×¥í¥ó¥×¥ÈÀßÄê
-autoload -U colors; colors      # ${fg[red]}·Á¼°¤Î¥«¥é¡¼½ñ¼°¤òÍ­¸ú²½
+## ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆè¨­å®š
+autoload -U colors; colors      # ${fg[red]}å½¢å¼ã®ã‚«ãƒ©ãƒ¼æ›¸å¼ã‚’æœ‰åŠ¹åŒ–
 
-setopt prompt_subst				# ESC¥¨¥¹¥±¡¼¥×¤òÍ­¸ú¤Ë¤¹¤ë
+setopt prompt_subst				# ESCã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 
 if [[ $COLORTERM == 1 ]]; then
     if [[ $UID == 0 ]] ; then 
 		PSCOLOR='01;01;31'
     else
-		PSCOLOR='01;01;32'		# ²¼Àş¡¢ÎĞ
+		PSCOLOR='01;01;32'		# ä¸‹ç·šã€ç·‘
     fi
-    # ±¦¥×¥í¥ó¥×¥È
+    # å³ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆ
     RPROMPT=$'%{\e[${PSCOLOR}m%}[%{\e[36m%}%~%{\e[${PSCOLOR}m%}]%{\e[00m%}'
     PS1=$'%{\e[${PSCOLOR}m%}%n@%m${WINDOW:+"[$WINDOW]"} %{\e[34m%}$ '
 fi
-# 1¸ÄÌÜ¤Î $'...' ¤Ï ¡Ö\e]2;¡Ökterm ¤Î¥¿¥¤¥È¥ë¡×\a¡×
-# 2¸ÄÌÜ¤Î $'...' ¤Ï ¡Ö\e]1;¡Ö¥¢¥¤¥³¥ó¤Î¥¿¥¤¥È¥ë¡×\a¡×
-# 3¸ÄÌÜ¤Î $'...' ¤¬¥×¥í¥ó¥×¥È
+# 1å€‹ç›®ã® $'...' ã¯ ã€Œ\e]2;ã€Œkterm ã®ã‚¿ã‚¤ãƒˆãƒ«ã€\aã€
+# 2å€‹ç›®ã® $'...' ã¯ ã€Œ\e]1;ã€Œã‚¢ã‚¤ã‚³ãƒ³ã®ã‚¿ã‚¤ãƒˆãƒ«ã€\aã€
+# 3å€‹ç›®ã® $'...' ãŒãƒ—ãƒ­ãƒ³ãƒ—ãƒˆ
 
-# \e ¤ò ESC ¥³¡¼¥É()¤ÇÃÖ¤¯É¬Í×¤¬¤¢¤ë¤«¤â
-# emacs ¤Ç¤Ï C-q ESC, vi ¤Ç¤Ï C-v ESC ¤ÇÆşÎÏ¤¹¤ë
-#	\e[00m 	½é´ü¾õÂÖ¤Ø
-#	\e[01m 	ÂÀ»ú	(0¤Ï¾ÊÎ¬²ÄÇ½¤Ã¤İ¤¤)
-#	\e[04m	¥¢¥ó¥À¡¼¥é¥¤¥ó
-#	\e[05m	blink(ÂÀ»ú)
-#	\e[07m	È¿Å¾
-#	\e[3?m	Ê¸»ú¿§¤ò¤«¤¨¤ë
-#	\e[4?m	ÇØ·Ê¿§¤ò¤«¤¨¤ë
-#		?= 0:¹õ, 1:ÀÖ, 2:ÎĞ, 3:²«, 4:ÀÄ, 5:»ç, 6:¶õ, 7:Çò
+# \e ã‚’ ESC ã‚³ãƒ¼ãƒ‰()ã§ç½®ãå¿…è¦ãŒã‚ã‚‹ã‹ã‚‚
+# emacs ã§ã¯ C-q ESC, vi ã§ã¯ C-v ESC ã§å…¥åŠ›ã™ã‚‹
+#	\e[00m 	åˆæœŸçŠ¶æ…‹ã¸
+#	\e[01m 	å¤ªå­—	(0ã¯çœç•¥å¯èƒ½ã£ã½ã„)
+#	\e[04m	ã‚¢ãƒ³ãƒ€ãƒ¼ãƒ©ã‚¤ãƒ³
+#	\e[05m	blink(å¤ªå­—)
+#	\e[07m	åè»¢
+#	\e[3?m	æ–‡å­—è‰²ã‚’ã‹ãˆã‚‹
+#	\e[4?m	èƒŒæ™¯è‰²ã‚’ã‹ãˆã‚‹
+#		?= 0:é»’, 1:èµ¤, 2:ç·‘, 3:é»„, 4:é’, 5:ç´«, 6:ç©º, 7:ç™½
 
 
 ############################################################
@@ -219,11 +219,11 @@ if [[ $ARCHI == "irix" ]]; then
 else; 
     alias psa='ps auxw'
 fi
-function pst() {				# CPU »ÈÍÑÎ¨¤Î¹â¤¤Êı¤«¤é8¤Ä
+function pst() {				# CPU ä½¿ç”¨ç‡ã®é«˜ã„æ–¹ã‹ã‚‰8ã¤
     psa | head -n 1
     psa | sort -r -n +2 | grep -v "ps -auxww" | grep -v grep | head -n 8
 }
-function psm() {				# ¥á¥â¥êÀêÍ­Î¨¤Î¹â¤¤Êı¤«¤é8¤Ä
+function psm() {				# ãƒ¡ãƒ¢ãƒªå æœ‰ç‡ã®é«˜ã„æ–¹ã‹ã‚‰8ã¤
     psa | head -n 1
     psa | sort -r -n +3 | grep -v "ps -auxww" | grep -v grep | head -n 8
 }
@@ -235,7 +235,7 @@ function psg() {
 #### ls
 #### dircolor
 # if [[ -x `which dircolors` ]] && [[ -e $HOME/.dir_colors ]]; then
-#     eval `dircolors $HOME/.dir_colors` # ¿§¤ÎÀßÄê
+#     eval `dircolors $HOME/.dir_colors` # è‰²ã®è¨­å®š
 # fi
 
 # BSD LSCOLORS
@@ -243,9 +243,9 @@ export LSCOLORS=ExgxFxdxcxegefabagacad
 # Linux LS_COLORS
 export LS_COLORS='di=1;;40:ln=36;40:so=1;;40:pi=33;40:ex=32;40:bd=34;46:cd=34;45:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 export ZLS_COLORS=$LS_COLORS
-# °ìÉô¤Î¥·¥§¥ë¥³¥Ş¥ó¥É¤Î½ĞÎÏ¤Ë¿§¤òÉÕ¤±
+# ä¸€éƒ¨ã®ã‚·ã‚§ãƒ«ã‚³ãƒãƒ³ãƒ‰ã®å‡ºåŠ›ã«è‰²ã‚’ä»˜ã‘
 export CLICOLOR=true
-# Êä´°¸õÊä¤Ë¿§¤òÉÕ¤±¤ë
+# è£œå®Œå€™è£œã«è‰²ã‚’ä»˜ã‘ã‚‹
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 #### Aliases
@@ -272,7 +272,7 @@ alias aoeu="xmodmap .Xmodmap-qwerty"
 alias usegnu="CC=gcc CXX=g++ FC=g77"
 alias useintel="CC=icc CXX=icpc FC=ifort F90=ifort"
 alias usepgi="CC=pgcc CXX=pgCC FC=pgf77 F90=pgf90"
-# ¾ï¤Ë¥Ğ¥Ã¥¯¥°¥é¥¦¥ó¥É¤Ç¼Â¹Ô
+# å¸¸ã«ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ã§å®Ÿè¡Œ
 function gv() { command gv $* & }
 function gimp() { command gimp $* & }
 function mozzila() { command mozilla $* & }
@@ -284,7 +284,7 @@ function acroread() { command acroread $* & }
 function display() { command display $* & }
 function mpg321() { command mpg321 -s $* | esdcat & }
 
-# ¥Ğ¥Ã¥¯¥¢¥Ã¥×¥Õ¥¡¥¤¥ë¤òºîÀ®
+# ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆ
 function bak() {
 	for i in $@ ; do
 	  	if [[ -e $i.bak ]] || [[ -d $i.bak ]]; then
@@ -295,13 +295,13 @@ function bak() {
 	done
 }
 
-# ¤´¤ßÈ¢¤Î¼ÂÁõ
+# ã”ã¿ç®±ã®å®Ÿè£…
 function rm() {
     if [[ -d ~/.trash ]]; then
 		DATE=`date "+%y%m%d-%H%M%S"`
 		mkdir ~/.trash/$DATE
 		for i in $@; do
-        # ÂĞ¾İ¤¬ ~/.trash/ °Ê²¼¤Ê¥Õ¥¡¥¤¥ë¤Ê¤é¤Ğ /bin/rm ¤ò¸Æ¤Ó½Ğ¤·¤¿¤¤¤Ê
+        # å¯¾è±¡ãŒ ~/.trash/ ä»¥ä¸‹ãªãƒ•ã‚¡ã‚¤ãƒ«ãªã‚‰ã° /bin/rm ã‚’å‘¼ã³å‡ºã—ãŸã„ãª
 			if [[ -e $i ]]; then
 				rmcommand="mv $i ~/.trash/$DATE/"
 				#echo "$rmcommand"
@@ -322,7 +322,7 @@ function rm() {
 #}
 
 #### time
-REPORTTIME=8                    # CPU¤ò8ÉÃ°Ê¾å»È¤Ã¤¿»ş¤Ï time ¤òÉ½¼¨
+REPORTTIME=8                    # CPUã‚’8ç§’ä»¥ä¸Šä½¿ã£ãŸæ™‚ã¯ time ã‚’è¡¨ç¤º
 TIMEFMT="\
     The name of this job.             :%J
     CPU seconds spent in user mode.   :%U
@@ -330,33 +330,33 @@ TIMEFMT="\
     Elapsed time in seconds.          :%E
     The  CPU percentage.              :%P"
 
-#### ¥í¥°¥¤¥ó¤Î´Æ»ë
-# log ¥³¥Ş¥ó¥É¤Ç¤â¾ğÊó¤ò¸«¤ë¤³¤È¤¬¤Ç¤­¤ë
-watch=(notme) # (all:Á´°÷¡¢notme:¼«Ê¬°Ê³°¡¢¥æ¡¼¥¶Ì¾,@¥Û¥¹¥ÈÌ¾¡¢%Ã¼ËöÌ¾(Îóµó¡¨¶õÇò¶èÀÚ¤ê¡¢·Ò¤²¤Æ½ñ¤¯¤ÈAND¾ò·ï)
-LOGCHECK=60                     # ¥Á¥§¥Ã¥¯´Ö³Ö[ÉÃ]
+#### ãƒ­ã‚°ã‚¤ãƒ³ã®ç›£è¦–
+# log ã‚³ãƒãƒ³ãƒ‰ã§ã‚‚æƒ…å ±ã‚’è¦‹ã‚‹ã“ã¨ãŒã§ãã‚‹
+watch=(notme) # (all:å…¨å“¡ã€notme:è‡ªåˆ†ä»¥å¤–ã€ãƒ¦ãƒ¼ã‚¶å,@ãƒ›ã‚¹ãƒˆåã€%ç«¯æœ«å(åˆ—æŒ™ï¼›ç©ºç™½åŒºåˆ‡ã‚Šã€ç¹‹ã’ã¦æ›¸ãã¨ANDæ¡ä»¶)
+LOGCHECK=60                     # ãƒã‚§ãƒƒã‚¯é–“éš”[ç§’]
 WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
-# ¢¬¤Ç¤Ï¡¢a (¥í¥°¥¤¥ó¤«¥í¥°¥¢¥¦¥È¤«)¤Ç¾ò·ïÊ¬´ô¤·¤Æ¤¤¤ë
-# %(a:¿¿¤Î¥á¥Ã¥»¡¼¥¸:µ¶¤Î¥á¥Ã¥»¡¼¥¸)
-# a,l,n,m,M ¤ÇÍøÍÑ¤Ç¤­¤ë¡£
-# ¢£»È¤¨¤ëÆÃ¼ìÊ¸»ú
-# %n    ¥æ¡¼¥¶Ì¾
-# %a    ¥í¥°¥¤¥ó/¥í¥°¥¢¥¦¥È¤Ë±ş¤¸¤Æ¡Ölogged on¡×/¡Ölogged off¡×
-# %l    ÍøÍÑ¤·¤Æ¤¤¤ëÃ¼ËöÌ¾
-# %M    Ä¹¤¤¥Û¥¹¥ÈÌ¾
-# %m    Ã»¤¤¥Û¥¹¥ÈÌ¾
-# %S¡Á%s        ¡Á¤Î´Ö¤òÈ¿Å¾
-# %U¡Á%u        ¡Á¤Î´Ö¤ò¥¢¥ó¥À¡¼¥é¥¤¥ó
-# %B¡Á%b        ¡Á¤Î´Ö¤òÂÀ»ú
-# %t,%@ 12»ş´ÖÉ½µ­¤Î»ş´Ö
-# %T    24»ş´ÖÉ½µ­¤Î»ş´Ö
-# %w    ÆüÉÕ(ÍËÆü Æü)
-# %W    ÆüÉÕ(·î/Æü/Ç¯)
-# %D    ÆüÉÕ(Ç¯-·î-Æü)
+# â†‘ã§ã¯ã€a (ãƒ­ã‚°ã‚¤ãƒ³ã‹ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã‹)ã§æ¡ä»¶åˆ†å²ã—ã¦ã„ã‚‹
+# %(a:çœŸã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸:å½ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸)
+# a,l,n,m,M ã§åˆ©ç”¨ã§ãã‚‹ã€‚
+# â– ä½¿ãˆã‚‹ç‰¹æ®Šæ–‡å­—
+# %n    ãƒ¦ãƒ¼ã‚¶å
+# %a    ãƒ­ã‚°ã‚¤ãƒ³/ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã«å¿œã˜ã¦ã€Œlogged onã€/ã€Œlogged offã€
+# %l    åˆ©ç”¨ã—ã¦ã„ã‚‹ç«¯æœ«å
+# %M    é•·ã„ãƒ›ã‚¹ãƒˆå
+# %m    çŸ­ã„ãƒ›ã‚¹ãƒˆå
+# %Sã€œ%s        ã€œã®é–“ã‚’åè»¢
+# %Uã€œ%u        ã€œã®é–“ã‚’ã‚¢ãƒ³ãƒ€ãƒ¼ãƒ©ã‚¤ãƒ³
+# %Bã€œ%b        ã€œã®é–“ã‚’å¤ªå­—
+# %t,%@ 12æ™‚é–“è¡¨è¨˜ã®æ™‚é–“
+# %T    24æ™‚é–“è¡¨è¨˜ã®æ™‚é–“
+# %w    æ—¥ä»˜(æ›œæ—¥ æ—¥)
+# %W    æ—¥ä»˜(æœˆ/æ—¥/å¹´)
+# %D    æ—¥ä»˜(å¹´-æœˆ-æ—¥)
 
 ############################################################
-## ¥Û¥¹¥È°ÍÂ¸¤ÎÀßÄê
+## ãƒ›ã‚¹ãƒˆä¾å­˜ã®è¨­å®š
 # if [ $ARCHI = "cygwin"  ]; then
-#     zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'	# Êä´°»ş¤ËÂç¾®Ê¸»ú¤ò¶èÊÌ¤·¤Ê¤¤
+#     zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'	# è£œå®Œæ™‚ã«å¤§å°æ–‡å­—ã‚’åŒºåˆ¥ã—ãªã„
 # fi
 if [[ $ARCHI == "irix" ]] || [[ $ARCHI == "osf1" ]]; then
     if [[ TERM == "Eterm" ]]; then
@@ -368,7 +368,7 @@ if [[ $ARCHI == "irix" ]] || [[ $ARCHI == "osf1" ]]; then
 fi
 
 ############################################################
-## ¸Ä¿Í¾ğÊó¤ò´Ş¤àÀßÄê
+## å€‹äººæƒ…å ±ã‚’å«ã‚€è¨­å®š
 #if [ -e ~/.zshrc_private ]; then
 #    source ~/.zshrc_private
 #fi

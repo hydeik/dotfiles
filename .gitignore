@@ -5,3 +5,5 @@
 *.pyc
 .emacs.d/el-get
 .emacs.d/auto-save-list
+.emacs.d/.emacs-places
+.emacs.d/.recentf

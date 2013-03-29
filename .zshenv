@@ -1,4 +1,4 @@
-﻿## -*- mode: sh; coding: utf-8 -*-
+# -*- mode: sh; coding: utf-8-unix; indent-tabs-mode: nil -*-
 ##
 ## File ~/.zshenv
 ## Set the environment variables for zsh.
