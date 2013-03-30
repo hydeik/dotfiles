@@ -20,7 +20,7 @@
                   'append)
 (add-to-list 'default-frame-alist '(font . "fontset-monacomarugo"))
 
-(modify-all-frames-parameters (list (cons 'alpha  '(70 60 50 30))))
+(modify-all-frames-parameters (list (cons 'alpha  '(80 60 50 30))))
 
 ;; avoid hiding with M-h
 (setq mac-pass-command-to-system nil)

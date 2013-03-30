@@ -4,7 +4,6 @@
 ;;; Description: Customize view, viewer
 ;;;
 
-
 (require 'view)
 ;; 読み込み専用ファイルを view-mode で開く
 (setq view-read-only t)
@@ -38,7 +37,7 @@
   (viewer-stay-in-setup)
 
   ;; view-mode 時に modeline に色を付ける
-  (setq viewer-modeline-color-unwritable "tomato")
-  (setq viewer-modeline-color-view "orange")
+  (setq viewer-modeline-color-unwritable "tomato3")
+  (setq viewer-modeline-color-view "red4")
   (viewer-change-modeline-color-setup)
   )
