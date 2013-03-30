@@ -1,5 +1,0 @@
-(:name key-combo
-       :type github
-       :pkgname "uk-ar/key-combo"
-       :features key-combo
-       :description "an alternative of smartchr and sequential-commands")

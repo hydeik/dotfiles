@@ -1,5 +1,0 @@
-(:name el-init
-       :type github
-       :pkgname "HKey/el-init"
-       :description "Emacs setup files loader"
-       )

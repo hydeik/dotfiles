@@ -1,5 +1,0 @@
-(:name init-loader
-       :type git
-       :website "https://gist.github.com/zqwell/1021706"
-       :description "[My recipe] split Emacs init-file"
-       :url "https://gist.github.com/1021706.git")

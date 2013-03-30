@@ -1,5 +1,0 @@
-(:name japanese-holidays
-       :type http
-       :website "http://www.meadowy.org/meadow/netinstall/browser/branches/3.00/pkginfo/japanese-holidays/japanese-holidays.el"
-       :description "[My recipe] show japanese holidays in calender"
-       :url "http://www.meadowy.org/meadow/netinstall/export/972/branches/3.00/pkginfo/japanese-holidays/japanese-holidays.el")

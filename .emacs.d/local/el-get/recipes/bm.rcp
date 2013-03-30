@@ -1,5 +1,0 @@
-(:name bm
-       :type git
-       :website "https://github.com/joodland/bm"
-       :description "[My recipe] Visible bookmarks in buffer"
-       :url "https://github.com/joodland/bm.git")
