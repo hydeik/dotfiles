@@ -1,6 +1,6 @@
 ;;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil; -*-
 ;;;
-;;; File: ~/.emacs.d/conf/40_helm.el
+;;; File: ~/.emacs.d/conf/70_helm.el
 ;;; Description: Setup helm
 ;;;
 
@@ -10,6 +10,7 @@
                 helm-c-yasnippet
                 helm-descbinds
                 helm-gist
+                helm-gtags
                 helm-ls-git
                 helm-migemo))
 
@@ -60,6 +61,23 @@
   (when (require 'helm-c-yasnippet)
     (setq helm-c-yas-space-match-any-greedy t) ;; [default: nil]
     (global-set-key (kbd "C-c y") 'helm-c-yas-complete)
+    )
+
+  ;; helm-ls-git
+  (require 'helm-gist nil t)
+  (when (require 'helm-ls-git nil t)
+    (global-set-key (kbd "C-x C-g") 'helm-ls-git-ls)
+    )
+
+  ;; helm-gtags
+  (when (require 'helm-gtags nil t)
+    (add-hook 'helm-gtags-mode-hook
+              '(lambda ()
+                 (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
+                 (local-set-key (kbd "M-r") 'helm-gtags-find-rtag)
+                 (local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
+                 (local-set-key (kbd "C-t") 'helm-gtags-pop-stack)
+                 (local-set-key (kbd "C-c C-f") 'helm-gtags-find-files)))
     )
 
   ;; ;; helm-migemo

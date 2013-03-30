@@ -1,4 +1,4 @@
-;;; -*- mode: emacs-lisp; coding: utf-8-unix -*-;;
+;;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil; -*-
 ;;;
 ;;; File: ~/.emacs.d/conf/40_vc.el
 ;;; Description: Customize VC (version control)
@@ -20,10 +20,12 @@
 ;;;=============================================================================
 ;;; Git customization
 ;;;=============================================================================
-(el-get 'sync '(git-gutter-fringe magit magithub))
+(el-get 'sync '(gist git-gutter-fringe magit magithub))
 
 (require 'magit nil t)
 (require 'magithub nil t)
 (when (require 'git-gutter-fringe nil t)
   (git-gutter-mode)
   )
+
+(require 'gist nil t)

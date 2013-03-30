@@ -1,10 +1,11 @@
-;;; -*- mode: emacs-lisp; coding: utf-8-unix -*-;;
+;;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil; -*-
 ;;;
-;;; File: ~/.emacs.d/conf/50_yasnippet.el
+;;; File: ~/.emacs.d/conf/60_yasnippet.el
 ;;; Description: Setup Yasnippet
 ;;;
 
 (el-get 'sync '(yasnippet))
+
 (when (require 'yasnippet nil t)
   (setq yas-snippet-dirs
         '("~/.emacs.d/local/yasnippet/snippets" ;; Location of private snippets
@@ -13,6 +14,5 @@
   (yas-global-mode 1)
 
   (custom-set-variables '(yas-trigger-key "TAB"))
-  
   )
 
