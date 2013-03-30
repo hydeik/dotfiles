@@ -20,11 +20,10 @@
 ;;;=============================================================================
 ;;; Git customization
 ;;;=============================================================================
-;; (el-get 'sync '(git-gutter-fringe magit magithub))
+(el-get 'sync '(git-gutter-fringe magit magithub))
 
-;; (require 'magit nil t)
-;; (require 'magithub nil t)
-;; (require 'git-gutter-fringe nil t)
-(el-get 'sync '(git-gutter-fringe egg))
-(require 'git-gutter-fringe nil t)
-(require 'egg nil t)
+(require 'magit nil t)
+(require 'magithub nil t)
+(when (require 'git-gutter-fringe nil t)
+  (git-gutter-mode)
+  )
