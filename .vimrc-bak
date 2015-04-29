@@ -1,8 +1,6 @@
 " .vimrc
 " vim 設定ファイル
 
-set encoding=utf-8
-
 "文字コードの識別 (http://www.kawaz.jp/pukiwiki/?vim)
 if &encoding !=# 'utf-8'
   set encoding=japan

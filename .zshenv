@@ -37,7 +37,6 @@ path=(
     # Fink
     /sw/bin(N)
     # *nix local, HomeBrew
-    /usr/local/share/python(N)
     /usr/local/bin(N)
     /usr/local/sbin(N)
     # System
@@ -188,7 +187,7 @@ fi
 [ -z "$pythonpath" ] && typeset -xT PYTHONPATH pythonpath
 typeset -U pythonpath
 pythonpath=(
-    $HOME/python
+    $HOME/python/lib/python2.7/site-packages
     $HOME/lib/python
     $HOME/opt/ase
     $pythonpath[@]
@@ -233,7 +232,8 @@ pythonpath=(
 # rscat
 if [[ -z $RSCATDIR ]]; then
   case "$HOST" in
-      freya*) export RSCATDIR=$HOME/program/rscat;;
+      freya*) export RSCATDIR=$HOME/programs/rscat;;
+      saga*)  export RSCATDIR=$HOME/programs/rscat;;
            *) export RSCATDIR=$HOME/program/rscat;;
   esac
 fi
@@ -262,7 +262,7 @@ if [[ -d $P4VASP_HOME ]] && test ! `echo $PATH | ${GREP} -q $P4VASP_HOME` ; then
 fi
 
 # XcrysDen
-export XCRYSDEN_TOPDIR=${HOME}/opt/XCrySDen-1.5.21-bin-semishared
+export XCRYSDEN_TOPDIR=${HOME}/opt/XCrySDen-1.5.60
 export XCRYSDEN_SCRATCH=${XCRYSDEN_TOPDIR}/tmp
 
 # ORCA

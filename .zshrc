@@ -130,7 +130,7 @@ else
     _cache_hosts=($HOST localhost)
 fi
 autoload -U compinit
-compinit
+compinit -u
 
 #compdef _tex platex             # platex に .tex を
 
