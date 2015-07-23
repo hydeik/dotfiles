@@ -184,16 +184,16 @@ fi
 ##
 ## Python
 ##
-[ -z "$pythonpath" ] && typeset -xT PYTHONPATH pythonpath
-typeset -U pythonpath
-pythonpath=(
-    #$HOME/python/lib/python2.7/site-packages
-    $HOME/python/lib/python3.4/site-packages
-    $HOME/lib/python
-    $HOME/opt/ase
-    /usr/local/lib/python3.4/site-packages
-    $pythonpath[@]
-    )
+# [ -z "$pythonpath" ] && typeset -xT PYTHONPATH pythonpath
+# typeset -U pythonpath
+# pythonpath=(
+#     #$HOME/python/lib/python2.7/site-packages
+#     $HOME/python/lib/python3.4/site-packages
+#     $HOME/lib/python
+#     $HOME/opt/ase
+#     /usr/local/lib/python3.4/site-packages
+#     $pythonpath[@]
+#     )
 
 ##
 ## Intel C/C++, Intel Fortran, and MKL

@@ -135,6 +135,12 @@ compinit -u
 #compdef _tex platex             # platex に .tex を
 
 
+## set keychain
+if [[ -x `which keychain` ]]; then
+   keychain ${HOME}/.ssh/id_rsa ${HOME}/.ssh/id_ecdsa ${HOME}/.ssh/id_ecdsa_github 2> /dev/null
+   source ${HOME}/.keychain/${HOST}-sh
+fi
+
 
 ############################################################
 # tcsh 風味の単語削除
