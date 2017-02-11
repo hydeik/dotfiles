@@ -3,3 +3,4 @@
 *.elc
 *_flymake*
 *.pyc
+*.zcompdump
