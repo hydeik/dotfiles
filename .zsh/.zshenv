@@ -1,16 +1,3 @@
-# -*- mode: sh; coding: utf-8-unix; indent-tabs-mode: nil -*-
-##
-## File ~/.zshenv
-## Set the environment variables for zsh.
-##
-
-##
-## Load system environment variables
-##
-if [[ -e /etc/profile.env ]]; then
-    source /etc/profile.env
-fi
-
 ##
 ## HTTP proxy (if necessary)
 ##
@@ -24,12 +11,27 @@ fi
 #
 # Note:
 #   A file path with (N) flag is expanded empty string if not exist.
-#   typeset -U list_name removes duplicated element in the list.
+#
+#   typeset
+#     -g global flag
+#     -x declare as a variable
+#     -U list_name removes duplicated element in the list.
 #
 
+## fpath -- set before compinit
+typeset -gxU fpath
+fpath=(
+    $HOME/.zsh/Completion(N-/)
+    $HOME/.zsh/functions(N-/)
+    $HOME/.zsh/plugins/zsh-completions(N-/)
+    /usr/local/share/zsh/site-functions(N-/)
+    $fpath
+)
+
 ##  path / PATH
-typeset -U path
+typeset -gxU path
 path=(
+    $HOME/bin(N)
     $HOME/bin(N)
     $HOME/opt/sage(N)
     # MacPorts
@@ -54,9 +56,10 @@ path=(
 )
 
 ## manpath / MANPATH
-typeset -U manpath
+typeset -gxU manpath
 manpath=(
     $HOME/man(N)
+    $HOME/dev/man(N)
     /sw/share/man(N)
     /opt/local/share/man(N)
     /usr/local/share/jman(N)
@@ -67,21 +70,45 @@ manpath=(
     $manpath[@]
 )
 
+## infopath / INFOPATH
+typeset -gxU infopath INFOPATH
+typeset -gxTU INFOPATH infopath  # tie the new array to the variables
 
-##
-## Info path
-##
-# if [[ -z $INFOPATH ]]; then
-#     INFOPATH=$HOME/info
-# else
-#     INFOPATH=$HOME/info:$INFOPATH
-# fi
-# export INFOPATH
+infopath=(
+    $HOME/share/info
+    $HOME/dev/share/info
+    /usr/local/share/info
+    /usr/share/info
+    $infopath[@]
+)
+
+## pag_config_path / PKG_CONFIG_PATH
+typeset -gxU pkg_config_path PKG_CONFIG_PATH
+typeset -gxU PKG_CONFIG_PATH pkg_config_path
+
+pkg_config_path=(
+    $HOME/.linuxbrew/lib/pkgconfig
+    $HOME/.linuxbrew/lib
+    /usr/local/lib/pkgconfig
+    /usr/local/lib
+    /usr/lib/x86_64-linux-gnu/pkgconfig
+    /usr/lib/x86_64-linux-gnu
+    /usr/share
+    /usr/share/pkgconfig
+    /usr/lib/pkgconfig
+    /usr/lib
+    /usr/local/include
+    /opt/X11/lib/pkgconfig
+    $pkg_config_path[@]
+)
+
+# typeset -gxU pkg_config_libdir PKG_CONFIG_LIBDIR
+# typeset -gxU PKG_CONFIG_LIBDIR pkg_config_libdir
 
 ##
 ## Load library path
 ##
-[ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
+[ -z "$ld_library_path" ] && typeset -gxT LD_LIBRARY_PATH ld_library_path
 typeset -U ld_library_path
 ld_library_path=(
     $HOME/lib(N)
@@ -124,40 +151,52 @@ SHELL=`which zsh`; export SHELL
 ##
 ## Language, Locale
 ##
-if [[ $ARCHI == "cygwin" ]]; then
-    export LC_ALL="ja"
-    export LANG="ja"
-else
-    case "$HOST" in
-        freya*) export LC_ALL="ja_JP.UTF-8"; \
-                export LANG="ja_JP.UTF-8";;
-        loki*)  export LC_ALL="ja_JP.UTF-8"; \
-                export LANG="ja_JP.UTF-8";;
-        *)      export LC_ALL="C"; \
-                export LANG="C";;
-    esac
-fi
-if [[ $ARCHI == "cygwin" ]]; then
-    export JLESSCHARSET="japanese-sjis"
-else
-    export JLESSCHARSET="japanese"
+export LANGUAGE=en_US.UTF-8
+export LANG=${LANGUAGE}
+export LC_ALL=${LANGUAGE}
+export LC_CTYPE=${LANGUAGE}
+
+##
+## History
+##
+# History file
+export HISTFILE=${ZDOTDIR}/.zsh_history
+# History size in memory
+export HISTSIZE=100000
+# The number of histsize
+export SAVEHIST=1000000
+# The size of asking history
+export LISTMAX=50
+# Do not add in root
+if [[ $UID == 0 ]]; then
+    unset HISTFILE
+    export SAVEHIST=0
 fi
 
 
 #### PAGER
-for cmd in lv w3m less more ; do
-    if [[ -x `which $cmd` ]] ; then 
-        pager=$cmd
-        break
-    fi
-done
-case "$pager" in
-    lv)   export PAGER="lv -c"; export MANPAGER="lv -c";;
-    # less -M: show page status
-    less) export PAGER="less -M"; export MANPAGER="less -M";;
-    *)    export PAGER=$pager; export MANPAGER=$pager;;
-esac
-unset pager cmd
+export PAGER=less
+
+# Less status line
+export LESS='-R -f -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
+export LESSCHARSET='utf-8'
+
+# LESS man page colors (makes Man pages more readable).
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[00;44;37m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+#### EDITOR
+if [[ -x `where vim`  ]]; then  
+    export EDITOR="vim"
+else
+    export EDITOR="vi"
+fi
 
 #### $COLORTERM 
 export COLORTERM=0
@@ -174,26 +213,22 @@ case "$TERM" in
     ct100*);    COLORTERM=1 ;;  # TeraTermPro
 esac
 
-#### EDITOR
-if [[ -x `where vim`  ]]; then  
-    export EDITOR="vim"
-else
-    export EDITOR="vi"
-fi
+# available $INTERACTIVE_FILTER
+export INTERACTIVE_FILTER="fzy:fzf:peco:percol:gof:pick"
 
 ##
-## Python
+## Do not read /etc/profile, /etc/zprofile
 ##
-# [ -z "$pythonpath" ] && typeset -xT PYTHONPATH pythonpath
-# typeset -U pythonpath
-# pythonpath=(
-#     #$HOME/python/lib/python2.7/site-packages
-#     $HOME/python/lib/python3.4/site-packages
-#     $HOME/lib/python
-#     $HOME/opt/ase
-#     /usr/local/lib/python3.4/site-packages
-#     $pythonpath[@]
-#     )
+setopt no_global_rcs
+
+##
+## Development environment
+##
+
+# pyenv -- Python environment
+export PYENV_ROOT=/usr/local/opt/pyenv
+export PATH=${PYENV_ROOT}/bin:$PATH
+eval "$(pyenv init -)"
 
 ##
 ## Intel C/C++, Intel Fortran, and MKL
@@ -228,8 +263,9 @@ fi
 #    unset INTEL_CMP_DIR INTEL_ARCH MKL_INTERFACE
 #fi
 
-
+##
 ## Computational programs
+##
 
 # rscat
 if [[ -z $RSCATDIR ]]; then
@@ -285,5 +321,8 @@ ADFROOT=${HOME}/opt/adf2012.01/adfhome
 if [ -e "${ADFROOT}/adfrc.sh" ]; then
     source ${ADFROOT}/adfrc.sh 
 fi
+# available $INTERACTIVE_FILTER
+export INTERACTIVE_FILTER="fzf:peco:percol:gof:pick"
 
-### End of file; ###
+
+[[ -f ~/.secret ]] && source ~/.secret~

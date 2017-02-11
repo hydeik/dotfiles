@@ -1,61 +1,55 @@
-#!/usr/bin/env zsh
-# -*- mode: sh; coding: utf-8-unix; indent-tabs-mode: nil -*-
-### 
-### File .zshrc
-###   Setup file for zsh
-###   Originaly written by ippei@cms.mtl.kyoto-u.ac.jp (2004-04-28)
+umask 022
+limit coredumpsize 0
 
-# メモ
-# cd -[tab] でディレクトリスタックを呼び出せる
-# <1-20> パターンマッチ
-#   ESC C-h で区切り文字までのバックスペース
-# killallコマンド
-# ***/ シムリンクを辿る
-# C-x g ワイルドカード展開結果をみる
-#    a=aiueo
-#    echo $a[1]
-
-# 個人的キーバインドに使える C-キーバインド
-# C-o, C-q, C-s
-# C-t の文字入れかえは使い勝手が良くないのでいらない
-# C-c, C-g は入力中のコマンドが消えてしまうのを何とかする
-# C-i は TAB の方がラク
-# C-w 改良
-# C-v 特殊文字を置く。C-v C-i ならタブ文字、C-v C-j なら改行文字を置ける
-# C-x 系コマンドを調べる。(C-x g みたいな)
-#### C-j or C-m どちらかで良い。→わけではない。skkinput で C-j を使う
-
-############################################################
-## 環境変数は主に ~/.zshenv に記述
-# ~/.zshrc に記述するのは、インタラクティブシェルとしての設定
-# if [[ -r $HOME/.zshenv ]]; then
-#     source $HOME/.zshenv
-# fi
-
-hosts=( localhost `hostname` )
-#printers=( lw ph clw )
-umask 002
-#cdpath=( ~ )                    # cd のサーチパス
-
-#### zsh-completion
-fpath=( ~/.zsh/functions $fpath[@] )       # zsh関数のサーチパス
-if [[ -d "$HOME/.zsh/cache" ]]; then
-    zstyle ':completion:*' use-cache yes
-    zstyle ':completion:*' cache-path $HOME/.zsh/cache
+# Return if zsh is called from Vim
+if [[ -n $VIMRUNTIME ]]; then
+    return 0
 fi
 
+# tmux_automatically_attach attachs tmux session
+# automatically when your are in zsh
+# $DOTPATH/bin/tmuxx
+
+if [[ -f ~/.zplug/init.zsh ]]; then
+    export ZPLUG_LOADFILE=~/.zsh/zplug.zsh
+    # For development version of zplug
+    # source ~/.zplug/init.zsh
+    source ~/dev/src/github.com/zplug/zplug/init.zsh
+
+    if ! zplug check --verbose; then
+        printf "Install? [y/N]: "
+        if read -q; then
+            echo; zplug install
+        fi
+        echo
+    fi
+    zplug load
+fi
+
+##============================================================================
+## Keybinding
+##============================================================================
+bindkey -e   # emacs like keybindings
+bindkey '^I' complete-word   # complete on tab, leave expansion to _expand
+
+# history-substring-search
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+
+##============================================================================
+## setupt
+##============================================================================
+
 # カレントディレクトリに候補がない場合のみ cdpath 上のディレクトリを候補
-zstyle ':completion:*:cd:*' tag-order local-directories path-directories
+# zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 # cf. zstyle ':completion:*:path-directories' hidden true
 # cf. cdpath 上のディレクトリは補完候補から外れる
 
 ## 補完時に大小文字を区別しない
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-#### history
-HISTFILE="$HOME/.zsh_history"      # 履歴ファイル
-HISTSIZE=10000                  # メモリ上に保存される $HISTFILE の最大サイズ？
-SAVEHIST=10000                  # 保存される最大履歴数
+#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 #### option, limit, bindkey
 setopt extended_history         # コマンドの開始時刻と経過時間を登録
@@ -73,8 +67,8 @@ setopt list_packed              # 補完候補リストを詰めて表示
 setopt list_types               # 補完候補にファイルの種類も表示する
 setopt print_eight_bit          # 補完候補リストの日本語を適正表示
 #setopt menu_complete           # 1回目のTAB で補完候補を挿入。表示だけの方が好き
-setopt no_clobber               # 上書きリダイレクトの禁止
-setopt no_unset                 # 未定義変数の使用の禁止
+#setopt no_clobber               # 上書きリダイレクトの禁止
+#setopt no_unset                 # 未定義変数の使用の禁止
 setopt no_hup                   # logout時にバックグラウンドジョブを kill しない
 setopt no_beep                  # コマンド入力エラーでBEEPを鳴らさない
 
@@ -90,114 +84,59 @@ setopt pushd_ignore_dups        # ディレクトリスタックに重複する�
 #setopt pushd_silent   # pushd, popd の度にディレクトリスタックの中身を表示しない
 setopt interactive_comments     # コマンド入力中のコメントを認める
 #setopt rm_star_silent          # rm * で本当に良いか聞かずに実行
-#setopt rm_star_wait            # rm * の時に 10秒間何もしない
+setopt rm_star_wait             # rm * の時に 10秒間何もしない
 #setopt chase_links             # リンク先のパスに変換してから実行。
 # setopt sun_keyboard_hack      # SUNキーボードでの頻出 typo ` をカバーする
 
+# 
+# stty    erase   '^H'
+# stty    intr    '^C'
+# stty    susp    '^Z'
+# 
+# 
+# ## set keychain
+# if [[ -x `which keychain` ]]; then
+#    keychain ${HOME}/.ssh/id_rsa ${HOME}/.ssh/id_ecdsa ${HOME}/.ssh/id_ecdsa_github 2> /dev/null
+#    source ${HOME}/.keychain/${HOST}-sh
+# fi
+# 
 
-#limit   coredumpsize    0       # コアファイルを吐かないようにする
+# ############################################################
+# ## プロンプト設定
+# autoload -U colors; colors      # ${fg[red]}形式のカラー書式を有効化
+# 
+# setopt prompt_subst				# ESCエスケープを有効にする
+# 
+# if [[ $COLORTERM == 1 ]]; then
+#     if [[ $UID == 0 ]] ; then 
+# 		PSCOLOR='01;01;31'
+#     else
+# 		PSCOLOR='01;01;32'		# 下線、緑
+#     fi
+#     # 右プロンプト
+#     RPROMPT=$'%{\e[${PSCOLOR}m%}[%{\e[36m%}%~%{\e[${PSCOLOR}m%}]%{\e[00m%}'
+#     PS1=$'%{\e[${PSCOLOR}m%}%n@%m${WINDOW:+"[$WINDOW]"} %{\e[34m%}$ '
+# fi
+# # 1個目の $'...' は 「\e]2;「kterm のタイトル」\a」
+# # 2個目の $'...' は 「\e]1;「アイコンのタイトル」\a」
+# # 3個目の $'...' がプロンプト
+# 
+# # \e を ESC コード()で置く必要があるかも
+# # emacs では C-q ESC, vi では C-v ESC で入力する
+# #	\e[00m 	初期状態へ
+# #	\e[01m 	太字	(0は省略可能っぽい)
+# #	\e[04m	アンダーライン
+# #	\e[05m	blink(太字)
+# #	\e[07m	反転
+# #	\e[3?m	文字色をかえる
+# #	\e[4?m	背景色をかえる
+# #		?= 0:黒, 1:赤, 2:緑, 3:黄, 4:青, 5:紫, 6:空, 7:白
+# 
+# 
 
-stty    erase   '^H'
-stty    intr    '^C'
-stty    susp    '^Z'
-
-#### bindkey
-# bindkey "割当てたいキー" 実行させる機能の名前
-bindkey -e    # emacs 風キーバインド(環境変数 EDITOR も反映するが、こっちが優先)
-bindkey '^I'    complete-word   # complete on tab, leave expansion to _expand
-
-bindkey '^P' history-beginning-search-backward # 先頭マッチのヒストリサーチ
-bindkey '^N' history-beginning-search-forward # 先頭マッチのヒストリサーチ
-
-# tcsh風先頭マッチのヒストリサーチ(カーソルが行末)
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
-
-# run-help が呼ばれた時、zsh の内部コマンドの場合は該当する zsh のマニュアル表示
-[ -n "`alias run-help`" ] && unalias run-help
-autoload run-help
-
-#### completion
-#
-#_cache_hosts=($HOST localhost)
-
-if [ -f ~/.rhosts ]; then                 
-    _cache_hosts=($HOST localhost `awk '{print $1}' ~/.rhosts`)
-else
-    _cache_hosts=($HOST localhost)
-fi
-autoload -U compinit
-compinit -u
-
-#compdef _tex platex             # platex に .tex を
-
-
-## set keychain
-if [[ -x `which keychain` ]]; then
-   keychain ${HOME}/.ssh/id_rsa ${HOME}/.ssh/id_ecdsa ${HOME}/.ssh/id_ecdsa_github 2> /dev/null
-   source ${HOME}/.keychain/${HOST}-sh
-fi
-
-
-############################################################
-# tcsh 風味の単語削除
-#tcsh-backward-delete-word () {
-    #local WORDCHARS="${WORDCHARS:s#/#}"
-    #zle backward-delete-word
-#}
-#zle -N tcsh-backward-delete-word # 関数を widget に変えて
-#bindkey '^W' tcsh-backward-delete-word # bindkey で割当てる
-
-# 単語単位でのバックスペース
-export WORDCHARS='*?_.[]~=&;!#$%^(){}<>'
-# M-h : default run-help
-bindkey "^[h" backward-kill-word
-bindkey "^[?" run-help
-
-# redo
-#     M-h のデフォルト run-help は便利らしい
-#     $ bindkey G backward-kill-word
-#     "^W" backward-kill-word
-#     "^[^H" backward-kill-word
-#     "^[^?" backward-kill-word
-
-############################################################
-## プロンプト設定
-autoload -U colors; colors      # ${fg[red]}形式のカラー書式を有効化
-
-setopt prompt_subst				# ESCエスケープを有効にする
-
-if [[ $COLORTERM == 1 ]]; then
-    if [[ $UID == 0 ]] ; then 
-		PSCOLOR='01;01;31'
-    else
-		PSCOLOR='01;01;32'		# 下線、緑
-    fi
-    # 右プロンプト
-    RPROMPT=$'%{\e[${PSCOLOR}m%}[%{\e[36m%}%~%{\e[${PSCOLOR}m%}]%{\e[00m%}'
-    PS1=$'%{\e[${PSCOLOR}m%}%n@%m${WINDOW:+"[$WINDOW]"} %{\e[34m%}$ '
-fi
-# 1個目の $'...' は 「\e]2;「kterm のタイトル」\a」
-# 2個目の $'...' は 「\e]1;「アイコンのタイトル」\a」
-# 3個目の $'...' がプロンプト
-
-# \e を ESC コード()で置く必要があるかも
-# emacs では C-q ESC, vi では C-v ESC で入力する
-#	\e[00m 	初期状態へ
-#	\e[01m 	太字	(0は省略可能っぽい)
-#	\e[04m	アンダーライン
-#	\e[05m	blink(太字)
-#	\e[07m	反転
-#	\e[3?m	文字色をかえる
-#	\e[4?m	背景色をかえる
-#		?= 0:黒, 1:赤, 2:緑, 3:黄, 4:青, 5:紫, 6:空, 7:白
-
-
-############################################################
-## alias & function
+##============================================================================
+## aliases
+##============================================================================
 
 #### PAGER
 #alias less="$PAGER"
@@ -292,35 +231,34 @@ function mpg321() { command mpg321 -s $* | esdcat & }
 
 # バックアップファイルを作成
 function bak() {
-	for i in $@ ; do
-	  	if [[ -e $i.bak ]] || [[ -d $i.bak ]]; then
-		  	echo "$i.bak already exist"
-		else
-		  	command cp -ir $i $i.bak
-		fi
-	done
+    for i in $@ ; do
+        if [[ -e $i.bak ]] || [[ -d $i.bak ]]; then
+            echo "$i.bak already exist"
+        else
+            command cp -ir $i $i.bak
+        fi
+    done
 }
 
 # ごみ箱の実装
 function rm() {
     if [[ -d ~/.trash ]]; then
-		DATE=`date "+%y%m%d-%H%M%S"`
-		mkdir ~/.trash/$DATE
-		for i in $@; do
-        # 対象が ~/.trash/ 以下なファイルならば /bin/rm を呼び出したいな
-			if [[ -e $i ]]; then
-				rmcommand="mv $i ~/.trash/$DATE/"
-				#echo "$rmcommand"
-				eval "$rmcommand"
-				unset rmcommand
-			else 
-				echo "$i : not found"
- 			fi
-		done
-		unset DATE
+        DATE=`date "+%y%m%d-%H%M%S"`
+        mkdir ${HOME}/.trash/$DATE
+        for i in $@; do
+            # 対象が ~/.trash/ 以下なファイルならば /bin/rm を呼び出したいな
+            if [[ -e $i ]]; then
+                rmcommand="mv $i ~/.trash/$DATE/"
+                eval "$rmcommand"
+                unset rmcommand
+            else 
+                echo "$i : not found"
+            fi
+        done
+        unset DATE
     else
-		/bin/rm $@
-	fi
+        /bin/rm $@
+    fi
 }
 
 #function emacs() {
