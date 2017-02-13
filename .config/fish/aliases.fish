@@ -1,8 +1,20 @@
+## cd
+alias ... 'cd ../..'
+alias .... 'cd ../../..'
+alias ..... 'cd ../../../..'
+alias ...... 'cd ../../../../..'
+
 ## ls
 alias ls 'ls -vaF'
 # for typo
 alias kls 'ls'
 alias sls 'ls'
+
+## mv
+alias mv 'mv -i'
+
+## cp
+alias mv 'cp -i'
 
 ## less
 # `les` for typo of `less`
