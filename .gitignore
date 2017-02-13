@@ -6,3 +6,4 @@
 *.zcompdump
 *.zsh_history
 .config/fish/fishd.*
+.config/fish/fundle
