@@ -12,7 +12,7 @@ set fish_user_paths $GOPATH/bin $fish_user_paths
 
 # pyenv
 set -x PYENV_ROOT /usr/local/var/pyenv
-if status --is-interactive; and type -f pyenv > /dev/null
+if status --is-interactive; and type -q pyenv
     . (pyenv init -|psub)
 end
 
