@@ -5,7 +5,7 @@ alias ..... 'cd ../../../..'
 alias ...... 'cd ../../../../..'
 
 ## ls
-alias ls 'ls -vaF'
+alias ls 'ls -vaFG'
 # for typo
 alias kls 'ls'
 alias sls 'ls'

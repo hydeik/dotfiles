@@ -19,4 +19,6 @@ end
 # Add $HOME/bin to PATH
 set fish_user_paths $HOME/bin $fish_user_paths
 
+# Themes
+set -x theme_color_scheme 'terminal'
 
