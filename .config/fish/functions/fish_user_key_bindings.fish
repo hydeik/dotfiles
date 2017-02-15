@@ -25,5 +25,5 @@ function fish_user_key_bindings -d 'define my bindings'
     #
     # Ctrl-g repository search by ghq (require fzf, peco or percol for the selector)
     #
-    bind \cg __ghq_ctrl_g
+    bind \cg __ghq_crtl_g
 end
