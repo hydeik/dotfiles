@@ -10,11 +10,11 @@ fi
 # zplug -- Zsh Plugin Manager
 #
 export ZPLUG_HOME=/usr/local/opt/zplug
-if [[ -f $ZPLUG_HOME/init.zsh ]]; then
+if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
     export ZPLUG_LOADFILE=${ZDOTDIR}/zplug.zsh
     export ZPLUG_CACHE_DIR=${HOME}/.cache/zplug 
 
-    source $ZPLUG_HOME/init.zsh
+    source ${ZPLUG_HOME}/init.zsh
 
     if ! zplug check --verbose; then
         printf "Install? [y/N]: "
@@ -42,20 +42,20 @@ fi
 
 ############################################################
 ## プロンプト設定
-autoload -U colors; colors      # ${fg[red]}形式のカラー書式を有効化
-
-setopt prompt_subst				# ESCエスケープを有効にする
-
-if [[ $COLORTERM == 1 ]]; then
-    if [[ $UID == 0 ]] ; then 
-		PSCOLOR='01;01;31'
-    else
-		PSCOLOR='01;01;32'		# 下線、緑
-    fi
-    # 右プロンプト
-    RPROMPT=$'%{\e[${PSCOLOR}m%}[%{\e[36m%}%~%{\e[${PSCOLOR}m%}]%{\e[00m%}'
-    PS1=$'%{\e[${PSCOLOR}m%}%n@%m${WINDOW:+"[$WINDOW]"} %{\e[34m%}$ '
-fi
+# autoload -U colors; colors      # ${fg[red]}形式のカラー書式を有効化
+# 
+# setopt prompt_subst				# ESCエスケープを有効にする
+# 
+# if [[ $COLORTERM == 1 ]]; then
+#     if [[ $UID == 0 ]] ; then 
+# 		PSCOLOR='01;01;31'
+#     else
+# 		PSCOLOR='01;01;32'		# 下線、緑
+#     fi
+#     # 右プロンプト
+#     RPROMPT=$'%{\e[${PSCOLOR}m%}[%{\e[36m%}%~%{\e[${PSCOLOR}m%}]%{\e[00m%}'
+#     PS1=$'%{\e[${PSCOLOR}m%}%n@%m${WINDOW:+"[$WINDOW]"} %{\e[34m%}$ '
+# fi
 # 1個目の $'...' は 「\e]2;「kterm のタイトル」\a」
 # 2個目の $'...' は 「\e]1;「アイコンのタイトル」\a」
 # 3個目の $'...' がプロンプト
@@ -105,24 +105,3 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 # %W    日付(月/日/年)
 # %D    日付(年-月-日)
 
-############################################################
-## ホスト依存の設定
-# if [ $ARCHI = "cygwin"  ]; then
-#     zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'	# 補完時に大小文字を区別しない
-# fi
-# if [[ $ARCHI == "irix" ]] || [[ $ARCHI == "osf1" ]]; then
-#     if [[ TERM == "Eterm" ]]; then
-#         export TERM="vt102"
-#     else
-#         export TERM="xterm"
-#     fi
-#     alias ls="ls -F"
-# fi
-
-############################################################
-## 個人情報を含む設定
-#if [ -e ~/.zshrc_private ]; then
-#    source ~/.zshrc_private
-#fi
-
-#### end of file ###########################################

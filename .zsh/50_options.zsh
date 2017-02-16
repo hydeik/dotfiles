@@ -1,7 +1,6 @@
 # 
 # options
 #
-
 setopt extended_history         # コマンドの開始時刻と経過時間を登録
 setopt hist_ignore_dups         # 直前のコマンドと同一ならば登録しない
 setopt hist_ignore_all_dups     # 登録済コマンド行は古い方を削除
