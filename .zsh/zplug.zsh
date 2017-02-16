@@ -9,6 +9,7 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug "glidenote/hub-zsh-completion"
 
+zplug "agnoster/agnoster-zsh-theme", as:theme
 #zplug "dracula/zsh", as:theme
 #zplug "jeremyFreeAgent/oh-my-zsh-powerline-theme", as:theme
 
