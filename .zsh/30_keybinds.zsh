@@ -6,15 +6,24 @@
 bindkey -e
 bindkey '^I' complete-word   # complete on tab, leave expansion to _expand
 
-# history-substring-search
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
+if zplug check "zsh-users/zsh-history-substring-search"; then
+    # history-substring-search
+    bindkey -M emacs '^P' history-substring-search-up
+    bindkey -M emacs '^N' history-substring-search-down
 
-#bindkey '^P' history-substring-search-up
-#bindkey '^N' history-substring-search-down
+    #bindkey '^P' history-substring-search-up
+    #bindkey '^N' history-substring-search-down
+else;
+    autoload -Uz history-search-end
+    zle -N history-beginning-search-backward-end history-search-end
+    zle -N history-beginning-search-forward-end history-search-end
+
+    bindkey "^[p" history-beginning-search-backward-end
+    bindkey "^[n" history-beginning-search-forward-end
+fi
 
 # Anyframe
-if zplug check "molifier/anyframe"; then
+if zplug check "mollifier/anyframe"; then
     autoload -Uz anyframe-init
     zstyle ":anyframe:selector:" use fzf
     anyframe-init
