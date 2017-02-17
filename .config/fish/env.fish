@@ -8,10 +8,9 @@ set -x EDITOR vim
 # Golang
 set -x GOPATH $HOME
 set fish_user_paths $GOROOT/bin $fish_user_paths
-set fish_user_paths $GOPATH/bin $fish_user_paths
 
 # pyenv
-set -x PYENV_ROOT /usr/local/var/pyenv
+set -x PYENV_ROOT $HOME/.pyenv
 if status --is-interactive; and type -q pyenv
     . (pyenv init -|psub)
 end
