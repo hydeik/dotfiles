@@ -15,6 +15,7 @@ if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
     export ZPLUG_CACHE_DIR=${HOME}/.cache/zplug 
 
     source ${ZPLUG_HOME}/init.zsh
+    path=( ${ZPLUG_BIN} $path[@] )
 
     if ! zplug check --verbose; then
         printf "Install? [y/N]: "

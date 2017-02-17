@@ -25,7 +25,7 @@ fpath=(
     $HOME/.zsh/functions(N-/)
     $HOME/.zsh/plugins/zsh-completions(N-/)
     /usr/local/share/zsh/site-functions(N-/)
-    $fpath
+    $fpath[@]
 )
 
 ##  path / PATH
@@ -225,9 +225,6 @@ case "$TERM" in
     # emacs*);  COLORTERM=1 ;;
     ct100*);    COLORTERM=1 ;;  # TeraTermPro
 esac
-
-# available $INTERACTIVE_FILTER
-export INTERACTIVE_FILTER="fzy:fzf:peco:percol:gof:pick"
 
 ##
 ## Do not read /etc/profile, /etc/zprofile
