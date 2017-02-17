@@ -30,7 +30,7 @@ if zplug check "mollifier/anyframe"; then
     
     bindkey '^x^b' anyframe-widget-checkout-git-branch
     
-    bindkey '^xr'  anyframe-widget-execute-history
+    bindkey '^r'  anyframe-widget-execute-history
     bindkey '^x^r' anyframe-widget-execute-history
     
     bindkey '^xp'  anyframe-widget-put-history
