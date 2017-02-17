@@ -108,3 +108,7 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 # %W    日付(月/日/年)
 # %D    日付(年-月-日)
 
+# # for profiling
+# if type zprof > /dev/null 2>&1; then
+#   zprof | less
+# fi

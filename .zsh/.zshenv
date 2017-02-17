@@ -1,3 +1,6 @@
+## for profiling
+# zmodload zsh/zprof
+
 ##
 ## HTTP proxy (if necessary)
 ##
