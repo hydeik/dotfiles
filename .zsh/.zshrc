@@ -9,7 +9,8 @@ fi
 #
 # zplug -- Zsh Plugin Manager
 #
-export ZPLUG_HOME=/usr/local/opt/zplug
+#export ZPLUG_HOME=/usr/local/opt/zplug
+export ZPLUG_HOME=${HOME}/.zplug
 if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
     export ZPLUG_LOADFILE=${ZDOTDIR}/zplug.zsh
     export ZPLUG_CACHE_DIR=${HOME}/.cache/zplug 
@@ -25,7 +26,8 @@ if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
         echo
     fi
 
-    zplug load --verbose
+    # zplug load --verbose
+    zplug load
 fi
 
 # 
