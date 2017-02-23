@@ -21,3 +21,13 @@ set fish_user_paths $HOME/bin $fish_user_paths
 # Themes
 set -x theme_color_scheme 'terminal'
 
+#
+# Intel C/C++, Intel Fortran, and MKL
+#
+set -l INTEL_COMPILER_DIR /opt/intel/compilers_and_libraries
+set -l INTEL_COMPILER_ARCH intel64
+set -l INTEL_COMPILERVARS_FILE $INTEL_COMPILER_DIR/linux/bin/compilervars.sh
+if test -e $INTEL_COMPILERVARS_FILE
+    bass source $INTEL_COMPILERVARS_FILE $INTEL_COMPILER_ARCH
+end
+
