@@ -14,7 +14,7 @@ alias sls 'ls'
 alias mv 'mv -i'
 
 ## cp
-alias mv 'cp -i'
+alias cp 'cp -i'
 
 ## less
 # `les` for typo of `less`
