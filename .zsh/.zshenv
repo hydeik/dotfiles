@@ -37,6 +37,8 @@ path=(
     $HOME/bin(N)
     $HOME/bin(N)
     $HOME/opt/sage(N)
+    # for OSX
+    /Library/Tex/texbin
     # MacPorts
     /opt/local/bin(N)
     # Fink
