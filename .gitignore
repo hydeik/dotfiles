@@ -7,3 +7,7 @@
 *.zsh_history
 .config/fish/fishd.*
 .config/fish/fundle
+.config/fish/completions/*
+.config/fish/functions/*
+!.config/fish/functions/fish_user_keybinds.fish
+!.config/fish/functions/fisher.fish
