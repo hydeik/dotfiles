@@ -1,0 +1,36 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+# Set the buffer filetype based on the code block the cursor currently resides in.
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+hood_add = '''
+  let g:precious_enable_switch_CursorMoved = { '*': 0, 'help': 1 }
+'''
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = ['toml']
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+on_ft = ['markdown','mkd']
+hook_add = '''
+  let g:vim_markdown_frontmatter = 1
+  let g:vim_markdown_math = 1
+'''
+

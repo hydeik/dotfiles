@@ -1,0 +1,94 @@
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_path = '.*'
+on_event = 'TextYankPost'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_path = '.*'
+
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/neosnippet'
+depends = ['neosnippet-snippets']
+on_ft = ['snippet']
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+hook_add = 'let g:deoplete#enable_at_startup = 1'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+depends = ['neomru.vim', 'neoyank.vim']
+if = 'has("nvim")'
+on_event = 'BufRead'
+hook_add = '''
+  nnoremap [denite] <Nop>
+  nmap <C-u> [denite]
+  nmap <silent> [denite]t : <C-u>Denite filetype<CR>
+  nmap <silent> [denite]f : <C-u>Denite file_rec<CR>
+  nmap <silent> [denite]y : <C-u>Denite neoyank<CR>
+  nmap <silent> [denite]g : <C-u>Denite grep -buffer-name=search-buffer-denite<CR>
+  nmap <silent> [denite]r : <C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+  nmap <silent> [denite]n : <C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
+  nmap <silent> [denite]p : <C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+'''
+hook_post_source = '''
+  call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--no-color', '--no-group', '-g', ''])
+  call denite#custom#var('grep', 'command', ['ag'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', [])
+  call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
+  call denite#custom#source('file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
+  call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
+'''
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+
+[[plugins]]
+repo = 'neomake/neomake'
+depends = ['vimproc.vim']
+if = 'has("nvim")'
+hook_add = '''
+  autocmd! BufWritePost * Neomake
+  let g:neomake_python_enabled_makers = ['python', 'flake8']
+'''
+
+[[plugins]]
+repo = 'zchee/deoplete-clang'
+depends = ['deoplete.nvim']
+if = 'has("nvim")'
+on_ft = ['c', 'cpp', 'cmake']
+hook_source = '''
+  let g:deoplete#sources#clang#libclang_path = '/usr/local/opt/llvm/lib/libclang.dylib'
+  let g:deoplete#sources#clang#clang_header = '/usr/loca/opt/llvm/lib/clang'
+'''
+
+[[plugins]]
+repo = 'rhysd/vim-clang-format'
+on_ft = ['c', 'cpp', 'cmake']
+hook_source = '''
+  let g:clang_format#detect_style_file = 1
+  let g:clang_format#auto_format = 1
+'''
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+depends = ['deoplete.nvim']
+if = 'has("nvim")'
+on_ft = ['python']
+hook_source = '''
+  let g:python3_host_prog = '~/.pyenv/versions/miniconda3-latest/bin/python'
+'''
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'jreybert/vimagit'
+
