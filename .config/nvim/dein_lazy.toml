@@ -25,9 +25,9 @@ repo = 'Shougo/neosnippet'
 depends = ['neosnippet-snippets']
 on_ft = ['snippet']
 hook_source = '''
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)  
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)  
-  xmap <C-k> <Plug>(neosnippet_expand_target)  
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
 '''
 
 [[plugins]]
@@ -38,26 +38,62 @@ on_event = 'BufRead'
 hook_add = '''
   nnoremap [denite] <Nop>
   nmap <C-u> [denite]
-  nmap <silent> [denite]t : <C-u>Denite filetype<CR>
-  nmap <silent> [denite]f : <C-u>Denite file_rec<CR>
-  nmap <silent> [denite]y : <C-u>Denite neoyank<CR>
-  nmap <silent> [denite]g : <C-u>Denite grep -buffer-name=search-buffer-denite<CR>
-  nmap <silent> [denite]r : <C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
-  nmap <silent> [denite]n : <C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
-  nmap <silent> [denite]p : <C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+  nmap <silent> [denite]<C-t> : <C-u>Denite filetype<CR>
+  nmap <silent> [denite]<C-f> : <C-u>Denite -auto_preview file_rec<CR>
+  nmap <silent> [denite]<C-y> : <C-u>Denite neoyank<CR>
+  nmap <silent> [denite]<C-g> : <C-u>Denite grep -mode=normal -buffer-name=search-buffer-denite<CR>
+  nmap <silent> [denite]<C-r> : <C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+  nmap <silent> [denite]<C-n> : <C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
+  nmap <silent> [denite]<C-p> : <C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
 '''
 hook_post_source = '''
-  call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--no-color', '--no-group', '-g', ''])
-  call denite#custom#var('grep', 'command', ['ag'])
-  call denite#custom#var('grep', 'recursive_opts', [])
-  call denite#custom#var('grep', 'pattern_opt', [])
-  call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
+  call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>',  'noremap')
+  call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+
+  if executable('rg')
+    call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git', ''])
+    call denite#custom#var('grep', 'command', ['rg'])
+    call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opt', [])
+  else
+    call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    call denite#custom#var('grep', 'command', ['ag'])
+    call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', [])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opt', [])
+  endif
+
+  " Change matchers
   call denite#custom#source('file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
+  call denite#custom#source('file_rec', 'matchers', ['matcher_cpsm'])
+  " Change sorters
+  call denite#custom#source('file_rec', 'sorters', ['sorter_sublime'])
+
+  " Change converters
   call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
+
+  " Define alias
+  call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+  call denite#custom#var('file_rec/git', 'command',
+    \ ['git', 'ls-files', '-co', '--exclude-standard'])
+
+  " Change default prompt
+  call denite#custom#option('default', 'prompt', '>')
+
+  " Change ignore_globs
+  call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+    \ [ '.git/', '.ropeproject/', '__pycache__/',
+    \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 '''
 
 [[plugins]]
-repo = 'scrooloose/nerdtree'
+repo = 'Jagua/vim-denite-ghq'
+depends = ['denite.nvim']
 
 [[plugins]]
 repo = 'neomake/neomake'
