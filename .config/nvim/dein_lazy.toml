@@ -7,6 +7,15 @@ on_event = 'TextYankPost'
 repo = 'Shougo/neomru.vim'
 on_path = '.*'
 
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+  inoremap <expr><tab> pumvisible() ? "\<C-n>" : 
+    \ neosnippet#expandable_or_jumpable() ?
+    \   "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+'''
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
@@ -15,11 +24,11 @@ repo = 'Shougo/neosnippet-snippets'
 repo = 'Shougo/neosnippet'
 depends = ['neosnippet-snippets']
 on_ft = ['snippet']
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-if = 'has("nvim")'
-hook_add = 'let g:deoplete#enable_at_startup = 1'
+hook_source = '''
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)  
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)  
+  xmap <C-k> <Plug>(neosnippet_expand_target)  
+'''
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'

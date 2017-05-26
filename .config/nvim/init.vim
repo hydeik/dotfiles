@@ -43,4 +43,5 @@ endif
 
 filetype plugin indent on
 syntax enable
-
+"colorscheme dracula
+source ~/.config/nvim/lightline.rc.vim
