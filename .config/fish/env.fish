@@ -15,6 +15,11 @@ if status --is-interactive; and type -q pyenv
     . (pyenv init -|psub)
 end
 
+# conda
+if status --is-interactive; and type -q conda
+    . (conda info --root)/etc/fish/conf.d/conda.fish
+end
+
 # Add $HOME/bin to PATH
 set fish_user_paths $HOME/bin $fish_user_paths
 
