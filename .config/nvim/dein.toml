@@ -1,11 +1,5 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-
-[[plugins]]
-repo = 'jreybert/vimagit'
-
 
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
@@ -65,6 +59,15 @@ hook_add = '''
   let g:vim_markdown_frontmatter = 1
   let g:vim_markdown_math = 1
 '''
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'lambdalisue/gina.vim'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'

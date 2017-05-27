@@ -1,4 +1,3 @@
-
 "----------------------------------------------------------------------------
 " Environments
 "----------------------------------------------------------------------------
@@ -62,5 +61,5 @@ set clipboard=unnamed,unnamedplus
 nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
 
 "colorscheme dracula
-"source ~/.config/nvim/lightline.rc.vim
+source ~/.config/nvim/lightline.rc.vim
 
