@@ -3,7 +3,11 @@ set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
 
 # Editor
-set -x EDITOR vim
+if type -q nvim
+  set -x EDITOR nvim
+else
+  set -x EDITOR vim
+end
 
 # Golang
 set -x GOPATH $HOME
