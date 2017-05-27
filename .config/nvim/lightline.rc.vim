@@ -4,7 +4,8 @@ let g:lightline = {
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'fugitive', 'filename' ] ],
-  \   'right': [ ['fileformat', 'fileencoding', 'filetype'] ]
+  \   'right': [ ['percent', 'lineinfo'], 
+  \              ['fileformat', 'fileencoding', 'filetype'] ],
   \ },
   \ 'component_function': {
   \   'modified': 'LightlineModified',
@@ -43,8 +44,10 @@ function! LightlineReadonly()
 endfunction
 
 function! LightlineFilename()
-  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+  let fname = expand('%:t')
+  return &ft == 'denite' ? denite#get_status_sources() . denite#get_status_path() : '' .
+       \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+       \ ('' != fname ? fname : '[No Name]') .
        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
@@ -61,7 +64,10 @@ function! LightlineFileencoding()
 endfunction
 
 function! LightlineMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
+  return &ft == 'denite' ? 'denite' : 
+       \ &ft == 'vimfiler' ? 'VimFiler' :
+       \ &ft == 'vimshell' ? 'VimShell' :
+       \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
 function! LightlineFugitive()
