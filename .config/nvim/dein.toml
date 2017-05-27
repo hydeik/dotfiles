@@ -2,10 +2,7 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
-
-[[plugins]] repo = 'Shougo/neosnippet-snippets'
+repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -68,6 +65,9 @@ repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
+
+[[plugins]]
+repo = 'jreybert/vimagit'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'

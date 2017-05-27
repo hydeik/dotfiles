@@ -50,7 +50,7 @@ syntax enable
 set ignorecase
 set smartcase
 set wrapscan
-set number
+" set number
 set list
 set showmatch
 set laststatus=2
@@ -60,6 +60,7 @@ set clipboard=unnamed,unnamedplus
 " Stop highlighting
 nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
 
-"colorscheme dracula
-source ~/.config/nvim/lightline.rc.vim
+" colorscheme dracula
+set background=dark
+execute 'source' fnameescape(s:config_home . '/nvim/lightline.rc.vim')
 
