@@ -109,6 +109,10 @@ repo = 'cjrh/vim-conda'
 on_ft = 'python'
 
 [[plugins]]
+repo = 'dag/vim-fish'
+on_ft = 'fish'
+
+[[plugins]]
 repo = 'rust-lang/rust.vim'
 on_ft = 'rust'
 
