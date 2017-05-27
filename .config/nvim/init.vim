@@ -54,6 +54,7 @@ set wrapscan
 set list
 set showmatch
 set laststatus=2
+set noshowmode
 
 set clipboard=unnamed,unnamedplus
 
@@ -62,5 +63,6 @@ nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
 
 " colorscheme dracula
 set background=dark
+colorscheme dracula
 execute 'source' fnameescape(s:config_home . '/nvim/lightline.rc.vim')
 
