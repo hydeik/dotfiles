@@ -58,11 +58,27 @@ set noshowmode
 
 set clipboard=unnamed,unnamedplus
 
-" Stop highlighting
-nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
+" Indent
+set autoindent
+set smartindent
+set cindent
 
+set smarttab
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+"----------------------------------------------------------------------------
+" Color scheme and themes
+"----------------------------------------------------------------------------
 " colorscheme dracula
 set background=dark
 colorscheme dracula
 execute 'source' fnameescape(s:config_home . '/nvim/lightline.rc.vim')
 
+"----------------------------------------------------------------------------
+" Keymapping
+"----------------------------------------------------------------------------
+" Stop highlighting
+nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
