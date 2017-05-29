@@ -69,16 +69,17 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
+" Stop highlighting
+nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
+
 "----------------------------------------------------------------------------
 " Color scheme and themes
 "----------------------------------------------------------------------------
+
+set termguicolors
+
 " colorscheme dracula
 set background=dark
 colorscheme dracula
 execute 'source' fnameescape(s:config_home . '/nvim/lightline.rc.vim')
 
-"----------------------------------------------------------------------------
-" Keymapping
-"----------------------------------------------------------------------------
-" Stop highlighting
-nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>

@@ -26,6 +26,15 @@ repo = 'jiangmiao/auto-pairs'
 repo = 'kana/vim-textobj-user'
 
 [[plugins]]
+repo = 'kana/vim-textobj-line'
+
+[[plugins]]
+repo = 'kana/vim-textobj-indent'
+
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+
+[[plugins]]
 repo = 'kana/vim-operator-user'
 
 [[plugins]]
@@ -43,18 +52,6 @@ hook_add = '''
   map <silent>sa <Plug>(operator-surround-append)
   map <silent>sd <Plug>(operator-surround-delete)
   map <silent>sr <Plug>(operator-surround-replace)
-'''
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = ['toml']
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = ['markdown','mkd']
-hook_add = '''
-  let g:vim_markdown_frontmatter = 1
-  let g:vim_markdown_math = 1
 '''
 
 [[plugins]]
@@ -77,4 +74,3 @@ repo = 'itchyny/lightline.vim'
 
 [[plugins]]
 repo = 'dracula/vim'
-

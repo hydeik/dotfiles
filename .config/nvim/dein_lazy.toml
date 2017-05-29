@@ -128,3 +128,37 @@ hook_source = '''
   \ .'stable-x86_64-unknown-linux-gnu/'
   \ .'lib/rustlib/src/rust/src/')
 '''
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = ['toml']
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+on_ft = ['markdown','mkd']
+hook_add = '''
+  let g:vim_markdown_frontmatter = 1
+  let g:vim_markdown_math = 1
+'''
+
+[[plugins]]
+repo = 'terryma/vim-expand-region'
+on_event = 'BufRead'
+hood_source = '''
+  let g:expand_region_text_objects = {
+  \ 'iw' :0,
+  \ 'iW' :0,
+  \ 'i"' :0,
+  \ "i''" :0,
+  \ 'i]' :1,
+  \ 'ib' :1,
+  \ 'iB' :1,
+  \ 'il' :0,
+  \ 'ip' :0,
+  \ 'ie':0,
+  \ }
+'''
+hook_add = '''
+  vmap v     <Plug>(expand_region_expand)
+  vmap <C-v> <Plug>(expand_region_shrink)
+ '''
