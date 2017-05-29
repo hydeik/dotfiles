@@ -5,6 +5,9 @@ set -x LC_ALL en_US.UTF-8
 # Editor
 set -x EDITOR vim
 
+# Interactive filterling tool (e.g., fzf, peco, percol)
+set -x PERCOL fzf
+
 # Golang
 set -x GOPATH $HOME
 set fish_user_paths $GOROOT/bin $fish_user_paths
