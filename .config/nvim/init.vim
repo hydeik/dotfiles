@@ -80,6 +80,6 @@ set termguicolors
 
 " colorscheme dracula
 set background=dark
-colorscheme dracula
+" colorscheme dracula
 execute 'source' fnameescape(s:config_home . '/nvim/lightline.rc.vim')
 

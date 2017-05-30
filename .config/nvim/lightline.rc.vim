@@ -1,6 +1,6 @@
 " Customize lightline
 let g:lightline = {
-  \ 'colorscheme': 'Dracula',
+  \ 'colorscheme': 'onedark',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'fugitive', 'filename' ] ],
