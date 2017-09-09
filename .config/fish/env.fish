@@ -26,6 +26,11 @@ if status --is-interactive; and type -q conda
      . $CONDA_ROOT/etc/fish/conf.d/conda.fish
 end
 
+# Rust
+set fish_user_paths $HOME/.cargo/bin $fish_user_paths
+set -x RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/src
+
+
 # Add $HOME/bin to PATH
 set fish_user_paths $HOME/bin $fish_user_paths
 
@@ -42,3 +47,6 @@ if test -e $INTEL_COMPILERVARS_FILE
     bass source $INTEL_COMPILERVARS_FILE $INTEL_COMPILER_ARCH
 end
 
+# rscat
+set -x RSCATDIR $HOME/src/local/rscat
+bass source $RSCATDIR/rscatvars.sh
