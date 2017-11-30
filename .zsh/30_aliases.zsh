@@ -13,8 +13,8 @@ alias .......='cd  ../../../../..'
 
 case ${OSTYPE} in
     # colored ls
-    freebsd*|darwin*) alias ls='ls -GF';;
-    linux*)           alias ls='ls -F --color';;
+    freebsd*|darwin*) alias ls='ls -GFa';;
+    linux*)           alias ls='ls -Fa --color';;
 esac
 
 alias ld='ls -ld'          # Show info about the directory

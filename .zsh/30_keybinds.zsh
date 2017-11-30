@@ -36,8 +36,8 @@ if zplug check "mollifier/anyframe"; then
     bindkey '^xp'  anyframe-widget-put-history
     bindkey '^x^p' anyframe-widget-put-history
     
-    # bindkey '^xg'  anyframe-widget-cd-ghq-repository
-    # bindkey '^x^g' anyframe-widget-cd-ghq-repository
+    bindkey '^xg'  anyframe-widget-cd-ghq-repository
+    bindkey '^x^g' anyframe-widget-cd-ghq-repository
     
     bindkey '^xk'  anyframe-widget-kill
     bindkey '^x^k' anyframe-widget-kill

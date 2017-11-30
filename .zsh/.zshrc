@@ -18,13 +18,13 @@ if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
     source ${ZPLUG_HOME}/init.zsh
     path=( ${ZPLUG_BIN} $path[@] )
 
-    if ! zplug check --verbose; then
-        printf "Install? [y/N]: "
-        if read -q; then
-            echo; zplug install
-        fi
-        echo
-    fi
+    # if ! zplug check --verbose; then
+    #     printf "Install? [y/N]: "
+    #     if read -q; then
+    #         echo; zplug install
+    #     fi
+    #     echo
+    # fi
 
     # zplug load --verbose
     zplug load

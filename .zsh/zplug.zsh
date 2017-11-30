@@ -3,11 +3,11 @@ zplug "zplug/zplug", hook-build:'zplug --self-manage'
 # Local plugins
 zplug "~/.zsh", from:local, use:"<->_*.zsh"
 
-zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-completions", lazy:true
 zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-zplug "glidenote/hub-zsh-completion"
+zplug "glidenote/hub-zsh-completion", lazy:true
 
 zplug "agnoster/agnoster-zsh-theme", as:theme
 #zplug "dracula/zsh", as:theme
