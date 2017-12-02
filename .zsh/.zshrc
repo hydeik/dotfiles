@@ -114,7 +114,7 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 ##
 [[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
 
-# for profiling
-if type zprof > /dev/null 2>&1; then
-  zprof | less
-fi
+# # for profiling
+# if type zprof > /dev/null 2>&1; then
+#   zprof | less
+# fi

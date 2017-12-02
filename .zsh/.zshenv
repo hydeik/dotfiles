@@ -1,7 +1,7 @@
 #
 # Setting for profiling `zplof`
 #
-zmodload zsh/zprof && zprof
+# zmodload zsh/zprof && zprof
 
 ##
 ## HTTP proxy (if necessary)
