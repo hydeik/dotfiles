@@ -82,3 +82,4 @@ case "$words[1]" in
     _pip_installed
     _wanted installed_pkgs expl 'installed packages' compadd -a installed_pkgs ;;
 esac
+

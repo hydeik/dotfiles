@@ -13,10 +13,11 @@ fi
 export ZPLUG_HOME=${HOME}/.zplug
 if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
     export ZPLUG_LOADFILE=${ZDOTDIR}/zplug.zsh
+    export ZPLUG_USE_CACHE=true
     export ZPLUG_CACHE_DIR=${HOME}/.cache/zplug 
+    export ZPLUG_BIN=${HOME}/bin
 
     source ${ZPLUG_HOME}/init.zsh
-    path=( ${ZPLUG_BIN} $path[@] )
 
     # if ! zplug check --verbose; then
     #     printf "Install? [y/N]: "
@@ -108,7 +109,12 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 # %W    日付(月/日/年)
 # %D    日付(年-月-日)
 
-# # for profiling
-# if type zprof > /dev/null 2>&1; then
-#   zprof | less
-# fi
+##
+## Machine local settings
+##
+[[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
+
+# for profiling
+if type zprof > /dev/null 2>&1; then
+  zprof | less
+fi

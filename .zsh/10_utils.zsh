@@ -44,3 +44,10 @@ ostype() {
     echo ${(L):-$(uname)}
 }
 
+# re-compile zsh configuration files
+function src() {
+    autoload -U zrecompile
+    [[ -f ${ZDOTDIR}/.zshenv ]] && zrecompile -p ${ZDOTDIR}/.zshenv
+    [[ -f ${ZDOTDIR}/.zshrc ]] && zrecompile -p ${ZDOTDIR}/.zshrc
+    [[ -f ${ZPLUG_HOME}/zcompdump ]] && zrecompile -p -M ${ZPLUG_HOME}/zcompdump
+}

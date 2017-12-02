@@ -5,6 +5,9 @@
 *.pyc
 *.zcompdump
 *.zsh_history
+*.zsh/.zsh_local
+*.zsh/*.zwc
+*.zsh/*.zwc.old
 .config/fish/fishd.*
 .config/fish/fundle
 .config/fish/completions/*

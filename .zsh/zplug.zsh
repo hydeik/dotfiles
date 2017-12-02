@@ -1,67 +1,57 @@
 zplug "zplug/zplug", hook-build:'zplug --self-manage'
 
-# Local plugins
-zplug "~/.zsh", from:local, use:"<->_*.zsh"
-
 zplug "zsh-users/zsh-completions", lazy:true
 zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
+zplug "esc/conda-zsh-completion", lazy:true
+
 zplug "glidenote/hub-zsh-completion", lazy:true
 
-zplug "agnoster/agnoster-zsh-theme", as:theme
-#zplug "dracula/zsh", as:theme
-#zplug "jeremyFreeAgent/oh-my-zsh-powerline-theme", as:theme
+zplug 'mollifier/anyframe', lazy:true
 
-zplug "b4b4r07/enhancd", use:init.sh
-zplug "b4b4r07/zsh-gomi", if:"which fzf"
+case ${OSTYPE} in
+    linux*)
+        # Install commands' binary if necessart
+        zplug "stedolan/jq", \
+            as:command, \
+            from:gh-r, \
+            rename-to:jq
+        
+        zplug "junegunn/fzf-bin", \
+            as:command, \
+            from:gh-r, \
+            rename-to:"fzf", \
+            frozen:1
+        
+        zplug "monochromegane/the_platinum_searcher", \
+            as:command, \
+            from:gh-r, \
+            rename-to:"pt", \
+            frozen:1
+        
+        zplug "peco/peco", \
+            as:command, \
+            from:gh-r, \
+            frozen:1
+        
+        zplug "motemen/ghq", \
+            as:command, \
+            from:gh-r, \
+            rename-to:ghq
+        
+        zplug "jhawthorn/fzy", \
+            as:command, \
+            hook-build:"make && sudo make install"
+        ;;
+    *)
+        ;;
+esac
 
-zplug "mollifier/anyframe", lazy:true
+# Theme
+zplug mafredri/zsh-async, from:github
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
 
-# Install commands' binary if necessart
-zplug "stedolan/jq", \
-    as:command, \
-    from:gh-r, \
-    rename-to:jq
-
-zplug "junegunn/fzf-bin", \
-    as:command, \
-    from:gh-r, \
-    rename-to:"fzf", \
-    frozen:1
-
-zplug "monochromegane/the_platinum_searcher", \
-    as:command, \
-    from:gh-r, \
-    rename-to:"pt", \
-    frozen:1
-
-zplug "peco/peco", \
-    as:command, \
-    from:gh-r, \
-    frozen:1
-
-zplug "motemen/ghq", \
-    as:command, \
-    from:gh-r, \
-    rename-to:ghq
-
-# zplug "jhawthorn/fzy", \
-#     as:command, \
-#     hook-build:"make && sudo make install"
-
-
-# vailable $INTERACTIVE_FILTER
-export INTERACTIVE_FILTER="fzy:fzf:peco:percol:gof:pick"
-
-# jenegunn/fzf
-export FZF_DEFAULT_OPTS='
---extended
---ansi
---multi
---bind=ctrl-u:page-up
---bind=ctrl-d:page-down
---bind=ctrl-z:toggle-all
-'
-
+# Local plugins
+zplug "~/.zsh", from:local, use:"<->_*.zsh"
 

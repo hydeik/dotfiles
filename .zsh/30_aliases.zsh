@@ -37,27 +37,30 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# zmv -- rename multiple files
-autoload -Uz zmv
-alias zmv='noglob zmv -W'
-
-
-if [[ $ARCHI == "irix" ]]; then
-    alias psa='ps -ef'
-else; 
-    alias psa='ps auxw'
+# Trash-cli instead of rm
+if which trash-put &>/dev/null; then
+    alias rm=trash-put
 fi
 
-function pst() {				# CPU 使用率の高い方から8つ
+# zmv -- rename multiple files
+# autoload -Uz zmv
+alias zmv='noglob zmv -W'
+
+alias psa='ps auxw'
+
+# Display the the first 8 processes with highest CPU usage
+function pst() {
     psa | head -n 1
     psa | sort -r -n +2 | grep -v "ps -auxww" | grep -v grep | head -n 8
 }
 
-function psm() {				# メモリ占有率の高い方から8つ
+# Display the the first 8 processes with highest memory usage
+function psm() {
     psa | head -n 1
     psa | sort -r -n +3 | grep -v "ps -auxww" | grep -v grep | head -n 8
 }
 
+# GREP process
 function psg() {
     psa | head -n 1
     psa | grep $* | grep -v "ps -auxww" | grep -v grep
@@ -92,7 +95,7 @@ alias usegnu="CC=gcc CXX=g++ FC=g77"
 alias useintel="CC=icc CXX=icpc FC=ifort F90=ifort"
 alias usepgi="CC=pgcc CXX=pgCC FC=pgf77 F90=pgf90"
 
-# 常にバックグラウンドで実行
+# functions/commands which are always executed background
 function gv() { command gv $* & }
 function gimp() { command gimp $* & }
 function mozzila() { command mozilla $* & }
@@ -104,7 +107,7 @@ function acroread() { command acroread $* & }
 function display() { command display $* & }
 function mpg321() { command mpg321 -s $* | esdcat & }
 
-# バックアップファイルを作成
+# Backup files and directories
 function bak() {
     for i in $@ ; do
         if [[ -e $i.bak ]] || [[ -d $i.bak ]]; then

@@ -1,5 +1,7 @@
-## for profiling
-# zmodload zsh/zprof
+#
+# Setting for profiling `zplof`
+#
+zmodload zsh/zprof && zprof
 
 ##
 ## HTTP proxy (if necessary)
@@ -34,44 +36,41 @@ fpath=(
 ##  path / PATH
 typeset -gxU path
 path=(
-    $HOME/bin(N)
-    $HOME/bin(N)
-    $HOME/opt/sage(N)
+    $HOME/bin(N-/)
+    $HOME/bin(N-/)
     # for OSX
-    /Library/Tex/texbin
-    # MacPorts
-    /opt/local/bin(N)
-    # Fink
-    /sw/bin(N)
+    /Library/Tex/texbin(N-/)
     # *nix local, HomeBrew
-    /usr/local/bin(N)
-    /usr/local/sbin(N)
+    /usr/local/bin(N-/)
+    /usr/local/sbin(N-/)
+    # MacPorts
+    /opt/local/bin(N-/)
     # System
-    /bin(N)
-    /sbin(N)
-    /usr/bin(N)
-    /usr/sbin(N)
-    /usr/texbin(N)
-    /usr/x11{6,7}/bin(N)
-    /usr/bin/x11(N)
-    /usr/i18n/bin(N)
-    /usr/kerberos/bin(N)
-    /usr/kerberos/sbin(N)
+    /bin(N-/)
+    /sbin(N-/)
+    /usr/bin(N-/)
+    /usr/sbin(N-/)
+    /usr/texbin(N-/)
+    /usr/x11{6,7}/bin(N-/)
+    /usr/bin/x11(N-/)
+    /usr/i18n/bin(N-/)
+    /usr/kerberos/bin(N-/)
+    /usr/kerberos/sbin(N-/)
     $path[@]
 )
 
 ## manpath / MANPATH
 typeset -gxU manpath
 manpath=(
-    $HOME/man(N)
-    $HOME/dev/man(N)
-    /sw/share/man(N)
-    /opt/local/share/man(N)
-    /usr/local/share/jman(N)
-    /usr/local/share/man/ja(N)
-    /usr/local/share/man(N)
-    /usr/share/man/ja(N)
-    /usr/share/man
+    $HOME/man(N-/)
+    $HOME/dev/man(N-/)
+    /sw/share/man(N-/)
+    /opt/local/share/man(N-/)
+    /usr/local/share/jman(N-/)
+    /usr/local/share/man/ja(N-/)
+    /usr/local/share/man(N-/)
+    /usr/share/man/ja(N-/)
+    /usr/share/man(N-/)
     $manpath[@]
 )
 
@@ -80,10 +79,10 @@ typeset -gxU infopath INFOPATH
 typeset -gxTU INFOPATH infopath  # tie the new array to the variables
 
 infopath=(
-    $HOME/share/info
-    $HOME/dev/share/info
-    /usr/local/share/info
-    /usr/share/info
+    $HOME/share/info(N-/)
+    $HOME/dev/share/info(N-/)
+    /usr/local/share/info(N-/)
+    /usr/share/info(N-/)
     $infopath[@]
 )
 
@@ -92,23 +91,14 @@ typeset -gxU pkg_config_path PKG_CONFIG_PATH
 typeset -gxU PKG_CONFIG_PATH pkg_config_path
 
 pkg_config_path=(
-    $HOME/.linuxbrew/lib/pkgconfig
-    $HOME/.linuxbrew/lib
-    /usr/local/lib/pkgconfig
-    /usr/local/lib
-    /usr/lib/x86_64-linux-gnu/pkgconfig
-    /usr/lib/x86_64-linux-gnu
-    /usr/share
-    /usr/share/pkgconfig
-    /usr/lib/pkgconfig
-    /usr/lib
-    /usr/local/include
-    /opt/X11/lib/pkgconfig
+    $HOME/.linuxbrew/lib/pkgconfig(N-/)
+    /usr/local/lib/pkgconfig(N-/)
+    /usr/lib/x86_64-linux-gnu/pkgconfig(N-/)
+    /usr/share/pkgconfig(N-/)
+    /usr/lib/pkgconfig(N-/)
+    /opt/X11/lib/pkgconfig(N-/)
     $pkg_config_path[@]
 )
-
-# typeset -gxU pkg_config_libdir PKG_CONFIG_LIBDIR
-# typeset -gxU PKG_CONFIG_LIBDIR pkg_config_libdir
 
 ##
 ## Load library path
@@ -116,31 +106,16 @@ pkg_config_path=(
 [ -z "$ld_library_path" ] && typeset -gxT LD_LIBRARY_PATH ld_library_path
 typeset -U ld_library_path
 ld_library_path=(
-    $HOME/lib(N)
-    $HOME/opt/oski/lib/oski(N)
-    $HOME/opt/lib(N)
-    /opt/gotoblas(N)
-    /usr/local/lib(N)
-    /usr/local/lib32(N)
-    /usr/local/calc/openmpi/lib(N)
-    /usr/local/calc/lam/lib(N)
+    $HOME/lib(N-/)
+    $HOME/opt/oski/lib/oski(N-/)
+    $HOME/opt/lib(N-/)
+    /opt/gotoblas(N-/)
+    /usr/local/lib(N-/)
+    /usr/local/lib32(N-/)
+    /usr/local/calc/openmpi/lib(N-/)
+    /usr/local/calc/lam/lib(N-/)
     $ld_library_path[@]
 )
-
-##
-## ARCHI
-##
-if [[ -x `which uname` ]]; then
-    case "`uname -sr`" in 
-        FreeBSD*); export ARCHI="freebsd" ;;
-        Linux*);   export ARCHI="linux" ;;
-        CYGWIN*);  export ARCHI="cygwin" ;; # Windows
-	Darwin*);  export ARCHI="darwin" ;; # Mac OS
-        *);        export ARCHI="dummy" ;;
-    esac
-else
-    export ARCHI="dummy"
-fi
 
 ##
 ## HOST
@@ -232,18 +207,19 @@ case "$TERM" in
 esac
 
 ##
-## Do not read /etc/profile, /etc/zprofile
-##
-setopt no_global_rcs
-
-##
 ## Development environment
 ##
 
 # pyenv -- Python environment
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
+export PYENV_ROOT=${HOME}/.pyenv
+path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
 eval "$(pyenv init - --no-rehash)"
+
+# Rust
+path=( ${HOME}/.cargo/bin(N-/) $path[@] )
+
+# Golang
+export GOPATH=${HOME}
 
 ##
 ## Intel C/C++, Intel Fortran, and MKL
@@ -290,54 +266,26 @@ if [[ -z $RSCATDIR ]]; then
            *) export RSCATDIR=$HOME/program/rscat;;
   esac
 fi
- 
-if [[ -r $RSCATDIR/rscatvars.sh ]]; then
-    source $RSCATDIR/rscatvars.sh
-fi
+[[ -r $RSCATDIR/rscatvars.sh ]] && . $RSCATDIR/rscatvars.sh
+
 
 # WIEN2k
 export WIENROOT=/usr/local/calc/wien2k/WIEN2k_051222-ifort9-mkl8-serial
-if [[ -d $WIENROOT ]] && test ! `echo $PATH | ${GREP} -q $WIENROOT` ; then
-    export PATH=$WIENROOT:$PATH
-fi
+path=( ${WIENROOT} $path[@] )
 export SCRATCH=./
 
-# GPAW
-export GPAW_SETUP_PATH=${HOME}/share/gpaw/gpaw-setups-0.5.3574
-
-# p4vasp
-export P4VASP_HOME=$HOME/opt/p4vasp
-if [[ -d $P4VASP_HOME ]] && test ! `echo $PYTHONPATH | ${GREP} -q $P4VASP_HOME/python-packages` ; then
-    export PYTHONPATH=$PYTHONPATH:$P4VASP_HOME/python-packages
-fi
-if [[ -d $P4VASP_HOME ]] && test ! `echo $PATH | ${GREP} -q $P4VASP_HOME` ; then
-    export PATH=$PATH:$P4VASP_HOME/bin
-fi
-
-# XcrysDen
-export XCRYSDEN_TOPDIR=${HOME}/opt/XCrySDen-1.5.60
-export XCRYSDEN_SCRATCH=${XCRYSDEN_TOPDIR}/tmp
-
-# ORCA
-ORCAROOT=${HOME}/opt/orca_amd64_exe
-if [[ -d $ORCAROOT ]] && test ! `echo $PATH | ${GREP} -q $ORCAROOT` ; then
-    export PATH=${ORCAROOT}:$PATH
-fi
-
-# exciting
-export EXCITINGROOT=${HOME}/opt/exciting
-#export EXCITINGROOT=${HOME}/opt/exciting-devel
-    
 # ADF
 #export ADFHOME=/Applications/adf2010.02/adfhome
 #export ADFHOME=${HOME}/opt/adfhome
 #export ADFHOME=${HOME}/program/adf-mybranch
-ADFROOT=${HOME}/opt/adf2012.01/adfhome
-if [ -e "${ADFROOT}/adfrc.sh" ]; then
-    source ${ADFROOT}/adfrc.sh 
-fi
+export ADFROOT=${HOME}/opt/adf2012.01/adfhome
+[[ -f ${ADFROOT}/adfrc.sh ]] && . ${ADFROOT}/adfrc.sh
+
 # available $INTERACTIVE_FILTER
 export INTERACTIVE_FILTER="fzf:peco:percol:gof:pick"
 
+#
+# Machine local configurations
+#
+[[ -f ~/.secret ]] && source ~/.secret
 
-[[ -f ~/.secret ]] && source ~/.secret~
