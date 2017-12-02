@@ -211,12 +211,13 @@ esac
 ##
 
 # pyenv -- Python environment
-export PYENV_ROOT=${HOME}/.pyenv
-path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
-eval "$(pyenv init - --no-rehash)"
+# export PYENV_ROOT=${HOME}/.pyenv
+# path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
+# eval "$(pyenv init - --no-rehash)"
 
 # Rust
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # Golang
 export GOPATH=${HOME}
