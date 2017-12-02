@@ -45,9 +45,13 @@ ostype() {
 }
 
 # re-compile zsh configuration files
-function src() {
+function zsh_reload () {
     autoload -U zrecompile
-    [[ -f ${ZDOTDIR}/.zshenv ]] && zrecompile -p ${ZDOTDIR}/.zshenv
-    [[ -f ${ZDOTDIR}/.zshrc ]] && zrecompile -p ${ZDOTDIR}/.zshrc
+    for f in ${ZDOTDIR}/.zshenv ${ZDOTDIR}/.zshrc ${ZDOTDIR}/<->_*.zsh
+    do
+        [[ -f $f ]] && zrecompile -p $f && command rm -f $f.zwc.old
+    done
     [[ -f ${ZPLUG_HOME}/zcompdump ]] && zrecompile -p -M ${ZPLUG_HOME}/zcompdump
+
+    source ${ZDOTDIR}/.zshrc
 }
