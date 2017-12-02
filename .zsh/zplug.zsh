@@ -4,9 +4,11 @@ zplug "zsh-users/zsh-completions", lazy:true
 zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-zplug "esc/conda-zsh-completion", lazy:true
+zplug "plugins/pip", lazy:true, from:oh-my-zsh
+zplug "plugins/cargo", lazy:true, from:oh-my-zsh
+zplug "plugins/rust", lazy:true, from:oh-my-zsh
 
-zplug "glidenote/hub-zsh-completion", lazy:true
+zplug "esc/conda-zsh-completion", lazy:true
 
 zplug 'mollifier/anyframe', lazy:true
 
