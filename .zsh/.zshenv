@@ -46,16 +46,16 @@ path=(
     # MacPorts
     /opt/local/bin(N-/)
     # System
-    /bin(N-/)
-    /sbin(N-/)
     /usr/bin(N-/)
     /usr/sbin(N-/)
-    /usr/texbin(N-/)
     /usr/x11{6,7}/bin(N-/)
     /usr/bin/x11(N-/)
     /usr/i18n/bin(N-/)
     /usr/kerberos/bin(N-/)
     /usr/kerberos/sbin(N-/)
+    /bin(N-/)
+    /sbin(N-/)
+    /usr/texbin(N-/)
     $path[@]
 )
 
@@ -272,7 +272,7 @@ fi
 
 # WIEN2k
 export WIENROOT=/usr/local/calc/wien2k/WIEN2k_051222-ifort9-mkl8-serial
-path=( ${WIENROOT} $path[@] )
+path=( ${WIENROOT}(N-/) $path[@] )
 export SCRATCH=./
 
 # ADF

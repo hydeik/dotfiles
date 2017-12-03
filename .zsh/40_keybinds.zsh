@@ -6,6 +6,15 @@
 bindkey -e
 bindkey '^I' complete-word   # complete on tab, leave expansion to _expand
 
+# M-h run-help -> backward-kill-word
+autoload -Uz select-word-style
+select-word-style default
+# この文字を単語の区切りと見なす(適当に調整する)
+zstyle ':zle:*' word-chars " _-/;@:{},|"
+zstyle ':zle:*' word-style unspecified
+bindkey "^[h" backward-kill-word  # Bind to M-h
+bindkey "^[^H" run-help           # Bind to C-M-h
+
 if zplug check "zsh-users/zsh-history-substring-search"; then
     # history-substring-search
     bindkey -M emacs '^P' history-substring-search-up
