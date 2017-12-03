@@ -9,8 +9,9 @@ zplug "plugins/cargo", lazy:true, from:oh-my-zsh
 zplug "plugins/rust", lazy:true, from:oh-my-zsh
 
 zplug "esc/conda-zsh-completion", lazy:true
+zplug "mollifier/anyframe", lazy:true
+zplug "kennethreitz/autoenv", use:"activate.sh", defer:2, from:github
 
-zplug 'mollifier/anyframe', lazy:true
 
 case ${OSTYPE} in
     linux*)
