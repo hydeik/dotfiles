@@ -210,6 +210,9 @@ esac
 ## Development environment
 ##
 
+# Python
+export WORKON_HOME=${HOME}/.virtualenv
+
 # pyenv -- Python environment
 # export PYENV_ROOT=${HOME}/.pyenv
 # path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
