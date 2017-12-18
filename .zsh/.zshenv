@@ -128,7 +128,7 @@ ld_library_path=(
 ##
 ## HOST
 ##
-if [ -x /bin/hostname ] || [ -x /usr/bin/hostname ]; then
+if (( ${+commands[hostname]} )); then
     export HOST=`hostname`
 fi;
 export host=`echo $HOST | sed -e 's/\..*//'`
@@ -195,7 +195,7 @@ export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 export LSCOLORS=exfxcxdxbxegedabagacad
 
 #### EDITOR
-if [[ -x `where vim`  ]]; then  
+if (( ${+commands[vim]} )); then  
     export EDITOR="vim"
 else
     export EDITOR="vi"
@@ -230,7 +230,9 @@ export WORKON_HOME=${HOME}/.virtualenv
 
 # Rust
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+if (( ${+commands[rustc]} )); then
+    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
 
 # Golang
 export GOPATH=${HOME}
