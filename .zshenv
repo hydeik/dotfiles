@@ -4,15 +4,7 @@
 ##
 
 ##
-## Set ZDOTFILE environment variable
-##
-export ZDOTDIR=${HOME}/.zsh
-if [ -f ${ZDOTDIR}/.zshenv ]; then
-    source ${ZDOTDIR}/.zshenv
-fi
-
-##
-## Zsh custom file loading order
+## NOTE: Zsh configuration file loading order
 ##
 
 # -- login shell
@@ -40,7 +32,30 @@ fi
 # 2. /etc/zlogout
 
 ##
-## Do not read /etc/profile, /etc/zprofile
+## Don't load /etc/profile, /etc/zprofile
 ##
 setopt no_global_rcs
+
+##
+## XDG Base Directory Specification
+##
+# --- User directories
+export XDG_CONFIG_HOME=${HOME}/.config     # [default: $HOME/.config]
+export XDG_CACHE_HOME=${HOME}/.cache       # [default: $HOME/.cache]
+export XDG_DATA_HOME=${HOME}/.local/share  # [default: $HOME/.cache]
+# export XDG_RUNTIME_DIR                     # [default: ?]
+
+# --- System directories
+## [default: /usr/local/share:/usr/share]
+#export XDG_DATA_DIRS=/usr/local/share:/usr/share
+## [default: /etc/xdg]
+#export XDG_CONFIG_DIRS=/etc/xdg 
+
+##
+## Set ZDOTFILE environment variable
+##
+export ZDOTDIR=${XDG_CONFIG_HOME}/zsh
+if [ -f ${ZDOTDIR}/.zshenv ]; then
+    source ${ZDOTDIR}/.zshenv
+fi
 
