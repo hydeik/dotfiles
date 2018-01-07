@@ -51,6 +51,7 @@ function zsh_reload () {
     do
         [[ -f $f ]] && zrecompile -p $f && command rm -f $f.zwc.old
     done
+    [[ -f ${ZDOTDIR}/.zcompdump ]] && zrecompile -p -M ${ZDOTDIR}/.zcompdump
     [[ -f ${ZPLUG_HOME}/zcompdump ]] && zrecompile -p -M ${ZPLUG_HOME}/zcompdump
 
     source ${ZDOTDIR}/.zshrc
