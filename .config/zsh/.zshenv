@@ -1,4 +1,4 @@
-#
+# 
 # Setting for profiling `zplof`
 #
 # zmodload zsh/zprof && zprof
@@ -220,13 +220,15 @@ esac
 ## Development environment
 ##
 
-# Python
-export WORKON_HOME=${HOME}/.virtualenv
+# Python / Pipenv / Pyenv
+#export WORKON_HOME=${XDG_DATA_HOME}/virtualenvs/default-py3/.venv
+#export PIPENV_VENV_IN_PROJECT=${XDG_DATA_HOME}/virtualenvs/default-py3
 
-# pyenv -- Python environment
-# export PYENV_ROOT=${HOME}/.pyenv
-# path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
-# eval "$(pyenv init - --no-rehash)"
+export PYENV_ROOT=${HOME}/.pyenv
+path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
+if (( ${+commands[pyenv]} )); then
+    eval "$(pyenv init - --no-rehash)"
+fi
 
 # Rust
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
@@ -276,11 +278,11 @@ export GOPATH=${HOME}
 
 # rscat
 if [[ -z $RSCATDIR ]]; then
-  case "$HOST" in
-      freya*) export RSCATDIR=$HOME/programs/rscat;;
-      saga*)  export RSCATDIR=$HOME/programs/rscat;;
-           *) export RSCATDIR=$HOME/program/rscat;;
-  esac
+    case "$HOST" in
+        freya*) export RSCATDIR=$HOME/programs/rscat;;
+        saga*)  export RSCATDIR=$HOME/programs/rscat;;
+             *) export RSCATDIR=$HOME/program/rscat;;
+    esac
 fi
 [[ -r $RSCATDIR/rscatvars.sh ]] && . $RSCATDIR/rscatvars.sh
 

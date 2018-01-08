@@ -4,8 +4,8 @@ zplug "zsh-users/zsh-completions", lazy:true
 zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-zplug "plugins/pip", lazy:true, from:oh-my-zsh
 zplug "plugins/cargo", lazy:true, from:oh-my-zsh
+zplug "plugins/pip", lazy:true, from:oh-my-zsh
 zplug "plugins/rust", lazy:true, from:oh-my-zsh
 
 zplug "esc/conda-zsh-completion", lazy:true

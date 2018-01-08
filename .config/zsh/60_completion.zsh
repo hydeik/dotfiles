@@ -120,14 +120,31 @@ zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' l
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
 
-# pipenv
+# pyenv
+if (( ${+commands[pyenv]} )); then
+    compctl -K _pyenv pyenv
+
+    _pyenv() {
+        local words completions
+        read -cA words
+  
+        if [ "${#words}" -eq 2 ]; then
+          completions="$(pyenv commands)"
+        else
+          completions="$(pyenv completions ${words[2,-2]})"
+        fi
+  
+        reply=(${(ps:\n:)completions})
+    }
+fi
+
 if (( ${+commands[pipenv]} )); then
-  # extract `eval "$(pipenv --completion)"`
-  _pipenv() {
-    eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh pipenv)
-  }
-  if [[ "$(basename ${(%):-%x})" != "_pipenv" ]]; then
-    # autoload -U compinit && compinit   # <- compinit already called
-    compdef _pipenv pipenv
-  fi
+    #compdef pipenv
+    _pipenv() {
+        eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh pipenv)
+    }
+    if [[ "$(basename ${(%):-%x})" != "_pipenv" ]]; then
+        # autoload -U compinit && compinit   # <- compinit already called
+        compdef _pipenv pipenv
+    fi
 fi

@@ -42,7 +42,7 @@ setopt no_global_rcs
 # --- User directories
 export XDG_CONFIG_HOME=${HOME}/.config     # [default: $HOME/.config]
 export XDG_CACHE_HOME=${HOME}/.cache       # [default: $HOME/.cache]
-export XDG_DATA_HOME=${HOME}/.local/share  # [default: $HOME/.cache]
+export XDG_DATA_HOME=${HOME}/.local/share  # [default: $HOME/.local/share]
 # export XDG_RUNTIME_DIR                     # [default: ?]
 
 # --- System directories
