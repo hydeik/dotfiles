@@ -10,6 +10,8 @@ zplug "plugins/rust", lazy:true, from:oh-my-zsh
 
 zplug "esc/conda-zsh-completion", lazy:true
 zplug "mollifier/anyframe", lazy:true
+
+export AUTOENV_ENABLE_LEAVE=true
 zplug "kennethreitz/autoenv", use:"activate.sh", defer:2, from:github
 
 
