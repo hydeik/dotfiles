@@ -45,7 +45,7 @@ fpath=(
 typeset -gxU path
 path=(
     $HOME/bin(N-/)
-    $HOME/bin(N-/)
+    $HOME/.local/bin(N-/) # for pip --user
     # for OSX
     /Library/Tex/texbin(N-/)
     # *nix local, HomeBrew
@@ -220,9 +220,11 @@ esac
 ## Development environment
 ##
 
-# Python / Pipenv / Pyenv
-#export WORKON_HOME=${XDG_DATA_HOME}/virtualenvs/default-py3/.venv
-#export PIPENV_VENV_IN_PROJECT=${XDG_DATA_HOME}/virtualenvs/default-py3
+# --- Python / Pipenv / Pyenv
+# Set directory to store virtual environments created by pipenv
+export WORKON_HOME=${HOME}/.virtualenv
+# # Stick virtualenv in {project_dir}/.venv
+# export PIPENV_VENV_IN_PROJECT=1
 
 export PYENV_ROOT=${HOME}/.pyenv
 path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
