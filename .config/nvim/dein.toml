@@ -1,81 +1,81 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
-[[plugins]]
-# Set the buffer filetype based on the code block the cursor currently resides in.
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim']
-hook_add = '''
-  let g:precious_enable_switch_CursorMoved = { '*': 0, 'help': 1 }
-'''
-
-[[plugins]]
-repo = 'tyru/caw.vim'
-depends = ['context_filetype.vim']
-
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
-
-[[plugins]]
-repo = 'kana/vim-textobj-user'
-
-[[plugins]]
-repo = 'kana/vim-textobj-line'
-
-[[plugins]]
-repo = 'kana/vim-textobj-indent'
-
-[[plugins]]
-repo = 'kana/vim-textobj-entire'
-
-[[plugins]]
-repo = 'kana/vim-operator-user'
-
-[[plugins]]
-repo = 'kana/vim-operator-replace'
-depends = ['vim-operator-user']
-hook_add = '''
-  map _ <Plug>(operator-replace)
-'''
-
-[[plugins]]
-repo = 'rhysd/vim-operator-surround'
-depends = ['vim-operator-user']
-hook_add = '''
-  " operator mappings
-  map <silent>sa <Plug>(operator-surround-append)
-  map <silent>sd <Plug>(operator-surround-delete)
-  map <silent>sr <Plug>(operator-surround-replace)
-'''
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-
-[[plugins]]
-repo = 'lambdalisue/gina.vim'
-
-[[plugins]]
-repo = 'jreybert/vimagit'
-
-[[plugins]]
-repo = 'cocopon/vaffle.vim'
-
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-
-[[plugins]]
-repo = 'dracula/vim'
-
-[[plugins]]
-repo = 'joshdick/onedark.vim'
+# [[plugins]]
+# repo = 'Shougo/neosnippet-snippets'
+# 
+# [[plugins]]
+# repo = 'Shougo/context_filetype.vim'
+# 
+# [[plugins]]
+# # Set the buffer filetype based on the code block the cursor currently resides in.
+# repo = 'osyo-manga/vim-precious'
+# depends = ['context_filetype.vim']
+# hook_add = '''
+#   let g:precious_enable_switch_CursorMoved = { '*': 0, 'help': 1 }
+# '''
+# 
+# [[plugins]]
+# repo = 'tyru/caw.vim'
+# depends = ['context_filetype.vim']
+# 
+# [[plugins]]
+# repo = 'jiangmiao/auto-pairs'
+# 
+# [[plugins]]
+# repo = 'kana/vim-textobj-user'
+# 
+# [[plugins]]
+# repo = 'kana/vim-textobj-line'
+# 
+# [[plugins]]
+# repo = 'kana/vim-textobj-indent'
+# 
+# [[plugins]]
+# repo = 'kana/vim-textobj-entire'
+# 
+# [[plugins]]
+# repo = 'kana/vim-operator-user'
+# 
+# [[plugins]]
+# repo = 'kana/vim-operator-replace'
+# depends = ['vim-operator-user']
+# hook_add = '''
+#   map _ <Plug>(operator-replace)
+# '''
+# 
+# [[plugins]]
+# repo = 'rhysd/vim-operator-surround'
+# depends = ['vim-operator-user']
+# hook_add = '''
+#   " operator mappings
+#   map <silent>sa <Plug>(operator-surround-append)
+#   map <silent>sd <Plug>(operator-surround-delete)
+#   map <silent>sr <Plug>(operator-surround-replace)
+# '''
+# 
+# [[plugins]]
+# repo = 'tpope/vim-fugitive'
+# 
+# [[plugins]]
+# repo = 'airblade/vim-gitgutter'
+# 
+# [[plugins]]
+# repo = 'lambdalisue/gina.vim'
+# 
+# [[plugins]]
+# repo = 'jreybert/vimagit'
+# 
+# [[plugins]]
+# repo = 'cocopon/vaffle.vim'
+# 
+# [[plugins]]
+# repo = 'itchyny/lightline.vim'
+# 
+# [[plugins]]
+# repo = 'dracula/vim'
+# 
+# [[plugins]]
+# repo = 'joshdick/onedark.vim'
 
 

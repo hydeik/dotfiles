@@ -1,164 +1,164 @@
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
-on_source = ['vimshell.vim']
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_if = 1
-on_event = 'TextYankPost'
-on_source = ['denite.nvim']
-
-[[plugins]]
-repo = 'Shougo/echodoc.vim'
-on_event = 'CompleteDone'
-hook_source = 'call echodoc#enable()'
-
-[[plugins]]
-repo = 'Shougo/neosnippet'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertCharPre'
-on_ft = 'snippet'
-hook_source = '''
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-
-  let g:neosnippet#enable_completed_snippet = 1
-  let g:neosnippet#expand_word_boundary = 1
-  let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
-'''
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-if = 'has("nvim")'
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" : 
-    \ neosnippet#expandable_or_jumpable() ?
-    \   "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
-'''
-
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-depends = ['neomru.vim', 'neoyank.vim']
-if = 'has("nvim")'
-on_event = 'BufRead'
-hood_source = 'source ~/.config/nvim/denite.rc.vim'
-hook_add = '''
-  nnoremap [denite] <Nop>
-  nmap <Space> [denite]
-  nmap <silent> [denite]ft : <C-u>Denite filetype<CR>
-  nmap <silent> [denite]ff : <C-u>Denite file_rec<CR>
-  nmap <silent> [denite]y  : <C-u>Denite neoyank<CR>
-  nmap <silent> [denite]G
-    \ : <C-u>Denite grep -mode=normal -buffer-name=search-buffer-denite<CR>
-  nmap <silent> [denite]gc : <C-u>Denite -mode=normal gitchanged<CR>
-  nmap <silent> [denite]gs : <C-u>Denite -mode=normal gitstatus<CR>
-
-  nmap <silent> [denite]rr
-    \ : <C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
-  nmap <silent> [denite]rn : <C-u>Denite -resume 
-    \  -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
-  nmap <silent> [denite]rp : <C-u>Denite -resume
-    \ -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
-'''
-
-[[plugins]]
-repo = 'Jagua/vim-denite-ghq'
-on_source = 'denite.nvim'
-
-[[plugins]]
-repo = 'neomake/neomake'
-depends = ['vimproc.vim']
-if = 'has("nvim")'
-hook_add = '''
-  autocmd! BufWritePost * Neomake
-  let g:neomake_python_enabled_makers = ['python', 'flake8']
-'''
-
-[[plugins]]
-repo = 'zchee/deoplete-clang'
-depends = ['deoplete.nvim']
-if = 'has("nvim")'
-on_ft = ['c', 'cpp', 'cmake']
-hook_source = '''
-  let g:deoplete#sources#clang#libclang_path = '/usr/local/opt/llvm/lib/libclang.dylib'
-  let g:deoplete#sources#clang#clang_header = '/usr/local/opt/llvm/lib/clang/'
-'''
-
-[[plugins]]
-repo = 'rhysd/vim-clang-format'
-on_ft = ['c', 'cpp', 'cmake']
-hook_source = '''
-  let g:clang_format#detect_style_file = 1
-  let g:clang_format#auto_format = 1
-'''
-
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-depends = ['deoplete.nvim']
-if = 'has("nvim")'
-on_ft = 'python'
-
-[[plugins]]
-repo = 'cjrh/vim-conda'
-on_ft = 'python'
-
-[[plugins]]
-repo = 'dag/vim-fish'
-on_ft = 'fish'
-
-[[plugins]]
-repo = 'rust-lang/rust.vim'
-on_ft = 'rust'
-
-[[plugins]]
-repo = 'rhysd/rust-doc.vim'
-on_ft = 'rust'
-
-[[plugins]]
-repo = 'racer-rust/vim-racer'
-on_ft = 'rust'
-hook_source = '''
-  let $RUST_SRC_PATH = expand('~/.multirust/toolchains/'
-  \ .'stable-x86_64-unknown-linux-gnu/'
-  \ .'lib/rustlib/src/rust/src/')
-'''
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = ['toml']
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = ['markdown','mkd']
-hook_add = '''
-  let g:vim_markdown_frontmatter = 1
-  let g:vim_markdown_math = 1
-'''
-
-[[plugins]]
-repo = 'terryma/vim-expand-region'
-on_event = 'BufRead'
-hood_source = '''
-  let g:expand_region_text_objects = {
-  \ 'iw' :0,
-  \ 'iW' :0,
-  \ 'i"' :0,
-  \ "i''" :0,
-  \ 'i]' :1,
-  \ 'ib' :1,
-  \ 'iB' :1,
-  \ 'il' :0,
-  \ 'ip' :0,
-  \ 'ie':0,
-  \ }
-'''
-hook_add = '''
-  vmap v     <Plug>(expand_region_expand)
-  vmap <C-v> <Plug>(expand_region_shrink)
- '''
+# [[plugins]]
+# repo = 'Shougo/vimproc.vim'
+# build = 'make'
+# on_source = ['vimshell.vim']
+# 
+# [[plugins]]
+# repo = 'Shougo/neomru.vim'
+# 
+# [[plugins]]
+# repo = 'Shougo/neoyank.vim'
+# on_if = 1
+# on_event = 'TextYankPost'
+# on_source = ['denite.nvim']
+# 
+# [[plugins]]
+# repo = 'Shougo/echodoc.vim'
+# on_event = 'CompleteDone'
+# hook_source = 'call echodoc#enable()'
+# 
+# [[plugins]]
+# repo = 'Shougo/neosnippet'
+# depends = ['neosnippet-snippets', 'context_filetype.vim']
+# on_event = 'InsertCharPre'
+# on_ft = 'snippet'
+# hook_source = '''
+#   imap <C-k> <Plug>(neosnippet_expand_or_jump)
+#   smap <C-k> <Plug>(neosnippet_expand_or_jump)
+#   xmap <C-k> <Plug>(neosnippet_expand_target)
+# 
+#   let g:neosnippet#enable_completed_snippet = 1
+#   let g:neosnippet#expand_word_boundary = 1
+#   let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
+# '''
+# 
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# if = 'has("nvim")'
+# hook_source = '''
+#   let g:deoplete#enable_at_startup = 1
+#   inoremap <expr><tab> pumvisible() ? "\<C-n>" : 
+#     \ neosnippet#expandable_or_jumpable() ?
+#     \   "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+# '''
+# 
+# [[plugins]]
+# repo = 'Shougo/denite.nvim'
+# depends = ['neomru.vim', 'neoyank.vim']
+# if = 'has("nvim")'
+# on_event = 'BufRead'
+# hood_source = 'source ~/.config/nvim/denite.rc.vim'
+# hook_add = '''
+#   nnoremap [denite] <Nop>
+#   nmap <Space> [denite]
+#   nmap <silent> [denite]ft : <C-u>Denite filetype<CR>
+#   nmap <silent> [denite]ff : <C-u>Denite file_rec<CR>
+#   nmap <silent> [denite]y  : <C-u>Denite neoyank<CR>
+#   nmap <silent> [denite]G
+#     \ : <C-u>Denite grep -mode=normal -buffer-name=search-buffer-denite<CR>
+#   nmap <silent> [denite]gc : <C-u>Denite -mode=normal gitchanged<CR>
+#   nmap <silent> [denite]gs : <C-u>Denite -mode=normal gitstatus<CR>
+# 
+#   nmap <silent> [denite]rr
+#     \ : <C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+#   nmap <silent> [denite]rn : <C-u>Denite -resume 
+#     \  -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
+#   nmap <silent> [denite]rp : <C-u>Denite -resume
+#     \ -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+# '''
+# 
+# [[plugins]]
+# repo = 'Jagua/vim-denite-ghq'
+# on_source = 'denite.nvim'
+# 
+# [[plugins]]
+# repo = 'neomake/neomake'
+# depends = ['vimproc.vim']
+# if = 'has("nvim")'
+# hook_add = '''
+#   autocmd! BufWritePost * Neomake
+#   let g:neomake_python_enabled_makers = ['python', 'flake8']
+# '''
+# 
+# [[plugins]]
+# repo = 'zchee/deoplete-clang'
+# depends = ['deoplete.nvim']
+# if = 'has("nvim")'
+# on_ft = ['c', 'cpp', 'cmake']
+# hook_source = '''
+#   let g:deoplete#sources#clang#libclang_path = '/usr/local/opt/llvm/lib/libclang.dylib'
+#   let g:deoplete#sources#clang#clang_header = '/usr/local/opt/llvm/lib/clang/'
+# '''
+# 
+# [[plugins]]
+# repo = 'rhysd/vim-clang-format'
+# on_ft = ['c', 'cpp', 'cmake']
+# hook_source = '''
+#   let g:clang_format#detect_style_file = 1
+#   let g:clang_format#auto_format = 1
+# '''
+# 
+# [[plugins]]
+# repo = 'zchee/deoplete-jedi'
+# depends = ['deoplete.nvim']
+# if = 'has("nvim")'
+# on_ft = 'python'
+# 
+# [[plugins]]
+# repo = 'cjrh/vim-conda'
+# on_ft = 'python'
+# 
+# [[plugins]]
+# repo = 'dag/vim-fish'
+# on_ft = 'fish'
+# 
+# [[plugins]]
+# repo = 'rust-lang/rust.vim'
+# on_ft = 'rust'
+# 
+# [[plugins]]
+# repo = 'rhysd/rust-doc.vim'
+# on_ft = 'rust'
+# 
+# [[plugins]]
+# repo = 'racer-rust/vim-racer'
+# on_ft = 'rust'
+# hook_source = '''
+#   let $RUST_SRC_PATH = expand('~/.multirust/toolchains/'
+#   \ .'stable-x86_64-unknown-linux-gnu/'
+#   \ .'lib/rustlib/src/rust/src/')
+# '''
+# 
+# [[plugins]]
+# repo = 'cespare/vim-toml'
+# on_ft = ['toml']
+# 
+# [[plugins]]
+# repo = 'rcmdnk/vim-markdown'
+# on_ft = ['markdown','mkd']
+# hook_add = '''
+#   let g:vim_markdown_frontmatter = 1
+#   let g:vim_markdown_math = 1
+# '''
+# 
+# [[plugins]]
+# repo = 'terryma/vim-expand-region'
+# on_event = 'BufRead'
+# hood_source = '''
+#   let g:expand_region_text_objects = {
+#   \ 'iw' :0,
+#   \ 'iW' :0,
+#   \ 'i"' :0,
+#   \ "i''" :0,
+#   \ 'i]' :1,
+#   \ 'ib' :1,
+#   \ 'iB' :1,
+#   \ 'il' :0,
+#   \ 'ip' :0,
+#   \ 'ie':0,
+#   \ }
+# '''
+# hook_add = '''
+#   vmap v     <Plug>(expand_region_expand)
+#   vmap <C-v> <Plug>(expand_region_shrink)
+#  '''
