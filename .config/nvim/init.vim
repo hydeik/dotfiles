@@ -1,3 +1,11 @@
+" ~/.config/nvim/init.vim
+
+"----------------------------------------------------------------------------
+" Encoding
+"----------------------------------------------------------------------------
+set encoding=utf-8
+scriptencoding utf-8
+
 "----------------------------------------------------------------------------
 " Environments
 "----------------------------------------------------------------------------
@@ -9,32 +17,6 @@ let s:cache_home  = empty($XDG_CACHE_HOME)  ? expand('~/.cache')  : $XDG_CACHE_H
 let s:workon_home = empty($WORKON_HOME) ? expand('~/.virtualenv') : $WORKON_HOME
 let g:python3_host_prog = s:workon_home . '/neovim3/.venv/bin/python3'
 let g:python_host_prog  = s:workon_home . '/neovim2/.venv/bin/python2'
-
-"----------------------------------------------------------------------------
-" Basic
-"----------------------------------------------------------------------------
-
-set ignorecase
-set smartcase
-set wrapscan
-" set number
-set list
-set showmatch
-set laststatus=2
-set noshowmode
-
-set clipboard=unnamed,unnamedplus
-
-" Indent
-set autoindent
-set smartindent
-set cindent
-
-set smarttab
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
 
 " Stop highlighting
 nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
@@ -88,4 +70,15 @@ endif
 
 filetype plugin indent on
 syntax on " sytax on|enable should be set after setting whole 'runtimepath'
+
+" Load vim scripts inside './rc'
+let s:rc_dir = s:config_home . '/rc'
+function! s:source_rc(file)
+    let rc_file = s:rc_dir . '/' . a:file
+    if filereadable(rc_file)
+        execute 'source ' rc_file
+    endif
+endfunction
+
+call s:source_rc('options.vim')
 
