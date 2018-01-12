@@ -19,7 +19,7 @@ set smarttab
 set expandtab
 set tabstop=4
 set shiftwidth=4
-set softtabstop=4
+" set softtabstop=4
 
 " ----- Files
 set confirm
@@ -33,6 +33,14 @@ set autoread
 set nobackup
 " Do not make a swapfile
 set noswapfile
+" Number of lines to be checked as modeline
+set modelines=5
+" Persistent undo
+if exists('persistet_undo')
+    set undofile
+    " Directory to store undo file (default: '$XDG_DATA_HOME/nvim/undo')
+    " set undodir=
+endif
 
 " ----- Edit
 " Behavior of <BS>, <DEL>, CTRL-W, CTRL-U in insert mode
@@ -55,6 +63,8 @@ set matchtime=2
 "   M - When joining lines, don't insert a space before or after a multi-byte
 "       character.  Overrules the 'B' flag.
 set formatoptions+=mM
+" Bases for numbers used by CTRL-A (increment) and CTRL-X (decrement) command. 
+set nrformats=alpha,hex,bin
 " Allow virtual editing in Visual block mode.
 set virtualedit=block
 " Wait 500 msec for a mapped sequence to complete
@@ -62,29 +72,46 @@ set timeout timeoutlen=500
 " Wait 50 msec for a key code
 set ttimeout ttimeoutlen=50
 " Enable Vim to use system clipboard
-set clipboard&   " <- set to default
-set clipboard^=unnamed,unnamedplus
+if has('clipboard')
+    set clipboard&   " <- set to default
+    set clipboard^=unnamed,unnamedplus
+endif
 
 " ----- Display
-" Print line number in front of each line
-set number
+" Don't redraw while executing macros
+set lazyredraw
 " Show the line and column number of the cursor position
 set ruler
-" 
-set ambiwidth=double
-" Display unprinted characters. 
+" Display multi-byte characters in vim properly
+if exists('&ambiwidth')
+    set ambiwidth=double
+endif
+" Display unprinted characters.
 set list
-set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 " Always display status line
 set laststatus=2
-" Number of screen lines to use for the command-line.
-set cmdheight=2
 " Show (partial) command in the last line of the screen.
 set showcmd
+" Show current mode (insert, visutl, normal, etc.)
+set showmode
 " Display title on the window (e.g. terminal)
 set title
 " Highlight the screen line of the cursor
 set cursorline
 " Max number of items in popup menu
 set pumheight=15
+" Set height of command-line. This is set to supress unwanted 'Press ENTER...'
+" prompts.
+set cmdheight=2
+" Enhanced command line completion
+set wildmenu
+" Completion style in wildmenu mode
+set wildmode=longest,full
+" Ignore compiled files
+set wildignore&
+set wildignore=.git,.hg,.svn
+set wildignore+=*.jpg,*.jpeg,*.bmp,*.gif,*.png
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.dylib,*.manifest,*.so,*.out,*.class
+set wildignore+=*.swp,*.swo,*.swn
+set wildignore+=*.DS_Store
 

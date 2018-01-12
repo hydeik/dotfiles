@@ -1,5 +1,14 @@
 " ~/.config/nvim/init.vim
 
+if &compatible
+  set nocompatible
+endif
+
+" Reset autocmd
+augroup MyAutoCmd
+    autocmd!
+augroup END
+
 "----------------------------------------------------------------------------
 " Encoding
 "----------------------------------------------------------------------------
@@ -35,20 +44,16 @@ nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
 "----------------------------------------------------------------------------
 " Dein.vim -- Dark powered Vim/Neovim plugin manager.
 "----------------------------------------------------------------------------
-if &compatible
-  set nocompatible
-endif
-
 " Path to dein.vim directory
 let s:dein_dir      = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 " Install dein.vim from github repository if dein_dir does not exist
 if &runtimepath !~# '/dein.vim'
-    if !isdirectory(s:dein_repo_dir)
-        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-    endif
-    execute 'set runtimepath^=' . s:dein_repo_dir
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . s:dein_repo_dir
 endif
 
 let s:toml      = s:config_home . '/nvim/dein.toml'
@@ -68,16 +73,20 @@ if dein#check_install()
   call dein#install()
 endif
 
+"----------------------------------------------------------------------------
+" Basic setting
+"----------------------------------------------------------------------------
+
 filetype plugin indent on
 syntax on " sytax on|enable should be set after setting whole 'runtimepath'
 
 " Load vim scripts inside './rc'
-let s:rc_dir = s:config_home . '/rc'
+let s:rc_dir = s:config_home . '/nvim/rc'
 function! s:source_rc(file)
-    let rc_file = s:rc_dir . '/' . a:file
-    if filereadable(rc_file)
-        execute 'source ' rc_file
-    endif
+  let rc_file = s:rc_dir . '/' . a:file
+  if filereadable(rc_file)
+    execute 'source ' rc_file
+  endif
 endfunction
 
 call s:source_rc('options.vim')
