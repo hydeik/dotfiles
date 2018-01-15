@@ -97,7 +97,7 @@ set showmode
 " Display title on the window (e.g. terminal)
 set title
 " Highlight the screen line of the cursor
-set cursorline
+" set cursorline
 " Max number of items in popup menu
 set pumheight=15
 " Set height of command-line. This is set to supress unwanted 'Press ENTER...'
