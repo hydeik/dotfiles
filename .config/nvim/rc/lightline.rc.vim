@@ -3,14 +3,14 @@ let g:lightline = {
   \ 'colorscheme': 'onedark',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'fugitive', 'filename' ] ],
+  \             [ 'gitbranch', 'filename' ] ],
   \   'right': [ ['percent', 'lineinfo'], 
   \              ['fileformat', 'fileencoding', 'filetype'] ],
   \ },
   \ 'component_function': {
   \   'modified': 'LightlineModified',
   \   'readonly': 'LightlineReadonly',
-  \   'fugitive': 'LightlineFugitive',
+  \   'gitbranch': 'gina#component#repo#branch',
   \   'filename': 'LightlineFilename',
   \   'fileformat': 'LightlineFileformat',
   \   'filetype': 'LightlineFiletype',
@@ -68,13 +68,5 @@ function! LightlineMode()
        \ &ft == 'vimfiler' ? 'VimFiler' :
        \ &ft == 'vimshell' ? 'VimShell' :
        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! LightlineFugitive()
-  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
-    let branch = fugitive#head()
-    return branch !=# '' ? "\ue0a0".branch : ''
-  endif
-  return ''
 endfunction
 
