@@ -19,27 +19,29 @@ scriptencoding utf-8
 " Environments
 "----------------------------------------------------------------------------
 " Store config and cache directories
-let s:config_home = empty($XDG_CONFIG_HOME) ? expand('~/.config') : $XDG_CONFIG_HOME
-let s:cache_home  = empty($XDG_CACHE_HOME)  ? expand('~/.cache')  : $XDG_CACHE_HOME
+let s:config_home = empty($XDG_CONFIG_HOME)
+            \ ? expand('~/.config')      : $XDG_CONFIG_HOME
+let s:cache_home  = empty($XDG_CACHE_HOME)
+            \ ? expand('~/.cache')       : $XDG_CACHE_HOME
+let s:data_home   = empty($XDG_DATA_HOME)
+            \ ? expand('~/.local/share') : $XDG_DATA_HOME
 
 " Set python2/python3 interpretor (required to setup some plugins)
 let s:workon_home = empty($WORKON_HOME) ? expand('~/.virtualenv') : $WORKON_HOME
 let g:python3_host_prog = s:workon_home . '/neovim3/.venv/bin/python3'
 let g:python_host_prog  = s:workon_home . '/neovim2/.venv/bin/python2'
 
-" Stop highlighting
-nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
-
-" "----------------------------------------------------------------------------
-" " Color scheme and themes
-" "----------------------------------------------------------------------------
-" 
-" set termguicolors
-" 
-" " colorscheme dracula
-" set background=dark
-" " colorscheme dracula
-" execute 'source' fnameescape(s:config_home . '/nvim/lightline.rc.vim')
+"----------------------------------------------------------------------------
+" Utility function(s)
+"----------------------------------------------------------------------------
+" Load vim scripts inside 'nvim/rc'
+let s:rc_dir = s:config_home . '/nvim/rc'
+function! s:source_rc(file)
+  let rc_file = s:rc_dir . '/' . a:file
+  if filereadable(rc_file)
+    execute 'source ' rc_file
+  endif
+endfunction
 
 "----------------------------------------------------------------------------
 " Dein.vim -- Dark powered Vim/Neovim plugin manager.
@@ -80,14 +82,7 @@ endif
 filetype plugin indent on
 syntax on " sytax on|enable should be set after setting whole 'runtimepath'
 
-" Load vim scripts inside './rc'
-let s:rc_dir = s:config_home . '/nvim/rc'
-function! s:source_rc(file)
-  let rc_file = s:rc_dir . '/' . a:file
-  if filereadable(rc_file)
-    execute 'source ' rc_file
-  endif
-endfunction
-
-call s:source_rc('options.vim')
+call s:source_rc('options.rc.vim')
+call s:source_rc('mappings.rc.vim')
+call s:source_rc('colorscheme.rc.vim')
 

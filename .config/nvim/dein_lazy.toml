@@ -129,10 +129,11 @@
 #   \ .'lib/rustlib/src/rust/src/')
 # '''
 # 
-# [[plugins]]
-# repo = 'cespare/vim-toml'
-# on_ft = ['toml']
-# 
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = ['toml']
+
 # [[plugins]]
 # repo = 'rcmdnk/vim-markdown'
 # on_ft = ['markdown','mkd']
