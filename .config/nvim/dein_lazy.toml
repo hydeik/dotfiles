@@ -1,8 +1,37 @@
-# [[plugins]]
-# repo = 'Shougo/vimproc.vim'
-# build = 'make'
-# on_source = ['vimshell.vim']
-# 
+#------------------------------------------------------------------------------
+# Auto completion
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+  source $XDG_CONFIG_HOME/nvim/rc/plugins/deoplete.rc.vim
+'''
+
+#------------------------------------------------------------------------------
+# Snippets
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'Shougo/neosnippet'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertCharPre'
+on_ft = 'snippet'
+hook_source = '''
+  " <C-k> to insert a snippet
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+
+  let g:neosnippet#enable_completed_snippet = 1
+  let g:neosnippet#expand_word_boundary = 1
+  let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
+'''
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
 # [[plugins]]
 # repo = 'Shougo/neomru.vim'
 # 
@@ -11,26 +40,13 @@
 # on_if = 1
 # on_event = 'TextYankPost'
 # on_source = ['denite.nvim']
+
 # 
 # [[plugins]]
 # repo = 'Shougo/echodoc.vim'
 # on_event = 'CompleteDone'
 # hook_source = 'call echodoc#enable()'
 # 
-# [[plugins]]
-# repo = 'Shougo/neosnippet'
-# depends = ['neosnippet-snippets', 'context_filetype.vim']
-# on_event = 'InsertCharPre'
-# on_ft = 'snippet'
-# hook_source = '''
-#   imap <C-k> <Plug>(neosnippet_expand_or_jump)
-#   smap <C-k> <Plug>(neosnippet_expand_or_jump)
-#   xmap <C-k> <Plug>(neosnippet_expand_target)
-# 
-#   let g:neosnippet#enable_completed_snippet = 1
-#   let g:neosnippet#expand_word_boundary = 1
-#   let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
-# '''
 # 
 # [[plugins]]
 # repo = 'Shougo/deoplete.nvim'
@@ -129,10 +145,6 @@
 #   \ .'lib/rustlib/src/rust/src/')
 # '''
 # 
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = ['toml']
 
 # [[plugins]]
 # repo = 'rcmdnk/vim-markdown'

@@ -1,97 +1,97 @@
+#------------------------------------------------------------------------------
+# Plugin manager
+#------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
-[[plugins]]
 repo = 'kana/vim-textobj-user'
-#
-# [[plugins]]
-# repo = 'kana/vim-textobj-line'
-#
-# [[plugins]]
-# repo = 'kana/vim-textobj-indent'
-#
-# [[plugins]]
-# repo = 'kana/vim-textobj-entire'
-#
-# [[plugins]]
-# repo = 'kana/vim-operator-user'
-#
-# [[plugins]]
-# repo = 'kana/vim-operator-replace'
-# depends = ['vim-operator-user']
-# hook_add = '''
-#   map _ <Plug>(operator-replace)
-# '''
 
-[[plugins]]
-repo = 'tpope/vim-repeat'
-
-# [[plugins]]
-# repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'tyru/caw.vim'
-depends = ['context_filetype.vim']
-
-[[plugins]]
-# Set the buffer filetype based on the code block the cursor currently resides in.
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim', 'vim-textobj-user']
-hook_add = '''
-  let g:precious_enable_switch_CursorMoved = { '*': 1, 'help': 0 }
-'''
-
-# [[plugins]]
-# repo = 'rhysd/vim-operator-surround'
-# depends = ['vim-operator-user']
-# hook_add = '''
-#   " operator mappings
-#   map <silent>sa <Plug>(operator-surround-append)
-#   map <silent>sd <Plug>(operator-surround-delete)
-#   map <silent>sr <Plug>(operator-surround-replace)
-# '''
+#------------------------------------------------------------------------------
+# Highlight
+#------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 
 [[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
 
-# --- Colorscheme
-# [[plugins]]
-# repo = 'w0ng/vim-hybrid'
-# script-type = 'colors'
+#------------------------------------------------------------------------------
+# Colorscheme
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+script-type = 'colors'
 
-# [[plugins]]
-# repo = 'jacoborus/tender.vim'
-# script-type = 'colors'
+[[plugins]]
+repo = 'jacoborus/tender.vim'
+script-type = 'colors'
 
-# [[plugins]]
-# repo = 'tomasr/molokai'
-# script-type = 'colors'
+[[plugins]]
+repo = 'tomasr/molokai'
+script-type = 'colors'
 
 [[plugins]]
 repo = 'dracula/vim'
 script-type = 'colors'
 
-# [[plugins]]
-# repo = 'blueshirts/darcula'
-# script-type = 'colors'
+[[plugins]]
+repo = 'blueshirts/darcula'
+script-type = 'colors'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 
-# --- Git
+#------------------------------------------------------------------------------
+# Filetypes
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'cespare/vim-toml'
 
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+hook_add = '''
+  let g:vim_markdown_frontmatter = 1
+  let g:vim_markdown_math = 1
+'''
+
+#------------------------------------------------------------------------------
+# Git
+#------------------------------------------------------------------------------
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 if = 'has("signs")'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
+
+#------------------------------------------------------------------------------
+# Programming
+#------------------------------------------------------------------------------
+# Language server protocol (LSP) client
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+rev = 'next'
+build = 'bash install.sh'
+on_ft = ['c', 'cpp', 'python', 'rust']
+hook_add = '''
+  set hidden
+  let g:LanguageClient_serverCommands = {
+    \ 'c':   ['/usr/local/opt/llvm/bin/clangd'],
+    \ 'cpp': ['/usr/local/opt/llvm/bin/clangd'],
+    \ 'python': ['~/.virtualenv/neovim3/.venv/bin/pyls'],
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ }
+  let g:LanguageClient_autoStart = 1
+  nnoremap <silent> K    :call LanguageClient_textDocument_hover()<CR>
+  nnoremap <silent> gd   :call LanguageClient_textDocument_definition()<CR>
+  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+'''
+
+# Linter
+[[plugins]]
+repo = 'w0rp/ale'
+
+# Snippet
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
