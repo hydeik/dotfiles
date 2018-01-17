@@ -10,7 +10,7 @@ set wrapscan
 " Highlights matches
 set hlsearch
 " Incremental search
-set incsearch 
+set incsearch
 " Program used to 'K' command
 set keywordprg=:help
 
@@ -37,9 +37,9 @@ set noswapfile
 set modelines=5
 " Persistent undo
 if exists('persistet_undo')
-    set undofile
-    " Directory to store undo file (default: '$XDG_DATA_HOME/nvim/undo')
-    " set undodir=
+  set undofile
+  " Directory to store undo file (default: '$XDG_DATA_HOME/nvim/undo')
+  " set undodir=
 endif
 
 " ----- Edit
@@ -63,7 +63,7 @@ set matchtime=2
 "   M - When joining lines, don't insert a space before or after a multi-byte
 "       character.  Overrules the 'B' flag.
 set formatoptions+=mM
-" Bases for numbers used by CTRL-A (increment) and CTRL-X (decrement) command. 
+" Bases for numbers used by CTRL-A (increment) and CTRL-X (decrement) command.
 set nrformats=alpha,hex,bin
 " Allow virtual editing in Visual block mode.
 set virtualedit=block
@@ -73,8 +73,8 @@ set timeout timeoutlen=500
 set ttimeout ttimeoutlen=50
 " Enable Vim to use system clipboard
 if has('clipboard')
-    set clipboard&   " <- set to default
-    set clipboard^=unnamed,unnamedplus
+  set clipboard&   " <- set to default
+  set clipboard^=unnamed,unnamedplus
 endif
 
 " ----- Display
@@ -84,7 +84,7 @@ set lazyredraw
 set ruler
 " Display multi-byte characters in vim properly
 if exists('&ambiwidth')
-    set ambiwidth=double
+  set ambiwidth=double
 endif
 " Display unprinted characters.
 set list

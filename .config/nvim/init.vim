@@ -6,7 +6,7 @@ endif
 
 " Reset autocmd
 augroup MyAutoCmd
-    autocmd!
+  autocmd!
 augroup END
 
 "----------------------------------------------------------------------------
@@ -20,11 +20,11 @@ scriptencoding utf-8
 "----------------------------------------------------------------------------
 " Store config and cache directories
 let s:config_home = empty($XDG_CONFIG_HOME)
-            \ ? expand('~/.config')      : $XDG_CONFIG_HOME
+      \ ? expand('~/.config')      : $XDG_CONFIG_HOME
 let s:cache_home  = empty($XDG_CACHE_HOME)
-            \ ? expand('~/.cache')       : $XDG_CACHE_HOME
+      \ ? expand('~/.cache')       : $XDG_CACHE_HOME
 let s:data_home   = empty($XDG_DATA_HOME)
-            \ ? expand('~/.local/share') : $XDG_DATA_HOME
+      \ ? expand('~/.local/share') : $XDG_DATA_HOME
 
 " Set python2/python3 interpretor (required to setup some plugins)
 let s:workon_home = empty($WORKON_HOME) ? expand('~/.virtualenv') : $WORKON_HOME

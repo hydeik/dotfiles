@@ -2,7 +2,7 @@
 
 " --- Colorscheme
 if has('termguicolors')
-    set termguicolors
+  set termguicolors
 endif
 
 set background=dark
@@ -11,26 +11,26 @@ colorscheme dracula
 
 " --- Customize status line with lightline
 let g:lightline = {
-  \ 'colorscheme': 'Dracula',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'gitbranch', 'filename' ] ],
-  \   'right': [ ['percent', 'lineinfo'],
-  \              ['fileformat', 'fileencoding', 'filetype'] ],
-  \ },
-  \ 'component_function': {
-  \   'modified': 'LightlineModified',
-  \   'readonly': 'LightlineReadonly',
-  \   'gitbranch': 'gina#component#repo#branch',
-  \   'filename': 'LightlineFilename',
-  \   'fileformat': 'LightlineFileformat',
-  \   'filetype': 'LightlineFiletype',
-  \   'fileencoding': 'LightlineFileencoding',
-  \   'mode': 'LightlineMode',
-  \ },
-  \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-  \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
-  \ }
+      \ 'colorscheme': 'Dracula',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'filename' ] ],
+      \   'right': [ ['percent', 'lineinfo'],
+      \              ['fileformat', 'fileencoding', 'filetype'] ],
+      \ },
+      \ 'component_function': {
+      \   'modified': 'LightlineModified',
+      \   'readonly': 'LightlineReadonly',
+      \   'gitbranch': 'gina#component#repo#branch',
+      \   'filename': 'LightlineFilename',
+      \   'fileformat': 'LightlineFileformat',
+      \   'filetype': 'LightlineFiletype',
+      \   'fileencoding': 'LightlineFileencoding',
+      \   'mode': 'LightlineMode',
+      \ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+      \ }
 
 function! LightlineModified()
   if &filetype == "help"
@@ -57,9 +57,9 @@ endfunction
 function! LightlineFilename()
   let fname = expand('%:t')
   return &ft == 'denite' ? denite#get_status_sources() . denite#get_status_path() : '' .
-       \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-       \ ('' != fname ? fname : '[No Name]') .
-       \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
 function! LightlineFileformat()
@@ -76,8 +76,8 @@ endfunction
 
 function! LightlineMode()
   return &ft == 'denite' ? 'denite' :
-       \ &ft == 'vimfiler' ? 'VimFiler' :
-       \ &ft == 'vimshell' ? 'VimShell' :
-       \ winwidth(0) > 60 ? lightline#mode() : ''
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
