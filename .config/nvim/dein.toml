@@ -62,8 +62,11 @@ hook_add = '''
 repo = 'airblade/vim-gitgutter'
 if = 'has("signs")'
 
+# [[plugins]]
+# repo = 'lambdalisue/gina.vim'
+
 [[plugins]]
-repo = 'lambdalisue/gina.vim'
+repo = 'neoclide/denite-git'
 
 #------------------------------------------------------------------------------
 # Programming

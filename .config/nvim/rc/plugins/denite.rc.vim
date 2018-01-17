@@ -27,14 +27,17 @@ else
 endif
 
 " Change matchers
-call denite#custom#source('file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
-call denite#custom#source('file_rec', 'matchers', ['matcher_cpsm'])
+call denite#custom#source('file_old', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
+call denite#custom#source('tag', 'matchers', ['matcher_substring'])
+if has('nvim')
+  call denite#custom#source('file_rec', 'matchers', ['matcher_cpsm'])
+endif
 
 " Change sorters
 call denite#custom#source('file_rec', 'sorters', ['sorter_sublime'])
 
 " Change converters
-call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
+call denite#custom#source('file_old', 'converters', ['converter_relative_word'])
 
 " Define alias
 call denite#custom#alias('source', 'file_rec/git', 'file_rec')
@@ -42,12 +45,16 @@ call denite#custom#var('file_rec/git', 'command',
   \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 " Change default prompt
-call denite#custom#option('default', 'prompt', '>')
+call denite#custom#option('default', {
+      \ 'auto_accel': v:true,
+      \ 'prompt': '>',
+      \ 'source_names': 'short',
+      \ })
 
 " Change ignore_globs
 call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
   \ [ '.git/', '.ropeproject/', '__pycache__/',
-  \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+  \   'venv/', '.venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 
 " Keymapping
 call denite#custom#map('insert', '<C-a>', '<denite:move_caret_to_head>', 'noremap')
