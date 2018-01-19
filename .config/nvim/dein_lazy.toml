@@ -72,7 +72,7 @@ hook_add = '''
     \ -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
 
   " Substitute search commands by denite
-  nnoremap <silent>   :<C-u>Denite -buffer-name=search -auto-highlight line<CR>
+  nnoremap <silent> / :<C-u>Denite -buffer-name=search -auto-highlight line<CR>
   nnoremap <silent> * :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal line<CR>
 '''
 
