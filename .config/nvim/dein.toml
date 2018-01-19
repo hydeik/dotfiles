@@ -65,7 +65,29 @@ if = 'has("signs")'
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 hook_add = '''
-  nnoremap <Space>gs :<C-u>Gina status --opener=split<CR>
+  " Set default options for commands
+  call gina#custom#command#option('status', '--opener', 'split')
+
+  call gina#custom#command#option('commit', '--verbose')
+
+  call gina#custom#command#option(
+    \ '/\%(branch\|changes\|grep\|log\)',
+    \ '--opener', 'vsplit'
+    \)
+
+  " execute :Gina commit with 'CC' on gina-status buffer
+  call gina#custom#mapping#nmap(
+    \ 'status', 'CC', ':<C-u>Gina commit<CR>',
+    \ {'noremap': 1, 'silent': 1}
+    \)
+
+  " quit gina-status buffer with 'q'
+  call gina#custom#mapping#nmap(
+    \ 'status', 'q', ':quit<CR>',
+    \ {'noremap': 1, 'silent': 1}
+    \)
+
+  nnoremap <Space>gs :<C-u>Gina status<CR>
   nnoremap <Space>gb :<C-u>Gina branch<CR>
   nnoremap <Space>gc :<C-u>Gina commit<CR>
   nnoremap <Space>gl :<C-u>Gina log<CR>
