@@ -75,7 +75,7 @@ hook_add = '''
     \ '--opener', 'vsplit'
     \)
 
-  " execute :Gina commit with 'CC' on gina-status buffer
+  " execute :Gina commit with '<C-c><C-c>' on gina-status buffer
   call gina#custom#mapping#nmap(
     \ 'status', '<C-c><C-c>', ':<C-u>Gina commit<CR>',
     \ {'noremap': 1, 'silent': 1}
@@ -92,9 +92,6 @@ hook_add = '''
   nnoremap <Space>gc :<C-u>Gina commit<CR>
   nnoremap <Space>gl :<C-u>Gina log<CR>
 '''
-
-# [[plugins]]
-# repo = 'neoclide/denite-git'
 
 #------------------------------------------------------------------------------
 # Programming

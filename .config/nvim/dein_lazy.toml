@@ -7,7 +7,7 @@ depends = 'context_filetype.vim'
 on_event = 'InsertEnter'
 hook_source = '''
   let g:deoplete#enable_at_startup = 1
-  source $XDG_CONFIG_HOME/nvim/rc/plugins/deoplete.rc.vim
+ $XDG_CONFIG_HOME/nvim/rc/plugins/deoplete.rc.vim
 '''
 
 #------------------------------------------------------------------------------
@@ -56,21 +56,6 @@ repo = 'Shougo/denite.nvim'
 on_cmd = 'Denite'
 hood_post_source = 'source ~/.config/nvim/rc/plugins/denite.rc.vim'
 hook_add = '''
-  nnoremap [denite] <Nop>
-  nmap <Space> [denite]
-  nmap <silent> [denite]ft : <C-u>Denite filetype<CR>
-  nmap <silent> [denite]ff : <C-u>Denite file_rec<CR>
-  nmap <silent> [denite]y  : <C-u>Denite neoyank<CR>
-  nmap <silent> [denite]G
-    \ : <C-u>Denite grep -mode=normal -buffer-name=search-buffer-denite<CR>
-
-  nmap <silent> [denite]rr
-    \ : <C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
-  nmap <silent> [denite]rn : <C-u>Denite -resume 
-    \  -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
-  nmap <silent> [denite]rp : <C-u>Denite -resume
-    \ -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
-
   " Substitute search commands by denite
   nnoremap <silent> / :<C-u>Denite -buffer-name=search -auto-highlight line<CR>
   nnoremap <silent> * :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal line<CR>
