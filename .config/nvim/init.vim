@@ -19,12 +19,9 @@ scriptencoding utf-8
 " Environments
 "----------------------------------------------------------------------------
 " Store config and cache directories
-let s:config_home = empty($XDG_CONFIG_HOME)
-      \ ? expand('~/.config')      : $XDG_CONFIG_HOME
-let s:cache_home  = empty($XDG_CACHE_HOME)
-      \ ? expand('~/.cache')       : $XDG_CACHE_HOME
-let s:data_home   = empty($XDG_DATA_HOME)
-      \ ? expand('~/.local/share') : $XDG_DATA_HOME
+let s:config_home = empty($XDG_CONFIG_HOME) ? expand('~/.config')      : $XDG_CONFIG_HOME
+let s:cache_home  = empty($XDG_CACHE_HOME)  ? expand('~/.cache')       : $XDG_CACHE_HOME
+let s:data_home   = empty($XDG_DATA_HOME)   ? expand('~/.local/share') : $XDG_DATA_HOME
 
 " Set python2/python3 interpretor (required to setup some plugins)
 let s:workon_home = empty($WORKON_HOME) ? expand('~/.virtualenv') : $WORKON_HOME
@@ -65,7 +62,8 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)  " execute ':filetype off' automatically
   " Configuration file for plugins
   call dein#load_toml(s:toml, {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  " call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  call dein#load_toml(s:lazy_toml, {'lazy': 0})
 
   call dein#end()              " 'runtimepath' is changed after dein#end()
   call dein#save_state()

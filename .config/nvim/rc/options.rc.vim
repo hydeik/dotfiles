@@ -56,7 +56,7 @@ set shiftround
 " When a bracket is inserted, briefly jump to the matching one.
 set showmatch
 " Time to show the matching paren, when 'showmatch' is set. (0.1 second)
-set matchtime=2
+set matchtime=1
 " Set additional format options for Japanese text
 "   m - Also break at a multi-byte character above 255.  This is useful for
 "       Asian text where every character is a word on its own.
@@ -71,11 +71,11 @@ set virtualedit=block
 set timeout timeoutlen=500
 " Wait 50 msec for a key code
 set ttimeout ttimeoutlen=50
-" Enable Vim to use system clipboard
-if has('clipboard')
-  set clipboard&   " <- set to default
-  set clipboard^=unnamed,unnamedplus
-endif
+" " Enable Vim to use system clipboard
+" if has('clipboard')
+"   set clipboard&   " <- set to default
+"   set clipboard^=unnamed
+" endif
 
 " ----- Display
 " Don't redraw while executing macros
@@ -88,6 +88,8 @@ if exists('&ambiwidth')
 endif
 " Display unprinted characters.
 set list
+" Display long text line properly
+set display=lastline
 " Always display status line
 set laststatus=2
 " Show (partial) command in the last line of the screen.
@@ -96,10 +98,10 @@ set showcmd
 set showmode
 " Display title on the window (e.g. terminal)
 set title
-" Highlight the screen line of the cursor
+" " Highlight the screen line of the cursor
 " set cursorline
 " Max number of items in popup menu
-set pumheight=15
+set pumheight=10
 " Set height of command-line. This is set to supress unwanted 'Press ENTER...'
 " prompts.
 set cmdheight=2
