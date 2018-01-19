@@ -62,11 +62,17 @@ hook_add = '''
 repo = 'airblade/vim-gitgutter'
 if = 'has("signs")'
 
-# [[plugins]]
-# repo = 'lambdalisue/gina.vim'
-
 [[plugins]]
-repo = 'neoclide/denite-git'
+repo = 'lambdalisue/gina.vim'
+hook_add = '''
+  nnoremap <Space>gs :<C-u>Gina status --opener=split<CR>
+  nnoremap <Space>gb :<C-u>Gina branch<CR>
+  nnoremap <Space>gc :<C-u>Gina commit<CR>
+  nnoremap <Space>gl :<C-u>Gina log<CR>
+'''
+
+# [[plugins]]
+# repo = 'neoclide/denite-git'
 
 #------------------------------------------------------------------------------
 # Programming
