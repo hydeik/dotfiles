@@ -2,7 +2,7 @@
 # Plugin manager
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'shougo/dein.vim'
+repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
