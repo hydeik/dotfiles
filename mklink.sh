@@ -15,5 +15,10 @@ done
 
 for dir in ${CWD}/config/*
 do
-    ln -fsv ${dir} ${XDG_CONFIG_HOME}/${dir##*/}
+    ln -fnsv ${dir} ${XDG_CONFIG_HOME}/${dir##*/}
 done
+
+if [ "$(uname)" == 'Darwin' ]
+then
+    ln -fnsv ${CWD}/hammerspoon ${HOME}/.hammerspoon
+fi
