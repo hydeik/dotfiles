@@ -10,12 +10,13 @@ fi
 # zplug -- Zsh Plugin Manager
 #
 #export ZPLUG_HOME=/usr/local/opt/zplug
-export ZPLUG_HOME=${HOME}/.zplug
+export ZPLUG_HOME=${XDG_DATA_HOME}/zplug/repos/zplug/zplug
 if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
     export ZPLUG_LOADFILE=${ZDOTDIR}/zplug.zsh
     export ZPLUG_USE_CACHE=true
-    export ZPLUG_CACHE_DIR=${HOME}/.cache/zplug 
-    export ZPLUG_BIN=${HOME}/bin
+    export ZPLUG_CACHE_DIR=${XDG_CACHE_HOME}/zplug 
+    export ZPLUG_REPOS=${XDG_DATA_HOME}/zplug/repos
+    #export ZPLUG_BIN=${HOME}/bin
 
     source ${ZPLUG_HOME}/init.zsh
 
