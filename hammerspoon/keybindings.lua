@@ -79,8 +79,12 @@ local emacsKeybinds = {
     {mods = {'ctrl'}, key = 'j', func = aquaskkJmode},
 }
 
--- emacsMarkMode = hs.hotkey.modal({'ctrl'}, 'space')
--- emacsMarkMode:entered() =
+local emacsMarkMode = {
+    {mods = {'ctrl'}, key = 'space', func = keyCode({}, 'escape')},
+    {mods = {'ctrl'}, key = 'g', func = keyCode({}, 'escape')},
+    {mods = {'ctrl'}, key = 'w', func = keyCode({'cmd'}, 'x')},
+    {mods = {'alt'},  key = 'w', func = keyCode({'cmd'}, 'c')},
+}
 
 local function bindKeys(keymap, modal)
     for _, v in ipairs(keymap) do
@@ -91,6 +95,24 @@ end
 
 emacsBindings = hs.hotkey.modal.new()
 emacsBindings = bindKeys(emacsKeybinds, emacsBindings)
+
+-- -- TODO: emulate mark mode (Ctrl-space)
+-- markModeBindings = hs.hotkey.modal.new({'ctrl'}, 'space')
+-- markModeBindings = bindKeys(emacsMarkMode, markModeBindings)
+-- markModeBindings.entered = function(self)
+--     markModeBindings._eventtap = hs.eventtap.new({
+--         hs.eventtap.type.keyDown,
+--         hs.eventtap.type.keyUp,
+--     }, function(event)
+--         flags = event:getFlags()
+--         flags.shift = true
+--         event:setFlags(flags)
+--     end):start()
+-- end
+-- markModeBindings.exited = function(self)
+--     markModeBindings._eventtap:stop()
+--     markModeBindings._eventtap = nil
+-- end
 
 -- Enable emacs keybindings on Microsoft Office
 wf_office = hs.window.filter.new({'Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint'})
