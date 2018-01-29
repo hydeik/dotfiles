@@ -2,6 +2,7 @@
 -- Emacs keybindings
 ------------------------------------------------------------------------------
 
+--- Utility function
 local function keyCode(modifiers, key)
     modifiers = modifiers or {}
     return function()
@@ -10,6 +11,22 @@ local function keyCode(modifiers, key)
     end
 end
 
+--- Ctrl-j to SKK_JMODE in AquaSKK
+--   keymap.conf for AquaSKK should be modified as
+--   [~/Library/Application\ Support/AquaSKK/keymap.conf]
+--   ...
+--   SKK_JMODE               ctrl::j||ctrl::0
+--   ...
+--
+local function aquaskkJmode()
+    if hs.keycodes.currentSourceID():find('aquaskk') then
+        keyCode({'ctrl'}, '0')()
+    else
+        keyCode({'ctrl'}, 'j')()
+    end
+end
+
+--- Mimic kill-line in emacs
 local function killLine()
     keyCode({'shift', 'ctrl'}, 'e')()
     keyCode({'cmd'}, 'x')()
@@ -57,10 +74,13 @@ local emacsKeybinds = {
 
     -- Escape
     {mods = {'ctrl'}, key = 'g', func = keyCode({}, 'escape')},
+
+    -- Input method for Japanese
+    {mods = {'ctrl'}, key = 'j', func = aquaskkJmode},
 }
 
 -- emacsMarkMode = hs.hotkey.modal({'ctrl'}, 'space')
--- emacsMarkMode:entered() = 
+-- emacsMarkMode:entered() =
 
 local function bindKeys(keymap, modal)
     for _, v in ipairs(keymap) do
@@ -75,10 +95,10 @@ emacsBindings = bindKeys(emacsKeybinds, emacsBindings)
 -- Enable emacs keybindings on Microsoft Office
 wf_office = hs.window.filter.new({'Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint'})
 wf_office:subscribe(hs.window.filter.windowFocused,
-    function() 
+    function()
         emacsBindings:enter()
     end)
 wf_office:subscribe(hs.window.filter.windowUnfocused,
-    function() 
+    function()
         emacsBindings:exit()
     end)
