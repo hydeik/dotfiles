@@ -52,3 +52,60 @@ set laststatus=2	"ステータスラインを常に表示
 "ステータスラインに文字コードと改行文字を表示する
 set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 "set list		"TAB, EOLの表示
+
+" --- Keymappings
+
+" Easy escape:"{{{
+inoremap jj       <ESC>
+inoremap j<Space>  j
+cnoremap <expr> j getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
+"}}}
+
+" Insert mode Keymappings;"{{{
+inoremap <C-a>    <Home>
+inoremap <C-b>    <Left>
+inoremap <C-d>    <Del>
+inoremap <C-e>    <End>
+inoremap <C-f>    <Right>
+"}}}
+
+" Command line mode keymappings:"{{{
+" --- Emacs like cursor move
+" <C-a>: move to head
+cnoremap <C-a>    <Home>
+" <C-b>: previous char
+cnoremap <C-b>    <Left>
+" <C-d>: delete char
+cnoremap <C-d>    <Del>
+" <C-e>: move to end
+cnoremap <C-e>    <End>
+" <C-f>: next char
+cnoremap <C-f>    <Right>
+" <C-n>: next history
+cnoremap <C-n>    <Down>
+" <C-p>: previous history
+cnoremap <C-p>    <Up>
+" <C-y>: paste
+cnoremap <C-y>    <C-r>*
+" <C-g>: exit
+cnoremap <C-g>    <C-c>
+"}}}
+
+" Better x
+nnoremap x "_x
+
+" Disable Ex-mode.
+nnoremap Q  q
+
+" Disable ZZ.
+nnoremap ZZ  <Nop>
+
+" Move by display line j [<--> gj, k <--> gk]
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
+" Stop highlighting by <ESC><ESC>
+nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
+
