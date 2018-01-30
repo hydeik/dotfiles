@@ -74,3 +74,7 @@ nnoremap  [Space]   <Nop>
 " Stop highlighting by <ESC><ESC>
 nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
 
+" leave terminal mode by <ESC>
+if has('nvim')
+  tnoremap <silent><ESC>    <C-\><C-n>
+endif

@@ -123,3 +123,13 @@ repo = 'w0rp/ale'
 # Snippet
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
+
+
+#------------------------------------------------------------------------------
+# Extending terminal emulator
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'kassio/neoterm'
+hook_add = '''
+'''
+

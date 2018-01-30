@@ -82,10 +82,10 @@ set ttimeout ttimeoutlen=50
 set lazyredraw
 " Show the line and column number of the cursor position
 set ruler
-" Display multi-byte characters in vim properly
-if exists('&ambiwidth')
-  set ambiwidth=double
-endif
+" " Display multi-byte characters in vim properly
+" if exists('&ambiwidth')
+"   set ambiwidth=double
+" endif
 " Display unprinted characters.
 set list
 " Display long text line properly
