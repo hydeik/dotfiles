@@ -1,4 +1,4 @@
-# 
+#
 # Setting for profiling `zplof`
 #
 # zmodload zsh/zprof && zprof
@@ -8,7 +8,7 @@
 ##
 # export http_proxy=
 # export ftp_proxy=
-# export RSYNC_PROXY=
+#emacsMarkMode export RSYNC_PROXY=
 
 ##==============================================================================
 ## Increase stack size (required for large scale simulation on linux)
@@ -195,15 +195,15 @@ export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 export LSCOLORS=exfxcxdxbxegedabagacad
 
 #### EDITOR
-if (( ${+commands[vim]} )); then  
+if (( ${+commands[vim]} )); then
     export EDITOR="vim"
 else
     export EDITOR="vi"
 fi
 
-#### $COLORTERM 
+#### $COLORTERM
 export COLORTERM=0
-case "$TERM" in 
+case "$TERM" in
     kterm*);    COLORTERM=1 ;;
     xterm*);    COLORTERM=1 ;;
     rxvt*);     COLORTERM=1 ;;
@@ -230,6 +230,9 @@ export PYENV_ROOT=${HOME}/.pyenv
 path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
 if (( ${+commands[pyenv]} )); then
     eval "$(pyenv init - --no-rehash)"
+fi
+if (( ${+commands[pyenv-virtualenv]} )); then
+    eval "$(pyenv-virtualenv init -)"
 fi
 
 # Rust

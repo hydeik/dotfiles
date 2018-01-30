@@ -54,9 +54,18 @@ case ${OSTYPE} in
 esac
 
 # Theme
-zplug mafredri/zsh-async, from:github
-zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+#zplug mafredri/zsh-async, from:github
+#zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, from:github, as:theme
+POWERLEVEL9K_MODE="nerdfont-complete"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status os_icon context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs virtualenv rbenv rvm load time)
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
+POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %y-%m-%d}"
+POWERLEVEL9K_STATUS_VERBOSE=false
 
 # Local plugins
 zplug "${ZDOTDIR}", from:local, use:"<->_*.zsh"
+
 
