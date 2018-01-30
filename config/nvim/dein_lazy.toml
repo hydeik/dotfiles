@@ -54,13 +54,16 @@ hook_source = '''
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 on_cmd = 'Denite'
-hood_post_source = 'source ~/.config/nvim/rc/plugins/denite.rc.vim'
+hook_source = 'source $XDG_CONFIG_HOME/nvim/rc/plugins/denite.rc.vim'
 hook_add = '''
   " Substitute search commands by denite
   nnoremap <silent> / :<C-u>Denite
     \ -buffer-name=search -auto-highlight line<CR>
   nnoremap <silent> * :<C-u>DeniteCursorWord
     \ -buffer-name=search -auto-highlight -mode=normal line<CR>
+
+  " command history
+  " nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
 '''
 
 [[plugins]]
@@ -90,3 +93,10 @@ hook_add = '''
   autocmd MyAutoCmd FileType * call InitCaw()
   call InitCaw()
 '''
+
+#-----------------------------------------------------------------------------
+# Sticky shift in Vim
+#-----------------------------------------------------------------------------
+[[plugins]]
+repo = 'lambdalisue/pinkyless.vim'
+on_if = true

@@ -1,3 +1,23 @@
+" Keymapping for denite/insert mode
+call denite#custom#map('insert', '<C-a>', '<denite:move_caret_to_head>', 'noremap')
+call denite#custom#map('insert', '<C-b>', '<denite:move_caret_to_left>', 'noremap')
+call denite#custom#map('insert', '<C-d>', '<denite:delete_char_under_caret>', 'noremap')
+call denite#custom#map('insert', '<C-e>', '<denite:move_caret_to_tail>', 'noremap')
+call denite#custom#map('insert', '<C-f>', '<denite:move_caret_to_right>', 'noremap')
+call denite#custom#map('insert', '<C-h>', '<denite:delete_char_before_caret>', 'noremap')
+" Use <C-j>, <C-k> to move lines.
+call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+" <C-n>, <C-p> are mapped by default to recall command-line history.
+" call denite#custom#map('insert', '<C-n>', '<denite:assign_next_text>', 'noremap')
+" call denite#custom#map('insert', '<C-p>', '<denite:assign_previous_text>', 'noremap')
+call denite#custom#map('insert', '<C-r>', '<denite:toggle_matchers:matcher_substring>', 'noremap')
+call denite#custom#map('insert', '<C-s>', '<denite:toggle_sorters:sorter_reverse>', 'noremap')
+" <C-g> to quit denite
+call denite#custom#map('insert', '<C-g>', '<denite:leave_mode>', 'noremap')
+
+call denite#custom#map('normal', 'r', '<denite:do_action:quickfix>', 'noremap')
+
 " Change file_rec and grep commmand
 if executable('rg')
   call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git', ''])
@@ -51,19 +71,27 @@ call denite#custom#option('default', {
       \ 'source_names': 'short',
       \ })
 
+" Custom menu
+let s:menus = {}
+let s:menus.vim = {
+  \ 'description': 'vim configuration',
+  \ }
+let s:menus.vim.file_candidates = [
+  \ ['    > Edit configuration file (init.vim)', '~/.config/nvim/init.vim']
+  \ ]
+let s:menus.zsh = {
+  \ 'description': 'zsh configuration'
+  \ }
+let s:menus.zsh.file_candidates = [
+  \ ['    > Edit zshenv', '~/.config/zsh/.zshenv'],
+  \ ['    > Edit zshrc',  '~/.config/zsh/.zshrc'],
+  \ ['    > Edit zplug configuration',  '~/.config/zsh/zplug.zsh']
+  \ ]
+
+call denite#custom#var('menu', 'menus', s:menus)
+
 " Change ignore_globs
 call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
   \ [ '.git/', '.ropeproject/', '__pycache__/',
   \   'venv/', '.venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 
-" Keymapping
-call denite#custom#map('insert', '<C-a>', '<denite:move_caret_to_head>', 'noremap')
-call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>', 'noremap')
-call denite#custom#map('insert', '<C-d>', '<denite:do_action:delete>', 'noremap')
-call denite#custom#map('insert', '<C-b>', '<denite:scroll_page_backward>', 'noremap')
-call denite#custom#map('insert', '<C-f>', '<denite:scroll_page_forward>', 'noremap')
-call denite#custom#map('insert', '<C-p>', '<denite:scroll_page_forward>', 'noremap')
-
-call denite#custom#map('normal', '<Esc>', '<denite:quit>', 'noremap')
