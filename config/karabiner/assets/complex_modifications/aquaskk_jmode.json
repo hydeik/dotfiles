@@ -1,0 +1,37 @@
+{
+    "title": "Remap Ctrl-j to AquaSKK SKK_JMODE",
+    "rules": [
+        {
+            "description": "Ctrl-j to Ctrl-0 (AquaSKK SKK_JMODE)",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "j",
+                        "modifiers": {
+                            "mandatory": [
+                                "control"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "0",
+                            "modifiers": [
+                                "control"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "bundle_identifiers": [
+                                "^com\\.microsoft\\.Powerpoint$"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

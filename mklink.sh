@@ -13,7 +13,7 @@ do
     ln -fsv ${CWD}/${f} ${HOME}/.${f}
 done
 
-for dir in ${CWD}/config/*
+for dir in ${CWD}/config/{fish,zsh,nvim}
 do
     ln -fnsv ${dir} ${XDG_CONFIG_HOME}/${dir##*/}
 done
@@ -21,4 +21,9 @@ done
 if [ "$(uname)" == 'Darwin' ]
 then
     ln -fnsv ${CWD}/hammerspoon ${HOME}/.hammerspoon
+
+    for f in ${CWD}/config/karabiner/assets/complex_modifications/*.json
+    do
+        ln -fsv $f ${XDG_CONFIG_HOME}/karabiner/assets/complex_modifications/
+    done
 fi
