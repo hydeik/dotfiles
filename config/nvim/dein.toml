@@ -42,6 +42,11 @@ script-type = 'colors'
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 
+# Create tmux powerline theme from vim powerline theme
+# (requires powerline/vim-airline/lightline)
+[[plugins]]
+repo = 'edkolev/tmuxline.vim'
+
 #------------------------------------------------------------------------------
 # Filetypes
 #------------------------------------------------------------------------------
