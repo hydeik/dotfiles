@@ -1,17 +1,18 @@
 " colorscheme.vim --- setup colorscheme on vim/nvim
 
-" --- Colorscheme
+" terminal colors
+set t_Co=256
 if has('termguicolors')
   set termguicolors
 endif
 
+" --- Colorscheme
 set background=dark
-colorscheme dracula
-
+colorscheme hybrid
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'Dracula',
+      \ 'colorscheme': 'hybrid',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'filename' ] ],

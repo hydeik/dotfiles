@@ -20,27 +20,18 @@ repo = 'bronson/vim-trailing-whitespace'
 # Colorscheme
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'w0ng/vim-hybrid'
+repo = 'flazz/vim-colorschemes'
 script-type = 'colors'
 
 [[plugins]]
-repo = 'jacoborus/tender.vim'
-script-type = 'colors'
-
-[[plugins]]
-repo = 'tomasr/molokai'
-script-type = 'colors'
-
-[[plugins]]
-repo = 'dracula/vim'
-script-type = 'colors'
-
-[[plugins]]
-repo = 'blueshirts/darcula'
+repo = 'altercation/vim-colors-solarized'
 script-type = 'colors'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'cocopon/lightline-hybrid.vim'
 
 # Create tmux powerline theme from vim powerline theme
 # (requires powerline/vim-airline/lightline)
@@ -128,7 +119,6 @@ repo = 'w0rp/ale'
 # Snippet
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-
 
 #------------------------------------------------------------------------------
 # Extending terminal emulator
