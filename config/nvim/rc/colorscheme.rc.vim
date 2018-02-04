@@ -1,4 +1,9 @@
 " colorscheme.vim --- setup colorscheme on vim/nvim
+"
+" depends on
+"  - vim-devicon
+"  - lightline.vim
+"  - lightline-hybrid.vim
 
 " terminal colors
 set t_Co=256
@@ -64,11 +69,11 @@ function! LightlineFilename()
 endfunction
 
 function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 
 function! LightlineFileencoding()

@@ -28,6 +28,9 @@ repo = 'altercation/vim-colors-solarized'
 script-type = 'colors'
 
 [[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
 
 [[plugins]]
