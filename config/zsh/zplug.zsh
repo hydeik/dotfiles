@@ -60,9 +60,9 @@ zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, from:github, as:theme
 
 POWERLEVEL9K_MODE="nerdfont-complete"
 
-POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\ue0b0"
-# Insert additional space after the separator (for Cica font)
-POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR="\ue0b2 "
+# POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\ue0b0"
+# -- Insert additional space after the separator char (for Cica font)
+# POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR="\ue0b2 "
 
 # Prompt
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -73,7 +73,7 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="\uf0da "
 
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(icons_test)
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir_writable dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs pyenv virtualenv disk_usage ram load)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs pyenv virtualenv load disk_usage ram)
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
 POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M:%S \uf073 %y-%m-%d}"
