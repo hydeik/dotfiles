@@ -22,29 +22,29 @@ case ${OSTYPE} in
             as:command, \
             from:gh-r, \
             rename-to:jq
-        
+
         zplug "junegunn/fzf-bin", \
             as:command, \
             from:gh-r, \
             rename-to:"fzf", \
             frozen:1
-        
+
         zplug "monochromegane/the_platinum_searcher", \
             as:command, \
             from:gh-r, \
             rename-to:"pt", \
             frozen:1
-        
+
         zplug "peco/peco", \
             as:command, \
             from:gh-r, \
             frozen:1
-        
+
         zplug "motemen/ghq", \
             as:command, \
             from:gh-r, \
             rename-to:ghq
-        
+
         zplug "jhawthorn/fzy", \
             as:command, \
             hook-build:"make && sudo make install"
@@ -57,9 +57,12 @@ esac
 #zplug mafredri/zsh-async, from:github
 #zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, from:github, as:theme
+
 POWERLEVEL9K_MODE="nerdfont-complete"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status os_icon context dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs virtualenv rbenv rvm load time)
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir_writable dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(ip disk_usage ram load)
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
 POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %y-%m-%d}"
