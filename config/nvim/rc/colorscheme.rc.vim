@@ -1,17 +1,23 @@
 " colorscheme.vim --- setup colorscheme on vim/nvim
+"
+" depends on
+"  - vim-devicon
+"  - lightline.vim
+"  - lightline-hybrid.vim
 
-" --- Colorscheme
+" terminal colors
+set t_Co=256
 if has('termguicolors')
   set termguicolors
 endif
 
+" --- Colorscheme
 set background=dark
-colorscheme dracula
-
+colorscheme hybrid
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'Dracula',
+      \ 'colorscheme': 'hybrid',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'filename' ] ],
@@ -63,11 +69,11 @@ function! LightlineFilename()
 endfunction
 
 function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 
 function! LightlineFileencoding()
