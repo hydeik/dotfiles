@@ -40,7 +40,7 @@ fi
 # 
 ## set keychain
 if [[ -x `which keychain` ]]; then
-   keychain ${HOME}/.ssh/id_rsa ${HOME}/.ssh/id_ecdsa ${HOME}/.ssh/id_ecdsa_github 2> /dev/null
+   keychain ${HOME}/.ssh/id_ed25519 ${HOME}/.ssh/id_github_ed25519 2> /dev/null
    source ${HOME}/.keychain/${HOST}-sh
 fi
 
