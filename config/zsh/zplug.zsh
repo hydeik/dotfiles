@@ -56,8 +56,9 @@ esac
 # Theme
 #zplug mafredri/zsh-async, from:github
 #zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
-zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, from:github, as:theme
 
+# Powerlevel9k -- themes using Powerline fonts
+zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, from:github, as:theme
 POWERLEVEL9K_MODE="nerdfont-complete"
 
 # POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\ue0b0"
@@ -65,15 +66,16 @@ POWERLEVEL9K_MODE="nerdfont-complete"
 # POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR="\ue0b2 "
 
 # Prompt
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="\n"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="\uf0da "
 
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(icons_test)
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir_writable dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs pyenv virtualenv load disk_usage ram)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs pyenv virtualenv load ram disk_usage)
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
 POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M:%S \uf073 %y-%m-%d}"
