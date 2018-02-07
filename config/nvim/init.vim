@@ -23,15 +23,22 @@ let s:config_home = empty($XDG_CONFIG_HOME) ? expand('~/.config')      : $XDG_CO
 let s:cache_home  = empty($XDG_CACHE_HOME)  ? expand('~/.cache')       : $XDG_CACHE_HOME
 let s:data_home   = empty($XDG_DATA_HOME)   ? expand('~/.local/share') : $XDG_DATA_HOME
 
-" Set python2/python3 interpretor (required to setup some plugins)
-let s:workon_home = empty($WORKON_HOME) ? expand('~/.virtualenv') : $WORKON_HOME
-let g:python3_host_prog = s:workon_home . '/neovim3/.venv/bin/python3'
-let g:python_host_prog  = s:workon_home . '/neovim2/.venv/bin/python2'
+"
+" Set python2/python3 interpretor (required to setup plugins using neovim
+" python API)
+"
+" Create virtualenvs for and only for neovim (+ development tools) and set
+" python3_host_prog and python_host_prog to point the corresponding python
+" interpreters.
+"
+let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
+let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
 
 "----------------------------------------------------------------------------
 " Utility function(s)
 "----------------------------------------------------------------------------
 " Load vim scripts inside 'nvim/rc'
+
 let s:rc_dir = s:config_home . '/nvim/rc'
 function! s:source_rc(file)
   let rc_file = s:rc_dir . '/' . a:file
@@ -62,7 +69,6 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)  " execute ':filetype off' automatically
   " Configuration file for plugins
   call dein#load_toml(s:toml, {'lazy': 0})
-  " call dein#load_toml(s:lazy_toml, {'lazy': 1})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
   call dein#end()              " 'runtimepath' is changed after dein#end()
@@ -83,4 +89,8 @@ syntax on " sytax on|enable should be set after setting whole 'runtimepath'
 call s:source_rc('options.rc.vim')
 call s:source_rc('mappings.rc.vim')
 call s:source_rc('colorscheme.rc.vim')
+
+" Do not allow run some commands from vimrc or exrc when they are not owned by
+" you. You better set 'secure' at the end of .vimrc or init.vim
+set secure
 

@@ -20,6 +20,7 @@ let g:lightline = {
       \ 'colorscheme': 'hybrid',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'pyenv' ],
       \             [ 'gitbranch', 'filename' ] ],
       \   'right': [ ['percent', 'lineinfo'],
       \              ['fileformat', 'fileencoding', 'filetype'] ],
@@ -33,6 +34,7 @@ let g:lightline = {
       \   'filetype': 'LightlineFiletype',
       \   'fileencoding': 'LightlineFileencoding',
       \   'mode': 'LightlineMode',
+      \   'pyenv': 'LightlinePyenv',
       \ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
@@ -85,5 +87,9 @@ function! LightlineMode()
         \ &ft == 'vimfiler' ? 'VimFiler' :
         \ &ft == 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! LightlinePyenv()
+  return "\ue73c " . pyenv#info#preset('short')[1:]
 endfunction
 

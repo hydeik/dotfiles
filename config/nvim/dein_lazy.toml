@@ -9,6 +9,7 @@ hook_source = '''
   let g:deoplete#enable_at_startup = 1
   source $XDG_CONFIG_HOME/nvim/rc/plugins/deoplete.rc.vim
 '''
+hook_post_update = ':UpdateRemotePlugins'
 
 #------------------------------------------------------------------------------
 # Snippets
@@ -65,6 +66,7 @@ hook_add = '''
   " command history
   " nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
 '''
+hook_post_update = ':UpdateRemotePlugins'
 
 [[plugins]]
 repo = 'Jagua/vim-denite-ghq'
@@ -94,19 +96,18 @@ hook_add = '''
   call InitCaw()
 '''
 
-# #-----------------------------------------------------------------------------
-# # Sticky shift in Vim
-# #-----------------------------------------------------------------------------
-# [[plugins]]
-# repo = 'lambdalisue/pinkyless.vim'
-# on_if = true
+#-----------------------------------------------------------------------------
+# Programming
+#-----------------------------------------------------------------------------
+repo = 'lambdalisue/vim-pyenv'
+# Do not load vim-pyenv until *.py is opened and make sure that it is loaded
+# after jedi-vim is loaded.
+# depends = 'jedi-vim'
+on_ft = ['python', 'python3']
 
 #-----------------------------------------------------------------------------
 # SKK
 #-----------------------------------------------------------------------------
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
 
 [[plugins]]
 repo = 'tyru/eskk.vim'
