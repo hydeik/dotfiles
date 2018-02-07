@@ -37,6 +37,8 @@ fpath=(
     $HOME/.zsh/Completion(N-/)
     $HOME/.zsh/functions(N-/)
     $HOME/.zsh/plugins/zsh-completions(N-/)
+    $ZDOTDIR/functions(N-/)
+    $ZDOTDIR/plugins/zsh-completions(N-/)
     /usr/local/share/zsh/site-functions(N-/)
     $fpath[@]
 )
