@@ -94,8 +94,8 @@ set display=lastline
 set laststatus=2
 " Show (partial) command in the last line of the screen.
 set showcmd
-" Show current mode (insert, visutl, normal, etc.)
-set showmode
+" Do not show current mode (insert, visutl, normal, etc.) -> set by lightline
+set noshowmode
 " Display title on the window (e.g. terminal)
 set title
 " " Highlight the screen line of the cursor

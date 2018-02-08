@@ -9,18 +9,7 @@ repo = 'Shougo/dein.vim'
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
-hook_post_update = '''
-  if dein#util#_is_windows()
-    let cmd = 'tools\\update-dll-mingw'
-  elseif dein#util#_is_cygwin()
-    let cmd = 'make -f make_cygwin.mak'
-  elseif executable('gmake')
-    let cmd = 'gmake'
-  else
-    let cmd = 'make'
-  endif
-  let g:dein#plugin.build = cmd
-'''
+build = 'make'
 
 #------------------------------------------------------------------------------
 # Highlight
@@ -53,6 +42,14 @@ repo = 'itchyny/lightline.vim'
 
 [[plugins]]
 repo = 'cocopon/lightline-hybrid.vim'
+
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+hook_add = '''
+  let g:lightline#ale#indicator_warnings = "\uf071"
+  let g:lightline#ale#indicator_errors   = "\uf00d"
+  let g:lightline#ale#indicator_ok       = "\uf00c"
+'''
 
 # Create tmux powerline theme from vim powerline theme
 # (requires powerline/vim-airline/lightline)

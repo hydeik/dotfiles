@@ -22,8 +22,10 @@ let g:lightline = {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'pyenv' ],
       \             [ 'gitbranch', 'filename' ] ],
-      \   'right': [ ['percent', 'lineinfo'],
-      \              ['fileformat', 'fileencoding', 'filetype'] ],
+      \   'right': [ [ 'linter_errors', 'linter_warnings', 'linter_ok' ],
+      \              [ 'percent' ],
+      \              [ 'lineinfo' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
       \ },
       \ 'component_function': {
       \   'modified': 'LightlineModified',
@@ -35,6 +37,16 @@ let g:lightline = {
       \   'fileencoding': 'LightlineFileencoding',
       \   'mode': 'LightlineMode',
       \   'pyenv': 'LightlinePyenv',
+      \ },
+      \ 'component_expand': {
+      \   'linter_warnings': 'lightline#ale#warnings',
+      \   'linter_errors': 'lightline#ale#errors',
+      \   'linter_ok': 'lightline#ale#ok',
+      \ },
+      \ 'component_type': {
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error',
+      \   'linter_ok': 'left',
       \ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
