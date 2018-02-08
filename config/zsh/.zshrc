@@ -14,7 +14,7 @@ export ZPLUG_HOME=${XDG_DATA_HOME}/zplug/repos/zplug/zplug
 if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
     export ZPLUG_LOADFILE=${ZDOTDIR}/zplug.zsh
     export ZPLUG_USE_CACHE=true
-    export ZPLUG_CACHE_DIR=${XDG_CACHE_HOME}/zplug 
+    export ZPLUG_CACHE_DIR=${XDG_CACHE_HOME}/zplug
     export ZPLUG_REPOS=${XDG_DATA_HOME}/zplug/repos
     #export ZPLUG_BIN=${HOME}/bin
 
@@ -32,27 +32,26 @@ if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
     zplug load
 fi
 
-# 
-# stty    erase   '^H'
-# stty    intr    '^C'
-# stty    susp    '^Z'
-# 
-# 
 ## set keychain
 if [[ -x `which keychain` ]]; then
    keychain ${HOME}/.ssh/id_ed25519 ${HOME}/.ssh/id_github_ed25519 2> /dev/null
    source ${HOME}/.keychain/${HOST}-sh
 fi
 
+#
+# stty    erase   '^H'
+# stty    intr    '^C'
+# stty    susp    '^Z'
+#
 
 ############################################################
 ## プロンプト設定
 # autoload -U colors; colors      # ${fg[red]}形式のカラー書式を有効化
-# 
+#
 # setopt prompt_subst				# ESCエスケープを有効にする
-# 
+#
 # if [[ $COLORTERM == 1 ]]; then
-#     if [[ $UID == 0 ]] ; then 
+#     if [[ $UID == 0 ]] ; then
 # 		PSCOLOR='01;01;31'
 #     else
 # 		PSCOLOR='01;01;32'		# 下線、緑
@@ -114,6 +113,7 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 ## Machine local settings
 ##
 [[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
+[[ -f ${ZDOTDIR}/.zshrc_local ]] && . ${ZDOTDIR}/.zshrc_local
 
 # # for profiling
 # if type zprof > /dev/null 2>&1; then
