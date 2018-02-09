@@ -9,7 +9,25 @@ repo = 'Shougo/dein.vim'
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
-build = 'make'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'tools\\update-dll-mingw'
+  elseif executable('gmake')
+    let cmd = 'gmake'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+
+#------------------------------------------------------------------------------
+# Vim help in Japanese
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+hook_add = '''
+  set helplang=ja,en
+'''
 
 #------------------------------------------------------------------------------
 # Highlight
@@ -20,8 +38,39 @@ repo = 'Yggdroot/indentLine'
 [[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
 
+#------------------------------------------------------------------------------
+# Textobj extensions
+#------------------------------------------------------------------------------
 [[plugins]]
 repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+depends = 'vim-textobj-user'
+
+#------------------------------------------------------------------------------
+# Operator extensions
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+depends = ['vim-operator-user']
+hood_add = '''
+  " operator mappings
+  map <silent>sa <Plug>(operator-surround-append)
+  map <silent>sd <Plug>(operator-surround-delete)
+  map <silent>sr <Plug>(operator-surround-replace)
+'''
 
 #------------------------------------------------------------------------------
 # Colorscheme
