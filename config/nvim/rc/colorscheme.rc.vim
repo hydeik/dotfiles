@@ -13,18 +13,21 @@ endif
 
 " --- Colorscheme
 set background=dark
-colorscheme hybrid
+colorscheme dracula
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'hybrid',
+      \ 'colorscheme': 'Dracula',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'pyenv' ],
       \             [ 'gitstatus', 'filename' ] ],
-      \   'right': [ [ 'percent' ],
-      \              [ 'lineinfo' ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
       \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+      \ },
+      \ 'component' : {
+      \   'lineinfo': "\ue0a1 %3l:%-2v"
       \ },
       \ 'component_function': {
       \   'modified': 'LightlineModified',
@@ -101,9 +104,9 @@ function! LightlineGitstatus()
     let ahead = gina#component#traffic#ahead()
     let behind = gina#component#traffic#behind()
     return  "\ue725 " . branch .
-          \ (winwidth(0) < 90 ? '' :
-          \   (ahead      ? " \uf062 ".ahead      : '') .
-          \   (behind     ? " \uf063 ".behind     : '') .
+          \ (winwidth(0) < 100 ? '' :
+          \   (ahead      ? " \uf01b ".ahead      : '') .
+          \   (behind     ? " \uf01a ".behind     : '') .
           \   (staged     ? " \uf055 ".staged     : '') .
           \   (unstaged   ? " \uf06a ".unstaged   : '') .
           \   (conflicted ? " \uf057 ".conflicted : '') )
@@ -116,6 +119,6 @@ function! LightlineGitbranch()
 endfunction
 
 function! LightlinePyenv()
-  return " \ue73c " . pyenv#info#preset('short')[1:]
+  return &filetype =~ 'python' ? " \ue73c " . pyenv#info#preset('short')[1:] : ''
 endfunction
 
