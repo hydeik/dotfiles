@@ -21,16 +21,15 @@ let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'pyenv' ],
-      \             [ 'gitbranch', 'filename' ] ],
-      \   'right': [ [ 'linter_errors', 'linter_warnings', 'linter_ok' ],
-      \              [ 'percent' ],
+      \             [ 'gitstatus', 'filename' ] ],
+      \   'right': [ [ 'percent' ],
       \              [ 'lineinfo' ],
       \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
       \ },
       \ 'component_function': {
       \   'modified': 'LightlineModified',
       \   'readonly': 'LightlineReadonly',
-      \   'gitbranch': 'gina#component#repo#branch',
+      \   'gitstatus': 'LightlineGitstatus',
       \   'filename': 'LightlineFilename',
       \   'fileformat': 'LightlineFileformat',
       \   'filetype': 'LightlineFiletype',
@@ -38,34 +37,24 @@ let g:lightline = {
       \   'mode': 'LightlineMode',
       \   'pyenv': 'LightlinePyenv',
       \ },
-      \ 'component_expand': {
-      \   'linter_warnings': 'lightline#ale#warnings',
-      \   'linter_errors': 'lightline#ale#errors',
-      \   'linter_ok': 'lightline#ale#ok',
-      \ },
-      \ 'component_type': {
-      \   'linter_warnings': 'warning',
-      \   'linter_errors': 'error',
-      \   'linter_ok': 'left',
-      \ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
       \ }
 
 function! LightlineModified()
-  if &filetype == "help"
+  if &filetype =~ "help\|vimfiler\|gundo"
     return ""
   elseif &modified
     return "+"
   elseif &modifiable
     return ""
   else
-    return ""
+    return "-"
   endif
 endfunction
 
 function! LightlineReadonly()
-  if &filetype == "help"
+  if &filetype !~ "help\|vimfiler\|gundo"
     return ""
   elseif &readonly
     return "\ue0a2"
@@ -101,7 +90,32 @@ function! LightlineMode()
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
+function! LightlineGitstatus()
+  let branch = gina#component#repo#branch()
+  if branch == ''
+    return ''
+  else
+    let staged = gina#component#status#staged()
+    let unstaged = gina#component#status#unstaged()
+    let conflicted = gina#component#status#conflicted()
+    let ahead = gina#component#traffic#ahead()
+    let behind = gina#component#traffic#behind()
+    return  "\ue725 " . branch .
+          \ (winwidth(0) < 90 ? '' :
+          \   (ahead      ? " \uf062 ".ahead      : '') .
+          \   (behind     ? " \uf063 ".behind     : '') .
+          \   (staged     ? " \uf055 ".staged     : '') .
+          \   (unstaged   ? " \uf06a ".unstaged   : '') .
+          \   (conflicted ? " \uf057 ".conflicted : '') )
+  end
+endfunction
+
+function! LightlineGitbranch()
+  let branch = gina#component#repo#branch()
+  return branch != '' ? " \ue725 " . branch : ''
+endfunction
+
 function! LightlinePyenv()
-  return "\ue73c " . pyenv#info#preset('short')[1:]
+  return " \ue73c " . pyenv#info#preset('short')[1:]
 endfunction
 
