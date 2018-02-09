@@ -62,8 +62,8 @@ if &runtimepath !~# '/dein.vim'
   execute 'set runtimepath^=' . s:dein_repo_dir
 endif
 
-let s:toml      = s:config_home . '/nvim/dein.toml'
-let s:lazy_toml = s:config_home . '/nvim/dein_lazy.toml'
+let s:toml      = s:config_home . '/nvim/rc/dein.toml'
+let s:lazy_toml = s:config_home . '/nvim/rc/dein_lazy.toml'
 
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)  " execute ':filetype off' automatically
