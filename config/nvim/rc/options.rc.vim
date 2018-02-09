@@ -14,11 +14,11 @@ set incsearch
 " Program used to 'K' command
 set keywordprg=:help
 
-" ----- Tab
-set smarttab
-set expandtab
-set tabstop=4
-set shiftwidth=4
+" ----- Tabs, Indentations -> use editorconfig
+" set smarttab
+" set expandtab
+" set tabstop=4
+" set shiftwidth=4
 " set softtabstop=4
 
 " ----- Files
