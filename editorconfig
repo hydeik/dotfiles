@@ -1,0 +1,59 @@
+# Default EditorConfig settings: [http://editorconfig.org/]
+
+root = true
+
+[*]
+
+# Use space for indentation
+indent_style = space
+# Default indentation size
+indent_size = 4
+# Use Unix line ending (LF)
+end_of_line = lf
+# Files are UTF-8 encoded
+charset = utf-8
+# No white space at the end-of-line
+trim_trailing_whitespace = true
+# A file must end with an empty line - this is good for version control system
+insert_final_newline = true
+
+# Markdown recognizes whitespaces at the end of line as line break.
+[*.md]
+trim_trailing_whitespace = false
+
+# The JSON files contain newlines inconsistently
+[*.json]
+indent_size = 2
+insert_final_newline = ignore
+
+[*.{yaml,yml}]
+indent_size = 2
+
+[*.{html,htm}]
+indent_size = 2
+
+[*.vim]
+indent_size = 2
+
+[*.py]
+max_line_length = 79
+
+[*.rb]
+indent_size = 2
+max_line_length = 79
+
+[*.{F,f,F90,f90,F95,f95,F08,f08}]
+indent_size = 2
+
+# Minified JavaScript files shouldn't be changed
+[**.min.js]
+indent_style = ignore
+insert_final_newline = ignore
+
+# Makefile use tabs for indentation
+[{Makefile,makefile,**.mk}]
+indent_style = tab
+
+# Batch file use tabs for indentation
+[*.bat]
+indent_style = tab

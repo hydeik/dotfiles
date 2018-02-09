@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CWD=`pwd`
-DOTFILES='gitconfig latexmk tmux.conf vimrc zshenv'
+DOTFILES='editorconfig gitconfig latexmk tmux.conf vimrc zshenv'
 
 if [ -z "${XDG_CONFIG_HOME}" ]
 then
