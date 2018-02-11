@@ -9,7 +9,7 @@ hook_source = '''
   let g:deoplete#enable_at_startup = 1
   source $XDG_CONFIG_HOME/nvim/rc/plugins/deoplete.rc.vim
 '''
-hook_post_update = ':UpdateRemotePlugins'
+hook_post_update = ':UpdateRemotePlugins()'
 
 #------------------------------------------------------------------------------
 # Snippets
@@ -37,10 +37,10 @@ hook_source = '''
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype']
-on_event = ['BufNewFile', 'BufRead']
+# [[plugins]]
+# repo = 'osyo-manga/vim-precious'
+# depends = ['context_filetype.vim']
+# on_event = ['BufNewFile', 'BufRead']
 
 #------------------------------------------------------------------------------
 # Denite

@@ -113,11 +113,6 @@ function! LightlineGitstatus()
   end
 endfunction
 
-function! LightlineGitbranch()
-  let branch = gina#component#repo#branch()
-  return branch != '' ? " \ue725 " . branch : ''
-endfunction
-
 function! LightlinePyenv()
   return &filetype =~ 'python' ? " \ue73c " . pyenv#info#preset('short')[1:] : ''
 endfunction
