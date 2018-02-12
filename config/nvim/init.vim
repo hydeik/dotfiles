@@ -48,6 +48,12 @@ function! s:source_rc(file)
 endfunction
 
 "----------------------------------------------------------------------------
+" Leader and Localleader keys
+"----------------------------------------------------------------------------
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
+
+"----------------------------------------------------------------------------
 " Dein.vim -- Dark powered Vim/Neovim plugin manager.
 "----------------------------------------------------------------------------
 " Path to dein.vim directory

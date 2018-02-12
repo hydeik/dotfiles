@@ -33,12 +33,6 @@ hook_add = '''
 repo = 'mattn/learn-vimscript'
 
 #------------------------------------------------------------------------------
-# Leader Guide -- Display vim keymaps
-#------------------------------------------------------------------------------
-repo = 'hecal3/vim-leader-guide'
-
-
-#------------------------------------------------------------------------------
 # Highlight
 #------------------------------------------------------------------------------
 [[plugins]]
@@ -168,10 +162,10 @@ hook_add = '''
     \ {'noremap': 1, 'silent': 1}
     \)
 
-  nnoremap <Space>gs :<C-u>Gina status<CR>
-  nnoremap <Space>gb :<C-u>Gina branch<CR>
-  nnoremap <Space>gc :<C-u>Gina commit<CR>
-  nnoremap <Space>gl :<C-u>Gina log<CR>
+  nnoremap <Leader>gs :<C-u>Gina status<CR>
+  nnoremap <Leader>gb :<C-u>Gina branch<CR>
+  nnoremap <Leader>gc :<C-u>Gina commit<CR>
+  nnoremap <Leader>gl :<C-u>Gina log<CR>
 '''
 
 #------------------------------------------------------------------------------
@@ -204,12 +198,4 @@ repo = 'w0rp/ale'
 # Snippet
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-
-#------------------------------------------------------------------------------
-# Extending terminal emulator
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'kassio/neoterm'
-hook_add = '''
-'''
 
