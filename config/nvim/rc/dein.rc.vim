@@ -44,12 +44,3 @@ if !has('vim_starting')
 endif
 
 autocmd MyVimrc VimEnter * call dein#call_hook('post_source')
-
-function! s:check_lazy_plugins() abort
-  let check_lazy_plugins = dein#check_lazy_plugins()
-  if len(check_lazy_plugins) > 0
-    echom 'There are nonsense lazy plugins: ' . string(check_lazy_plugins)
-  endif
-endfunction
-
-call s:check_lazy_plugins()
