@@ -21,6 +21,40 @@ hook_post_update = '''
 '''
 
 #------------------------------------------------------------------------------
+# Colorscheme
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'flazz/vim-colorschemes'
+script-type = 'colors'
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+script-type = 'colors'
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'cocopon/lightline-hybrid.vim'
+
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+hook_add = '''
+  " Set icon font
+  let g:lightline#ale#indicator_warnings = "\uf071"
+  let g:lightline#ale#indicator_errors   = "\uf00d"
+  let g:lightline#ale#indicator_ok       = "\uf00c"
+'''
+
+# Create tmux powerline theme from vim powerline theme
+# (requires powerline/vim-airline/lightline)
+[[plugins]]
+repo = 'edkolev/tmuxline.vim'
+
+#------------------------------------------------------------------------------
 # Vim help in Japanese
 #------------------------------------------------------------------------------
 [[plugins]]
@@ -55,10 +89,6 @@ depends = 'vim-textobj-user'
 repo = 'kana/vim-textobj-entire'
 depends = 'vim-textobj-user'
 
-[[plugins]]
-repo = 'kana/vim-textobj-entire'
-depends = 'vim-textobj-user'
-
 #------------------------------------------------------------------------------
 # Operator extensions
 #------------------------------------------------------------------------------
@@ -68,45 +98,70 @@ repo = 'kana/vim-operator-user'
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
 depends = ['vim-operator-user']
+on_event = 'InsertEnter'
 hood_add = '''
   " operator mappings
-  map <silent>sa <Plug>(operator-surround-append)
-  map <silent>sd <Plug>(operator-surround-delete)
-  map <silent>sr <Plug>(operator-surround-replace)
+  map <silent>ys <Plug>(operator-surround-append)
+  map <silent>ds <Plug>(operator-surround-delete)
+  map <silent>cs <Plug>(operator-surround-replace)
 '''
 
 #------------------------------------------------------------------------------
-# Colorscheme
+# Enhanced commands
+#------------------------------------------------------------------------------
+# powerful repeat '.'
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+#------------------------------------------------------------------------------
+# Increment
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'flazz/vim-colorschemes'
-script-type = 'colors'
+repo = 'osyo-manga/vim-anzu'
 
 [[plugins]]
-repo = 'altercation/vim-colors-solarized'
-script-type = 'colors'
-
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-
-[[plugins]]
-repo = 'cocopon/lightline-hybrid.vim'
-
-[[plugins]]
-repo = 'maximbaz/lightline-ale'
+repo = 'haya14busa/is.vim'
+depends = 'vim-anzu'
 hook_add = '''
-  let g:lightline#ale#indicator_warnings = "\uf071"
-  let g:lightline#ale#indicator_errors   = "\uf00d"
-  let g:lightline#ale#indicator_ok       = "\uf00c"
+  map n  <Plug>(issan-nohl)<Plug>(anzu-n-with-echo)
+  map N  <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
 '''
 
-# Create tmux powerline theme from vim powerline theme
-# (requires powerline/vim-airline/lightline)
+#------------------------------------------------------------------------------
+# EasyMotion
+#------------------------------------------------------------------------------
+# "Hit a hint"
 [[plugins]]
-repo = 'edkolev/tmuxline.vim'
+repo = 'easymotion/vim-easymotion'
+depends = ['vim-repeat']
+hook_add = '''
+  " disable default mappings
+  let g:EasyMotion_do_mapping = 0
+
+  " Smart case
+  let g:EasyMotion_smartcase = 1
+
+  " Smart sign: ('1' matches '1' and '!', '!' matches '!' only.)
+  let g:EasyMotion_smartsign_us = 1 " For US keyboard layout
+
+  " Enable migemo search (for Japanese texts)
+  let g:EasyMotion_use_migemo = 1
+
+  " Move to {char}
+  map  <Leader>f <Plug>(easymotion-bd-f)
+  nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+  " s{char}{char} to move to {char}{char}
+  nmap s <Plug>(easymotion-overwin-f2)
+
+  " Move to line
+  map  <Leader>L <Plug>(easymotion-bd-jk)
+  nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+  " Move to word
+  map  <Leader>w <Plug>(easymotion-bd-w)
+  nmap <Leader>w <Plug>(easymotion-overwin-w)
+'''
 
 #------------------------------------------------------------------------------
 # Filetypes

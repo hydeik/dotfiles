@@ -67,10 +67,10 @@ on_cmd = 'Denite'
 hook_source = 'source $XDG_CONFIG_HOME/nvim/rc/plugins/denite.rc.vim'
 hook_add = '''
   " Substitute search commands by denite
-  nnoremap <silent> / :<C-u>Denite
-    \ -buffer-name=search -auto-highlight line<CR>
-  nnoremap <silent> * :<C-u>DeniteCursorWord
-    \ -buffer-name=search -auto-highlight -mode=normal line<CR>
+  " nnoremap <silent> / :<C-u>Denite
+  "   \ -buffer-name=search -auto-highlight line<CR>
+  " nnoremap <silent> * :<C-u>DeniteCursorWord
+  "   \ -buffer-name=search -auto-highlight -mode=normal line<CR>
 
   " command history
   " nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
@@ -88,8 +88,10 @@ on_source = 'denite.nvim'
 repo = 'tyru/caw.vim'
 on_map = {nx = '<Plug>'}
 hook_add = '''
-  nmap <Leader>c  <Plug>(caw:prefix)
-  vmap <Leader>c  <Plug>(caw:prefix)
+  nmap <buffer> <Leader>c  <Plug>(caw:prefix)
+  xmap <buffer> <Leader>c  <Plug>(caw:prefix)
+  nmap <buffer> <Leader>cc  <Plug>(caw:hatpos:toggle)
+  xmap <buffer> <Leader>cc  <Plug>(caw:hatpos:toggle)
 '''
 
 #-----------------------------------------------------------------------------
