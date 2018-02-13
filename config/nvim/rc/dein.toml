@@ -5,22 +5,6 @@
 repo = 'Shougo/dein.vim'
 
 #------------------------------------------------------------------------------
-# Asyncronous execution
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-hook_post_update = '''
-  if dein#util#_is_windows()
-    let cmd = 'tools\\update-dll-mingw'
-  elseif executable('gmake')
-    let cmd = 'gmake'
-  else
-    let cmd = 'make'
-  endif
-  let g:dein#plugin.build = cmd
-'''
-
-#------------------------------------------------------------------------------
 # Colorscheme
 #------------------------------------------------------------------------------
 [[plugins]]
@@ -98,7 +82,7 @@ repo = 'kana/vim-operator-user'
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
 depends = ['vim-operator-user']
-on_event = 'InsertEnter'
+#on_event = 'InsertEnter'
 hood_add = '''
   " operator mappings
   map <silent>ys <Plug>(operator-surround-append)
@@ -123,7 +107,7 @@ repo = 'osyo-manga/vim-anzu'
 repo = 'haya14busa/is.vim'
 depends = 'vim-anzu'
 hook_add = '''
-  map n  <Plug>(issan-nohl)<Plug>(anzu-n-with-echo)
+  map n  <Plug>(is-nohl)<Plug>(anzu-n-with-echo)
   map N  <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
 '''
 
@@ -161,6 +145,32 @@ hook_add = '''
   " Move to word
   map  <Leader>w <Plug>(easymotion-bd-w)
   nmap <Leader>w <Plug>(easymotion-overwin-w)
+'''
+
+#-----------------------------------------------------------------------------
+# Smart commenter
+#-----------------------------------------------------------------------------
+[[plugins]]
+repo = 'tyru/caw.vim'
+hook_add = '''
+  " nmap <buffer> <Leader>c   <Plug>(caw:prefix)
+  " xmap <buffer> <Leader>c   <Plug>(caw:prefix)
+  " nmap <buffer> <Leader>cc  <Plug>(caw:hatpos:toggle)
+  " xmap <buffer> <Leader>cc  <Plug>(caw:hatpos:toggle)
+  let g:lmap.c = {
+    \ 'name' : 'Comments',
+    \ 'c' : ['call feedkeys("\<Plug>(caw:hatpos:toggle)",       "nx")', 'Toggle'],
+    \ 'i' : ['call feedkeys("\<Plug>(caw:hatpos:comment)",      "nx")', 'Comment(^)'],
+    \ 'ui': ['call feedkeys("\<Plug>(caw:hatpos:uncomment)",    "nx")', 'Uncomment(^)'],
+    \ 'I' : ['call feedkeys("\<Plug>(caw:zeropos:comment)",     "nx")', 'Comment(0)'],
+    \ 'uI': ['call feedkeys("\<Plug>(caw:zeropos:uncomment)",   "nx")', 'Uncomment(0)'],
+    \ 'a' : ['call feedkeys("\<Plug>(caw:dollarpos:comment)",   "nx")', 'Comment($)'],
+    \ 'ua': ['call feedkeys("\<Plug>(caw:dollarpos:uncomment)", "nx")', 'Uncomment($)'],
+    \ 'w' : ['call feedkeys("\<Plug>(caw:wrap:comment)",        "nx")', 'Comment(w)'],
+    \ 'uw': ['call feedkeys("\<Plug>(caw:wrap:uncomment)",      "nx")', 'Uncomment(w)'],
+    \ 'n' : ['call feedkeys("\<Plug>(caw:jump:comment-next)",   "nx")', 'Comment(w)'],
+    \ 'p' : ['call feedkeys("\<Plug>(caw:jump:comment-prev)",   "nx")', 'Uncomment(w)'],
+    \ }
 '''
 
 #------------------------------------------------------------------------------
@@ -217,33 +227,19 @@ hook_add = '''
     \ {'noremap': 1, 'silent': 1}
     \)
 
-  nnoremap <Leader>gs :<C-u>Gina status<CR>
-  nnoremap <Leader>gb :<C-u>Gina branch<CR>
-  nnoremap <Leader>gc :<C-u>Gina commit<CR>
-  nnoremap <Leader>gl :<C-u>Gina log<CR>
-'''
-
-#------------------------------------------------------------------------------
-# Programming
-#------------------------------------------------------------------------------
-# Language server protocol (LSP) client
-[[plugins]]
-repo = 'autozimu/LanguageClient-neovim'
-rev = 'next'
-build = 'bash install.sh'
-on_ft = ['c', 'cpp', 'python', 'rust']
-hook_add = '''
-  set hidden
-  let g:LanguageClient_serverCommands = {
-    \ 'c':   ['/usr/local/opt/llvm/bin/clangd'],
-    \ 'cpp': ['/usr/local/opt/llvm/bin/clangd'],
-    \ 'python': ['~/.virtualenv/neovim3/.venv/bin/pyls'],
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+  " nnoremap <Leader>gs :<C-u>Gina status<CR>
+  " nnoremap <Leader>gb :<C-u>Gina branch<CR>
+  " nnoremap <Leader>gc :<C-u>Gina commit<CR>
+  " nnoremap <Leader>gl :<C-u>Gina log<CR>
+  let g:lmap.g = {
+    \ 'name' : 'Git menu',
+    \ 's' : ['Gina status', 'Git status'],
+    \ 'd' : ['Gina diff',   'Git diff'],
+    \ 'l' : ['Gina log',    'Git log'],
+    \ 'c' : ['Gina commit', 'Git commit'],
+    \ 'b' : ['Gina branch', 'Git branch'],
+    \ 'B' : ['Gina blame',  'Git blame'],
     \ }
-  let g:LanguageClient_autoStart = 1
-  "nnoremap <silent> K    :call LanguageClient_textDocument_hover()<CR>
-  "nnoremap <silent> gd   :call LanguageClient_textDocument_definition()<CR>
-  "nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 '''
 
 # Linter

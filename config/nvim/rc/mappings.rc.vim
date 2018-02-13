@@ -67,8 +67,8 @@ nnoremap - <C-x>
 
 " [Space]: Other useful commands "{{{
 " Smart space mapping.
-nmap  <Space>   [Space]
-nnoremap  [Space]   <Nop>
+" nmap  <Space>   [Space]
+" nnoremap  [Space]   <Nop>
 "}}}
 
 " Stop highlighting by <ESC><ESC>

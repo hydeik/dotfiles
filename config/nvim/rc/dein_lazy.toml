@@ -1,4 +1,20 @@
 #------------------------------------------------------------------------------
+# Asyncronous execution
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'tools\\update-dll-mingw'
+  elseif executable('gmake')
+    let cmd =
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+
+#------------------------------------------------------------------------------
 # Auto completion
 #------------------------------------------------------------------------------
 [[plugins]]
@@ -74,25 +90,27 @@ hook_add = '''
 
   " command history
   " nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
+
+  noremap [Denite]  <Nop>
+  nmap <Leader>d    [Denite]
+
+  nnoremap [Denite]h :<C-u>Denite help<CR>
+
+  nnoremap [Denite]r
+      \ :<C-u>Denite -buffer-name=register
+      \ register neoyank<CR>
+  xnoremap [Denite]r
+      \ :<C-u>Denite -default-action=replace -buffer-name=register
+      \ register neoyank<CR>
+
+  nnoremap [Denite]g
+      \ :<C-u>Denite -buffer-name=search -no-empty -mode=normal grep<CR>
 '''
 hook_post_update = ':UpdateRemotePlugins'
 
 [[plugins]]
 repo = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
-
-#-----------------------------------------------------------------------------
-# Smart commenter
-#-----------------------------------------------------------------------------
-[[plugins]]
-repo = 'tyru/caw.vim'
-on_map = {nx = '<Plug>'}
-hook_add = '''
-  nmap <buffer> <Leader>c  <Plug>(caw:prefix)
-  xmap <buffer> <Leader>c  <Plug>(caw:prefix)
-  nmap <buffer> <Leader>cc  <Plug>(caw:hatpos:toggle)
-  xmap <buffer> <Leader>cc  <Plug>(caw:hatpos:toggle)
-'''
 
 #-----------------------------------------------------------------------------
 # Programming
@@ -160,4 +178,50 @@ hook_source = '''
         \ EskkMap -remap jj <ESC>
 '''
 
+#------------------------------------------------------------------------------
+# Programming
+#------------------------------------------------------------------------------
+# Language server protocol (LSP) client
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+rev = 'next'
+build = 'bash install.sh'
+on_ft = ['c', 'cpp', 'python', 'rust']
+hook_add = '''
+  set hidden
+  let g:LanguageClient_serverCommands = {
+    \ 'c':   ['/usr/local/opt/llvm/bin/clangd'],
+    \ 'cpp': ['/usr/local/opt/llvm/bin/clangd'],
+    \ 'python': ['~/.virtualenv/neovim3/.venv/bin/pyls'],
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ }
+  let g:LanguageClient_autoStart = 1
+  "nnoremap <silent> K    :call LanguageClient_textDocument_hover()<CR>
+  "nnoremap <silent> gd   :call LanguageClient_textDocument_definition()<CR>
+  "nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+'''
+
+#------------------------------------------------------------------------------
+# Leader guide
+#------------------------------------------------------------------------------
+repo = 'hecal3/vim-leader-guide'
+on_event = ['VimEnter']
+hook_post_source = '''
+  let g:topdict = {}
+  let g:topdict[' '] = g:lmap
+  let g:topdict[' ']['name'] = '<leader>'
+  let g:topdict[','] = g:llmap
+  let g:topdict[',']['name'] = '<localleader>'
+
+  " register it with the guide:
+  call leaderGuide#register_prefix_descriptions("", "g:topdict")
+
+  " define mappings:
+  nnoremap <silent> <Leader>  :<C-u>LeaderGuide       '<Space>'<CR>
+  vnoremap <silent> <Leader>  :<C-u>LeaderGuideVisual '<Space>'<CR>
+  map               <Leader>.  <Plug>leaderguide-global
+  nnoremap <LocalLeader>      :<C-u>LeaderGuide        ','<CR>
+  vnoremap <LocalLeader>      :<C-u>LeaderGuideVisual  ','<CR>
+  map      <LocalLeader>.      <Plug>leaderguide-buffer<Paste>
+'''
 
