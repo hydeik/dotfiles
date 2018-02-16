@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CWD=`pwd`
-DOTFILES='editorconfig gitconfig latexmk tmux.conf vimrc zshenv'
+DOTFILES='editorconfig gitconfig latexmk tmux.conf vim zshenv'
 
 if [ -z "${XDG_CONFIG_HOME}" ]
 then
@@ -13,10 +13,13 @@ do
     ln -fsv ${CWD}/${f} ${HOME}/.${f}
 done
 
-for dir in ${CWD}/config/{fish,zsh,nvim}
+for dir in ${CWD}/config/{fish,zsh}
 do
     ln -fnsv ${dir} ${XDG_CONFIG_HOME}/${dir##*/}
 done
+
+# Make symlink for NeoVim configuration
+ln -fnsv ${CWD}/vim ${XDG_CONFIG_HOME}/nvim
 
 if [ "$(uname)" == 'Darwin' ]
 then
