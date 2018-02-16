@@ -62,8 +62,10 @@ if !empty('g:llmap')
 endif
 
 "----------------------------------------------------------------------------
-" Basic setting
+" Load confituration files
 "----------------------------------------------------------------------------
+call s:source_rc('encoding.rc.vim')
+
 call s:source_rc('options.rc.vim')
 
 call s:source_rc('mappings.rc.vim')
