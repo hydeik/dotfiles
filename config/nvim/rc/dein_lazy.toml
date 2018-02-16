@@ -174,7 +174,7 @@ hook_source = '''
   let g:eskk#show_annotation = 1
 
   " --- easy escape with 'jj'
-  autocmd MyAutoCmd User eskk-initialize-post
+  autocmd MyVimrc User eskk-initialize-post
         \ EskkMap -remap jj <ESC>
 '''
 
