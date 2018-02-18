@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Asyncronous execution
 #------------------------------------------------------------------------------
 [[plugins]]
@@ -18,34 +18,22 @@ hook_post_update = '''
 # Auto completion
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = 'context_filetype.vim'
-on_event = 'InsertEnter'
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1
-  source $XDG_CONFIG_HOME/nvim/rc/plugins/deoplete.rc.vim
-'''
-hook_post_update = ':UpdateRemotePlugins()'
+repo             = 'Shougo/deoplete.nvim'
+depends          = 'context_filetype.vim'
+on_event         = 'InsertEnter'
+hook_source      = 'call rc#plugin#deoplete#hook_source()'
+hook_post_source = 'call rc#plugin#deoplete#hook_post_source()'
 
 #------------------------------------------------------------------------------
 # Snippets
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'Shougo/neosnippet'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertCharPre'
-on_ft = 'snippet'
-hook_source = '''
-  " <C-k> to insert a snippet
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#enable_completed_snippet = 1
-  let g:neosnippet#expand_word_boundary = 1
-  let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
-'''
+repo        = 'Shougo/neosnippet'
+depends     = ['neosnippet-snippets', 'context_filetype.vim']
+on_event    = 'InsertCharPre'
+on_ft       = 'snippet'
+hook_add    = 'call rc#plugin#neosnippet#hook_add()'
+hook_source = 'call rc#plugin#neosnippet#hook_source()'
 
 #------------------------------------------------------------------------------
 # Detect filetype in the context of current cursor position
@@ -62,121 +50,73 @@ repo = 'Shougo/context_filetype.vim'
 # Denite
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'Shougo/neomru.vim'
+repo        = 'Shougo/echodoc.vim'
+on_event    = 'CompleteDone'
+hook_source = 'call echodoc#enable()'
 
 [[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_if = 1
-on_event = 'TextYankPost'
-on_source = ['denite.nvim']
+repo             = 'Shougo/denite.nvim'
+on_cmd           = 'Denite'
+hook_add         = 'call rc#plugin#denite#hook_add()'
+hook_source      = 'call rc#plugin#denite#hook_source()'
 
+# --- Denite sources
 [[plugins]]
-repo = 'Shougo/echodoc.vim'
-on_event = 'CompleteDone'
-hook_source = '''
-  call echodoc#enable()
-'''
-
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-on_cmd = 'Denite'
-hook_source = 'source $XDG_CONFIG_HOME/nvim/rc/plugins/denite.rc.vim'
-hook_add = '''
-  " Substitute search commands by denite
-  " nnoremap <silent> / :<C-u>Denite
-  "   \ -buffer-name=search -auto-highlight line<CR>
-  " nnoremap <silent> * :<C-u>DeniteCursorWord
-  "   \ -buffer-name=search -auto-highlight -mode=normal line<CR>
-
-  " command history
-  " nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
-
-  noremap [Denite]  <Nop>
-  nmap <Leader>d    [Denite]
-
-  nnoremap [Denite]h :<C-u>Denite help<CR>
-
-  nnoremap [Denite]r
-      \ :<C-u>Denite -buffer-name=register
-      \ register neoyank<CR>
-  xnoremap [Denite]r
-      \ :<C-u>Denite -default-action=replace -buffer-name=register
-      \ register neoyank<CR>
-
-  nnoremap [Denite]g
-      \ :<C-u>Denite -buffer-name=search -no-empty -mode=normal grep<CR>
-'''
-hook_post_update = ':UpdateRemotePlugins'
-
-[[plugins]]
-repo = 'Jagua/vim-denite-ghq'
+repo      = 'Shougo/neomru.vim'
 on_source = 'denite.nvim'
+
+[[plugins]]
+repo      = 'Shougo/neoyank.vim'
+on_if     = 1
+on_event  = 'TextYankPost'
+on_source = 'denite.nvim'
+
+[[plugins]]
+repo      = 'Jagua/vim-denite-ghq'
+on_source = 'denite.nvim'
+
+#------------------------------------------------------------------------------
+# EasyMotion
+#------------------------------------------------------------------------------
+[[plugins]]
+repo        = 'easymotion/vim-easymotion'
+on_map      = '<Plug>'
+on_func     = ['EasyMotion#go']
+hook_add    = 'call rc#plugin#easymotion#hook_add()'
+hook_source = 'call rc#plugin#easymotion#hook_source()'
+
+#-----------------------------------------------------------------------------
+# Smart commenter
+#-----------------------------------------------------------------------------
+[[plugins]]
+repo        = 'tyru/caw.vim'
+on_map      = '<Plug>'
+hook_add    = 'call rc#plugin#caw#hook_add()'
+hook_source = 'call rc#plugin#caw#hook_source()'
 
 #-----------------------------------------------------------------------------
 # Programming
 #-----------------------------------------------------------------------------
-repo = 'lambdalisue/vim-pyenv'
+repo  = 'lambdalisue/vim-pyenv'
+on_ft = ['python', 'python3']
 # Do not load vim-pyenv until *.py is opened and make sure that it is loaded
 # after jedi-vim is loaded.
 # depends = 'jedi-vim'
-on_ft = ['python', 'python3']
+
+[[plugins]]
+repo             = 'lambdalisue/gina.vim'
+on_cmd           = 'Gina'
+hook_add         = 'call rc#plugin#gina#hook_add()'
+hook_post_source = 'call rc#plugin#gina#hook_post_source()'
 
 #-----------------------------------------------------------------------------
 # SKK
 #-----------------------------------------------------------------------------
-
 [[plugins]]
-repo = 'tyru/eskk.vim'
-on_map = {ic = '<Plug>'}
-hook_add = '''
-  imap <C-j>     <Plug>(eskk:toggle)
-  cmap <C-j>     <Plug>(eskk:toggle)
-'''
-hook_source = '''
-  " --- eskk directory
-  let g:eskk#directory = expand('$XDG_CACHE_HOME/eskk')
-
-  " --- user dictionary
-  let g:eskk#dictionary = {
-    \ 'path': expand('$XDG_CACHE_HOME/skk-jisyo'),
-    \ 'sorted': 1,
-    \ 'encoding': 'utf-8',
-    \ }
-
-  " --- large dictionary
-  if has('mac')
-    let g:eskk#large_dictionary = {
-      \ 'path': '~/Library/Application\ Support/AquaSKK/SKK-JISYO.L',
-      \ 'sorted': 1,
-      \ 'encoding': 'euc-jp',
-      \ }
-  elseif has('win32') || has('win64')
-    let g:eskk#large_dictionary = {
-      \ 'path': '~/SKK-JISYO.L',
-      \ 'sorted': 1,
-      \ 'encoding': 'euc-jp',
-      \ }
-  else
-    let g:eskk#large_dictionary = {
-      \ 'path': '/usr/local/share/skk/SKK-JISYO.L',
-      \ 'sorted': 1,
-      \ 'encoding': 'euc-jp',
-      \ }
-  endif
-
-  " --- SKK server
-  let g:eskk#server = {
-      \ 'host': 'localhost',
-      \ 'port': 1178,
-      \ }
-
-  " --- Henkan, annotation
-  let g:eskk#show_annotation = 1
-
-  " --- easy escape with 'jj'
-  autocmd MyVimrc User eskk-initialize-post
-        \ EskkMap -remap jj <ESC>
-'''
+repo        = 'tyru/eskk.vim'
+on_map      = {ic = '<Plug>'}
+hook_add    = 'call rc#plugin#eskk#hook_add()'
+hook_source = 'call rc#plugin#eskk#hook_source()'
 
 #------------------------------------------------------------------------------
 # Programming
@@ -204,24 +144,24 @@ hook_add = '''
 #------------------------------------------------------------------------------
 # Leader guide
 #------------------------------------------------------------------------------
-repo = 'hecal3/vim-leader-guide'
-on_event = ['VimEnter']
-hook_post_source = '''
-  let g:topdict = {}
-  let g:topdict[' '] = g:lmap
-  let g:topdict[' ']['name'] = '<leader>'
-  let g:topdict[','] = g:llmap
-  let g:topdict[',']['name'] = '<localleader>'
-
-  " register it with the guide:
-  call leaderGuide#register_prefix_descriptions("", "g:topdict")
-
-  " define mappings:
-  nnoremap <silent> <Leader>  :<C-u>LeaderGuide       '<Space>'<CR>
-  vnoremap <silent> <Leader>  :<C-u>LeaderGuideVisual '<Space>'<CR>
-  map               <Leader>.  <Plug>leaderguide-global
-  nnoremap <LocalLeader>      :<C-u>LeaderGuide        ','<CR>
-  vnoremap <LocalLeader>      :<C-u>LeaderGuideVisual  ','<CR>
-  map      <LocalLeader>.      <Plug>leaderguide-buffer<Paste>
-'''
+# repo = 'hecal3/vim-leader-guide'
+# on_event = ['VimEnter']
+# hook_post_source = '''
+#   let g:topdict = {}
+#   let g:topdict[' '] = g:lmap
+#   let g:topdict[' ']['name'] = '<leader>'
+#   let g:topdict[','] = g:llmap
+#   let g:topdict[',']['name'] = '<localleader>'
+#
+#   " register it with the guide:
+#   call leaderGuide#register_prefix_descriptions("", "g:topdict")
+#
+#   " define mappings:
+#   nnoremap <silent> <Leader>  :<C-u>LeaderGuide       '<Space>'<CR>
+#   vnoremap <silent> <Leader>  :<C-u>LeaderGuideVisual '<Space>'<CR>
+#   map               <Leader>.  <Plug>leaderguide-global
+#   nnoremap <LocalLeader>      :<C-u>LeaderGuide        ','<CR>
+#   vnoremap <LocalLeader>      :<C-u>LeaderGuideVisual  ','<CR>
+#   map      <LocalLeader>.      <Plug>leaderguide-buffer<Paste>
+# '''
 

@@ -18,11 +18,18 @@ scriptencoding utf-8
 "----------------------------------------------------------------------------
 " Environments
 "----------------------------------------------------------------------------
-" Store config and cache directories
-let s:config_home = empty($XDG_CONFIG_HOME) ? expand('~/.config')      : $XDG_CONFIG_HOME
-let s:cache_home  = empty($XDG_CACHE_HOME)  ? expand('~/.cache')       : $XDG_CACHE_HOME
-let s:data_home   = empty($XDG_DATA_HOME)   ? expand('~/.local/share') : $XDG_DATA_HOME
+" XDG Base Directory Specification
+if empty($XDG_CONFIG_HOME)
+  let $XDG_CONFIG_HOME = expand('~/.config')
+endif
 
+if empty($XDG_CACHE_HOME)
+  let $XDG_CACHE_HOME = expand('~/.cache')
+endif
+
+if empty($XDG_DATA_HOME)
+  let $XDG_DATA_HOME = expand('~/.local/share')
+endif
 "
 " Set python2/python3 interpretor (required to setup plugins using neovim
 " python API)
@@ -39,9 +46,15 @@ let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
 "----------------------------------------------------------------------------
 " Load vim scripts inside 'nvim/rc'
 
-let s:rc_dir = s:config_home . '/nvim/rc'
+if has('nvim')
+  let g:vimrc_root = $XDG_CONFIG_HOME . '/nvim'
+else
+  let g:vimrc_root = "$HOME/.vim"
+endif
+let s:rc_base_dir = g:vimrc_root . '/rc'
+
 function! s:source_rc(file)
-  let rc_file = s:rc_dir . '/' . a:file
+  let rc_file = s:rc_base_dir . '/' . a:file
   if filereadable(rc_file)
     execute 'source ' rc_file
   endif

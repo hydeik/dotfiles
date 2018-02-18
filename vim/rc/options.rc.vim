@@ -68,7 +68,7 @@ set nrformats=alpha,hex,bin
 " Allow virtual editing in Visual block mode.
 set virtualedit=block
 " Wait 500 msec for a mapped sequence to complete
-set timeout timeoutlen=500
+set timeout timeoutlen=1000
 " Wait 50 msec for a key code
 set ttimeout ttimeoutlen=50
 " " Enable Vim to use system clipboard

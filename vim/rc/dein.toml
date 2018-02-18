@@ -5,6 +5,23 @@
 repo = 'Shougo/dein.vim'
 
 #------------------------------------------------------------------------------
+# Remote Plugin Framework
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+on_if = '!has("nvim")'
+
+[[plugins]]
+repo = 'https://github.com/roxma/nvim-yarp'
+
+#------------------------------------------------------------------------------
+# Fast matcher for CtrlP and Denite
+#------------------------------------------------------------------------------
+[[plugins]]
+repo  = 'nixprime/cpsm'
+build = 'sh -c "PY3=ON ./install.sh"'
+
+#------------------------------------------------------------------------------
 # Colorscheme
 #------------------------------------------------------------------------------
 [[plugins]]
@@ -42,10 +59,8 @@ repo = 'edkolev/tmuxline.vim'
 # Vim help in Japanese
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'vim-jp/vimdoc-ja'
-hook_add = '''
-  set helplang=ja,en
-'''
+repo     = 'vim-jp/vimdoc-ja'
+hook_add = 'set helplang=ja,en'
 
 # Introduction of VIM script
 repo = 'mattn/learn-vimscript'
@@ -98,89 +113,15 @@ hood_add = '''
 repo = 'tpope/vim-repeat'
 
 #------------------------------------------------------------------------------
-# Increment
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'osyo-manga/vim-anzu'
-
-[[plugins]]
-repo = 'haya14busa/is.vim'
-depends = 'vim-anzu'
-hook_add = '''
-  map n  <Plug>(is-nohl)<Plug>(anzu-n-with-echo)
-  map N  <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
-'''
-
-#------------------------------------------------------------------------------
-# EasyMotion
-#------------------------------------------------------------------------------
-# "Hit a hint"
-[[plugins]]
-repo = 'easymotion/vim-easymotion'
-depends = ['vim-repeat']
-hook_add = '''
-  " disable default mappings
-  let g:EasyMotion_do_mapping = 0
-
-  " Smart case
-  let g:EasyMotion_smartcase = 1
-
-  " Smart sign: ('1' matches '1' and '!', '!' matches '!' only.)
-  let g:EasyMotion_smartsign_us = 1 " For US keyboard layout
-
-  " Enable migemo search (for Japanese texts)
-  let g:EasyMotion_use_migemo = 1
-
-  " Move to {char}
-  map  <Leader>f <Plug>(easymotion-bd-f)
-  nmap <Leader>f <Plug>(easymotion-overwin-f)
-
-  " s{char}{char} to move to {char}{char}
-  nmap s <Plug>(easymotion-overwin-f2)
-
-  " Move to line
-  map  <Leader>L <Plug>(easymotion-bd-jk)
-  nmap <Leader>L <Plug>(easymotion-overwin-line)
-
-  " Move to word
-  map  <Leader>w <Plug>(easymotion-bd-w)
-  nmap <Leader>w <Plug>(easymotion-overwin-w)
-'''
-
-#-----------------------------------------------------------------------------
-# Smart commenter
-#-----------------------------------------------------------------------------
-[[plugins]]
-repo = 'tyru/caw.vim'
-hook_add = '''
-  " nmap <buffer> <Leader>c   <Plug>(caw:prefix)
-  " xmap <buffer> <Leader>c   <Plug>(caw:prefix)
-  " nmap <buffer> <Leader>cc  <Plug>(caw:hatpos:toggle)
-  " xmap <buffer> <Leader>cc  <Plug>(caw:hatpos:toggle)
-  let g:lmap.c = {
-    \ 'name' : 'Comments',
-    \ 'c' : ['call feedkeys("\<Plug>(caw:hatpos:toggle)",       "nx")', 'Toggle'],
-    \ 'i' : ['call feedkeys("\<Plug>(caw:hatpos:comment)",      "nx")', 'Comment(^)'],
-    \ 'ui': ['call feedkeys("\<Plug>(caw:hatpos:uncomment)",    "nx")', 'Uncomment(^)'],
-    \ 'I' : ['call feedkeys("\<Plug>(caw:zeropos:comment)",     "nx")', 'Comment(0)'],
-    \ 'uI': ['call feedkeys("\<Plug>(caw:zeropos:uncomment)",   "nx")', 'Uncomment(0)'],
-    \ 'a' : ['call feedkeys("\<Plug>(caw:dollarpos:comment)",   "nx")', 'Comment($)'],
-    \ 'ua': ['call feedkeys("\<Plug>(caw:dollarpos:uncomment)", "nx")', 'Uncomment($)'],
-    \ 'w' : ['call feedkeys("\<Plug>(caw:wrap:comment)",        "nx")', 'Comment(w)'],
-    \ 'uw': ['call feedkeys("\<Plug>(caw:wrap:uncomment)",      "nx")', 'Uncomment(w)'],
-    \ 'n' : ['call feedkeys("\<Plug>(caw:jump:comment-next)",   "nx")', 'Comment(w)'],
-    \ 'p' : ['call feedkeys("\<Plug>(caw:jump:comment-prev)",   "nx")', 'Uncomment(w)'],
-    \ }
-'''
-
-#------------------------------------------------------------------------------
 # Filetypes
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'cespare/vim-toml'
+on_ft = 'toml'
 
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'
+on_ft = 'markdown'
 hook_add = '''
   let g:vim_markdown_frontmatter = 1
   let g:vim_markdown_math = 1
@@ -202,51 +143,15 @@ hook_add = '''
 repo = 'airblade/vim-gitgutter'
 if = 'has("signs")'
 
-[[plugins]]
-repo = 'lambdalisue/gina.vim'
-hook_add = '''
-  " Set default options for commands
-  call gina#custom#command#option('status', '--opener', 'split')
-
-  call gina#custom#command#option('commit', '--verbose')
-
-  call gina#custom#command#option(
-    \ '/\%(branch\|changes\|grep\|log\)',
-    \ '--opener', 'vsplit'
-    \)
-
-  " execute :Gina commit with '<C-c><C-c>' on gina-status buffer
-  call gina#custom#mapping#nmap(
-    \ 'status', '<C-c><C-c>', ':<C-u>Gina commit<CR>',
-    \ {'noremap': 1, 'silent': 1}
-    \)
-
-  " quit gina-status buffer with 'q'
-  call gina#custom#mapping#nmap(
-    \ 'status', 'q', ':quit<CR>',
-    \ {'noremap': 1, 'silent': 1}
-    \)
-
-  " nnoremap <Leader>gs :<C-u>Gina status<CR>
-  " nnoremap <Leader>gb :<C-u>Gina branch<CR>
-  " nnoremap <Leader>gc :<C-u>Gina commit<CR>
-  " nnoremap <Leader>gl :<C-u>Gina log<CR>
-  let g:lmap.g = {
-    \ 'name' : 'Git menu',
-    \ 's' : ['Gina status', 'Git status'],
-    \ 'd' : ['Gina diff',   'Git diff'],
-    \ 'l' : ['Gina log',    'Git log'],
-    \ 'c' : ['Gina commit', 'Git commit'],
-    \ 'b' : ['Gina branch', 'Git branch'],
-    \ 'B' : ['Gina blame',  'Git blame'],
-    \ }
-'''
-
+#------------------------------------------------------------------------------
 # Linter
+#------------------------------------------------------------------------------
 [[plugins]]
 repo = 'w0rp/ale'
 
-# Snippet
+#------------------------------------------------------------------------------
+# Snippet definitions
+#------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
 
