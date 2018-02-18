@@ -49,7 +49,7 @@ let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
 if has('nvim')
   let g:vimrc_root = $XDG_CONFIG_HOME . '/nvim'
 else
-  let g:vimrc_root = "$HOME/.vim"
+  let g:vimrc_root = $HOME . '/.vim'
 endif
 let s:rc_base_dir = g:vimrc_root . '/rc'
 
