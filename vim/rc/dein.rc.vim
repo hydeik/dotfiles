@@ -36,11 +36,11 @@ if !has('vim_starting')
     call dein#install()
   endif
 
-  call dein#recache_runtimepath()
+  "call dein#recache_runtimepath()
 
-  call dein#call_hook('add')
-  call dein#call_hook('source')
-  call dein#call_hook('post_source')
+  "call dein#call_hook('add')
+  "call dein#call_hook('source')
+  "call dein#call_hook('post_source')
 endif
 
 autocmd MyVimrc VimEnter * call dein#call_hook('post_source')

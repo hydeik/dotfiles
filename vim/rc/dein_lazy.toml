@@ -38,9 +38,6 @@ hook_source = 'call rc#plugin#neosnippet#hook_source()'
 #------------------------------------------------------------------------------
 # Detect filetype in the context of current cursor position
 #------------------------------------------------------------------------------
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
 # [[plugins]]
 # repo = 'osyo-manga/vim-precious'
 # depends = ['context_filetype.vim']
@@ -75,6 +72,22 @@ on_source = 'denite.nvim'
 repo      = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
+#-----------------------------------------------------------------------------
+# Programming
+#-----------------------------------------------------------------------------
+[[plugins]]
+repo  = 'lambdalisue/vim-pyenv'
+on_ft = ['python', 'python3']
+# Do not load vim-pyenv until *.py is opened and make sure that it is loaded
+# after jedi-vim is loaded.
+# depends = 'jedi-vim'
+
+[[plugins]]
+repo             = 'lambdalisue/gina.vim'
+on_cmd           = 'Gina'
+hook_add         = 'call rc#plugin#gina#hook_add()'
+hook_post_source = 'call rc#plugin#gina#hook_post_source()'
+
 #------------------------------------------------------------------------------
 # EasyMotion
 #------------------------------------------------------------------------------
@@ -95,19 +108,13 @@ hook_add    = 'call rc#plugin#caw#hook_add()'
 hook_source = 'call rc#plugin#caw#hook_source()'
 
 #-----------------------------------------------------------------------------
-# Programming
+# Smart Align
 #-----------------------------------------------------------------------------
-repo  = 'lambdalisue/vim-pyenv'
-on_ft = ['python', 'python3']
-# Do not load vim-pyenv until *.py is opened and make sure that it is loaded
-# after jedi-vim is loaded.
-# depends = 'jedi-vim'
-
 [[plugins]]
-repo             = 'lambdalisue/gina.vim'
-on_cmd           = 'Gina'
-hook_add         = 'call rc#plugin#gina#hook_add()'
-hook_post_source = 'call rc#plugin#gina#hook_post_source()'
+repo   = 'junegunn/vim-easy-align'
+on_map = {nv = '<Plug>'}
+on_cmd = ['EasyAlign', 'LiveEasyAlign']
+hook_add = 'call rc#plugin#easyalign#hook_add()'
 
 #-----------------------------------------------------------------------------
 # SKK

@@ -19,7 +19,7 @@ function! rc#plugin#denite#hook_add() abort
 
   nnoremap <silent> ;ff :<C-u>Denite file_rec<CR>
   nnoremap <silent> ;ft :<C-u>Denite filetype<CR>
-  nnoremap <silent> ;fv :<C-u>Denite file_rec:~/.vim<CR>
+  nnoremap <silent> ;fd :<C-u>Denite file_rec:~/.vim<CR>
 endfunction
 
 function! rc#plugin#denite#hook_source() abort
