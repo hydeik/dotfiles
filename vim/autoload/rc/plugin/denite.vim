@@ -9,7 +9,8 @@ function! rc#plugin#denite#hook_add() abort
   nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
 
   nnoremap <silent> ;h :<C-u>Denite help<CR>
-  nnoremap <silent> ;b :<C-u>Denite buffer -mode=normal<CR>
+  nnoremap <silent> ;b :<C-u>Denite -auto-preview -mode=normal buffer<CR>
+  nnoremap <silent> ;c :<C-u>Denite -mode=normal change jump<CR>
 
   nnoremap <silent> ;r :<C-u>Denite -resume<CR>
   nnoremap <silent> ;y :<C-u>Denite -buffer-name=register register neoyank<CR>
@@ -18,8 +19,11 @@ function! rc#plugin#denite#hook_add() abort
   nnoremap <silent> ;g :<C-u>Denite -buffer-name=search -no-empty -mode=normal grep<CR>
 
   nnoremap <silent> ;ff :<C-u>Denite file_rec<CR>
-  nnoremap <silent> ;ft :<C-u>Denite filetype<CR>
   nnoremap <silent> ;fd :<C-u>Denite file_rec:~/.vim<CR>
+  nnoremap <silent> ;fs :<C-u>Denite file_point file_old -sorters=sorter_rank
+      \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+  nnoremap <silent> ;ft :<C-u>Denite filetype<CR>
+  nnoremap <silent> ;fp :<C-u>Denite ghq<CR>
 endfunction
 
 function! rc#plugin#denite#hook_source() abort
