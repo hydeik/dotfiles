@@ -45,7 +45,7 @@ function! rc#plugin#denite#hook_source() abort
 
   " Change file_rec and grep commmand
   if executable('rg')
-    call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git', ''])
+    call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
     call denite#custom#var('grep', 'command', ['rg'])
     call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
     call denite#custom#var('grep', 'recursive_opts', [])
