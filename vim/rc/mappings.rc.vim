@@ -36,6 +36,30 @@ cnoremap <C-y>    <C-r>*
 cnoremap <C-g>    <C-c>
 "}}}
 
+" Open/close folding:"{{{
+nnoremap <expr>l  foldclosed('.') != -1 ? 'zo' : 'l'
+xnoremap <expr>l  foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
+
+nnoremap <silent><C-_> :<C-u>call <SID>smart_foldcloser()<CR>
+function! s:smart_foldcloser()
+  if foldlevel('.') == 0
+    norm! zM
+    return
+  endif
+
+  let foldc_lnum = foldclosed('.')
+  norm! zc
+  if foldc_lnum == -1
+    return
+  endif
+
+  if foldclosed('.') != foldc_lnum
+    return
+  endif
+  norm! zM
+endfunction
+"}}}
+
 " Better x
 nnoremap x "_x
 

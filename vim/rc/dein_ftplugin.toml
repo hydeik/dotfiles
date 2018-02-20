@@ -1,0 +1,57 @@
+[ftplugin]
+# NOTE: '_' key is executed after all ftplugin
+_ = '''
+  " Disable automatically insert comment.
+  setlocal formatoptions-=ro | setlocal formatoptions+=mMBl
+
+  " Disable auto wrap.
+  if &l:textwidth != 70 && &filetype !=# 'help'
+    setlocal textwidth=0
+  endif
+
+  " Use FoldCCtext().
+  if &filetype !=# 'help'
+    setlocal foldtext=FoldCCtext()
+  endif
+
+  if !&l:modifiable
+    setlocal nofoldenable
+    setlocal foldcolumn=0
+    if v:version >= 703
+      setlocal colorcolumn=
+    endif
+  endif
+'''
+
+# Python
+python = '''
+  setlocal foldmethod=indent
+'''
+
+# Ruby
+ruby = '''
+  setlocal iskeyword+=!
+  setlocal iskeyword+=?
+  setlocal omnifunc=
+'''
+
+# TOML
+toml = '''
+  syntax sync minlines=500
+'''
+
+# VIM script
+vim = '''
+  if 5000 < line('$')
+    syntax sync minlines=200
+  endif
+  setlocal foldmethod=indent
+'''
+
+# VIM help
+help = '''
+  setlocal iskeyword+=:
+  setlocal iskeyword+=#
+  setlocal iskeyword+=-
+'''
+

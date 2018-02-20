@@ -1,15 +1,15 @@
 function! rc#plugin#denite#hook_add() abort
   " Substitute search commands by denite
-  nnoremap <silent> / :<C-u>Denite           -buffer-name=search -auto-highlight line<CR>
+  nnoremap <silent> / :<C-u>Denite -buffer-name=search -auto-highlight line<CR>
   nnoremap <silent> * :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal line<CR>
   " Substitute 'n' command
-  nnoremap <silent> n :<C-u>Denite           -buffer-name=search -auto-highlight -resume -mode=normal -refresh<CR>
+  nnoremap <silent> n :<C-u>Denite -buffer-name=search -auto-highlight -resume -mode=normal -refresh<CR>
 
   " command history
   nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
 
   nnoremap <silent> ;h :<C-u>Denite help<CR>
-  nnoremap <silent> ;b :<C-u>Denite -auto-preview -mode=normal buffer<CR>
+  nnoremap <silent> ;b :<C-u>Denite -mode=normal buffer<CR>
   nnoremap <silent> ;c :<C-u>Denite -mode=normal change jump<CR>
 
   nnoremap <silent> ;r :<C-u>Denite -resume<CR>
@@ -20,7 +20,7 @@ function! rc#plugin#denite#hook_add() abort
 
   nnoremap <silent> ;ff :<C-u>Denite file_rec<CR>
   nnoremap <silent> ;fd :<C-u>Denite file_rec:~/.vim<CR>
-  nnoremap <silent> ;fs :<C-u>Denite file_point file_old -sorters=sorter_rank
+  nnoremap <silent> ;fs :<C-u>Denitd file_point file_old -sorters=sorter_rank
       \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
   nnoremap <silent> ;ft :<C-u>Denite filetype<CR>
   nnoremap <silent> ;fp :<C-u>Denite ghq<CR>

@@ -77,13 +77,17 @@ endif
 "----------------------------------------------------------------------------
 " Load confituration files
 "----------------------------------------------------------------------------
+call s:source_rc('dein.rc.vim')
+if !has('vim_starting')
+  call dein#call_hook('source')
+  call dein#call_hook('post_source')
+endif
+
 call s:source_rc('encoding.rc.vim')
 
 call s:source_rc('options.rc.vim')
 
 call s:source_rc('mappings.rc.vim')
-
-call s:source_rc('dein.rc.vim')
 
 filetype plugin indent on
 syntax on " sytax on|enable should be set after setting whole 'runtimepath'

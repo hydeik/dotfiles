@@ -77,6 +77,31 @@ set ttimeout ttimeoutlen=50
 "   set clipboard^=unnamed
 " endif
 
+" Enable folding
+set foldenable
+set foldmethod=indent
+" Show folding level
+set foldcolumn=1
+set fillchars=vert:\|
+set commentstring=%s
+
+" Fast fold
+autocmd MyVimrc TextChangedI,TextChanged *
+      \ if &l:foldenable && &l:foldmethod !=# 'manual' |
+      \   let b:foldmethod_save = &l:foldmethod |
+      \   let &l:foldmethod = 'manual' |
+      \ endif
+autocmd MyVimrc BufWritePost *
+      \ if &l:foldmethod ==# 'manual' && exists('b:foldmethod_save') |
+      \   let &l:foldmethod = b:foldmethod_save |
+      \   execute 'normal! zx' |
+      \ endif
+
+if exists('*FoldCCtext')
+  " Use FoldCCtext
+  set foldtext=FoldCCtext()
+endif
+
 " ----- Display
 " Don't redraw while executing macros
 set lazyredraw

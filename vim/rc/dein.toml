@@ -19,7 +19,7 @@ repo = 'https://github.com/roxma/nvim-yarp'
 #------------------------------------------------------------------------------
 [[plugins]]
 repo  = 'nixprime/cpsm'
-build = 'sh -c "PY3=ON ./install.sh"'
+build = "PY3=ON ./install.sh"
 
 #------------------------------------------------------------------------------
 # Utilities
@@ -119,19 +119,41 @@ hood_add = '''
 repo = 'tpope/vim-repeat'
 
 #------------------------------------------------------------------------------
-# Filetypes
+# Filetype & Syntax
 #------------------------------------------------------------------------------
 [[plugins]]
+repo = 'octol/vim-cpp-enhanced-highlight'
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+
+[[plugins]]
 repo = 'cespare/vim-toml'
-on_ft = 'toml'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+
+[[plugins]]
+repo = 'stephpy/vim-yaml'
 
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'
-on_ft = 'markdown'
 hook_add = '''
   let g:vim_markdown_frontmatter = 1
   let g:vim_markdown_math = 1
 '''
+
+[[plugins]]
+repo = 'thinca/vim-ft-diff_fold'
+
+[[plugins]]
+repo = 'thinca/vim-ft-help_fold'
+
+[[plugins]]
+repo = 'kballard/vim-fish'
+
+[[plugins]]
+repo = 'chrisbra/vim-zsh'
 
 #-----------------------------------------------------------------------------
 # Editor config
@@ -160,4 +182,10 @@ repo = 'w0rp/ale'
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
+
+#------------------------------------------------------------------------------
+# Folding
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'LeafCage/foldCC.vim'
 

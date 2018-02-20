@@ -16,31 +16,24 @@ if &runtimepath !~# '/dein.vim'
   execute 'set runtimepath^=' . s:dein_repo_dir
 endif
 
-let s:toml      = s:base . '/dein.toml'
-let s:lazy_toml = s:base . '/dein_lazy.toml'
+let s:dein_toml      = s:base . '/dein.toml'
+let s:dein_toml_lazy = s:base . '/dein_lazy.toml'
+let s:dein_toml_ft   = s:base . '/dein_ftplugin.toml'
 
 if !dein#load_state(s:dein_dir)
   finish
 endif
 
-call dein#begin(s:dein_dir)  " execute ':filetype off' automatically
+call dein#begin(s:dein_dir, expand('<sfile>'))
 " Configuration file for plugins
-call dein#load_toml(s:toml, {'lazy': 0})
-call dein#load_toml(s:lazy_toml, {'lazy': 1})
+call dein#load_toml(s:dein_toml,      {'lazy': 0})
+call dein#load_toml(s:dein_toml_lazy, {'lazy': 1})
+call dein#load_toml(s:dein_toml_ft)
 
 call dein#end()              " 'runtimepath' is changed after dein#end()
 call dein#save_state()
 
-if !has('vim_starting')
-  if dein#check_install()
-    call dein#install()
-  endif
-
-  "call dein#recache_runtimepath()
-
-  "call dein#call_hook('add')
-  "call dein#call_hook('source')
-  "call dein#call_hook('post_source')
+if !has('vim_starting') && dein#check_install()
+  " Install plugin(s) automatically if necessary
+  call dein#install()
 endif
-
-autocmd MyVimrc VimEnter * call dein#call_hook('post_source')

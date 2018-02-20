@@ -130,23 +130,14 @@ hook_source = 'call rc#plugin#eskk#hook_source()'
 #------------------------------------------------------------------------------
 # Language server protocol (LSP) client
 [[plugins]]
-repo = 'autozimu/LanguageClient-neovim'
-rev = 'next'
-build = 'bash install.sh'
-on_ft = ['c', 'cpp', 'python', 'rust']
-hook_add = '''
-  set hidden
-  let g:LanguageClient_serverCommands = {
-    \ 'c':   ['/usr/local/opt/llvm/bin/clangd'],
-    \ 'cpp': ['/usr/local/opt/llvm/bin/clangd'],
-    \ 'python': ['~/.virtualenv/neovim3/.venv/bin/pyls'],
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ }
-  let g:LanguageClient_autoStart = 1
-  "nnoremap <silent> K    :call LanguageClient_textDocument_hover()<CR>
-  "nnoremap <silent> gd   :call LanguageClient_textDocument_definition()<CR>
-  "nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-'''
+repo             = 'autozimu/LanguageClient-neovim'
+depends          = ['deoplete.nvim', 'denite.nvim']
+rev              = 'next'
+build            = 'bash install.sh'
+on_ft            = ['c', 'cpp', 'python', 'rust']
+hook_add         = 'call rc#plugin#LanguageClient#hook_add()'
+hook_source      = 'call rc#plugin#LanguageClient#hook_source()'
+#hook_post_source = 'call rc#plugin#LanguageClient#hook_post_source()'
 
 #------------------------------------------------------------------------------
 # Leader guide
