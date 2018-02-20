@@ -79,7 +79,7 @@ set ttimeout ttimeoutlen=50
 
 " Enable folding
 set foldenable
-set foldmethod=indent
+set foldmethod=marker
 " Show folding level
 set foldcolumn=1
 set fillchars=vert:\|

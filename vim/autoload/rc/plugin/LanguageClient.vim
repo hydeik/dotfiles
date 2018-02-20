@@ -1,16 +1,24 @@
 function! rc#plugin#LanguageClient#hook_source() abort
   set hidden
   let g:LanguageClient_autoStart = 1
+
+  " Language servers
   let g:LanguageClient_serverCommands = {
-        \ 'c': ['cquery'],
-        \ 'cpp': ['cquery'],
+        \ 'c':   ['/usr/local/opt/llvm/bin/clangd'],
+        \ 'cpp': ['/usr/local/opt/llvm/bin/clangd'],
         \ 'python': [$PYENV_ROOT . '/versions/neovim3/bin/pyls'],
         \ 'rust': ['rustup', 'run', 'stable', 'rls'],
         \ }
+
+  let g:LanguageClient_loadSettings = 1
+  let g:LanguageClient_settingsPath = g:vimrc_root . '/settings.json'
+
+  set formatexpr=LanguageClient_textDocument_rangeFormatting()
 endfunction
 
 function! rc#plugin#LanguageClient#hook_add() abort
   nnoremap <Leader>ld  :call LanguageClient_textDocument_definition()<CR>
+  nnoremap <Leader>ls  :call LanguageClient_textDocument_documentSymbol()<CR>
   nnoremap <Leader>lr  :call LanguageClient_textDocument_rename()<CR>
   nnoremap <Leader>lR  :call LanguageClient_textDocument_references()<CR>
   " Search for workspace symbols approximately.
@@ -19,9 +27,9 @@ function! rc#plugin#LanguageClient#hook_add() abort
   " nnoremap <silent> <F2>  :call LanguageClient_textDocument_rename()<CR>
 
   " Denite source
-  nnoremap <silent>;ls :Denite documentSymbol<CR>
-  nnoremap <silent>;lS :Denite workspaceSymbol<CR>
-  nnoremap <silent>;lr :Denite reference<CR>
+  nnoremap <silent>;ls :Denite -mode=normal documentSymbol<CR>
+  nnoremap <silent>;lS :Denite -mode=normal workspaceSymbol<CR>
+  nnoremap <silent>;lr :Denite -mode=normal reference<CR>
 
 
   augroup LanguageClient_config
