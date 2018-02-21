@@ -10,14 +10,14 @@ augroup MyVimrc
 augroup END
 
 "----------------------------------------------------------------------------
-" Encoding
-"----------------------------------------------------------------------------
-set encoding=utf-8
-scriptencoding utf-8
-
-"----------------------------------------------------------------------------
 " Environments
 "----------------------------------------------------------------------------
+if has('vim_starting')
+  " Set encoding in vim
+  set encoding=utf-8
+  scriptencoding utf-8
+endif
+
 " XDG Base Directory Specification
 if empty($XDG_CONFIG_HOME)
   let $XDG_CONFIG_HOME = expand('~/.config')
@@ -30,6 +30,40 @@ endif
 if empty($XDG_DATA_HOME)
   let $XDG_DATA_HOME = expand('~/.local/share')
 endif
+
+" --- Set executable path and manpath.
+" These variables might not be set properly in GVim/MacVim
+let s:is_windows = has('win32') || has('win64')
+function! s:configure_path(name, pathlist) abort
+  let path_separator = s:is_windows ? ';' : ':'
+  let pathlist = split(expand(a:name), path_separator)
+  for path in map(filter(a:pathlist, '!empty(v:val)'), 'expand(v:val)')
+    if isdirectory(path) && index(pathlist, path) == -1
+      call insert(pathlist, path, 0)
+    endif
+  endfor
+  execute printf('let %s = join(pathlist, ''%s'')', a:name, path_separator)
+endfunction
+
+call s:configure_path('$PATH', [
+      \ '~/.local/bin',
+      \ '~/.cargo/bin',
+      \ '~/.pyenv/bin',
+      \ '~/.zplug/bin',
+      \ '~/bin',
+      \ '/Library/Tex/texbin',
+      \ '/usr/local/bin',
+      \ '/usr/bin',
+      \ '/bin',
+      \])
+call s:configure_path('$MANPATH', [
+      \ '/usr/local/share/man/',
+      \ '/usr/share/man/',
+      \ '/opt/intel/man/',
+      \ '/Applications/Xcode.app/Contents/Developer/usr/share/man',
+      \ '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man',
+      \])
+
 "
 " Set python2/python3 interpretor (required to setup plugins using neovim
 " python API)
@@ -41,11 +75,21 @@ endif
 let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
 let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
 
+" --- Enable Vim to use system clipboard
+if has('clipboard')
+  set clipboard&   " <- set to default
+  " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
+  " - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows (but yank)
+  if has('win32') || has('win64') || has('mac')
+    set clipboard^=unnamed
+  else
+    set clipboard^=unnamed,unnamedplus
+  endif
+endif
+
 "----------------------------------------------------------------------------
 " Utility function(s)
 "----------------------------------------------------------------------------
-" Load vim scripts inside 'nvim/rc'
-
 if has('nvim')
   let g:vimrc_root = $XDG_CONFIG_HOME . '/nvim'
 else
@@ -53,6 +97,7 @@ else
 endif
 let s:rc_base_dir = g:vimrc_root . '/rc'
 
+" Load vim scripts inside 'nvim/rc'
 function! s:source_rc(file)
   let rc_file = s:rc_base_dir . '/' . a:file
   if filereadable(rc_file)

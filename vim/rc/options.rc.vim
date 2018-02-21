@@ -71,11 +71,6 @@ set virtualedit=block
 set timeout timeoutlen=1000
 " Wait 50 msec for a key code
 set ttimeout ttimeoutlen=50
-" " Enable Vim to use system clipboard
-" if has('clipboard')
-"   set clipboard&   " <- set to default
-"   set clipboard^=unnamed
-" endif
 
 " Enable folding
 set foldenable

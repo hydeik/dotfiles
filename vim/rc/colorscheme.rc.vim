@@ -5,10 +5,21 @@
 "  - lightline.vim
 "  - lightline-hybrid.vim
 
-" terminal colors
-set t_Co=256
-if has('termguicolors')
-  set termguicolors
+" Enable true color if supported
+if !has('gui_running')
+  if has('termguicolors') && $COLORTERM ==# 'truecolor'
+    " Enable true color in Vim on tmux (not necessary for NeoVim)
+    if !has('nvim')
+      let &t_8f = "\e[38;2;%lu;%lu;%lum"
+      let &t_8b = "\e[48;2;%lu;%lu;%lum"
+    endif
+    set termguicolors
+  endif
+endif
+
+" --- Font in GUI Vim
+if has('gui_running')
+  " set guifont=Knack\ Regular\ Nerd\ Font\ Complete:h14
 endif
 
 " --- Colorscheme
