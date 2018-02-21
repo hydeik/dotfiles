@@ -5,25 +5,29 @@ function! rc#plugin#denite#hook_add() abort
   " Substitute 'n' command
   nnoremap <silent> n :<C-u>Denite -buffer-name=search -auto-highlight -resume -mode=normal -refresh<CR>
 
-  " command history
-  nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
+  nnoremap <silent><Leader>y :<C-u>Denite -buffer-name=register register neoyank<CR>
+  xnoremap <silent><Leader>y :<C-u>Denite -default-action=replace -buffer-name=register register neoyank<CR>
 
-  nnoremap <silent> ;h :<C-u>Denite help<CR>
-  nnoremap <silent> ;b :<C-u>Denite -mode=normal buffer<CR>
-  nnoremap <silent> ;c :<C-u>Denite -mode=normal change jump<CR>
+  " Press <Leader> twice to call a command or command history
+  nnoremap <silent><Leader><Leader> :<C-u>Denite command command_history<CR>
 
-  nnoremap <silent> ;r :<C-u>Denite -resume<CR>
-  nnoremap <silent> ;y :<C-u>Denite -buffer-name=register register neoyank<CR>
-  xnoremap <silent> ;y :<C-u>Denite -default-action=replace -buffer-name=register register neoyank<CR>
+  noremap [Denite]   <Nop>
+  nmap <Leader>d     [Denite]
+  nnoremap [Denite]b  :<C-u>Denite -mode=normal buffer<CR>
+  nnoremap [Denite]h  :<C-u>Denite help<CR>
+  nnoremap [Denite]g  :<C-u>Denite -buffer-name=search -no-empty -mode=normal grep<CR>
+  " nnoremap [Denite]Q  :<C-u>Denite -mode=normal quickfix<CR>
+  " nnoremap [Denite]L  :<C-u>Denite -no-empty location_list<CR>
 
-  nnoremap <silent> ;g :<C-u>Denite -buffer-name=search -no-empty -mode=normal grep<CR>
-
-  nnoremap <silent> ;ff :<C-u>Denite file_rec<CR>
-  nnoremap <silent> ;fd :<C-u>Denite file_rec:~/.vim<CR>
-  nnoremap <silent> ;fs :<C-u>Denite file_point file_old -sorters=sorter_rank
-      \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
-  nnoremap <silent> ;ft :<C-u>Denite filetype<CR>
-  nnoremap <silent> ;fp :<C-u>Denite ghq<CR>
+  noremap [DeniteFile]   <Nop>
+  nmap <Leader>f     [DeniteFile]
+  nnoremap [DeniteFile]f  :<C-u>Denite file<CR>
+  " Quick access to Vim configuration files
+  nnoremap [DeniteFile]d  :<C-u>Denite file_rec:~/.vim<CR>
+  nnoremap [DeniteFile]t  :<C-u>Denite filetype<CR>
+  nnoremap [DeniteFile]s  :<C-u>Denite file_point file_old -sorters=sorter_rank
+        \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+  nnoremap [DeniteFile]g  :<C-u>Denite ghq<CR>
 endfunction
 
 function! rc#plugin#denite#hook_source() abort
@@ -44,6 +48,8 @@ function! rc#plugin#denite#hook_source() abort
   call denite#custom#map('insert', '<C-s>', '<denite:toggle_sorters:sorter_reverse>', 'noremap')
   " <C-g> to quit denite
   call denite#custom#map('insert', '<C-g>', '<denite:leave_mode>', 'noremap')
+  " jj to move to normal mode
+  call denite#custom#map('insert', 'jj', '<denite:enter_mode:normal>', 'noremap')
 
   call denite#custom#map('normal', 'r', '<denite:do_action:quickfix>', 'noremap')
 
@@ -58,7 +64,7 @@ function! rc#plugin#denite#hook_source() abort
     call denite#custom#var('grep', 'final_opt', [])
   elseif executable('pt')
     call denite#custom#var('file_rec', 'command', ['pt', '--follow', '--nocolor', '--nogroup',
-                        \ (has('win32') ? '-g:' : '-g='), ''])
+          \ (has('win32') ? '-g:' : '-g='), ''])
     call denite#custom#var('grep', 'command', ['pt'])
     call denite#custom#var('grep', 'default_opts', ['--nocolor', '--nogroup', '--smart-case'])
     call denite#custom#var('grep', 'recursive_opts', [])
@@ -91,7 +97,7 @@ function! rc#plugin#denite#hook_source() abort
   " Define alias
   call denite#custom#alias('source', 'file_rec/git', 'file_rec')
   call denite#custom#var('file_rec/git', 'command',
-    \ ['git', 'ls-files', '-co', '--exclude-standard'])
+        \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
   " Change default prompt
   call denite#custom#option('default', {
@@ -103,25 +109,25 @@ function! rc#plugin#denite#hook_source() abort
   " Custom menu
   let s:menus = {}
   let s:menus.vim = {
-    \ 'description': 'vim configuration',
-    \ }
+        \ 'description': 'vim configuration',
+        \ }
   let s:menus.vim.file_candidates = [
-    \ ['    > Edit configuration file (init.vim)', '~/.config/nvim/init.vim']
-    \ ]
+        \ ['    > Edit configuration file (init.vim)', '~/.config/nvim/init.vim']
+        \ ]
   let s:menus.zsh = {
-    \ 'description': 'zsh configuration'
-    \ }
+        \ 'description': 'zsh configuration'
+        \ }
   let s:menus.zsh.file_candidates = [
-    \ ['    > Edit zshenv', '~/.config/zsh/.zshenv'],
-    \ ['    > Edit zshrc',  '~/.config/zsh/.zshrc'],
-    \ ['    > Edit zplug configuration',  '~/.config/zsh/zplug.zsh']
-    \ ]
+        \ ['    > Edit zshenv', '~/.config/zsh/.zshenv'],
+        \ ['    > Edit zshrc',  '~/.config/zsh/.zshrc'],
+        \ ['    > Edit zplug configuration',  '~/.config/zsh/zplug.zsh']
+        \ ]
 
   call denite#custom#var('menu', 'menus', s:menus)
 
   " Change ignore_globs
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-    \ [ '.git/', '.ropeproject/', '__pycache__/',
-    \   'venv/', '.venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+        \ [ '.git/', '.ropeproject/', '__pycache__/',
+        \   'venv/', '.venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 endfunction
 

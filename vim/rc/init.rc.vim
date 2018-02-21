@@ -4,11 +4,6 @@ if &compatible
   set nocompatible
 endif
 
-" Reset autocmd
-augroup MyVimrc
-  autocmd!
-augroup END
-
 "----------------------------------------------------------------------------
 " Environments
 "----------------------------------------------------------------------------
@@ -76,16 +71,17 @@ let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
 let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
 
 " --- Enable Vim to use system clipboard
-if has('clipboard')
-  set clipboard&   " <- set to default
-  " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
-  " - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows (but yank)
-  if has('win32') || has('win64') || has('mac')
-    set clipboard^=unnamed
-  else
-    set clipboard^=unnamed,unnamedplus
-  endif
-endif
+" -> Disabled because of the problem of lectangular yank
+" if has('clipboard')
+"   set clipboard&   " <- set to default
+"   " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
+"   " - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows (but yank)
+"   if has('win32') || has('win64') || has('mac')
+"     set clipboard^=unnamed
+"   else
+"     set clipboard^=unnamed,unnamedplus
+"   endif
+" endif
 
 "----------------------------------------------------------------------------
 " Utility function(s)
@@ -105,16 +101,40 @@ function! s:source_rc(file)
   endif
 endfunction
 
+function! s:on_filetype() abort "{{{
+  if execute('filetype') =~# 'OFF'
+    " Lazy loading
+    silent! filetype plugin indent on
+    syntax enable
+    filetype detect
+  endif
+endfunction "}}}
+
+"----------------------------------------------------------------------------
+" Set augroup
+"----------------------------------------------------------------------------
+augroup MyVimrc
+  autocmd!
+  autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?  call s:on_filetype()
+  " Re-detect filetype on save
+  autocmd BufWritePost *
+        \ if &filetype ==# '' && exists('b:ftdetect') |
+        \   unlet! b:ftdetect |
+        \   filetype detect |
+        \ endif
+augroup END
+
 "----------------------------------------------------------------------------
 " Leader and Localleader keys
 "----------------------------------------------------------------------------
+noremap <Leader>       <Nop>
+noremap <LocalLeader>  <Nop>
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 
 if !empty('g:lmap')
   let g:lmap = {}
 endif
-
 if !empty('g:llmap')
   let g:llmap = {}
 endif
@@ -123,9 +143,16 @@ endif
 " Load confituration files
 "----------------------------------------------------------------------------
 call s:source_rc('dein.rc.vim')
+if has('vim_starting') && !empty(argv())
+  call s:on_filetype()
+endif
+
 if !has('vim_starting')
   call dein#call_hook('source')
   call dein#call_hook('post_source')
+
+  filetype plugin indent on
+  syntax enable
 endif
 
 call s:source_rc('encoding.rc.vim')
@@ -133,9 +160,6 @@ call s:source_rc('encoding.rc.vim')
 call s:source_rc('options.rc.vim')
 
 call s:source_rc('mappings.rc.vim')
-
-filetype plugin indent on
-syntax on " sytax on|enable should be set after setting whole 'runtimepath'
 
 call s:source_rc('colorscheme.rc.vim')
 

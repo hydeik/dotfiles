@@ -52,10 +52,10 @@ on_event    = 'CompleteDone'
 hook_source = 'call echodoc#enable()'
 
 [[plugins]]
-repo             = 'Shougo/denite.nvim'
-on_cmd           = 'Denite'
-hook_add         = 'call rc#plugin#denite#hook_add()'
-hook_source      = 'call rc#plugin#denite#hook_source()'
+repo        = 'Shougo/denite.nvim'
+on_cmd      = 'Denite'
+hook_add    = 'call rc#plugin#denite#hook_add()'
+hook_source = 'call rc#plugin#denite#hook_source()'
 
 # --- Denite sources
 [[plugins]]
@@ -72,12 +72,16 @@ on_source = 'denite.nvim'
 repo      = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
+[[plugins]]
+repo      = 'chemzqm/denite-extra'
+on_source = 'denite.nvim'
+
 #-----------------------------------------------------------------------------
 # Programming
 #-----------------------------------------------------------------------------
 [[plugins]]
 repo  = 'lambdalisue/vim-pyenv'
-on_ft = ['python', 'python3']
+on_ft = ['python']
 # Do not load vim-pyenv until *.py is opened and make sure that it is loaded
 # after jedi-vim is loaded.
 # depends = 'jedi-vim'
@@ -111,9 +115,8 @@ hook_source = 'call rc#plugin#caw#hook_source()'
 # Smart Align
 #-----------------------------------------------------------------------------
 [[plugins]]
-repo   = 'junegunn/vim-easy-align'
-on_map = {nv = '<Plug>'}
-on_cmd = ['EasyAlign', 'LiveEasyAlign']
+repo     = 'junegunn/vim-easy-align'
+on_map   = {nx = '<Plug>'}
 hook_add = 'call rc#plugin#easyalign#hook_add()'
 
 #-----------------------------------------------------------------------------
@@ -130,13 +133,13 @@ hook_source = 'call rc#plugin#eskk#hook_source()'
 #------------------------------------------------------------------------------
 # Language server protocol (LSP) client
 [[plugins]]
-repo             = 'autozimu/LanguageClient-neovim'
-depends          = ['deoplete.nvim', 'denite.nvim']
-rev              = 'next'
-build            = 'bash install.sh'
-on_ft            = ['c', 'cpp', 'python', 'rust']
-hook_add         = 'call rc#plugin#LanguageClient#hook_add()'
-hook_source      = 'call rc#plugin#LanguageClient#hook_source()'
+repo        = 'autozimu/LanguageClient-neovim'
+depends     = ['deoplete.nvim', 'denite.nvim']
+rev         = 'next'
+build       = 'bash install.sh'
+on_ft       = ['c', 'cpp', 'python', 'rust']
+hook_source = 'call rc#plugin#LanguageClient#hook_source()'
+#hook_add    = 'call rc#plugin#LanguageClient#hook_add()'
 #hook_post_source = 'call rc#plugin#LanguageClient#hook_post_source()'
 
 #------------------------------------------------------------------------------

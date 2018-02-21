@@ -1,6 +1,8 @@
 function! rc#plugin#caw#hook_add() abort
   map gc <Plug>(caw:hatpos:toggle:operator)
   map gcc <Plug>(caw:hatpos:toggle)
+
+  let g:lmap['c'] = ['call feedkeys("\<Plug>(caw:hatpos:prefix)")', 'Caw Prefix']
 endfunction
 
 function! rc#plugin#caw#hook_source() abort

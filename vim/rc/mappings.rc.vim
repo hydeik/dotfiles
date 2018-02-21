@@ -1,9 +1,9 @@
 " mapping.vim --- setting vim/nvim key mappings
 
 " Easy escape:"{{{
-inoremap jj       <ESC>
+inoremap jj        <ESC>
 inoremap j<Space>  j
-cnoremap <expr> j getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
+cnoremap <expr> j  getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 "}}}
 
 " Emacs-like cursor move in insert mode and command line mode:"{{{
@@ -34,8 +34,8 @@ cnoremap <C-g>    <C-c>
 "}}}
 
 " Open/close folding:"{{{
-nnoremap <expr>l  foldclosed('.') != -1 ? 'zo' : 'l'
-xnoremap <expr>l  foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
+nnoremap <expr> l  foldclosed('.') != -1 ? 'zo' : 'l'
+xnoremap <expr> l  foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
 
 nnoremap <silent><C-_> :<C-u>call <SID>smart_foldcloser()<CR>
 function! s:smart_foldcloser()
@@ -61,7 +61,7 @@ endfunction
 nnoremap x "_x
 
 " Disable Ex-mode.
-nnoremap Q  q
+" nnoremap Q  q
 
 " Disable ZZ.
 nnoremap ZZ  <Nop>
@@ -96,7 +96,7 @@ nnoremap - <C-x>
 nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
 
 " Quit help by 'q'
-autocmd MyVimrc FileType help nnoremap <buffer> q  :q<CR>
+autocmd MyVimrc FileType help nnoremap <buffer> <silent> q  :q<CR>
 
 " leave terminal mode by <ESC>
 if has('nvim')
@@ -119,3 +119,50 @@ endif
 " Map <F10> to reload current vim script
 nnoremap <silent><F10>  :<C-u>call <SID>source_script('%')<CR>
 
+" Toggle Quickfix window
+function! s:toggle_qf() abort
+  let nwin = winnr('$')
+  cclose
+  if nwin == winnr('$')
+    botright copen
+  endif
+endfunction
+nnoremap <silent> <Plug>(my-toggle-quickfix)  :<C-u>call <SID>toggle_qf()<CR>
+nmap Q <Plug>(my-toggle-quickfix)
+" Map q/<ESC> to close quickfix window
+autocmd MyVimrc FileType qf nnoremap <buffer> <silent>q      :q<CR>
+autocmd MyVimrc FileType qf nnoremap <buffer> <silent><ESC>  :q<CR>
+
+" Toggle LocationList window
+function! s:toggle_ll() abort
+  try
+    let nwin = winnr('$')
+    lclose
+    if nwin == winnr('$')
+      botright lopen
+    endif
+  catch /^Vim\%((\a\+)\)\=:E776/
+    echohl WarningMsg
+    redraw | echo 'No location list'
+    echohl None
+  endtry
+endfunction
+nnoremap <silent> <Plug>(my-toggle-locationlist)  :<C-u>call <SID>toggle_ll()<CR>
+nmap L <Plug>(my-toggle-locationlist)
+
+" Toggle window zoom
+"  <C-w>z      : maximize current window
+"  <C-w>z again: restore the previous windows
+function! s:toggle_window_zoom() abort
+  if exists('t:zoom_winrestcmd')
+    execute t:zoom_winrestcmd
+    unlet t:zoom_winrestcmd
+  else
+    let t:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+  endif
+endfunction
+nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>toggle_window_zoom()<CR>
+nmap <C-w>z     <Plug>(my-zoom-window)
+nmap <C-w><C-z> <Plug>(my-zoom-window)
