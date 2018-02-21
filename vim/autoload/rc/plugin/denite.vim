@@ -20,7 +20,7 @@ function! rc#plugin#denite#hook_add() abort
 
   nnoremap <silent> ;ff :<C-u>Denite file_rec<CR>
   nnoremap <silent> ;fd :<C-u>Denite file_rec:~/.vim<CR>
-  nnoremap <silent> ;fs :<C-u>Denitd file_point file_old -sorters=sorter_rank
+  nnoremap <silent> ;fs :<C-u>Denite file_point file_old -sorters=sorter_rank
       \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
   nnoremap <silent> ;ft :<C-u>Denite filetype<CR>
   nnoremap <silent> ;fp :<C-u>Denite ghq<CR>
