@@ -197,26 +197,28 @@ export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 export LSCOLORS=exfxcxdxbxegedabagacad
 
 #### EDITOR
-if (( ${+commands[vim]} )); then
+if (( ${+commands[nvim]} )); then
+    export EDITOR='nvim'
+elif (( ${+commands[vim]} )); then
     export EDITOR="vim"
 else
     export EDITOR="vi"
 fi
 
 #### $COLORTERM
-export COLORTERM=0
-case "$TERM" in
-    kterm*);    COLORTERM=1 ;;
-    xterm*);    COLORTERM=1 ;;
-    rxvt*);     COLORTERM=1 ;;
-    mlterm*);   COLORTERM=1 ;;
-    Eterm*);    COLORTERM=1 ;;
-    screen*);   COLORTERM=1 ;;
-    eterm*);    COLORTERM=1 ;;  # eterm on GNU Emacs
-    dumb*);     COLORTERM=0 ;;  #
-    # emacs*);  COLORTERM=1 ;;
-    ct100*);    COLORTERM=1 ;;  # TeraTermPro
-esac
+# export COLORTERM=0
+# case "$TERM" in
+#     kterm*);    COLORTERM=1 ;;
+#     xterm*);    COLORTERM=1 ;;
+#     rxvt*);     COLORTERM=1 ;;
+#     mlterm*);   COLORTERM=1 ;;
+#     Eterm*);    COLORTERM=1 ;;
+#     screen*);   COLORTERM=1 ;;
+#     eterm*);    COLORTERM=1 ;;  # eterm on GNU Emacs
+#     dumb*);     COLORTERM=0 ;;  #
+#     # emacs*);  COLORTERM=1 ;;
+#     ct100*);    COLORTERM=1 ;;  # TeraTermPro
+# esac
 
 ##
 ## Development environment
