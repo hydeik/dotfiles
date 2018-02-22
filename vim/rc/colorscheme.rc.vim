@@ -31,11 +31,11 @@ let g:lightline = {
       \ 'colorscheme': 'hybrid',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'pyenv' ],
       \             [ 'gitstatus', 'filename' ] ],
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ],
+      \              [ 'pyenv' ] ],
       \ },
       \ 'component' : {
       \   'lineinfo': "\ue0a1 %3l:%-2v"
