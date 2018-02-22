@@ -72,10 +72,6 @@ on_source = 'denite.nvim'
 repo      = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
-[[plugins]]
-repo      = 'chemzqm/denite-extra'
-on_source = 'denite.nvim'
-
 #-----------------------------------------------------------------------------
 # Programming
 #-----------------------------------------------------------------------------

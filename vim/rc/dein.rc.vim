@@ -33,7 +33,7 @@ call dein#load_toml(s:dein_toml_ft)
 call dein#end()              " 'runtimepath' is changed after dein#end()
 call dein#save_state()
 
-if !has('vim_starting') && dein#check_install()
+if has('vim_starting') && dein#check_install()
   " Install plugin(s) automatically if necessary
   call dein#install()
 endif

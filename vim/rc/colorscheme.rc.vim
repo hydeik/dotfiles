@@ -24,11 +24,11 @@ endif
 
 " --- Colorscheme
 set background=dark
-colorscheme dracula
+colorscheme hybrid
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'Dracula',
+      \ 'colorscheme': 'hybrid',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'pyenv' ],
