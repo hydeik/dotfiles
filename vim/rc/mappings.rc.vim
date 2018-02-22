@@ -66,12 +66,6 @@ nnoremap x "_x
 " Disable ZZ.
 nnoremap ZZ  <Nop>
 
-" Move by display line j [<--> gj, k <--> gk]
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
-
 " Move widows by Ctrl+h,j,k,l
 " nnoremap <C-h> <C-w>h
 " nnoremap <C-j> <C-w>j

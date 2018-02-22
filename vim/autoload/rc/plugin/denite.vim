@@ -16,8 +16,6 @@ function! rc#plugin#denite#hook_add() abort
   nnoremap [Denite]b  :<C-u>Denite -mode=normal buffer<CR>
   nnoremap [Denite]h  :<C-u>Denite help<CR>
   nnoremap [Denite]g  :<C-u>Denite -buffer-name=search -no-empty -mode=normal grep<CR>
-  " nnoremap [Denite]Q  :<C-u>Denite -mode=normal quickfix<CR>
-  " nnoremap [Denite]L  :<C-u>Denite -no-empty location_list<CR>
 
   noremap [DeniteFile]   <Nop>
   nmap <Leader>f     [DeniteFile]
@@ -106,24 +104,8 @@ function! rc#plugin#denite#hook_source() abort
         \ 'source_names': 'short',
         \ })
 
-  " Custom menu
-  let s:menus = {}
-  let s:menus.vim = {
-        \ 'description': 'vim configuration',
-        \ }
-  let s:menus.vim.file_candidates = [
-        \ ['    > Edit configuration file (init.vim)', '~/.config/nvim/init.vim']
-        \ ]
-  let s:menus.zsh = {
-        \ 'description': 'zsh configuration'
-        \ }
-  let s:menus.zsh.file_candidates = [
-        \ ['    > Edit zshenv', '~/.config/zsh/.zshenv'],
-        \ ['    > Edit zshrc',  '~/.config/zsh/.zshrc'],
-        \ ['    > Edit zplug configuration',  '~/.config/zsh/zplug.zsh']
-        \ ]
-
-  call denite#custom#var('menu', 'menus', s:menus)
+  " Change highlight colors/style in insert mode.
+  call denite#custom#option('_', 'highlight_mode_insert', 'Search')
 
   " Change ignore_globs
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',

@@ -24,6 +24,11 @@ on_event         = 'InsertEnter'
 hook_source      = 'call rc#plugin#deoplete#hook_source()'
 hook_post_source = 'call rc#plugin#deoplete#hook_post_source()'
 
+# --- Deoplete sources
+[[plugins]]
+repo  = 'Shougo/neoinclude.vim'
+on_if = 1
+
 #------------------------------------------------------------------------------
 # Snippets
 #------------------------------------------------------------------------------
@@ -34,14 +39,6 @@ on_event    = 'InsertCharPre'
 on_ft       = 'snippet'
 hook_add    = 'call rc#plugin#neosnippet#hook_add()'
 hook_source = 'call rc#plugin#neosnippet#hook_source()'
-
-#------------------------------------------------------------------------------
-# Detect filetype in the context of current cursor position
-#------------------------------------------------------------------------------
-# [[plugins]]
-# repo = 'osyo-manga/vim-precious'
-# depends = ['context_filetype.vim']
-# on_event = ['BufNewFile', 'BufRead']
 
 #------------------------------------------------------------------------------
 # Denite
@@ -73,24 +70,26 @@ repo      = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
 #-----------------------------------------------------------------------------
-# Programming
+# Replace grep/quickfix results
 #-----------------------------------------------------------------------------
 [[plugins]]
-repo  = 'lambdalisue/vim-pyenv'
-on_ft = ['python']
-# Do not load vim-pyenv until *.py is opened and make sure that it is loaded
-# after jedi-vim is loaded.
-# depends = 'jedi-vim'
+repo        = 'thinca/vim-qfreplace'
+on_ft       = ['denite', 'qf']
+hook_source = '''
+  autocmd MyVimrc FileType qf nnoremap <buffer> r :<C-u>Qfreplace<CR>
+'''
 
+#-----------------------------------------------------------------------------
+# Cursor moves
+#-----------------------------------------------------------------------------
 [[plugins]]
-repo             = 'lambdalisue/gina.vim'
-on_cmd           = 'Gina'
-hook_add         = 'call rc#plugin#gina#hook_add()'
-hook_post_source = 'call rc#plugin#gina#hook_post_source()'
+repo     = 'rhysd/accelerated-jk'
+on_map   = {n = '<Plug>'}
+hook_add = '''
+  nmap <silent>j <Plug>(accelerated_jk_gj)
+  nmap <silent>k <Plug>(accelerated_jk_gk)
+'''
 
-#------------------------------------------------------------------------------
-# EasyMotion
-#------------------------------------------------------------------------------
 [[plugins]]
 repo        = 'easymotion/vim-easymotion'
 on_map      = '<Plug>'
@@ -99,35 +98,65 @@ hook_add    = 'call rc#plugin#easymotion#hook_add()'
 hook_source = 'call rc#plugin#easymotion#hook_source()'
 
 #-----------------------------------------------------------------------------
-# Smart commenter
+# Editting
 #-----------------------------------------------------------------------------
+# --- Surround
+[[plugins]]
+repo     = 'rhysd/vim-operator-surround'
+depends  = 'vim-operator-user'
+on_map   = {n = '<Plug>'}
+hook_add = '''
+  nmap <silent>sa <Plug>(operator-surround-append)a
+  nmap <silent>sd <Plug>(operator-surround-delete)a
+  nmap <silent>sr <Plug>(operator-surround-replace)a
+  nmap <silent>sc <Plug>(operator-surround-replace)a
+'''
+# --- Smart commenter
 [[plugins]]
 repo        = 'tyru/caw.vim'
 on_map      = '<Plug>'
-hook_add    = 'call rc#plugin#caw#hook_add()'
-hook_source = 'call rc#plugin#caw#hook_source()'
+hook_add    = '''
+  map gc  <Plug>(caw:hatpos:toggle:operator)
+  map gcc <Plug>(caw:hatpos:toggle)
+'''
+hook_source = '''
+  let g:caw_no_default_keymappings = 1
+'''
 
-#-----------------------------------------------------------------------------
-# Smart Align
-#-----------------------------------------------------------------------------
+# --- Smart Align
 [[plugins]]
 repo     = 'junegunn/vim-easy-align'
-on_map   = {nx = '<Plug>'}
-hook_add = 'call rc#plugin#easyalign#hook_add()'
+on_cmd   = ['EasyAlign', 'LiveEasyAlign']
+hook_add = '''
+  vnoremap <Enter> :EasyAlign<CR>
+'''
 
-#-----------------------------------------------------------------------------
-# SKK
-#-----------------------------------------------------------------------------
+# --- SKK imput method for Japanese
 [[plugins]]
 repo        = 'tyru/eskk.vim'
 on_map      = {ic = '<Plug>'}
 hook_add    = 'call rc#plugin#eskk#hook_add()'
 hook_source = 'call rc#plugin#eskk#hook_source()'
 
-#------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Programming
-#------------------------------------------------------------------------------
-# Language server protocol (LSP) client
+#-----------------------------------------------------------------------------
+# --- Python pyenv
+[[plugins]]
+repo  = 'lambdalisue/vim-pyenv'
+on_ft = ['python']
+# Do not load vim-pyenv until *.py is opened and make sure that it is loaded
+# after jedi-vim is loaded.
+# depends = 'jedi-vim'
+
+# --- Git operations
+[[plugins]]
+repo             = 'lambdalisue/gina.vim'
+on_cmd           = 'Gina'
+hook_add         = 'call rc#plugin#gina#hook_add()'
+hook_post_source = 'call rc#plugin#gina#hook_post_source()'
+
+# --- Language server protocol (LSP) client
 [[plugins]]
 repo        = 'autozimu/LanguageClient-neovim'
 depends     = ['deoplete.nvim', 'denite.nvim']
@@ -135,8 +164,6 @@ rev         = 'next'
 build       = 'bash install.sh'
 on_ft       = ['c', 'cpp', 'python', 'rust']
 hook_source = 'call rc#plugin#LanguageClient#hook_source()'
-#hook_add    = 'call rc#plugin#LanguageClient#hook_add()'
-#hook_post_source = 'call rc#plugin#LanguageClient#hook_post_source()'
 
 #------------------------------------------------------------------------------
 # Leader guide
