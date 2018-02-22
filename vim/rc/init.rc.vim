@@ -26,9 +26,21 @@ if empty($XDG_DATA_HOME)
   let $XDG_DATA_HOME = expand('~/.local/share')
 endif
 
+" --- Query OS type
+let s:is_windows = has('win32') || has('win64')
+
+function! IsWindows() abort
+  return s:is_windows
+endfunction
+
+function! IsMac() abort
+  return !s:is_windows && !has('win32unix')
+        \ && (has('mac') || has('macunix') || has('gui_macvim')
+        \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
+endfunction
+
 " --- Set executable path and manpath.
 " These variables might not be set properly in GVim/MacVim
-let s:is_windows = has('win32') || has('win64')
 function! s:configure_path(name, pathlist) abort
   let path_separator = s:is_windows ? ';' : ':'
   let pathlist = split(expand(a:name), path_separator)

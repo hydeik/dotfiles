@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CWD=`pwd`
-DOTFILES='editorconfig gitconfig latexmk tmux.conf zshenv'
+DOTFILES='editorconfig gitconfig latexmkrc tmux.conf zshenv'
 
 if [ -z "${XDG_CONFIG_HOME}" ]
 then
@@ -19,7 +19,7 @@ do
 done
 
 # Make symlink for VIM configuration
-ln -fnsv ${CWD}/vim $HOME/.vim 
+ln -fnsv ${CWD}/vim $HOME/.vim
 
 # Make symlink for NeoVim configuration
 ln -fnsv ${CWD}/vim ${XDG_CONFIG_HOME}/nvim

@@ -30,36 +30,46 @@ repo = 'Shougo/context_filetype.vim'
 #------------------------------------------------------------------------------
 # Colorscheme
 #------------------------------------------------------------------------------
-[[plugins]]
-repo = 'flazz/vim-colorschemes'
-script-type = 'colors'
-
-[[plugins]]
-repo = 'altercation/vim-colors-solarized'
-script-type = 'colors'
-
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-
+# Configurable statusline/tabline (lighter than powerline and vim-airline)
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 
+# Add filetype glyphs (icons) to other plugins
 [[plugins]]
-repo = 'cocopon/lightline-hybrid.vim'
-
-[[plugins]]
-repo = 'maximbaz/lightline-ale'
-hook_add = '''
-  " Set icon font
-  let g:lightline#ale#indicator_warnings = "\uf071"
-  let g:lightline#ale#indicator_errors   = "\uf00d"
-  let g:lightline#ale#indicator_ok       = "\uf00c"
-'''
+repo = 'ryanoasis/vim-devicons'
 
 # Create tmux powerline theme from vim powerline theme
 # (requires powerline/vim-airline/lightline)
 [[plugins]]
 repo = 'edkolev/tmuxline.vim'
+
+# hybrid colorscheme
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+
+[[plugins]]
+repo = 'cocopon/lightline-hybrid.vim'
+
+# Colorschemes supporting (24bit) true-colors including lightline theme
+[[plugins]]
+repo = 'lifepillar/vim-solarized8'
+
+[[plugins]]
+repo = 'morhetz/gruvbox'
+
+[[plugins]]
+repo = 'jacoborus/tender.vim'
+
+[[plugins]]
+repo = 'joshdick/onedark.vim'
+
+[[plugins]]
+repo = 'morhetz/gruvbox'
+
+[[plugins]]
+# lightline contains Dracula theme
+repo = 'dracula/vim'
+name = 'dracula'
 
 #------------------------------------------------------------------------------
 # Vim help in Japanese
@@ -176,6 +186,16 @@ if = 'has("signs")'
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'w0rp/ale'
+
+# Lightline component for ALE status
+[[plugins]]
+repo     = 'maximbaz/lightline-ale'
+hook_add = '''
+  " Set icon font
+  let g:lightline#ale#indicator_warnings = "\uf071"
+  let g:lightline#ale#indicator_errors   = "\uf00d"
+  let g:lightline#ale#indicator_ok       = "\uf00c"
+'''
 
 #------------------------------------------------------------------------------
 # Snippet definitions

@@ -165,6 +165,13 @@ build       = 'bash install.sh'
 on_ft       = ['c', 'cpp', 'python', 'rust']
 hook_source = 'call rc#plugin#LanguageClient#hook_source()'
 
+# --- Latex
+[[plugins]]
+repo    = 'lervag/vimtex'
+depends = ['deoplete.nvim']
+on_ft   = ['tex']
+hook_source = 'call rc#plugin#vimtex#hook_source()'
+
 #------------------------------------------------------------------------------
 # Leader guide
 #------------------------------------------------------------------------------
