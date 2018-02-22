@@ -1,5 +1,8 @@
 # Global hook_add, which is executed in dein#end().
 hook_add = '''
+  " -- C++
+  let g:cpp_class_scope_highlight = 1
+
   " -- Python
   let g:python_highlight_all = 1
 
@@ -23,14 +26,14 @@ hook_add = '''
         \ 'vim'
         \ ]
 
-  " LaTeX
+  " -- LaTeX
   let g:tex_stylish = 1
   let g:tex_conceal = ''
   let g:tex_flavor = 'latex'
   let g:tex_isk='48-57,a-z,A-Z,192-255,:'
-
-  " Folding
   let g:tex_fold_enabled = 1
+
+  " Folding in other filetypes
   let g:xml_syntax_folding = 1
   let g:php_folding = 1
   let g:perl_fold = 1

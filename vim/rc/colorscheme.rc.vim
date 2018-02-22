@@ -1,9 +1,4 @@
-" colorscheme.vim --- setup colorscheme on vim/nvim
-"
-" depends on
-"  - vim-devicon
-"  - lightline.vim
-"  - lightline-hybrid.vim
+" colorscheme.vim --- setup colorscheme on vim/nvim and costomize lightline
 
 " Enable true color if supported
 if !has('gui_running')
@@ -24,11 +19,11 @@ endif
 
 " --- Colorscheme
 set background=dark
-colorscheme hybrid
+colorscheme onedark
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'hybrid',
+      \ 'colorscheme': 'onedark',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitstatus', 'filename' ] ],

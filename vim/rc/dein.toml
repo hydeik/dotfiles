@@ -28,7 +28,7 @@ build = "PY3=ON ./install.sh"
 repo = 'Shougo/context_filetype.vim'
 
 #------------------------------------------------------------------------------
-# Colorscheme
+# Lightline + Colorscheme
 #------------------------------------------------------------------------------
 # Configurable statusline/tabline (lighter than powerline and vim-airline)
 [[plugins]]
@@ -43,33 +43,30 @@ repo = 'ryanoasis/vim-devicons'
 [[plugins]]
 repo = 'edkolev/tmuxline.vim'
 
-# hybrid colorscheme
+#  Dracula
 [[plugins]]
-repo = 'w0ng/vim-hybrid'
+repo = 'dracula/vim'
+name = 'dracula'
 
+#  Iceberg -- with lightline colorscheme
 [[plugins]]
-repo = 'cocopon/lightline-hybrid.vim'
+repo = 'cocopon/iceberg.vim'
 
-# Colorschemes supporting (24bit) true-colors including lightline theme
-[[plugins]]
-repo = 'lifepillar/vim-solarized8'
-
+#  gruvbox -- truecolor support with lightline colorscheme
 [[plugins]]
 repo = 'morhetz/gruvbox'
 
+#  tender -- truecolor support with lightline colorscheme
 [[plugins]]
 repo = 'jacoborus/tender.vim'
 
+#  onedark -- truecolor support with lightline colorscheme
 [[plugins]]
 repo = 'joshdick/onedark.vim'
 
+#  neodark -- truecolor support with lightline colorscheme
 [[plugins]]
-repo = 'morhetz/gruvbox'
-
-[[plugins]]
-# lightline contains Dracula theme
-repo = 'dracula/vim'
-name = 'dracula'
+repo = 'KeitaNakamura/neodark.vim'
 
 #------------------------------------------------------------------------------
 # Vim help in Japanese
