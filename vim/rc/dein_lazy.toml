@@ -141,6 +141,13 @@ hook_source = 'call rc#plugin#eskk#hook_source()'
 #-----------------------------------------------------------------------------
 # Filetype, syntax and more
 #-----------------------------------------------------------------------------
+# --- Git operations
+[[plugins]]
+repo             = 'lambdalisue/gina.vim'
+on_cmd           = 'Gina'
+hook_add         = 'call rc#plugin#gina#hook_add()'
+hook_post_source = 'call rc#plugin#gina#hook_post_source()'
+
 # --- reStructuredText (rst)
 [[plugins]]
 repo  = 'gu-fan/riv.vim'
@@ -149,17 +156,10 @@ on_ft = 'rst'
 # --- Python pyenv
 [[plugins]]
 repo  = 'lambdalisue/vim-pyenv'
-on_ft = ['python']
+on_ft = 'python'
 # Do not load vim-pyenv until *.py is opened and make sure that it is loaded
 # after jedi-vim is loaded.
 # depends = 'jedi-vim'
-
-# --- Git operations
-[[plugins]]
-repo             = 'lambdalisue/gina.vim'
-on_cmd           = 'Gina'
-hook_add         = 'call rc#plugin#gina#hook_add()'
-hook_post_source = 'call rc#plugin#gina#hook_post_source()'
 
 # --- Language server protocol (LSP) client
 [[plugins]]
@@ -174,8 +174,32 @@ hook_source = 'call rc#plugin#LanguageClient#hook_source()'
 [[plugins]]
 repo    = 'lervag/vimtex'
 depends = ['deoplete.nvim']
-on_ft   = ['tex']
+on_ft   = 'tex'
 hook_source = 'call rc#plugin#vimtex#hook_source()'
+
+# --- Markdown preview
+[[plugins]]
+repo = 'iamcco/mathjax-support-for-mkdp'
+on_ft = 'markdown'
+depends = ['markdown-preview.vim']
+
+[[plugins]]
+repo = 'iamcco/markdown-preview.vim'
+on_ft = 'markdown'
+hook_source = '''
+  let g:mkdp_refresh_slow = 1
+'''
+
+# [[plugins]]
+# repo = 'euclio/vim-markdown-composer'
+# on_ft = 'markdown'
+# hook_post_update = '''
+#   if has('nvim')
+#     !cargo build --release
+#   else
+#     !cargo build --release --no-default-features --features json-rpc
+#   endif
+# '''
 
 #------------------------------------------------------------------------------
 # Leader guide
