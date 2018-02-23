@@ -139,8 +139,13 @@ hook_add    = 'call rc#plugin#eskk#hook_add()'
 hook_source = 'call rc#plugin#eskk#hook_source()'
 
 #-----------------------------------------------------------------------------
-# Programming
+# Filetype, syntax and more
 #-----------------------------------------------------------------------------
+# --- reStructuredText (rst)
+[[plugins]]
+repo  = 'gu-fan/riv.vim'
+on_ft = 'rst'
+
 # --- Python pyenv
 [[plugins]]
 repo  = 'lambdalisue/vim-pyenv'

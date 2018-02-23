@@ -224,26 +224,17 @@ fi
 ## Development environment
 ##
 
-# --- Python / Pipenv / Pyenv
-# Set directory to store virtual environments created by pipenv
-export WORKON_HOME=${HOME}/.virtualenv
-# # Stick virtualenv in {project_dir}/.venv
-# export PIPENV_VENV_IN_PROJECT=1
-
-export PYENV_ROOT=${HOME}/.pyenv
-path=( ${PYENV_ROOT}/bin(N-/) $path[@] )
-if (( ${+commands[pyenv]} )); then
-    eval "$(pyenv init - --no-rehash)"
-fi
-if (( ${+commands[pyenv-virtualenv]} )); then
-    eval "$(pyenv-virtualenv init -)"
+# --- Anyenv
+path=( ${HOME}/.anyenv/bin(N-/) $path[@] )
+if (( ${+commands[anyenv]} )); then
+    eval "$(anyenv init - --no-rehash)"
 fi
 
 # Rust
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
-if (( ${+commands[rustc]} )); then
-    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-fi
+# if (( ${+commands[rustc]} )); then
+#     export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+# fi
 
 # Golang
 export GOPATH=${HOME}
