@@ -114,13 +114,23 @@ hook_add = '''
 # --- Smart commenter
 [[plugins]]
 repo        = 'tyru/caw.vim'
-on_map      = '<Plug>'
-hook_add    = '''
-  map gc  <Plug>(caw:hatpos:toggle:operator)
-  map gcc <Plug>(caw:hatpos:toggle)
-'''
-hook_source = '''
-  let g:caw_no_default_keymappings = 1
+on_map      = {nx = '<Plug>'}
+hook_add = '''
+  function! InitCaw() abort
+    if !&l:modifiable
+      silent! nunmap <buffer> gc
+      silent! xunmap <buffer> gc
+      silent! nunmap <buffer> gcc
+      silent! xunmap <buffer> gcc
+    else
+      nmap <buffer> gc <Plug>(caw:prefix)
+      xmap <buffer> gc <Plug>(caw:prefix)
+      nmap <buffer> gcc <Plug>(caw:hatpos:toggle)
+      xmap <buffer> gcc <Plug>(caw:hatpos:toggle)
+    endif
+  endfunction
+  autocmd MyVimrc FileType * call InitCaw()
+  call InitCaw()
 '''
 
 # --- Smart Align
