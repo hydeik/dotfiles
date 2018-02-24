@@ -50,6 +50,7 @@ hook_source = 'call echodoc#enable()'
 
 [[plugins]]
 repo        = 'Shougo/denite.nvim'
+depends     = ['vim-qfreplace']
 on_cmd      = 'Denite'
 hook_add    = 'call rc#plugin#denite#hook_add()'
 hook_source = 'call rc#plugin#denite#hook_source()'

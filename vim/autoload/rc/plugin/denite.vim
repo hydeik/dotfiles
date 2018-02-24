@@ -111,5 +111,33 @@ function! rc#plugin#denite#hook_source() abort
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
         \ [ '.git/', '.ropeproject/', '__pycache__/',
         \   'venv/', '.venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+
+  " Edit search results by Qfreplace
+  if dein#tap('vim-qfreplace')
+    function! DeniteQfreplace(context)
+      let l:qflist = []
+      for l:target in a:context['targets']
+        if !has_key(l:target, 'action__path') | continue | endif
+        if !has_key(l:target, 'action__line') | continue | endif
+        if !has_key(l:target, 'action__text') | continue | endif
+
+        call add(qflist, {
+              \ 'filename': l:target['action__path'],
+              \ 'lnum':     l:target['action__line'],
+              \ 'text':     l:target['action__text']
+              \ })
+      endfor
+      call setqflist(l:qflist)
+      call qfreplace#start('')
+    endfunction
+    call denite#custom#action('file', 'qfreplace', 'DeniteQfreplace')
+    call denite#custom#map('normal', 'R', '<denite:do_action:qfrepalce>', 'noremap')
+  endif
+
+  " Display file icons in Denite* command: requires Vim-devicons
+  if dein#tap('vim-devicons')
+    call denite#custom#source('file_rec,file_old,buffer,directory_rec',
+          \ 'converters', ['devicons_denite_converter'])
+  endif
 endfunction
 
