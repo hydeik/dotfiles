@@ -102,16 +102,30 @@ hook_source = 'call rc#plugin#easymotion#hook_source()'
 # Editting
 #-----------------------------------------------------------------------------
 # --- Surround
+# [[plugins]]
+# repo     = 'rhysd/vim-operator-surround'
+# depends  = 'vim-operator-user'
+# on_map   = {n = '<Plug>'}
+# hook_add = '''
+#   nmap <silent>sa <Plug>(operator-surround-append)a
+#   nmap <silent>sd <Plug>(operator-surround-delete)a
+#   nmap <silent>sr <Plug>(operator-surround-replace)a
+#   nmap <silent>sc <Plug>(operator-surround-replace)a
+# '''
+
+# vim-sandwich
 [[plugins]]
-repo     = 'rhysd/vim-operator-surround'
-depends  = 'vim-operator-user'
-on_map   = {n = '<Plug>'}
-hook_add = '''
-  nmap <silent>sa <Plug>(operator-surround-append)a
-  nmap <silent>sd <Plug>(operator-surround-delete)a
-  nmap <silent>sr <Plug>(operator-surround-replace)a
-  nmap <silent>sc <Plug>(operator-surround-replace)a
+repo = 'machakann/vim-sandwich'
+on_map = {nxo = '<Plug>'}
+hook_source = '''
+  let g:textobj#sandwich#stimeoutlen = 100
+  let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+  let g:sandwich#recipes += [{'buns' : ['「', '」']}]
+  let g:sandwich#recipes += [{'buns' : ['【', '】']}]
+  let g:sandwich#recipes += [{'buns' : ['（', '）']}]
+  let g:sandwich#recipes += [{'buns' : ['『', '』']}]
 '''
+
 # --- Smart commenter
 [[plugins]]
 repo        = 'tyru/caw.vim'

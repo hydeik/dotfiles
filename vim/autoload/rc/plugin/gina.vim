@@ -4,14 +4,14 @@ function! rc#plugin#gina#hook_add() abort
   nnoremap <Leader>gc :<C-u>Gina commit<CR>
   nnoremap <Leader>gl :<C-u>Gina log<CR>
 
-  let g:lmap.g = {
-        \ 'name': 'Git Menu',
-        \ 's': ['Gina status', 'Git status'],
-        \ 'c': ['Gina commit', 'Git commit'],
-        \ 'a': ['Gina amend',  'Git amend'],
-        \ 'b': ['Gina branch', 'Git branch'],
-        \ 'l': ['Gina log',    'Git log'],
-        \ }
+  " let g:lmap.g = {
+  "       \ 'name': 'Git Menu',
+  "       \ 's': ['Gina status', 'Git status'],
+  "       \ 'c': ['Gina commit', 'Git commit'],
+  "       \ 'a': ['Gina amend',  'Git amend'],
+  "       \ 'b': ['Gina branch', 'Git branch'],
+  "       \ 'l': ['Gina log',    'Git log'],
+  "       \ }
 endfunction
 
 function! rc#plugin#gina#hook_post_source() abort

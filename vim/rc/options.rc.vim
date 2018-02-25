@@ -87,7 +87,7 @@ autocmd MyVimrc TextChangedI,TextChanged *
       \   let &l:foldmethod = 'manual' |
       \ endif
 autocmd MyVimrc BufWritePost *
-      \ if &l:f2ldmethod ==# 'manual' && exists('b:foldmethod_save') |
+      \ if &l:foldmethod ==# 'manual' && exists('b:foldmethod_save') |
       \   let &l:foldmethod = b:foldmethod_save |
       \   execute 'normal! zx' |
       \ endif

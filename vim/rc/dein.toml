@@ -99,30 +99,22 @@ repo = 'bronson/vim-trailing-whitespace'
 [[plugins]]
 repo = 'kana/vim-textobj-user'
 
-[[plugins]]
-repo = 'kana/vim-textobj-line'
-depends = 'vim-textobj-user'
+# [[plugins]]
+# repo = 'kana/vim-textobj-line'
+# depends = 'vim-textobj-user'
+
+# [[plugins]]
+# repo = 'kana/vim-textobj-entire'
+# depends = 'vim-textobj-user'
 
 [[plugins]]
-repo = 'kana/vim-textobj-entire'
-depends = 'vim-textobj-user'
+repo = 'machakann/vim-textobj-delimited'
 
 #------------------------------------------------------------------------------
 # Operator extensions
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'kana/vim-operator-user'
-
-[[plugins]]
-repo = 'rhysd/vim-operator-surround'
-depends = ['vim-operator-user']
-#on_event = 'InsertEnter'
-hood_add = '''
-  " operator mappings
-  map <silent>ys <Plug>(operator-surround-append)
-  map <silent>ds <Plug>(operator-surround-delete)
-  map <silent>cs <Plug>(operator-surround-replace)
-'''
 
 #------------------------------------------------------------------------------
 # Enhanced commands

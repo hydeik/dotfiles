@@ -148,19 +148,19 @@ augroup MyVimrc
 augroup END
 
 "----------------------------------------------------------------------------
-" Leader and Localleader keys
+" Prefix keys
 "----------------------------------------------------------------------------
 noremap <Leader>       <Nop>
 noremap <LocalLeader>  <Nop>
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 
-if !empty('g:lmap')
-  let g:lmap = {}
-endif
-if !empty('g:llmap')
-  let g:llmap = {}
-endif
+" Release some keymappings for plugins
+nnoremap ;  <Nop>
+nnoremap , <Nop>
+" nnoremap m  <Nop>
+nnoremap s <Nop>
+xnoremap s <Nop>
 
 "----------------------------------------------------------------------------
 " Load confituration files
