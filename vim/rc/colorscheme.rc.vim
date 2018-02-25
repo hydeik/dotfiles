@@ -14,7 +14,7 @@ endif
 
 " --- Font in GUI Vim
 if has('gui_running')
-  " set guifont=Knack\ Regular\ Nerd\ Font\ Complete:h14
+  set guifont=Knack\ Regular\ Nerd\ Font\ Complete:h14
 endif
 
 " --- Colorscheme

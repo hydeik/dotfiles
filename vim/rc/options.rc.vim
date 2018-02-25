@@ -76,7 +76,7 @@ set ttimeout ttimeoutlen=50
 set foldenable
 set foldmethod=marker
 " Show folding level
-set foldcolumn=1
+set foldcolumn=2
 set fillchars=vert:\|
 set commentstring=%s
 
@@ -87,7 +87,7 @@ autocmd MyVimrc TextChangedI,TextChanged *
       \   let &l:foldmethod = 'manual' |
       \ endif
 autocmd MyVimrc BufWritePost *
-      \ if &l:foldmethod ==# 'manual' && exists('b:foldmethod_save') |
+      \ if &l:f2ldmethod ==# 'manual' && exists('b:foldmethod_save') |
       \   let &l:foldmethod = b:foldmethod_save |
       \   execute 'normal! zx' |
       \ endif
