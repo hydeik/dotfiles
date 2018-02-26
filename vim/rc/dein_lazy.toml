@@ -115,8 +115,9 @@ hook_source = 'call rc#plugin#easymotion#hook_source()'
 
 # vim-sandwich
 [[plugins]]
-repo = 'machakann/vim-sandwich'
-on_map = {nxo = '<Plug>'}
+repo        = 'machakann/vim-sandwich'
+on_map      = {nxo = '<Plug>'}
+on_event    = ['BufRead', 'BufNewFile']
 hook_source = '''
   let g:textobj#sandwich#stimeoutlen = 100
   let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
@@ -128,8 +129,8 @@ hook_source = '''
 
 # --- Smart commenter
 [[plugins]]
-repo        = 'tyru/caw.vim'
-on_map      = {nx = '<Plug>'}
+repo     = 'tyru/caw.vim'
+on_map   = {nx = '<Plug>'}
 hook_add = '''
   function! InitCaw() abort
     if !&l:modifiable
