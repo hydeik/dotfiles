@@ -9,7 +9,7 @@ bindkey '^I' complete-word   # complete on tab, leave expansion to _expand
 # M-h run-help -> backward-kill-word
 autoload -Uz select-word-style
 select-word-style default
-# $B$3$NJ8;z$rC18l$N6h@Z$j$H8+$J$9(B($BE,Ev$KD4@0$9$k(B)
+# この文字を単語の区切りと見なす(適当に調整する)
 zstyle ':zle:*' word-chars " _-/;@:{},|"
 zstyle ':zle:*' word-style unspecified
 bindkey "^[h" backward-kill-word  # Bind to M-h
@@ -36,24 +36,30 @@ if zplug check "mollifier/anyframe"; then
     autoload -Uz anyframe-init
     zstyle ":anyframe:selector:" use fzf
     anyframe-init
-    
+
     bindkey '^x^b' anyframe-widget-checkout-git-branch
-    
+
     bindkey '^r'  anyframe-widget-execute-history
     bindkey '^x^r' anyframe-widget-execute-history
-    
+
     bindkey '^xp'  anyframe-widget-put-history
     bindkey '^x^p' anyframe-widget-put-history
-    
+
     bindkey '^g'   anyframe-widget-cd-ghq-repository
     bindkey '^x^g' anyframe-widget-cd-ghq-repository
-    
+
     bindkey '^xk'  anyframe-widget-kill
     bindkey '^x^k' anyframe-widget-kill
-    
+
     bindkey '^xi'  anyframe-widget-insert-git-branch
     bindkey '^x^i' anyframe-widget-insert-git-branch
-    
+
     bindkey '^xf'  anyframe-widget-insert-filename
     bindkey '^x^f' anyframe-widget-insert-filename
 fi
+
+if (( ${+commands[ranger]} )); then
+    autoload -Uz ranger-cd
+    bindkey -s '^o' 'ranger-cd^M'
+fi
+

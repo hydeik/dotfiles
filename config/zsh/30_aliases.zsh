@@ -69,9 +69,9 @@ function psg() {
 #alias less="$PAGER"
 alias les="less"	# for typo
 
-# The first word of each simple command, if unquoted, is checked to see 
-# if it has an alias. [...] If the last character of the alias value is 
-# a space or tab character, then the next command word following the 
+# The first word of each simple command, if unquoted, is checked to see
+# if it has an alias. [...] If the last character of the alias value is
+# a space or tab character, then the next command word following the
 # alias is also checked for alias expansion
 if [[ $ARCHI == "darwin" ]]; then
     alias sudo="${ZSH_VERSION:+nocorrect} sudo "
@@ -106,6 +106,16 @@ function okular() { command okular $* & }
 function acroread() { command acroread $* & }
 function display() { command display $* & }
 function mpg321() { command mpg321 -s $* | esdcat & }
+
+# --- ranger CLI filer
+# Prevent nested ranger instances
+function ranger() {
+    if [ -z "${RANGER_LEVEL}" ]; then
+        command ranger $@
+    else
+        exit
+    fi
+}
 
 # Backup files and directories
 function bak() {
