@@ -85,6 +85,15 @@ hook_add = 'set helplang=ja,en'
 repo = 'mattn/learn-vimscript'
 
 #------------------------------------------------------------------------------
+# Filer
+#------------------------------------------------------------------------------
+repo = 'cocopon/vaffle.vim'
+hook_add = '''
+  " Changes the working directory to the selected one automatically
+  let g:vaffle_auto_cd = 1
+'''
+
+#------------------------------------------------------------------------------
 # Highlight
 #------------------------------------------------------------------------------
 [[plugins]]
