@@ -80,6 +80,14 @@ set foldcolumn=2
 set fillchars=vert:\|
 set commentstring=%s
 
+augroup foldmethod
+  autocmd!
+  autocmd BufRead,BufNewFile *.toml,*.zshrc setlocal commentstring=#%s
+  autocmd BufRead,BufNewFile *.vim          setlocal commentstring=\"%s
+  autocmd BufRead,BufNewFile *.html         setlocal commentstring=<!--%s-->
+  autocmd BufRead,BufNewFile *.md,*.mkd     setlocal commentstring=<!--%s-->
+augroup END
+
 " Fast fold
 autocmd MyVimrc TextChangedI,TextChanged *
       \ if &l:foldenable && &l:foldmethod !=# 'manual' |

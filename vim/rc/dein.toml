@@ -91,6 +91,19 @@ repo = 'cocopon/vaffle.vim'
 hook_add = '''
   " Changes the working directory to the selected one automatically
   let g:vaffle_auto_cd = 1
+
+  function! s:customize_vaffle_mappings() abort
+    " Customize key mappings here
+    nmap <buffer> <Bslash> <Plug>(vaffle-open-root)
+    nmap <buffer> l        <Plug>(vaffle-open-selected)
+  endfunction
+
+  augroup vimrc_vaffle
+    autocmd!
+    autocmd FileType vaffle call s:customize_vaffle_mappings()
+  augroup END
+
+  nnoremap <silent> <Space>fe :<C-u>Vaffle<CR>
 '''
 
 #------------------------------------------------------------------------------
@@ -133,6 +146,59 @@ repo = 'kana/vim-operator-user'
 repo = 'tpope/vim-repeat'
 
 #------------------------------------------------------------------------------
+# Folding
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'LeafCage/foldCC.vim'
+
+#------------------------------------------------------------------------------
+# For programming
+#------------------------------------------------------------------------------
+# --- EditorConfig
+repo = 'editorconfig/editorconfig-vim'
+hook_add = '''
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+'''
+
+# --- Git
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+if = 'has("signs")'
+hook_add = '''
+  nmap <silent> <Space>gk  <Plug>GitGutterPrevHunkzz
+  nmap <silent> <Space>gj  <Plug>GitGutterNextHunkzz
+  nmap <silent> <Space>gp  <Plug>GitGutterNextHunkzz
+'''
+
+# --- linter
+[[plugins]]
+repo = 'w0rp/ale'
+
+# Lightline component for ALE status
+[[plugins]]
+repo     = 'maximbaz/lightline-ale'
+hook_add = '''
+  " Set icon font
+  let g:lightline#ale#indicator_warnings = "\uf071"
+  let g:lightline#ale#indicator_errors   = "\uf00d"
+  let g:lightline#ale#indicator_ok       = "\uf00c"
+'''
+
+# --- Auto format
+repo = 'Chiel92/vim-autoformat'
+hook_add = '''
+  let g:formatter_yapf_style = 'pep8'
+  " For debug
+  " let g:autoformat_verbosemode = 1
+
+  nnoremap <silent> <Space>m= :<C-u>Autoformat<CR>
+'''
+
+# --- Snippet definitions for neosnippet
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+#------------------------------------------------------------------------------
 # Filetype & Syntax
 #------------------------------------------------------------------------------
 [[plugins]]
@@ -170,47 +236,20 @@ repo = 'kballard/vim-fish'
 [[plugins]]
 repo = 'chrisbra/vim-zsh'
 
-#-----------------------------------------------------------------------------
-# Editor config
-#-----------------------------------------------------------------------------
-# Need to install EditorConfig core command
-repo = 'editorconfig/editorconfig-vim'
+
+#------------------------------------------------------------------------------
+# Leader guide
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'hecal3/vim-leader-guide'
 hook_add = '''
-  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+  " register it with the guide:
+  call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
+  call leaderGuide#register_prefix_descriptions(",", "g:llmap")
+
+  nnoremap <silent> <Space>  :<C-u>LeaderGuide       '<Space>'<CR>
+  vnoremap <silent> <Space>  :<C-u>LeaderGuideVisual '<Space>'<CR>
+  map               <Space>.  <Plug>leaderguide-global
+  map               <Space>,  <Plug>leaderguide-buffer
 '''
-
-#------------------------------------------------------------------------------
-# Git
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-if = 'has("signs")'
-
-#------------------------------------------------------------------------------
-# Linter
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'w0rp/ale'
-
-# Lightline component for ALE status
-[[plugins]]
-repo     = 'maximbaz/lightline-ale'
-hook_add = '''
-  " Set icon font
-  let g:lightline#ale#indicator_warnings = "\uf071"
-  let g:lightline#ale#indicator_errors   = "\uf00d"
-  let g:lightline#ale#indicator_ok       = "\uf00c"
-'''
-
-#------------------------------------------------------------------------------
-# Snippet definitions
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-#------------------------------------------------------------------------------
-# Folding
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'LeafCage/foldCC.vim'
 

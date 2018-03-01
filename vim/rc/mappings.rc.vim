@@ -80,12 +80,6 @@ nnoremap + <C-a>
 " -: decrement
 nnoremap - <C-x>
 
-" [Space]: Other useful commands "{{{
-" Smart space mapping.
-" nmap  <Space>   [Space]
-" nnoremap  [Space]   <Nop>
-"}}}
-
 " Stop highlighting by <ESC><ESC>
 nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
 
@@ -160,3 +154,37 @@ endfunction
 nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>toggle_window_zoom()<CR>
 nmap <C-w>z     <Plug>(my-zoom-window)
 nmap <C-w><C-z> <Plug>(my-zoom-window)
+
+" [Space]: Other useful commands "{{{
+" Smart space mapping.
+
+" <Space>B mapping -- buffer
+nnoremap <silent> <Space>bd :bdelete<CR>
+nnoremap <silent> <Space>bD :bdelete!<CR>
+nnoremap <silent> <Space>bs :wall<CR>
+nnoremap <silent> <Space>bn :bnext<CR>
+nnoremap <silent> <Space>bp :bprevious<CR>
+
+" <Space>Q mapping -- quit
+nnoremap <silent> <Space>qq :qall<CR>
+nnoremap <silent> <Space>qQ :qall!<CR>
+
+" <Space>W mapping -- window
+nnoremap <silent> <Space>ws :split<CR>
+nnoremap <silent> <Space>wv :vsplit<CR>
+nnoremap <silent> <Space>wd :close<CR>
+nnoremap <silent> <Space>wO :only<CR>
+nnoremap <silent> <Space>wD <c-w>j:close<CR>
+nnoremap <silent> <Space>w= <c-w>=<CR>
+nmap     <silent> <Space>wz <Plug>(my-zoom-window)
+
+nnoremap <Space>wl <c-w>l
+nnoremap <Space>wh <c-w>h
+nnoremap <Space>wj <c-w>j
+nnoremap <Space>wk <c-w>k
+nnoremap <silent> <Space>wL <c-w>L
+nnoremap <silent> <Space>wH <c-w>H
+nnoremap <silent> <Space>wJ <c-w>J
+nnoremap <silent> <Space>wK <c-w>K
+nnoremap <silent> <Space>wP <c-w>\|<c-w>_
+"}}}

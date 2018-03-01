@@ -50,4 +50,6 @@ function! rc#plugin#vimtex#hook_source() abort
     let g:deoplete#omni#input_patterns = {}
   endif
   let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+
+  autocmd Filetype tex let g:llmap.l = { 'name' : 'vimtex' }
 endfunction

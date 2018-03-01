@@ -94,25 +94,12 @@ hook_add = '''
 [[plugins]]
 repo        = 'easymotion/vim-easymotion'
 on_map      = '<Plug>'
-on_func     = ['EasyMotion#go']
 hook_add    = 'call rc#plugin#easymotion#hook_add()'
 hook_source = 'call rc#plugin#easymotion#hook_source()'
 
 #-----------------------------------------------------------------------------
 # Editting
 #-----------------------------------------------------------------------------
-# --- Surround
-# [[plugins]]
-# repo     = 'rhysd/vim-operator-surround'
-# depends  = 'vim-operator-user'
-# on_map   = {n = '<Plug>'}
-# hook_add = '''
-#   nmap <silent>sa <Plug>(operator-surround-append)a
-#   nmap <silent>sd <Plug>(operator-surround-delete)a
-#   nmap <silent>sr <Plug>(operator-surround-replace)a
-#   nmap <silent>sc <Plug>(operator-surround-replace)a
-# '''
-
 # vim-sandwich
 [[plugins]]
 repo        = 'machakann/vim-sandwich'
@@ -132,22 +119,26 @@ hook_source = '''
 repo     = 'tyru/caw.vim'
 on_map   = {nx = '<Plug>'}
 hook_add = '''
-  function! InitCaw() abort
-    if !&l:modifiable
-      silent! nunmap <buffer> gc
-      silent! xunmap <buffer> gc
-      silent! nunmap <buffer> gcc
-      silent! xunmap <buffer> gcc
-    else
-      nmap <buffer> gc <Plug>(caw:prefix)
-      xmap <buffer> gc <Plug>(caw:prefix)
-      nmap <buffer> gcc <Plug>(caw:hatpos:toggle)
-      xmap <buffer> gcc <Plug>(caw:hatpos:toggle)
-    endif
-  endfunction
-  autocmd MyVimrc FileType * call InitCaw()
-  call InitCaw()
+  nmap <silent> <Space>c  <Plug>(caw:prefix)
+  xmap <silent> <Space>c  <Plug>(caw:prefix)
 '''
+# hook_add = '''
+#   function! InitCaw() abort
+#     if !&l:modifiable
+#       silent! nunmap <buffer> gc
+#       silent! xunmap <buffer> gc
+#       silent! nunmap <buffer> gcc
+#       silent! xunmap <buffer> gcc
+#     else
+#       nmap <buffer> gc <Plug>(caw:prefix)
+#       xmap <buffer> gc <Plug>(caw:prefix)
+#       nmap <buffer> gcc <Plug>(caw:hatpos:toggle)
+#       xmap <buffer> gcc <Plug>(caw:hatpos:toggle)
+#     endif
+#   endfunction
+#   autocmd MyVimrc FileType * call InitCaw()
+#   call InitCaw()
+# '''
 
 # --- Smart Align
 [[plugins]]
@@ -225,29 +216,5 @@ hook_source = '''
 #   else
 #     !cargo build --release --no-default-features --features json-rpc
 #   endif
-# '''
-
-#------------------------------------------------------------------------------
-# Leader guide
-#------------------------------------------------------------------------------
-# repo = 'hecal3/vim-leader-guide'
-# on_event = ['VimEnter']
-# hook_post_source = '''
-#   let g:topdict = {}
-#   let g:topdict[' '] = g:lmap
-#   let g:topdict[' ']['name'] = '<leader>'
-#   let g:topdict[','] = g:llmap
-#   let g:topdict[',']['name'] = '<localleader>'
-#
-#   " register it with the guide:
-#   call leaderGuide#register_prefix_descriptions("", "g:topdict")
-#
-#   " define mappings:
-#   nnoremap <silent> <Leader>  :<C-u>LeaderGuide       '<Space>'<CR>
-#   vnoremap <silent> <Leader>  :<C-u>LeaderGuideVisual '<Space>'<CR>
-#   map               <Leader>.  <Plug>leaderguide-global
-#   nnoremap <LocalLeader>      :<C-u>LeaderGuide        ','<CR>
-#   vnoremap <LocalLeader>      :<C-u>LeaderGuideVisual  ','<CR>
-#   map      <LocalLeader>.      <Plug>leaderguide-buffer<Paste>
 # '''
 

@@ -5,27 +5,43 @@ function! rc#plugin#denite#hook_add() abort
   " Substitute 'n' command
   nnoremap <silent> n :<C-u>Denite -buffer-name=search -auto-highlight -resume -mode=normal -refresh<CR>
 
-  nnoremap <silent><Leader>y :<C-u>Denite -buffer-name=register register neoyank<CR>
-  xnoremap <silent><Leader>y :<C-u>Denite -default-action=replace -buffer-name=register register neoyank<CR>
 
   " Press <Leader> twice to call a command or command history
-  nnoremap <silent><Leader><Leader> :<C-u>Denite command command_history<CR>
+  nnoremap <silent> <Space><Space> :<C-u>Denite command command_history<CR>
 
-  noremap [Denite]   <Nop>
-  nmap <Leader>d     [Denite]
-  nnoremap [Denite]b  :<C-u>Denite -mode=normal buffer<CR>
-  nnoremap [Denite]h  :<C-u>Denite help<CR>
-  nnoremap [Denite]g  :<C-u>Denite -buffer-name=search -no-empty -mode=normal grep<CR>
+  " -- B mapping
+  nnoremap <silent> <Space>bb :<C-u>Denite -mode=normal buffer<CR>
+  nnoremap <silent> <Space>bf :<C-u>DeniteBufferDir -mode=insert file_rec<CR>
+  nnoremap <silent> <Space>bF :<C-u>DeniteBufferDir -mode=normal file<CR>
+  " Grep current buffer
+  nnoremap <silent> <Space>bg :<C-u>DeniteBufferDir -buffer-name=search -no-empty -mode=normal grep<CR>
+  xnoremap <silent> <Space>bg :<C-u>DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty<CR>
+  nnoremap <silent> <Space>bG :<C-u>DeniteBufferDir grep:::`expand('<cword>')` -no-empty<CR>
 
-  noremap [DeniteFile]   <Nop>
-  nmap <Leader>f     [DeniteFile]
-  nnoremap [DeniteFile]f  :<C-u>Denite file<CR>
-  " Quick access to Vim configuration files
-  nnoremap [DeniteFile]d  :<C-u>Denite file_rec:~/.vim<CR>
-  nnoremap [DeniteFile]t  :<C-u>Denite filetype<CR>
-  nnoremap [DeniteFile]s  :<C-u>Denite file_point file_old -sorters=sorter_rank
-        \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
-  nnoremap [DeniteFile]g  :<C-u>Denite ghq<CR>
+  " -- D mapping
+  nnoremap <silent> <Space>dh :<C-u>Denite help<CR>
+  nnoremap <silent> <Space>dg :<C-u>Denite ghq<CR>
+  nnoremap <silent> <Space>dp :<C-u>Denite -default-action=open dein<CR>
+  nnoremap <silent> <Space>dr :<C-u>Denite -resume<CR>
+  nnoremap <silent> <Space>dt :<C-u>Denite tag<CR>
+
+  " -- F mapping
+  nnoremap <silent> <Space>ff :<C-u>Denite file_rec -path=`getcwd()`<CR>
+  nnoremap <silent> <Space>fd :<C-u>Denite file_rec -path=`g:vimrc_root`<CR>
+  nnoremap <silent> <Space>fr :<C-u>Denite file_mru<CR>
+  nnoremap <silent> <Space>ft :<C-u>Denite filetype<CR>
+
+  " -- P mapping
+  nnoremap <silent> <Space>pf :<C-u>DeniteProjectDir file_rec<CR>
+  nnoremap <silent> <Space>pF :<C-u>DeniteProjectDir file<CR>
+  nnoremap <silent> <Space>pg :<C-u>DeniteProjectDir -buffer-name=search -no-empty -mode=normal grep<CR>
+  xnoremap <silent> <Space>pg :<C-u>DeniteProjectDir -buffer-name=search -no-empty grep:::`GetVisualSelectionESC()`<CR>
+  nnoremap <silent> <Space>pG :<C-u>DeniteProjectDir -buffer-name=search -no-empty grep:::`expand('<cword>')`<CR>
+
+  " -- Y mapping
+  nnoremap <silent> <Space>yy :<C-u>Denite -buffer-name=register register neoyank<CR>
+  xnoremap <silent> <Space>yy :<C-u>Denite -default-action=replace -buffer-name=register register neoyank<CR>
+
 endfunction
 
 function! rc#plugin#denite#hook_source() abort

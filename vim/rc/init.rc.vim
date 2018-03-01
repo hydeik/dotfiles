@@ -162,6 +162,24 @@ nnoremap , <Nop>
 nnoremap s <Nop>
 xnoremap s <Nop>
 
+" Menu for keymapping (vim-leader-guide)
+let g:lmap = {
+      \ 'b' : { 'name' : 'Buffer' },
+      \ 'c' : { 'name' : 'Comment' },
+      \ 'd' : { 'name' : 'Denite' },
+      \ 'f' : { 'name' : 'File' },
+      \ 'g' : { 'name' : 'Git' },
+      \ 'j' : { 'name' : 'Jump, Search' },
+      \ 'm' : { 'name' : 'Mark, Program' },
+      \ 'p' : { 'name' : 'Project' },
+      \ 'q' : { 'name' : 'Quit' },
+      \ 'r' : { 'name' : 'Rename, Replace' },
+      \ 't' : { 'name' : 'Tab, Tags, Terminal, and Toggle' },
+      \ 'u' : { 'name' : 'Undo, Update' },
+      \ 'w' : { 'name' : 'Window' },
+      \ }
+let g:llmap = {}
+
 "----------------------------------------------------------------------------
 " Disable default plugins
 "----------------------------------------------------------------------------
