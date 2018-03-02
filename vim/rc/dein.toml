@@ -33,6 +33,20 @@ build = 'sh -c "PY3=ON ./install.sh"'
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
+[[plugins]]
+# Faster than the built-in 'matchparen' plugin
+repo = 'itchyny/vim-parenmatch'
+
+[[plugins]]
+repo     = 'itchyny/vim-cursorword'
+hook_add = '''
+  augroup cursorword-filetype
+    autocmd!
+    autocmd FileType qf,denite,unite,vimfiler,quickrun,calendar let b:cursorword = 0
+    autocmd InsertEnter * let b:cursorword = 0
+    autocmd InsertLeave * let b:cursorword = 1
+  augroup END
+'''
 #------------------------------------------------------------------------------
 # Lightline + Colorscheme
 #------------------------------------------------------------------------------

@@ -183,6 +183,7 @@ let g:llmap = {}
 "----------------------------------------------------------------------------
 " Disable default plugins
 "----------------------------------------------------------------------------
+let g:loaded_matchparen        = 1
 let g:loaded_gzip              = 1
 let g:loaded_tar               = 1
 let g:loaded_tarPlugin         = 1
@@ -210,7 +211,6 @@ endif
 if !has('vim_starting')
   call dein#call_hook('source')
   call dein#call_hook('post_source')
-
   filetype plugin indent on
   syntax enable
 endif

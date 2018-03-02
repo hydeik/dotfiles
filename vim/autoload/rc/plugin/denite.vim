@@ -19,10 +19,13 @@ function! rc#plugin#denite#hook_add() abort
   nnoremap <silent> <Space>bG :<C-u>DeniteBufferDir grep:::`expand('<cword>')` -no-empty<CR>
 
   " -- D mapping
-  nnoremap <silent> <Space>dh :<C-u>Denite help<CR>
   nnoremap <silent> <Space>dg :<C-u>Denite ghq<CR>
+  nnoremap <silent> <Space>dh :<C-u>Denite help<CR>
+  nnoremap <silent> <Space>dj :<C-u>Denite jump changed<CR>
+  nnoremap <silent> <Space>do :<C-u>Denite outline<CR>
   nnoremap <silent> <Space>dp :<C-u>Denite -default-action=open dein<CR>
   nnoremap <silent> <Space>dr :<C-u>Denite -resume<CR>
+  nnoremap <silent> <Space>ds :<C-u>Denite session -buffer-name=list<CR>
   nnoremap <silent> <Space>dt :<C-u>Denite tag<CR>
 
   " -- F mapping
@@ -146,7 +149,7 @@ function! rc#plugin#denite#hook_source() abort
       call setqflist(l:qflist)
       call qfreplace#start('')
     endfunction
-    call denite#custom#action('file', 'qfreplace', 'DeniteQfreplace')
+    call denite#custom#action('file', 'qfreplace', function('DeniteQfreplace'))
     call denite#custom#map('normal', 'R', '<denite:do_action:qfrepalce>', 'noremap')
   endif
 

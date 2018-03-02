@@ -44,11 +44,6 @@ hook_source = 'call rc#plugin#neosnippet#hook_source()'
 # Denite
 #------------------------------------------------------------------------------
 [[plugins]]
-repo        = 'Shougo/echodoc.vim'
-on_event    = 'CompleteDone'
-hook_source = 'call echodoc#enable()'
-
-[[plugins]]
 repo        = 'Shougo/denite.nvim'
 depends     = ['vim-qfreplace']
 on_cmd      = 'Denite'
@@ -68,6 +63,10 @@ on_source = 'denite.nvim'
 
 [[plugins]]
 repo      = 'Jagua/vim-denite-ghq'
+on_source = 'denite.nvim'
+
+[[plugins]]
+repo      = 'rafi/vim-denite-session'
 on_source = 'denite.nvim'
 
 #-----------------------------------------------------------------------------
@@ -114,6 +113,15 @@ hook_source = '''
   let g:sandwich#recipes += [{'buns' : ['『', '』']}]
 '''
 
+# --- Expand region
+[[plugins]]
+repo     = 'terryma/vim-expand-region'
+on_map   = {x = '<Plug>'}
+hook_add = '''
+  xmap v  <Plug>(expand_region_expand)
+  xmap V  <Plug>(expand_region_shrink)
+'''
+
 # --- Smart commenter
 [[plugins]]
 repo     = 'tyru/caw.vim'
@@ -156,8 +164,14 @@ hook_add    = 'call rc#plugin#eskk#hook_add()'
 hook_source = 'call rc#plugin#eskk#hook_source()'
 
 #-----------------------------------------------------------------------------
-# Filetype, syntax and more
+# Programming
 #-----------------------------------------------------------------------------
+# --- Print document on echo area
+[[plugins]]
+repo        = 'Shougo/echodoc.vim'
+on_event    = 'CompleteDone'
+hook_source = 'call echodoc#enable()'
+
 # --- Git operations
 [[plugins]]
 repo             = 'lambdalisue/gina.vim'
