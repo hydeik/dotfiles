@@ -1,9 +1,9 @@
 function! rc#plugin#denite#hook_add() abort
   " Substitute search commands by denite
-  nnoremap <silent> / :<C-u>Denite -buffer-name=search -auto-highlight line<CR>
-  nnoremap <silent> * :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal line<CR>
+  nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
+  nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
   " Substitute 'n' command
-  nnoremap <silent> n :<C-u>Denite -buffer-name=search -auto-highlight -resume -mode=normal -refresh<CR>
+  nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
 
 
   " Press <Leader> twice to call a command or command history
@@ -11,8 +11,8 @@ function! rc#plugin#denite#hook_add() abort
 
   " -- B mapping
   nnoremap <silent> <Space>bb :<C-u>Denite -mode=normal buffer<CR>
-  nnoremap <silent> <Space>bf :<C-u>DeniteBufferDir -mode=insert file_rec<CR>
-  nnoremap <silent> <Space>bF :<C-u>DeniteBufferDir -mode=normal file<CR>
+  nnoremap <silent> <Space>bf :<C-u>DeniteBufferDir file_rec -mode=insert<CR>
+  nnoremap <silent> <Space>bF :<C-u>DeniteBufferDir file -mode=normal<CR>
   " Grep current buffer
   nnoremap <silent> <Space>bg :<C-u>DeniteBufferDir -buffer-name=search -no-empty -mode=normal grep<CR>
   xnoremap <silent> <Space>bg :<C-u>DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty<CR>
@@ -21,18 +21,24 @@ function! rc#plugin#denite#hook_add() abort
   " -- D mapping
   nnoremap <silent> <Space>dg :<C-u>Denite ghq<CR>
   nnoremap <silent> <Space>dh :<C-u>Denite help<CR>
-  nnoremap <silent> <Space>dj :<C-u>Denite jump changed<CR>
+  nnoremap <silent> <Space>dj :<C-u>Denite jump change<CR>
   nnoremap <silent> <Space>do :<C-u>Denite outline<CR>
-  nnoremap <silent> <Space>dp :<C-u>Denite -default-action=open dein<CR>
+  nnoremap <silent> <Space>dp :<C-u>Denite dein -default-action=open<CR>
   nnoremap <silent> <Space>dr :<C-u>Denite -resume<CR>
   nnoremap <silent> <Space>ds :<C-u>Denite session -buffer-name=list<CR>
   nnoremap <silent> <Space>dt :<C-u>Denite tag<CR>
 
   " -- F mapping
   nnoremap <silent> <Space>ff :<C-u>Denite file_rec -path=`getcwd()`<CR>
+  nnoremap <silent> <Space>fF :<C-u>Denite file -path=`getcwd()`<CR>
   nnoremap <silent> <Space>fd :<C-u>Denite file_rec -path=`g:vimrc_root`<CR>
   nnoremap <silent> <Space>fr :<C-u>Denite file_mru<CR>
+  nnoremap <silent> <Space>fs :<C-u>call save_file(0)<CR>
+  nnoremap <silent> <Space>fS :<C-u>call save_file(1)<CR>
   nnoremap <silent> <Space>ft :<C-u>Denite filetype<CR>
+
+  " -- J mapping
+  nnoremap <silent> <Space>jl :<C-u>Denite jump change<CR>
 
   " -- P mapping
   nnoremap <silent> <Space>pf :<C-u>DeniteProjectDir file_rec<CR>
@@ -41,9 +47,18 @@ function! rc#plugin#denite#hook_add() abort
   xnoremap <silent> <Space>pg :<C-u>DeniteProjectDir -buffer-name=search -no-empty grep:::`GetVisualSelectionESC()`<CR>
   nnoremap <silent> <Space>pG :<C-u>DeniteProjectDir -buffer-name=search -no-empty grep:::`expand('<cword>')`<CR>
 
+  " -- S mapping
+  nnoremap <silent> <Space>sl :<C-u>Dentie session<CR>
+
   " -- Y mapping
   nnoremap <silent> <Space>yy :<C-u>Denite -buffer-name=register register neoyank<CR>
   xnoremap <silent> <Space>yy :<C-u>Denite -default-action=replace -buffer-name=register register neoyank<CR>
+
+  " Save function
+  function! s:save_file(force)
+    let l:cmd = &readonly ? 'SudoWrite' : a:force ? 'w!' : 'w'
+    execute l:cmd
+  endfunction
 
 endfunction
 
@@ -150,7 +165,7 @@ function! rc#plugin#denite#hook_source() abort
       call qfreplace#start('')
     endfunction
     call denite#custom#action('file', 'qfreplace', function('DeniteQfreplace'))
-    call denite#custom#map('normal', 'R', '<denite:do_action:qfrepalce>', 'noremap')
+    call denite#custom#map('normal', 'R', '<denite:do_action:qfreplace>', 'noremap')
   endif
 
   " Display file icons in Denite* command: requires Vim-devicons

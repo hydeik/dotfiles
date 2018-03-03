@@ -65,9 +65,20 @@ on_source = 'denite.nvim'
 repo      = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
+#-----------------------------------------------------------------------------
+# Session manager
+#-----------------------------------------------------------------------------
 [[plugins]]
-repo      = 'rafi/vim-denite-session'
-on_source = 'denite.nvim'
+repo  = 'lambdalisue/session.vim'
+on_source = 'denite.vim'
+on_cmd = ['SessionOpen', 'SessionClose', 'SessionSave', 'SessionRemove']
+hook_add = '''
+  nnoremap <Space>ss :<C-u>SessionSave<CR>
+  nnoremap <Space>sl :<C-u>Denite session -mode=normal<CR>
+  nnoremap <Space>so :<C-u>SessionOpen<CR>
+  nnoremap <Space>sc :<C-u>SessionClose<CR>
+  nnoremap <Space>sd :<C-u>SessionRemove<CR>
+'''
 
 #-----------------------------------------------------------------------------
 # Replace grep/quickfix results
@@ -129,6 +140,8 @@ on_map   = {nx = '<Plug>'}
 hook_add = '''
   nmap <silent> <Space>c  <Plug>(caw:prefix)
   xmap <silent> <Space>c  <Plug>(caw:prefix)
+
+  let g:lmap.c.c = ['call feedkeys("\<Plug>(caw:hatpos:toggle)")', 'Toggle']
 '''
 # hook_add = '''
 #   function! InitCaw() abort

@@ -42,14 +42,14 @@ endfunction
 " --- Set executable path and manpath.
 " These variables might not be set properly in GVim/MacVim
 function! s:configure_path(name, pathlist) abort
-  let path_separator = s:is_windows ? ';' : ':'
-  let pathlist = split(expand(a:name), path_separator)
-  for path in map(filter(a:pathlist, '!empty(v:val)'), 'expand(v:val)')
-    if isdirectory(path) && index(pathlist, path) == -1
-      call insert(pathlist, path, 0)
+  let l:path_separator = s:is_windows ? ';' : ':'
+  let l:pathlist = split(expand(a:name), l:path_separator)
+  for l:path in map(filter(a:pathlist, '!empty(v:val)'), 'expand(v:val)')
+    if isdirectory(l:path) && index(l:pathlist, l:path) == -1
+      call insert(l:pathlist, l:path, 0)
     endif
   endfor
-  execute printf('let %s = join(pathlist, ''%s'')', a:name, path_separator)
+  execute printf('let %s = join(pathlist, ''%s'')', a:name, l:path_separator)
 endfunction
 
 call s:configure_path('$PATH', [
@@ -90,8 +90,10 @@ call s:configure_path('$MANPATH', [
 " python3_host_prog and python_host_prog to point the corresponding python
 " interpreters.
 "
-let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
-let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
+if has('nvim')
+  let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
+  let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
+endif
 
 " --- Enable Vim to use system clipboard
 " -> Disabled because of the problem of lectangular yank
@@ -118,9 +120,9 @@ let s:rc_base_dir = g:vimrc_root . '/rc'
 
 " Load vim scripts inside 'nvim/rc'
 function! s:source_rc(file)
-  let rc_file = s:rc_base_dir . '/' . a:file
-  if filereadable(rc_file)
-    execute 'source ' rc_file
+  let l:rc_file = s:rc_base_dir . '/' . a:file
+  if filereadable(l:rc_file)
+    execute 'source ' l:rc_file
   endif
 endfunction
 
@@ -174,9 +176,11 @@ let g:lmap = {
       \ 'p' : { 'name' : 'Project' },
       \ 'q' : { 'name' : 'Quit' },
       \ 'r' : { 'name' : 'Rename, Replace' },
+      \ 's' : { 'name' : 'Session' },
       \ 't' : { 'name' : 'Tab, Tags, Terminal, and Toggle' },
       \ 'u' : { 'name' : 'Undo, Update' },
       \ 'w' : { 'name' : 'Window' },
+      \ ' ' : { 'name' : 'Vim Commands' },
       \ }
 let g:llmap = {}
 

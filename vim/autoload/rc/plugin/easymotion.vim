@@ -22,19 +22,13 @@ function! rc#plugin#easymotion#hook_source() abort
 endfunction
 
 function! rc#plugin#easymotion#hook_add() abort
-  nmap <Leader>s <Plug>(easymotion-overwin-f2)
-  vmap <Leader>s <Plug>(easymotion-s2)
+  nmap <Leader>jj <Plug>(easymotion-overwin-f2)
+  vmap <Leader>jj <Plug>(easymotion-s2)
   omap z <Plug>(easymotion-s2)
 
   " smart f & F
-  omap f <Plug>(easymotion-bd-fl)
-  xmap f <Plug>(easymotion-bd-fl)
-  omap F <Plug>(easymotion-Fl)
-  xmap F <Plug>(easymotion-Fl)
-  omap t <Plug>(easymotion-tl)
-  xmap t <Plug>(easymotion-tl)
-  omap T <Plug>(easymotion-Tl)
-  xmap T <Plug>(easymotion-Tl)
+  map f <Plug>(easymotion-bd-fl)
+  map t <Plug>(easymotion-bd-tl)
 
   " hjkl
   " map ;h <Plug>(easymotion-linebackward)
