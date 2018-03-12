@@ -48,6 +48,9 @@ max_line_length = 79
 [*.{F,f,F90,f90,F95,f95,F08,f08}]
 indent_size = 2
 
+[*.tex]
+indent_size = 2
+
 # Minified JavaScript files shouldn't be changed
 [**.min.js]
 indent_style = ignore
