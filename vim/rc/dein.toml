@@ -56,10 +56,6 @@ repo = 'itchyny/vim-parenmatch'
 #------------------------------------------------------------------------------
 # Lightline + Colorscheme
 #------------------------------------------------------------------------------
-# Configurable statusline/tabline (lighter than powerline and vim-airline)
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-
 # Add filetype glyphs (icons) to other plugins
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
@@ -130,33 +126,7 @@ hook_add = '''
 # Highlight
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'Yggdroot/indentLine'
-
-[[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
-
-#------------------------------------------------------------------------------
-# Textobj extensions
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'kana/vim-textobj-user'
-
-# [[plugins]]
-# repo = 'kana/vim-textobj-line'
-# depends = 'vim-textobj-user'
-
-# [[plugins]]
-# repo = 'kana/vim-textobj-entire'
-# depends = 'vim-textobj-user'
-
-[[plugins]]
-repo = 'machakann/vim-textobj-delimited'
-
-#------------------------------------------------------------------------------
-# Operator extensions
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'kana/vim-operator-user'
 
 #------------------------------------------------------------------------------
 # Enhanced commands
@@ -178,16 +148,6 @@ repo = 'LeafCage/foldCC.vim'
 repo = 'editorconfig/editorconfig-vim'
 hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-'''
-
-# --- Git
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-if = 'has("signs")'
-hook_add = '''
-  nmap <silent> <Space>gk  <Plug>GitGutterPrevHunkzz
-  nmap <silent> <Space>gj  <Plug>GitGutterNextHunkzz
-  nmap <silent> <Space>gp  <Plug>GitGutterNextHunkzz
 '''
 
 # --- linter
@@ -221,40 +181,6 @@ repo = 'Shougo/neosnippet-snippets'
 #------------------------------------------------------------------------------
 # Filetype & Syntax
 #------------------------------------------------------------------------------
-[[plugins]]
-repo = 'octol/vim-cpp-enhanced-highlight'
-
-[[plugins]]
-repo = 'rust-lang/rust.vim'
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-
-[[plugins]]
-repo = 'elzr/vim-json'
-
-[[plugins]]
-repo = 'stephpy/vim-yaml'
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-hook_add = '''
-  let g:vim_markdown_frontmatter = 1
-  let g:vim_markdown_math = 1
-  let g:vim_markdown_conceal = 0
-'''
-
-[[plugins]]
-repo = 'thinca/vim-ft-diff_fold'
-
-[[plugins]]
-repo = 'thinca/vim-ft-help_fold'
-
-[[plugins]]
-repo = 'kballard/vim-fish'
-
-[[plugins]]
-repo = 'chrisbra/vim-zsh'
 
 
 #------------------------------------------------------------------------------

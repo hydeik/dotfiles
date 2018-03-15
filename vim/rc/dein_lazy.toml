@@ -81,16 +81,6 @@ hook_add = '''
 '''
 
 #-----------------------------------------------------------------------------
-# Replace grep/quickfix results
-#-----------------------------------------------------------------------------
-[[plugins]]
-repo        = 'thinca/vim-qfreplace'
-on_ft       = ['denite', 'qf']
-hook_source = '''
-  autocmd MyVimrc FileType qf nnoremap <buffer> r :<C-u>Qfreplace<CR>
-'''
-
-#-----------------------------------------------------------------------------
 # Cursor moves
 #-----------------------------------------------------------------------------
 [[plugins]]
@@ -102,27 +92,91 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'haya14busa/vim-edgemotion'
+on_map = {nv = '<Plug>'}
+
+[[plugins]]
 repo        = 'easymotion/vim-easymotion'
-on_map      = '<Plug>'
+on_map      = {n = '<Plug>'}
 hook_add    = 'call rc#plugin#easymotion#hook_add()'
 hook_source = 'call rc#plugin#easymotion#hook_source()'
 
 #-----------------------------------------------------------------------------
-# Editting
+# Interfaces
 #-----------------------------------------------------------------------------
-# vim-sandwich
+# --- Quickly highlight <cword> or visually selected word
 [[plugins]]
-repo        = 'machakann/vim-sandwich'
-on_map      = {nxo = '<Plug>'}
-on_event    = ['BufRead', 'BufNewFile']
-hook_source = '''
-  let g:textobj#sandwich#stimeoutlen = 100
-  let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
-  let g:sandwich#recipes += [{'buns' : ['「', '」']}]
-  let g:sandwich#recipes += [{'buns' : ['【', '】']}]
-  let g:sandwich#recipes += [{'buns' : ['（', '）']}]
-  let g:sandwich#recipes += [{'buns' : ['『', '』']}]
+repo   = 't9md/vim-quickhl'
+on_map = {nv = '<Plug>'}
+
+# ---  Show a git diff in the gutter and stages/undoes hunks
+[[plugins]]
+repo     = 'airblade/vim-gitgutter'
+if       = 'has("signs")'
+on_path  = '.*'
+hook_add = '''
+  nmap <silent> <Space>gk  <Plug>GitGutterPrevHunkzz
+  nmap <silent> <Space>gj  <Plug>GitGutterNextHunkzz
+  nmap <silent> <Space>gp  <Plug>GitGutterNextHunkzz
 '''
+
+# --- Visually displaying indent levels in code
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+on_cmd = ['IndentGuidesEnable', 'IndentGuidesDisable', 'IndentLinesToggle']
+hook_add = '''
+  let g:indent_guides_enable_on_vim_startup = 1
+  let g:indent_guides_default_mapping = 0
+  let g:indent_guides_indent_levels = 15
+  let g:indent_guides_exclude_filetypes = ['help', 'denite', 'nerdtree']
+'''
+
+# --- Bookmark
+repo = 'MattesGroeger/vim-bookmarks'
+on_path = '.*'
+hook_source = '''
+  let g:bookmark_auto_save = 1
+  let g:bookmark_save_per_working_dir = 1
+	let g:bookmark_no_default_key_mappings = 1
+	let g:bookmark_disable_ctrlp = 1
+'''
+
+# --- Perform the replacement in |quickfix|
+[[plugins]]
+repo        = 'thinca/vim-qfreplace'
+on_ft       = ['denite', 'qf']
+hook_source = '''
+  autocmd MyVimrc FileType qf nnoremap <buffer> r :<C-u>Qfreplace<CR>
+'''
+#------------------------------------------------------------------------------
+# Textobj extensions
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo    = 'kana/vim-textobj-line'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo    = 'kana/vim-textobj-entire'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo     = 'kana/vim-textobj-function'
+depends  = 'vim-textobj-user'
+on_map   = {ox = '<Plug>'}
+hook_add = '''
+  let g:textobj_function_no_default_key_mappings = 1
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+depends = 'vim-textobj-user'
+on_map = {ox = '<Plug>'}
+
+[[plugins]]
+repo = 'machakann/vim-textobj-delimited'
 
 # --- Expand region
 [[plugins]]
@@ -132,6 +186,63 @@ hook_add = '''
   xmap v  <Plug>(expand_region_expand)
   xmap V  <Plug>(expand_region_shrink)
 '''
+
+# --- Move function arguments
+repo   = 'AndrewRadev/sideway.vim'
+on_map = {ox = '<Plug>Sideway'}
+
+# --- Easily translate between single-line and multiline code
+repo   = 'AndrewRadev/splitjoin.vim'
+on_map = {n = '<Plug>Splitjoin'}
+
+# --- Diffs in block code
+repo   = 'AndrewRadev/linediff.vim'
+on_cmd = 'Linediff'
+
+# --- Delete surrounding function call
+repo   = 'AndrewRadev/dsf.vim'
+on_map = {n = '<Plug>Dsf'}
+hook_add = '''
+  let g:dsf_no_mappings = 1
+'''
+
+#------------------------------------------------------------------------------
+# Operator extensions
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+on_map = {vnx = '<Plug>'}
+
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+depends = ['vim-operator-user', 'vim-textobj-multiblock']
+on_map = {vnx = '<Plug>'}
+
+[[plugins]]
+repo = 'haya14busa/vim-operator-flashy'
+depends = 'vim-operator-user'
+on_map = {nx = '<Plug>'}
+
+#-----------------------------------------------------------------------------
+# Editting
+#-----------------------------------------------------------------------------
+# # vim-sandwich
+# [[plugins]]
+# repo        = 'machakann/vim-sandwich'
+# on_map      = {nxo = '<Plug>'}
+# on_event    = ['BufRead', 'BufNewFile']
+# hook_source = '''
+#   let g:textobj#sandwich#stimeoutlen = 100
+#   let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+#   let g:sandwich#recipes += [{'buns' : ['「', '」']}]
+#   let g:sandwich#recipes += [{'buns' : ['【', '】']}]
+#   let g:sandwich#recipes += [{'buns' : ['（', '）']}]
+#   let g:sandwich#recipes += [{'buns' : ['『', '』']}]
+# '''
 
 # --- Smart commenter
 [[plugins]]
@@ -168,7 +279,6 @@ on_cmd   = ['EasyAlign', 'LiveEasyAlign']
 hook_add = '''
   vnoremap <Enter> :EasyAlign<CR>
 '''
-
 # --- SKK imput method for Japanese
 [[plugins]]
 repo        = 'tyru/eskk.vim'
@@ -191,11 +301,6 @@ repo             = 'lambdalisue/gina.vim'
 on_cmd           = 'Gina'
 hook_add         = 'call rc#plugin#gina#hook_add()'
 hook_post_source = 'call rc#plugin#gina#hook_post_source()'
-
-# --- reStructuredText (rst)
-[[plugins]]
-repo  = 'gu-fan/riv.vim'
-on_ft = 'rst'
 
 # --- Python pyenv
 [[plugins]]
@@ -221,7 +326,68 @@ depends = ['deoplete.nvim']
 on_ft   = 'tex'
 hook_source = 'call rc#plugin#vimtex#hook_source()'
 
-# --- Markdown preview
+# --- C++
+[[plugins]]
+repo  = 'octol/vim-cpp-enhanced-highlight'
+on_ft = 'cpp'
+
+# --- Rust
+[[plugins]]
+repo  = 'rust-lang/rust.vim'
+on_ft = 'rust'
+
+# --- Python
+[[plugins]]
+repo  = 'vim-python/python-syntax'
+on_ft = 'python'
+
+[[plugins]]
+# extend % and g% for python
+repo  = 'vim-scripts/python_match.vim'
+on_ft = 'python'
+
+[[plugins]]
+repo  = 'tmhedberg/SimpylFold'
+on_ft = 'python'
+
+[[plugins]]
+repo  = 'raimon49/requirements.txt.vim'
+on_ft = 'requirements'
+
+# --- CSV
+repo  = 'chrisbra/csv.vim'
+on_ft = 'csv'
+
+# --- TOML
+[[plugins]]
+repo  = 'cespare/vim-toml'
+on_ft = 'toml'
+
+# --- JSON
+[[plugins]]
+repo  = 'elzr/vim-json'
+on_ft = 'json'
+
+# --- YAML
+[[plugins]]
+repo  = 'stephpy/vim-yaml'
+on_ft = 'yaml'
+
+# --- Markdown
+[[plugins]]
+repo     = 'rcmdnk/vim-markdown'
+on_ft    = 'markdown'
+hook_add = '''
+  let g:vim_markdown_frontmatter = 1
+  let g:vim_markdown_math = 1
+  let g:vim_markdown_conceal = 0
+'''
+
+[[plugins]]
+repo  = 'rhysd/vim-gfm-syntax'
+on_ft = 'markdown'
+
+# Markdown live preview
 [[plugins]]
 repo = 'iamcco/mathjax-support-for-mkdp'
 on_ft = 'markdown'
@@ -233,7 +399,6 @@ on_ft = 'markdown'
 hook_source = '''
   let g:mkdp_refresh_slow = 1
 '''
-
 # [[plugins]]
 # repo = 'euclio/vim-markdown-composer'
 # on_ft = 'markdown'
@@ -244,4 +409,45 @@ hook_source = '''
 #     !cargo build --release --no-default-features --features json-rpc
 #   endif
 # '''
+
+# --- reStructuredText (rst)
+[[plugins]]
+repo  = 'gu-fan/riv.vim'
+on_ft = 'rst'
+
+# --- diff
+[[plugins]]
+repo  = 'thinca/vim-ft-diff_fold'
+on_ft = 'diff'
+
+# --- help
+[[plugins]]
+repo  = 'thinca/vim-ft-help_fold'
+on_ft = 'help'
+
+# --- fish
+[[plugins]]
+repo  = 'kballard/vim-fish'
+on_ft = 'fish'
+
+# --- zsh
+[[plugins]]
+repo  = 'chrisbra/vim-zsh'
+on_ft = 'zsh'
+
+# --- vim
+[[plugins]]
+repo  = 'vim-jp/syntax-vim-ex'
+on_ft = 'vim'
+
+# --- tmux
+[[plugins]]
+repo  = 'tmux-plugins/vim-tmux'
+on_ft = 'tmux'
+
+# --- Docker files
+[[plugins]]
+repo  = 'ekalinin/Dockerfile.vim'
+on_ft = ['Dockerfile', 'docker-compose']
+
 
