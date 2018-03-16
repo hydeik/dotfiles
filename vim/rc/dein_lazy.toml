@@ -1,3 +1,5 @@
+# === Plugins (lazy loading) ===
+
 #-----------------------------------------------------------------------------
 # Asyncronous execution
 #------------------------------------------------------------------------------
@@ -69,10 +71,10 @@ on_source = 'denite.nvim'
 # Session manager
 #-----------------------------------------------------------------------------
 [[plugins]]
-repo  = 'lambdalisue/session.vim'
+repo      = 'lambdalisue/session.vim'
 on_source = 'denite.vim'
-on_cmd = ['SessionOpen', 'SessionClose', 'SessionSave', 'SessionRemove']
-hook_add = '''
+on_cmd    = ['SessionOpen', 'SessionClose', 'SessionSave', 'SessionRemove']
+hook_add  = '''
   nnoremap <Space>ss :<C-u>SessionSave<CR>
   nnoremap <Space>sl :<C-u>Denite session -mode=normal<CR>
   nnoremap <Space>so :<C-u>SessionOpen<CR>
@@ -122,8 +124,8 @@ hook_add = '''
 
 # --- Visually displaying indent levels in code
 [[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
-on_cmd = ['IndentGuidesEnable', 'IndentGuidesDisable', 'IndentLinesToggle']
+repo     = 'nathanaelkane/vim-indent-guides'
+on_cmd   = ['IndentGuidesEnable', 'IndentGuidesDisable', 'IndentGuidesToggle']
 hook_add = '''
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_default_mapping = 0
@@ -132,8 +134,8 @@ hook_add = '''
 '''
 
 # --- Bookmark
-repo = 'MattesGroeger/vim-bookmarks'
-on_path = '.*'
+repo        = 'MattesGroeger/vim-bookmarks'
+on_path     = '.*'
 hook_source = '''
   let g:bookmark_auto_save = 1
   let g:bookmark_save_per_working_dir = 1
@@ -148,12 +150,33 @@ on_ft       = ['denite', 'qf']
 hook_source = '''
   autocmd MyVimrc FileType qf nnoremap <buffer> r :<C-u>Qfreplace<CR>
 '''
+
+#------------------------------------------------------------------------------
+# Filer
+#------------------------------------------------------------------------------
+repo     = 'cocopon/vaffle.vim'
+on_cmd   = ['Vaffle']
+hook_add = '''
+  " Changes the working directory to the selected one automatically
+  let g:vaffle_auto_cd = 1
+
+  function! s:customize_vaffle_mappings() abort
+    " Customize key mappings here
+    nmap <buffer> <Bslash> <Plug>(vaffle-open-root)
+    nmap <buffer> l        <Plug>(vaffle-open-selected)
+  endfunction
+
+  augroup vimrc_vaffle
+    autocmd!
+    autocmd FileType vaffle call s:customize_vaffle_mappings()
+  augroup END
+
+  nnoremap <silent> <Space>fe :<C-u>Vaffle<CR>
+'''
+
 #------------------------------------------------------------------------------
 # Textobj extensions
 #------------------------------------------------------------------------------
-[[plugins]]
-repo = 'kana/vim-textobj-user'
-
 [[plugins]]
 repo    = 'kana/vim-textobj-line'
 depends = 'vim-textobj-user'
@@ -209,9 +232,6 @@ hook_add = '''
 #------------------------------------------------------------------------------
 # Operator extensions
 #------------------------------------------------------------------------------
-[[plugins]]
-repo = 'kana/vim-operator-user'
-
 [[plugins]]
 repo = 'kana/vim-operator-replace'
 depends = 'vim-operator-user'
@@ -326,26 +346,12 @@ depends = ['deoplete.nvim']
 on_ft   = 'tex'
 hook_source = 'call rc#plugin#vimtex#hook_source()'
 
-# --- C++
-[[plugins]]
-repo  = 'octol/vim-cpp-enhanced-highlight'
-on_ft = 'cpp'
-
 # --- Rust
 [[plugins]]
 repo  = 'rust-lang/rust.vim'
 on_ft = 'rust'
 
 # --- Python
-[[plugins]]
-repo  = 'vim-python/python-syntax'
-on_ft = 'python'
-
-[[plugins]]
-# extend % and g% for python
-repo  = 'vim-scripts/python_match.vim'
-on_ft = 'python'
-
 [[plugins]]
 repo  = 'tmhedberg/SimpylFold'
 on_ft = 'python'
@@ -363,16 +369,6 @@ on_ft = 'csv'
 repo  = 'cespare/vim-toml'
 on_ft = 'toml'
 
-# --- JSON
-[[plugins]]
-repo  = 'elzr/vim-json'
-on_ft = 'json'
-
-# --- YAML
-[[plugins]]
-repo  = 'stephpy/vim-yaml'
-on_ft = 'yaml'
-
 # --- Markdown
 [[plugins]]
 repo     = 'rcmdnk/vim-markdown'
@@ -386,6 +382,14 @@ hook_add = '''
 [[plugins]]
 repo  = 'rhysd/vim-gfm-syntax'
 on_ft = 'markdown'
+
+# Generate table of contents for Markdown file
+[[plugins]]
+repo   = 'mzlogin/vim-markdown-toc'
+on_cmd = ['GenTocGFM', 'GenTocRedcarpet', 'GenTocGitLab', 'UpdateToc']
+hook_source = '''
+  let g:vmt_auto_update_on_save = 0
+'''
 
 # Markdown live preview
 [[plugins]]
@@ -414,40 +418,5 @@ hook_source = '''
 [[plugins]]
 repo  = 'gu-fan/riv.vim'
 on_ft = 'rst'
-
-# --- diff
-[[plugins]]
-repo  = 'thinca/vim-ft-diff_fold'
-on_ft = 'diff'
-
-# --- help
-[[plugins]]
-repo  = 'thinca/vim-ft-help_fold'
-on_ft = 'help'
-
-# --- fish
-[[plugins]]
-repo  = 'kballard/vim-fish'
-on_ft = 'fish'
-
-# --- zsh
-[[plugins]]
-repo  = 'chrisbra/vim-zsh'
-on_ft = 'zsh'
-
-# --- vim
-[[plugins]]
-repo  = 'vim-jp/syntax-vim-ex'
-on_ft = 'vim'
-
-# --- tmux
-[[plugins]]
-repo  = 'tmux-plugins/vim-tmux'
-on_ft = 'tmux'
-
-# --- Docker files
-[[plugins]]
-repo  = 'ekalinin/Dockerfile.vim'
-on_ft = ['Dockerfile', 'docker-compose']
 
 

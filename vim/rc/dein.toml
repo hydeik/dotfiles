@@ -1,3 +1,5 @@
+# === Plugins (loaded on startup) ===
+
 #------------------------------------------------------------------------------
 # Plugin manager
 #------------------------------------------------------------------------------
@@ -13,14 +15,16 @@ hook_add = '''
 # Functions and commands for Neovim GUI
 #------------------------------------------------------------------------------
 [[plugins]]
-repo = 'equalsraf/neovim-gui-shim'
+repo  = 'equalsraf/neovim-gui-shim'
+if = 'has("nvim")'
 
 #------------------------------------------------------------------------------
 # Remote Plugin Framework
 #------------------------------------------------------------------------------
+# for Vim 8
 [[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-on_if = '!has("nvim")'
+repo  = 'roxma/vim-hug-neovim-rpc'
+if = '!has("nvim")'
 
 [[plugins]]
 repo = 'https://github.com/roxma/nvim-yarp'
@@ -35,11 +39,12 @@ build = 'sh -c "PY3=ON ./install.sh"'
 #------------------------------------------------------------------------------
 # Utilities
 #------------------------------------------------------------------------------
+# Enable configuration file in each directory
 [[plugins]]
-repo = 'Shougo/context_filetype.vim'
+repo = 'thinca/vim-localrc'
 
-[[plugins]]
 # Faster than the built-in 'matchparen' plugin
+[[plugins]]
 repo = 'itchyny/vim-parenmatch'
 
 # [[plugins]]
@@ -98,35 +103,8 @@ repo     = 'vim-jp/vimdoc-ja'
 hook_add = 'set helplang=ja,en'
 
 # Introduction of VIM script
-repo = 'mattn/learn-vimscript'
-
-#------------------------------------------------------------------------------
-# Filer
-#------------------------------------------------------------------------------
-repo = 'cocopon/vaffle.vim'
-hook_add = '''
-  " Changes the working directory to the selected one automatically
-  let g:vaffle_auto_cd = 1
-
-  function! s:customize_vaffle_mappings() abort
-    " Customize key mappings here
-    nmap <buffer> <Bslash> <Plug>(vaffle-open-root)
-    nmap <buffer> l        <Plug>(vaffle-open-selected)
-  endfunction
-
-  augroup vimrc_vaffle
-    autocmd!
-    autocmd FileType vaffle call s:customize_vaffle_mappings()
-  augroup END
-
-  nnoremap <silent> <Space>fe :<C-u>Vaffle<CR>
-'''
-
-#------------------------------------------------------------------------------
-# Highlight
-#------------------------------------------------------------------------------
 [[plugins]]
-repo = 'bronson/vim-trailing-whitespace'
+repo = 'mattn/learn-vimscript'
 
 #------------------------------------------------------------------------------
 # Enhanced commands
@@ -134,12 +112,6 @@ repo = 'bronson/vim-trailing-whitespace'
 # powerful repeat '.'
 [[plugins]]
 repo = 'tpope/vim-repeat'
-
-#------------------------------------------------------------------------------
-# Folding
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'LeafCage/foldCC.vim'
 
 #------------------------------------------------------------------------------
 # For programming
@@ -154,34 +126,9 @@ hook_add = '''
 [[plugins]]
 repo = 'w0rp/ale'
 
-# Lightline component for ALE status
-[[plugins]]
-repo     = 'maximbaz/lightline-ale'
-hook_add = '''
-  " Set icon font
-  let g:lightline#ale#indicator_warnings = "\uf071"
-  let g:lightline#ale#indicator_errors   = "\uf00d"
-  let g:lightline#ale#indicator_ok       = "\uf00c"
-'''
-
-# --- Auto format
-repo = 'Chiel92/vim-autoformat'
-hook_add = '''
-  let g:formatter_yapf_style = 'pep8'
-  " For debug
-  " let g:autoformat_verbosemode = 1
-
-  nnoremap <silent> <Space>m= :<C-u>Autoformat<CR>
-'''
-
 # --- Snippet definitions for neosnippet
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-
-#------------------------------------------------------------------------------
-# Filetype & Syntax
-#------------------------------------------------------------------------------
-
 
 #------------------------------------------------------------------------------
 # Leader guide
@@ -199,3 +146,77 @@ hook_add = '''
   map               <Space>,  <Plug>leaderguide-buffer
 '''
 
+# === No meaning lazy plugins ===
+
+# --- Textobj extension
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+# --- Operator extension
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+# --- Find fenced code blocks and filetype
+#     (e.g., Javascript blocks inside HTML)
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+# --- C++
+[[plugins]]
+repo  = 'octol/vim-cpp-enhanced-highlight'
+on_ft = 'cpp'
+
+# --- Python
+[[plugins]]
+repo  = 'vim-python/python-syntax'
+on_ft = 'python'
+
+[[plugins]]
+# extend % and g% for python
+repo  = 'vim-scripts/python_match.vim'
+on_ft = 'python'
+
+# --- diff
+[[plugins]]
+repo  = 'thinca/vim-ft-diff_fold'
+on_ft = 'diff'
+
+# --- help
+[[plugins]]
+repo  = 'thinca/vim-ft-help_fold'
+on_ft = 'help'
+
+# --- JSON
+[[plugins]]
+repo  = 'elzr/vim-json'
+on_ft = 'json'
+
+# --- YAML
+[[plugins]]
+repo  = 'stephpy/vim-yaml'
+on_ft = 'yaml'
+
+# --- Docker files
+[[plugins]]
+repo  = 'ekalinin/Dockerfile.vim'
+on_ft = ['Dockerfile', 'docker-compose']
+
+# --- fish
+[[plugins]]
+repo  = 'kballard/vim-fish'
+on_ft = 'fish'
+
+# --- zsh
+[[plugins]]
+repo  = 'chrisbra/vim-zsh'
+on_ft = 'zsh'
+
+# --- tmux
+[[plugins]]
+repo  = 'tmux-plugins/vim-tmux'
+on_ft = 'tmux'
+
+# --- vim
+[[plugins]]
+repo  = 'vim-jp/syntax-vim-ex'
+on_ft = 'vim'
