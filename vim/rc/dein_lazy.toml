@@ -134,6 +134,7 @@ hook_add = '''
 '''
 
 # --- Bookmark
+[[plugins]]
 repo        = 'MattesGroeger/vim-bookmarks'
 on_path     = '.*'
 hook_source = '''
@@ -151,9 +152,19 @@ hook_source = '''
   autocmd MyVimrc FileType qf nnoremap <buffer> r :<C-u>Qfreplace<CR>
 '''
 
+# --- Calendar
+[[plugins]]
+repo   = 'itchyny/calendar.vim'
+on_cmd = 'Calendar'
+hook_source = '''
+  let g:calendar_google_calendar = 1
+  let g:calendar_google_task = 1
+'''
+
 #------------------------------------------------------------------------------
 # Filer
 #------------------------------------------------------------------------------
+[[plugins]]
 repo     = 'cocopon/vaffle.vim'
 on_cmd   = ['Vaffle']
 hook_add = '''
@@ -211,18 +222,22 @@ hook_add = '''
 '''
 
 # --- Move function arguments
-repo   = 'AndrewRadev/sideway.vim'
-on_map = {ox = '<Plug>Sideway'}
+[[plugins]]
+repo   = 'AndrewRadev/sideways.vim'
+on_map = {ox = '<Plug>Sideways'}
 
 # --- Easily translate between single-line and multiline code
+[[plugins]]
 repo   = 'AndrewRadev/splitjoin.vim'
 on_map = {n = '<Plug>Splitjoin'}
 
 # --- Diffs in block code
+[[plugins]]
 repo   = 'AndrewRadev/linediff.vim'
 on_cmd = 'Linediff'
 
 # --- Delete surrounding function call
+[[plugins]]
 repo   = 'AndrewRadev/dsf.vim'
 on_map = {n = '<Plug>Dsf'}
 hook_add = '''
@@ -250,20 +265,6 @@ on_map = {nx = '<Plug>'}
 #-----------------------------------------------------------------------------
 # Editting
 #-----------------------------------------------------------------------------
-# # vim-sandwich
-# [[plugins]]
-# repo        = 'machakann/vim-sandwich'
-# on_map      = {nxo = '<Plug>'}
-# on_event    = ['BufRead', 'BufNewFile']
-# hook_source = '''
-#   let g:textobj#sandwich#stimeoutlen = 100
-#   let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
-#   let g:sandwich#recipes += [{'buns' : ['「', '」']}]
-#   let g:sandwich#recipes += [{'buns' : ['【', '】']}]
-#   let g:sandwich#recipes += [{'buns' : ['（', '）']}]
-#   let g:sandwich#recipes += [{'buns' : ['『', '』']}]
-# '''
-
 # --- Smart commenter
 [[plugins]]
 repo     = 'tyru/caw.vim'
@@ -330,6 +331,11 @@ on_ft = 'python'
 # after jedi-vim is loaded.
 # depends = 'jedi-vim'
 
+# --- Asynchronous Lint Engine (ALE)
+[[plugins]]
+repo    = 'w0rp/ale'
+on_path = '.*'
+
 # --- Language server protocol (LSP) client
 [[plugins]]
 repo        = 'autozimu/LanguageClient-neovim'
@@ -360,7 +366,13 @@ on_ft = 'python'
 repo  = 'raimon49/requirements.txt.vim'
 on_ft = 'requirements'
 
+# --- HTML/CSS/Javascript
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['html', 'css', 'jsx', 'javascript', 'javascript.jsx']
+
 # --- CSV
+[[plugins]]
 repo  = 'chrisbra/csv.vim'
 on_ft = 'csv'
 
@@ -418,5 +430,4 @@ hook_source = '''
 [[plugins]]
 repo  = 'gu-fan/riv.vim'
 on_ft = 'rst'
-
 

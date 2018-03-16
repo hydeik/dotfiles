@@ -122,10 +122,6 @@ hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 '''
 
-# --- linter
-[[plugins]]
-repo = 'w0rp/ale'
-
 # --- Snippet definitions for neosnippet
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
@@ -179,12 +175,14 @@ on_ft = 'python'
 # --- diff
 [[plugins]]
 repo  = 'thinca/vim-ft-diff_fold'
-on_ft = 'diff'
 
 # --- help
 [[plugins]]
 repo  = 'thinca/vim-ft-help_fold'
-on_ft = 'help'
+
+# --- CSS
+[[plugins]]
+repo  = 'hail2u/vim-css3-syntax'
 
 # --- JSON
 [[plugins]]
