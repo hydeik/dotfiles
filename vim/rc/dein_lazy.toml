@@ -31,6 +31,24 @@ hook_post_source = 'call rc#plugin#deoplete#hook_post_source()'
 repo  = 'Shougo/neoinclude.vim'
 on_if = 1
 
+# --- Auto close parentheses
+[[plugins]]
+repo     = 'cohama/lexima.vim'
+on_event = 'InsertCharPre'
+hook_post_source = '''
+  call lexima#add_rule({'char': '<C-h>', 'at': '(\%#)',   'delete': 1})
+  call lexima#add_rule({'char': '<C-h>', 'at': '{\%#}',   'delete': 1})
+  call lexima#add_rule({'char': '<C-h>', 'at': '\[\%#\]', 'delete': 1})
+  call lexima#add_rule({'char': '<C-h>', 'at': '"\%#"',   'delete': 1})
+  call lexima#add_rule({'char': '<C-h>', 'at': "'\\%#'",  'delete': 1})
+  call lexima#add_rule({'char': '<C-h>', 'at': '`\%#`',   'delete': 1})
+
+  call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
+  call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
+  call lexima#add_rule({'char': '<BS>',  'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+  call lexima#add_rule({'char': '<C-h>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+'''
+
 #------------------------------------------------------------------------------
 # Snippets
 #------------------------------------------------------------------------------
