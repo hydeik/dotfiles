@@ -15,7 +15,7 @@ hook_add = '''
 # Functions and commands for Neovim GUI
 #------------------------------------------------------------------------------
 [[plugins]]
-repo  = 'equalsraf/neovim-gui-shim'
+repo = 'equalsraf/neovim-gui-shim'
 if = 'has("nvim")'
 
 #------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ if = 'has("nvim")'
 #------------------------------------------------------------------------------
 # for Vim 8
 [[plugins]]
-repo  = 'roxma/vim-hug-neovim-rpc'
+repo = 'roxma/vim-hug-neovim-rpc'
 if = '!has("nvim")'
 
 [[plugins]]
@@ -33,7 +33,7 @@ repo = 'https://github.com/roxma/nvim-yarp'
 # Fast matcher for CtrlP and Denite
 #------------------------------------------------------------------------------
 [[plugins]]
-repo  = 'nixprime/cpsm'
+repo = 'nixprime/cpsm'
 build = 'sh -c "PY3=ON ./install.sh"'
 
 #------------------------------------------------------------------------------
@@ -61,6 +61,10 @@ repo = 'itchyny/vim-parenmatch'
 #------------------------------------------------------------------------------
 # Lightline + Colorscheme
 #------------------------------------------------------------------------------
+# Custom status line
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
 # Add filetype glyphs (icons) to other plugins
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
@@ -99,7 +103,7 @@ repo = 'KeitaNakamura/neodark.vim'
 # Vim help in Japanese
 #------------------------------------------------------------------------------
 [[plugins]]
-repo     = 'vim-jp/vimdoc-ja'
+repo = 'vim-jp/vimdoc-ja'
 hook_add = 'set helplang=ja,en'
 
 # Introduction of VIM script
@@ -159,62 +163,52 @@ repo = 'Shougo/context_filetype.vim'
 
 # --- C++
 [[plugins]]
-repo  = 'octol/vim-cpp-enhanced-highlight'
-on_ft = 'cpp'
+repo = 'octol/vim-cpp-enhanced-highlight'
 
 # --- Python
 [[plugins]]
-repo  = 'vim-python/python-syntax'
-on_ft = 'python'
+repo = 'vim-python/python-syntax'
 
 [[plugins]]
 # extend % and g% for python
-repo  = 'vim-scripts/python_match.vim'
-on_ft = 'python'
+repo = 'vim-scripts/python_match.vim'
 
 # --- diff
 [[plugins]]
-repo  = 'thinca/vim-ft-diff_fold'
+repo = 'thinca/vim-ft-diff_fold'
 
 # --- help
 [[plugins]]
-repo  = 'thinca/vim-ft-help_fold'
+repo = 'thinca/vim-ft-help_fold'
 
 # --- CSS
 [[plugins]]
-repo  = 'hail2u/vim-css3-syntax'
+repo = 'hail2u/vim-css3-syntax'
 
 # --- JSON
 [[plugins]]
-repo  = 'elzr/vim-json'
-on_ft = 'json'
+repo = 'elzr/vim-json'
 
 # --- YAML
 [[plugins]]
-repo  = 'stephpy/vim-yaml'
-on_ft = 'yaml'
+repo = 'stephpy/vim-yaml'
 
 # --- Docker files
 [[plugins]]
-repo  = 'ekalinin/Dockerfile.vim'
-on_ft = ['Dockerfile', 'docker-compose']
+repo = 'ekalinin/Dockerfile.vim'
 
 # --- fish
 [[plugins]]
-repo  = 'kballard/vim-fish'
-on_ft = 'fish'
+repo = 'kballard/vim-fish'
 
 # --- zsh
 [[plugins]]
-repo  = 'chrisbra/vim-zsh'
-on_ft = 'zsh'
+repo = 'chrisbra/vim-zsh'
 
 # --- tmux
 [[plugins]]
-repo  = 'tmux-plugins/vim-tmux'
-on_ft = 'tmux'
+repo = 'tmux-plugins/vim-tmux'
 
 # --- vim
 [[plugins]]
-repo  = 'vim-jp/syntax-vim-ex'
-on_ft = 'vim'
+repo = 'vim-jp/syntax-vim-ex'
