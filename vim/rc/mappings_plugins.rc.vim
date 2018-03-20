@@ -65,7 +65,6 @@ if dein#tap('denite.nvim')
     let l:cmd = &readonly ? 'SudoWrite' : a:force ? 'w!' : 'w'
     execute l:cmd
   endfunction
-
 endif
 
 if dein#tap('neosnippet')
@@ -240,4 +239,15 @@ if dein#tap('sideways.vim')
   xmap <silent> aa <Plug>SidewaysArgumentTextobjA
   omap <silent> ia <Plug>SidewaysArgumentTextobjI
   xmap <silent> ia <Plug>SidewaysArgumentTextobjI
+endif
+
+if dein#tap('vim-leader-guide')
+  " register it with the guide:
+  call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
+  call leaderGuide#register_prefix_descriptions(",", "g:llmap")
+
+  nnoremap <silent> <Space>  :<C-u>LeaderGuide       '<Space>'<CR>
+  vnoremap <silent> <Space>  :<C-u>LeaderGuideVisual '<Space>'<CR>
+  map               <Space>.  <Plug>leaderguide-global
+  map               <Space>,  <Plug>leaderguide-buffer
 endif

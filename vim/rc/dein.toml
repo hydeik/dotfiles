@@ -5,11 +5,6 @@
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/dein.vim'
-hook_add = '''
-  " --- U mapping
-  nnoremap <silent> <Space>up :<C-u>call dein#clear_state()<CR>:UpdateRemotePlugins<CR>
-  nnoremap <silent> <Space>uP :<C-u>call dein#update()<CR>
-'''
 
 #------------------------------------------------------------------------------
 # Functions and commands for Neovim GUI
@@ -135,16 +130,6 @@ repo = 'Shougo/neosnippet-snippets'
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'hecal3/vim-leader-guide'
-hook_add = '''
-  " register it with the guide:
-  call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
-  call leaderGuide#register_prefix_descriptions(",", "g:llmap")
-
-  nnoremap <silent> <Space>  :<C-u>LeaderGuide       '<Space>'<CR>
-  vnoremap <silent> <Space>  :<C-u>LeaderGuideVisual '<Space>'<CR>
-  map               <Space>.  <Plug>leaderguide-global
-  map               <Space>,  <Plug>leaderguide-buffer
-'''
 
 # === No meaning lazy plugins ===
 
