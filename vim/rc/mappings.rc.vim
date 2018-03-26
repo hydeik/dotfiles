@@ -6,6 +6,15 @@ inoremap j<Space>  j
 cnoremap <expr> j  getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 "}}}
 
+" Visual mode key mappings:"{{{
+" indent by > and < instead of >> and <<
+nnoremap >   >>
+nnoremap <   <<
+" Maintain visual mode after shifting > and <
+xnoremap >   >gv
+xnoremap <   <gv
+"}}}
+
 " Emacs-like cursor move in insert mode and command line mode:"{{{
 inoremap <C-a>    <Home>
 inoremap <C-b>    <Left>
