@@ -86,7 +86,7 @@ if dein#tap('vim-textobj-multiblock')
 endif
 
 if dein#tap('vim-textobj-function')
-	omap <silent> af  <Plug>(textobj-function-a)
+  omap <silent> af  <Plug>(textobj-function-a)
 	omap <silent> if  <Plug>(textobj-function-i)
 	xmap <silent> af  <Plug>(textobj-function-a)
 	xmap <silent> if  <Plug>(textobj-function-i)
@@ -147,6 +147,13 @@ if dein#tap('vim-bookmarks')
   nmap mi <Plug>BookmarkAnnotate
 endif
 
+if dein#tap('caw.vim')
+  nmap <silent> gc  <Plug>(caw:prefix)
+  xmap <silent> gc  <Plug>(caw:prefix)
+  nmap <silent> gcc <Plug>(caw:hatpos:toggle)
+  xmap <silent> gcc <Plug>(caw:hatpos:toggle)
+endif
+
 if dein#tap('gina.vim')
   nnoremap <Space>gs :<C-u>Gina status<CR>
   nnoremap <Space>gb :<C-u>Gina branch<CR>
@@ -202,24 +209,6 @@ endif
 if dein#tap('vim-expand-region')
   xmap v  <Plug>(expand_region_expand)
   xmap V  <Plug>(expand_region_shrink)
-endif
-
-if dein#tap('caw.vim')
-  function! InitCaw() abort
-    if !&l:modifiable
-      silent! nunmap <buffer> gc
-      silent! xunmap <buffer> gc
-      silent! nunmap <buffer> gcc
-      silent! xunmap <buffer> gcc
-    else
-      nmap <buffer> gc <Plug>(caw:prefix)
-      xmap <buffer> gc <Plug>(caw:prefix)
-      nmap <buffer> gcc <Plug>(caw:hatpos:toggle)
-      xmap <buffer> gcc <Plug>(caw:hatpos:toggle)
-    endif
-  endfunction
-  autocmd MyVimrc FileType * call InitCaw()
-  call InitCaw()
 endif
 
 if dein#tap('eskk.vim')

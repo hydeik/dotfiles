@@ -49,6 +49,17 @@ hook_post_source = '''
   call lexima#add_rule({'char': '<C-h>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
 '''
 
+# --- Source for Vim script
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_ft = 'vim'
+
+# --- Completion by `look` command for deoplete
+[[plugins]]
+repo = 'ujihisa/neco-look'
+if = 'executable("look")'
+on_event = 'InsertEnter'
+
 #------------------------------------------------------------------------------
 # Snippets
 #------------------------------------------------------------------------------

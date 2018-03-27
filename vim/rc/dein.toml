@@ -116,6 +116,7 @@ repo = 'tpope/vim-repeat'
 # For programming
 #------------------------------------------------------------------------------
 # --- EditorConfig
+[[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
