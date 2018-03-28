@@ -18,19 +18,20 @@ function! rc#plugin#LanguageClient#hook_source() abort
   let g:LanguageClient_autoStart = 1
 
   " --- Language servers
+  let g:LanguageClient_serverCommands = {
+        \ 'c':   ['clangd'],
+        \ 'cpp': ['clangd'],
+        \ 'python': [$PYENV_ROOT . '/versions/neovim3/bin/pyls', '--log-file=/tmp/pyls.log'],
+        \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+        \ 'vim': ['rustup', 'run', 'stable', 'rls'],
+        \ }
+  " let cquery_exec_path = $HOME . '/src/github.com/cquery-project/cquery/build/cxx-release/bin/cquery'
   " let g:LanguageClient_serverCommands = {
-  "       \ 'c':   ['clangd'],
-  "       \ 'cpp': ['clangd'],
+  "       \ 'c':   [cquery_exec_path, '--log-file=/tmp/cquery/cquery.log'],
+  "       \ 'cpp': [cquery_exec_path, '--log-file=/tmp/cquery/cquery.log'],
   "       \ 'python': [$PYENV_ROOT . '/versions/neovim3/bin/pyls', '--log-file=/tmp/pyls.log'],
   "       \ 'rust': ['rustup', 'run', 'stable', 'rls'],
   "       \ }
-  let cquery_exec_path = $HOME . '/src/github.com/cquery-project/cquery/build/cxx-release/bin/cquery'
-  let g:LanguageClient_serverCommands = {
-        \ 'c':   [cquery_exec_path, '--log-file=/tmp/cquery/cquery.log'],
-        \ 'cpp': [cquery_exec_path, '--log-file=/tmp/cquery/cquery.log'],
-        \ 'python': [$PYENV_ROOT . '/versions/neovim3/bin/pyls', '--log-file=/tmp/pyls.log'],
-        \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-        \ }
 
   let g:LanguageClient_loadSettings = 1
   let g:LanguageClient_settingsPath = g:vimrc_root . '/settings.json'

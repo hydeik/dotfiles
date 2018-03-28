@@ -57,15 +57,15 @@ call s:configure_path('$PATH', [
       \ '~/.cargo/bin',
       \ '~/.ndenv/bin',
       \ '~/.rbenv/bin',
-      \ '~/.plenv/bin',
       \ '~/.pyenv/bin',
+      \ '~/.ndenv/shims/bin',
+      \ '~/.rbenv/shims/bin',
+      \ '~/.pyenv/shims/bin',
       \ '~/.anyenv/envs/ndenv/bin',
       \ '~/.anyenv/envs/rbenv/bin',
-      \ '~/.anyenv/envs/plenv/bin',
       \ '~/.anyenv/envs/pyenv/bin',
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.anyenv/envs/rbenv/shims',
-      \ '~/.anyenv/envs/plenv/shims',
       \ '~/.anyenv/envs/pyenv/shims',
       \ '~/.zplug/bin',
       \ '~/bin',
@@ -152,17 +152,18 @@ augroup END
 "----------------------------------------------------------------------------
 " Prefix keys
 "----------------------------------------------------------------------------
+" Release some keymappings for plugins
+nnoremap ;  <Nop>
+nnoremap ,  <Nop>
+" nnoremap m  <Nop>
+nnoremap s  <Nop>
+xnoremap s  <Nop>
+
+" <Leader> and <LocalLeader>
 noremap <Leader>       <Nop>
 noremap <LocalLeader>  <Nop>
 let g:mapleader = "\<Space>"
-let g:maplocalleader = ','
-
-" Release some keymappings for plugins
-nnoremap ;  <Nop>
-nnoremap , <Nop>
-" nnoremap m  <Nop>
-nnoremap s <Nop>
-xnoremap s <Nop>
+let g:maplocalleader = ';'
 
 " Menu for keymapping (vim-leader-guide)
 let g:lmap = {

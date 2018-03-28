@@ -53,6 +53,18 @@ repo = 'itchyny/vim-parenmatch'
 #   augroup END
 # '''
 
+# Powerful repeat '.'
+[[plugins]]
+repo = 'tpope/vim-repeat'
+if = 'executable("editorconfig")'
+
+# --- EditorConfig
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+hook_add = '''
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+'''
+
 #------------------------------------------------------------------------------
 # Lightline + Colorscheme
 #------------------------------------------------------------------------------
@@ -106,25 +118,20 @@ hook_add = 'set helplang=ja,en'
 repo = 'mattn/learn-vimscript'
 
 #------------------------------------------------------------------------------
-# Enhanced commands
+# Plugins for completion
 #------------------------------------------------------------------------------
-# powerful repeat '.'
-[[plugins]]
-repo = 'tpope/vim-repeat'
-
-#------------------------------------------------------------------------------
-# For programming
-#------------------------------------------------------------------------------
-# --- EditorConfig
-[[plugins]]
-repo = 'editorconfig/editorconfig-vim'
-hook_add = '''
-  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-'''
-
 # --- Snippet definitions for neosnippet
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
+
+# --- Completion by `look` command for neocomplete/deoplete/ncm
+[[plugins]]
+repo = 'ujihisa/neco-look'
+if = 'executable("look")'
+
+# --- syntax source for neocomplete/deoplete/ncm
+[[plugins]]
+repo = 'Shougo/neco-syntax'
 
 #------------------------------------------------------------------------------
 # Leader guide
@@ -179,6 +186,10 @@ repo = 'elzr/vim-json'
 [[plugins]]
 repo = 'stephpy/vim-yaml'
 
+# --- TOML
+[[plugins]]
+repo = 'cespare/vim-toml'
+
 # --- Docker files
 [[plugins]]
 repo = 'ekalinin/Dockerfile.vim'
@@ -198,3 +209,4 @@ repo = 'tmux-plugins/vim-tmux'
 # --- vim
 [[plugins]]
 repo = 'vim-jp/syntax-vim-ex'
+

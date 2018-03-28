@@ -4,6 +4,11 @@
 inoremap jj        <ESC>
 inoremap j<Space>  j
 cnoremap <expr> j  getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
+if exists(':tnoremap')
+  tnoremap <ESC>      <C-\><C-n>
+  tnoremap jj         <C-\><C-n>
+  tnoremap j<Space>   j
+endif
 "}}}
 
 " Visual mode key mappings:"{{{
@@ -41,6 +46,14 @@ cnoremap <C-y>    <C-r>*
 " <C-g>: exit
 cnoremap <C-g>    <C-c>
 "}}}
+
+" Change current word in a repeatable manner
+nnoremap cn  *``cgn
+nnoremap cN  *``cgN
+
+" Change selected word in a repeatable manner
+vnoremap <expr> cn  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
+vnoremap <expr> cN  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 
 " Open/close folding:"{{{
 nnoremap <expr> l  foldclosed('.') != -1 ? 'zo' : 'l'
