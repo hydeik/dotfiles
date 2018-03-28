@@ -181,7 +181,6 @@ let g:lmap = {
       \ 't' : { 'name' : 'Tab, Tags, Terminal, and Toggle' },
       \ 'u' : { 'name' : 'Undo, Update' },
       \ 'w' : { 'name' : 'Window' },
-      \ ' ' : { 'name' : 'Vim Commands' },
       \ }
 let g:llmap = {}
 

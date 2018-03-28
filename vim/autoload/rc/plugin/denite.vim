@@ -1,4 +1,67 @@
 function! rc#plugin#denite#hook_add() abort
+  " Substitute search commands by denite
+  nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
+  nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
+  " Substitute 'n' command
+  nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
+
+  " Press <Leader> twice to call a command or command history
+  nnoremap <silent> <Leader><Leader> :<C-u>Denite command command_history<CR>
+
+  " -- B mapping
+  nnoremap <silent> <Leader>bb :<C-u>Denite buffer -mode=normal<CR>
+  nnoremap <silent> <Leader>bf :<C-u>DeniteBufferDir file_rec -mode=insert<CR>
+  nnoremap <silent> <Leader>bF :<C-u>DeniteBufferDir file -mode=normal<CR>
+
+  " Grep current buffer
+  nnoremap <silent> <Leader>bg :<C-u>DeniteBufferDir grep -buffer-name=search -no-empty -mode=normal<CR>
+  xnoremap <silent> <Leader>bg :<C-u>DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty<CR>
+  nnoremap <silent> <Leader>bG :<C-u>DeniteBufferDir grep:::`expand('<cword>')` -no-empty<CR>
+
+  " -- D mapping
+  nnoremap <silent> <Leader>dg :<C-u>Denite ghq<CR>
+  nnoremap <silent> <Leader>dh :<C-u>Denite help<CR>
+  nnoremap <silent> <Leader>dj :<C-u>Denite jump change<CR>
+  nnoremap <silent> <Leader>do :<C-u>Denite outline<CR>
+  nnoremap <silent> <Leader>dp :<C-u>Denite dein -default-action=open<CR>
+  nnoremap <silent> <Leader>dr :<C-u>Denite -resume<CR>
+  nnoremap <silent> <Leader>dt :<C-u>Denite tag<CR>
+
+  " -- F mapping
+  nnoremap <silent> <Leader>ff :<C-u>Denite file_rec -path=`getcwd()`<CR>
+  nnoremap <silent> <Leader>fF :<C-u>Denite file -path=`getcwd()`<CR>
+  nnoremap <silent> <Leader>fd :<C-u>Denite file_rec -path=`g:vimrc_root`<CR>
+  nnoremap <silent> <Leader>fr :<C-u>Denite file_mru<CR>
+  nnoremap <silent> <Leader>fs :<C-u>call save_file(0)<CR>
+  nnoremap <silent> <Leader>fS :<C-u>call save_file(1)<CR>
+  nnoremap <silent> <Leader>ft :<C-u>Denite filetype<CR>
+
+  " -- H mapping
+  nnoremap <silent> <Leader>hh :<C-u>Denite help<CR>
+
+  " -- J mapping
+  nnoremap <silent> <Leader>jl :<C-u>Denite jump change<CR>
+
+  " -- P mapping
+  nnoremap <silent> <Leader>pf :<C-u>DeniteProjectDir file_rec<CR>
+  nnoremap <silent> <Leader>pF :<C-u>DeniteProjectDir file<CR>
+  nnoremap <silent> <Leader>pg :<C-u>DeniteProjectDir grep -buffer-name=search -no-empty -mode=normal<CR>
+  xnoremap <silent> <Leader>pg :<C-u>DeniteProjectDir grep:::`GetVisualSelectionESC()` -buffer-name=search -no-empty<CR>
+  nnoremap <silent> <Leader>pG :<C-u>DeniteProjectDir grep:::`expand('<cword>')` -buffer-name=search -no-empty<CR>
+
+  " -- Y mapping
+  nnoremap <silent> <Leader>yy :<C-u>Denite register neoyank -buffer-name=register<CR>
+  xnoremap <silent> <Leader>yy :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
+
+  function! s:GetVisualSelection() abort "{{{
+    return getline("'<")[getpos("'<")[1:2][1] - 1: getpos("'>")[1:2][1] - 1]
+  endfunction "}}}
+
+  " Save function
+  function! s:save_file(force)
+    let l:cmd = &readonly ? 'SudoWrite' : a:force ? 'w!' : 'w'
+    execute l:cmd
+  endfunction
 endfunction
 
 function! rc#plugin#denite#hook_source() abort

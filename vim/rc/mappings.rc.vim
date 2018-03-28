@@ -180,33 +180,39 @@ nmap <C-w><C-z> <Plug>(my-zoom-window)
 " [Space]: Other useful commands "{{{
 " Smart space mapping.
 
-" <Space>B mapping -- buffer
-nnoremap <silent> <Space>bd :bdelete<CR>
-nnoremap <silent> <Space>bD :bdelete!<CR>
-nnoremap <silent> <Space>bs :wall<CR>
-nnoremap <silent> <Space>bn :bnext<CR>
-nnoremap <silent> <Space>bp :bprevious<CR>
+" <Leader>B mapping -- buffer
+nnoremap <silent> <Leader>bd :<C-u>bdelete<CR>
+nnoremap <silent> <Leader>bD :<C-u>bdelete!<CR>
+nnoremap <silent> <Leader>bs :<C-u>wall<CR>
+nnoremap <silent> <Leader>bn :<C-u>bnext<CR>
+nnoremap <silent> <Leader>bp :<C-u>bprevious<CR>
 
-" <Space>Q mapping -- quit
-nnoremap <silent> <Space>qq :qall<CR>
-nnoremap <silent> <Space>qQ :qall!<CR>
+let g:lmap.b.d = ['bdelete',   'Delete current buffer']
+let g:lmap.b.D = ['bdelete!',  'Delete current buffer (force)']
+let g:lmap.b.s = ['wall',      'Save all buffers (wall)']
+let g:lmap.b.n = ['bnext',     'Next buffer']
+let g:lmap.b.p = ['bprevious', 'Previous buffer']
 
-" <Space>W mapping -- window
-nnoremap <silent> <Space>ws :split<CR>
-nnoremap <silent> <Space>wv :vsplit<CR>
-nnoremap <silent> <Space>wd :close<CR>
-nnoremap <silent> <Space>wO :only<CR>
-nnoremap <silent> <Space>wD <c-w>j:close<CR>
-nnoremap <silent> <Space>w= <c-w>=<CR>
-nmap     <silent> <Space>wz <Plug>(my-zoom-window)
+" <Leader>Q mapping -- quit
+nnoremap <silent> <Leader>qq :qall<CR>
+nnoremap <silent> <Leader>qQ :qall!<CR>
 
-nnoremap <Space>wl <c-w>l
-nnoremap <Space>wh <c-w>h
-nnoremap <Space>wj <c-w>j
-nnoremap <Space>wk <c-w>k
-nnoremap <silent> <Space>wL <c-w>L
-nnoremap <silent> <Space>wH <c-w>H
-nnoremap <silent> <Space>wJ <c-w>J
-nnoremap <silent> <Space>wK <c-w>K
-nnoremap <silent> <Space>wP <c-w>\|<c-w>_
+" <Leader>W mapping -- window
+nnoremap <silent> <Leader>ws :split<CR>
+nnoremap <silent> <Leader>wv :vsplit<CR>
+nnoremap <silent> <Leader>wd :close<CR>
+nnoremap <silent> <Leader>wO :only<CR>
+nnoremap <silent> <Leader>wD <c-w>j:close<CR>
+nnoremap <silent> <Leader>w= <c-w>=<CR>
+nmap     <silent> <Leader>wz <Plug>(my-zoom-window)
+
+nnoremap <Leader>wl <c-w>l
+nnoremap <Leader>wh <c-w>h
+nnoremap <Leader>wj <c-w>j
+nnoremap <Leader>wk <c-w>k
+nnoremap <silent> <Leader>wL <c-w>L
+nnoremap <silent> <Leader>wH <c-w>H
+nnoremap <silent> <Leader>wJ <c-w>J
+nnoremap <silent> <Leader>wK <c-w>K
+nnoremap <silent> <Leader>wP <c-w>\|<c-w>_
 "}}}

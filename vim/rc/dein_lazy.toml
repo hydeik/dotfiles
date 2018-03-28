@@ -64,8 +64,8 @@ on_event = 'InsertCharPre'
 on_ft = 'snippet'
 hook_source = '''
   imap <silent><C-k>  <Plug>(neosnippet_expand_or_jump)
-  smap <silent>L  <Plug>(neosnippet_expand_or_jump)
-  xmap <silent>L  <Plug>(neosnippet_expand_target)
+  smap <silent><C-k>  <Plug>(neosnippet_expand_or_jump)
+  xmap <silent><C-k>  <Plug>(neosnippet_expand_target)
 
   let g:neosnippet#enable_snipmate_compatibility = 1
   let g:neosnippet#enable_completed_snippet = 1
@@ -81,6 +81,7 @@ hook_source = '''
 repo = 'Shougo/denite.nvim'
 depends = 'vim-qfreplace'
 on_cmd = 'Denite'
+hook_add = 'call rc#plugin#denite#hook_add()'
 hook_source = 'call rc#plugin#denite#hook_source()'
 
 # --- Denite sources
@@ -105,6 +106,19 @@ on_source = 'denite.nvim'
 repo = 'lambdalisue/session.vim'
 on_source = 'denite.vim'
 on_cmd = ['SessionOpen', 'SessionClose', 'SessionSave', 'SessionRemove']
+hook_add = '''
+  nnoremap <Leader>ss :<C-u>SessionSave<CR>
+  nnoremap <Leader>sl :<C-u>Denite session -mode=normal<CR>
+  nnoremap <Leader>so :<C-u>SessionOpen<CR>
+  nnoremap <Leader>sc :<C-u>SessionClose<CR>
+  nnoremap <Leader>sd :<C-u>SessionRemove<CR>
+
+  let g:lmap.s.s = ['SessionSave', 'Save session']
+  let g:lmap.s.o = ['SessionOpen', 'Open session']
+  let g:lmap.s.c = ['SessionClose', 'Close session']
+  let g:lmap.s.d = ['SessionRemove', 'Delete session']
+  let g:lmap.s.l = ['Denite session -mode=normal', 'List of sessions']
+'''
 
 #-----------------------------------------------------------------------------
 # Cursor moves
@@ -112,6 +126,10 @@ on_cmd = ['SessionOpen', 'SessionClose', 'SessionSave', 'SessionRemove']
 [[plugins]]
 repo = 'rhysd/accelerated-jk'
 on_map = {n = '<Plug>'}
+hook_add = '''
+  nmap <silent>j <Plug>(accelerated_jk_gj)
+  nmap <silent>k <Plug>(accelerated_jk_gk)
+'''
 
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
@@ -144,6 +162,9 @@ on_path = '.*'
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
 on_cmd = ['IndentGuidesEnable', 'IndentGuidesDisable', 'IndentGuidesToggle']
+hook_add = '''
+  nmap <silent><Leader>ti :<C-u>IndentGuidesToggle<CR>
+'''
 hook_source = '''
   let g:indent_guides_enable_on_vim_startup = 0
   let g:indent_guides_default_mapping = 0
@@ -262,11 +283,18 @@ on_map = {nx = '<Plug>'}
 [[plugins]]
 repo = 'tyru/caw.vim'
 on_map = {nx = '<Plug>'}
+hook_add = '''
+  nmap <Leader>c  <Plug>(caw:prefix)
+  xmap <Leader>c  <Plug>(caw:prefix)
+'''
 
 # --- Smart Align
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
 on_cmd = ['EasyAlign', 'LiveEasyAlign']
+hook_add = '''
+  vnoremap <Enter> :EasyAlign<CR>
+'''
 
 # --- Extended J command
 [[plugins]]
@@ -308,6 +336,7 @@ hook_source = 'call echodoc#enable()'
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
+hook_add = 'call rc#plugin#gina#hook_add()'
 hook_post_source = 'call rc#plugin#gina#hook_post_source()'
 
 # --- Python pyenv
