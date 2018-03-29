@@ -31,6 +31,11 @@ hook_post_source = 'call rc#plugin#deoplete#hook_post_source()'
 repo = 'Shougo/neoinclude.vim'
 on_if = 1
 
+# --- Source for Vim script
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_ft = 'vim'
+
 # --- Auto close parentheses
 [[plugins]]
 repo = 'cohama/lexima.vim'
@@ -49,11 +54,6 @@ hook_post_source = '''
   call lexima#add_rule({'char': '<C-h>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
 '''
 
-# --- Source for Vim script
-[[plugins]]
-repo = 'Shougo/neco-vim'
-on_ft = 'vim'
-
 #------------------------------------------------------------------------------
 # Snippets
 #------------------------------------------------------------------------------
@@ -71,6 +71,7 @@ hook_source = '''
   let g:neosnippet#enable_completed_snippet = 1
   let g:neosnippet#expand_word_boundary = 1
   let g:neosnippet#snippets_directory = g:vimrc_root . '/snippets'
+
   autocmd MyVimrc CompleteDone * call neosnippet#complete_done()
 '''
 
@@ -134,6 +135,27 @@ hook_add = '''
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
 on_map = {nv = '<Plug>'}
+hook_add = '''
+  map  gj  <Plug>(edgemotion-j)
+  map  gk  <Plug>(edgemotion-k)
+  xmap gj  <Plug>(edgemotion-j)
+  xmap gk  <Plug>(edgemotion-k)
+'''
+
+# # --- Motions in CamelCase or snake_case words
+# [[plugins]]
+# repo = 'bkad/CamelCaseMotion'
+# on_map = {nvo = '<Plug>'}
+# hook_add = '''
+#   map <silent> w <Plug>CamelCaseMotion_w
+#   map <silent> b <Plug>CamelCaseMotion_b
+#   map <silent> e <Plug>CamelCaseMotion_e
+#   map <silent> ge <Plug>CamelCaseMotion_ge
+#   sunmap w
+#   sunmap b
+#   sunmap e
+#   sunmap ge
+# '''
 
 #-----------------------------------------------------------------------------
 # Interfaces
@@ -151,12 +173,22 @@ hook_source = '''
 [[plugins]]
 repo   = 't9md/vim-quickhl'
 on_map = {nv = '<Plug>'}
+hook_add = '''
+  " TODO: key mapping conflict
+  nmap <Leader>, <Plug>(quickhl-manual-this)
+  xmap <Leader>, <Plug>(quickhl-manual-this)
+'''
 
 # ---  Show a git diff in the gutter and stages/undoes hunks
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 if = 'has("signs")'
 on_path = '.*'
+hook_add = '''
+  nmap <silent> <Leader>gk  <Plug>GitGutterPrevHunkzz
+  nmap <silent> <Leader>gj  <Plug>GitGutterNextHunkzz
+  nmap <silent> <Leader>gp  <Plug>GitGutterNextHunkzz
+'''
 
 # --- Visually displaying indent levels in code
 [[plugins]]
@@ -178,6 +210,13 @@ hook_source = '''
 [[plugins]]
 repo = 'MattesGroeger/vim-bookmarks'
 on_path = '.*'
+hook_add = '''
+	nmap <Leader>ma  :<C-u>cgetexpr bm#location_list()<CR> :<C-u>Denite quickfix -buffer-name=list<CR>
+	nmap <Leader>mn  <Plug>BookmarkNext
+	nmap <Leader>mp  <Plug>BookmarkPrev
+	nmap <Leader>mm  <Plug>BookmarkToggle
+  nmap <Leader>mi  <Plug>BookmarkAnnotate
+'''
 hook_source = '''
   let g:bookmark_auto_save = 1
   let g:bookmark_save_per_working_dir = 1
@@ -189,6 +228,9 @@ hook_source = '''
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
 on_ft = ['denite', 'qf']
+hook_source = '''
+  autocmd MyVimrc FileType qf nnoremap <buffer> r :<C-u>Qfreplace<CR>
+'''
 
 #------------------------------------------------------------------------------
 # Filer
@@ -199,6 +241,15 @@ on_cmd = ['Vaffle']
 hook_add = '''
   " Changes the working directory to the selected one automatically
   let g:vaffle_auto_cd = 1
+
+  function! s:customize_vaffle_mappings() abort
+    " Customize key mappings here
+    nmap <buffer> <Bslash> <Plug>(vaffle-open-root)
+    nmap <buffer> l        <Plug>(vaffle-open-selected)
+  endfunction
+
+  nnoremap <silent> <Space>fe :<C-u>Vaffle<CR>
+  autocmd MyVimrc FileType vaffle call s:customize_vaffle_mappings()
 '''
 
 #------------------------------------------------------------------------------
@@ -215,30 +266,40 @@ depends = 'vim-textobj-user'
 on_map = {ox = '<Plug>'}
 
 [[plugins]]
-repo = 'kana/vim-textobj-function'
-depends = 'vim-textobj-user'
-on_map = {ox = '<Plug>'}
-hook_add = '''
-  let g:textobj_function_no_default_key_mappings = 1
-'''
-
-[[plugins]]
 repo = 'osyo-manga/vim-textobj-multiblock'
 depends = 'vim-textobj-user'
 on_map = {ox = '<Plug>'}
+hook_add = '''
+	omap <silent> ab  <Plug>(textobj-multiblock-a)
+	omap <silent> ib  <Plug>(textobj-multiblock-i)
+	xmap <silent> ab  <Plug>(textobj-multiblock-a)
+	xmap <silent> ib  <Plug>(textobj-multiblock-i)
+'''
 
 [[plugins]]
 repo = 'machakann/vim-textobj-delimited'
 
 # --- Expand region
 [[plugins]]
-repo     = 'terryma/vim-expand-region'
-on_map   = {x = '<Plug>'}
+repo = 'terryma/vim-expand-region'
+on_map = {x = '<Plug>'}
+hook_add = '''
+  xmap v  <Plug>(expand_region_expand)
+  xmap V  <Plug>(expand_region_shrink)
+'''
 
 # --- Move function arguments
 [[plugins]]
 repo   = 'AndrewRadev/sideways.vim'
 on_map = {ox = '<Plug>Sideways'}
+hook_add = '''
+  nnoremap <silent> m" :<C-u>SidewaysJumpLeft<CR>
+  nnoremap <silent> m' :<C-u>SidewaysJumpRight<CR>
+  omap <silent> aa <Plug>SidewaysArgumentTextobjA
+  xmap <silent> aa <Plug>SidewaysArgumentTextobjA
+  omap <silent> ia <Plug>SidewaysArgumentTextobjI
+  xmap <silent> ia <Plug>SidewaysArgumentTextobjI
+'''
 
 # --- Easily translate between single-line and multiline code
 [[plugins]]
@@ -253,9 +314,17 @@ on_cmd = 'Linediff'
 # --- Delete surrounding function call
 [[plugins]]
 repo   = 'AndrewRadev/dsf.vim'
-on_map = {n = '<Plug>Dsf'}
+on_map = {nxo = '<Plug>Dsf'}
 hook_add = '''
   let g:dsf_no_mappings = 1
+
+	nmap sdf  <Plug>DsfDelete
+	nmap sdf  <Plug>DsfChange
+
+  omap af   <PLug>DsfTextObjectA
+  xmap af   <PLug>DsfTextObjectA
+  omap if   <PLug>DsfTextObjectI
+  xmap if   <PLug>DsfTextObjectI
 '''
 
 #------------------------------------------------------------------------------
@@ -265,16 +334,36 @@ hook_add = '''
 repo = 'kana/vim-operator-replace'
 depends = 'vim-operator-user'
 on_map = {vnx = '<Plug>'}
+hook_add = '''
+  xmap p  <Plug>(operator-replace)
+'''
 
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
 depends = ['vim-operator-user', 'vim-textobj-multiblock']
 on_map = {vnx = '<Plug>'}
+hook_add = '''
+  " operator mappings
+  map <silent>sa <Plug>(operator-surround-append)
+  map <silent>sd <Plug>(operator-surround-delete)
+  map <silent>sr <Plug>(operator-surround-replace)
+
+  " delete or replace most inner surround
+  nmap <silent>saa <Plug>(operator-surround-append)<Plug>(textobj-multiblock-a)
+  nmap <silent>sai <Plug>(operator-surround-append)<Plug>(textobj-multiblock-i)
+  nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+  nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+'''
 
 [[plugins]]
 repo = 'haya14busa/vim-operator-flashy'
 depends = 'vim-operator-user'
 on_map = {nx = '<Plug>'}
+hook_add = '''
+  map  y  <Plug>(operator-flashy)
+  nmap Y  <Plug>(operator-flashy)$
+'''
+
 
 #-----------------------------------------------------------------------------
 # Editting
@@ -321,6 +410,7 @@ on_map = {x = '<Plug>'}
 [[plugins]]
 repo = 'tyru/eskk.vim'
 on_map = {ic = '<Plug>'}
+hook_add = 'call rc#plugin#eskk#hook_add()'
 hook_source = 'call rc#plugin#eskk#hook_source()'
 
 #-----------------------------------------------------------------------------
@@ -351,6 +441,15 @@ on_ft = 'python'
 [[plugins]]
 repo = 'w0rp/ale'
 on_path = '.*'
+
+# --- Auto format
+[[plugins]]
+repo = 'Chiel92/vim-autoformat'
+on_path = '.*'
+hook_source = '''
+  autocmd MyVimrc BufWrite * :Autoformat
+  autocmd MyVimrc FileType vim,tex  let b:autoformat_autoindent=0
+'''
 
 # --- Language server protocol (LSP) client
 [[plugins]]

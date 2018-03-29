@@ -14,19 +14,35 @@ function! rc#plugin#deoplete#hook_source() abort
   " Start deoplete
   let g:deoplete#enable_at_startup = 1
 
+  let g:deoplete#enable_refresh_always = 0
+  let g:deoplete#enable_camel_case = 1
+  " let g:deoplete#auto_complete_delay = 50
+  " let g:deoplete#auto_complete_start_length = 3
+  let g:deoplete#skip_chars = ['(', ')', '<', '>']
+
+  let g:deoplete#file#enable_buffer_path = 1
+
   " Keyword patterns for buffer completion
   let g:deoplete#keyword_patterns = {}
   let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
   let g:deoplete#keyword_patterns.tex = '[^\w|\s][a-zA-Z_]\w*'
 
-  let g:deoplete#enable_refresh_always = 0
-  let g:deoplete#enable_camel_case = 1
-  " let g:deoplete#auto_complete_delay = 50
-  " let g:deoplete#auto_complete_start_length = 3
+  " Input patterns for filetypes
+  let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
+  let g:deoplete#omni#input_patterns.xml = '<[^>]*'
+  let g:deoplete#omni#input_patterns.md  = '<[^>]*'
+  let g:deoplete#omni#input_patterns.css  = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  let g:deoplete#omni#input_patterns.scss = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  let g:deoplete#omni#input_patterns.sass = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  let g:deoplete#omni#input_patterns.javascript = ''
+  let g:deoplete#omni#input_patterns.python = ''
+  let g:deoplete#omni#input_patterns.ruby   = '[^. *\t]\.\w*\|\h\w*::'
 
-  let g:deoplete#skip_chars = ['(', ')']
+  " omni functions
+  let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
 
-  " <TAB>: SuperTab like behavior.
+  " --- Key mappings
+  " <TAB> like behavior.
   inoremap <silent><expr> <TAB>
         \ pumvisible() ? "\<C-n>" :
         \ <SID>check_back_space() ? "\<TAB>" :
@@ -55,3 +71,4 @@ function! rc#plugin#deoplete#hook_post_source() abort
         \ 'converter_auto_delimiter',
         \ ])
 endfunction
+

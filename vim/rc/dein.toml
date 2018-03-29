@@ -5,6 +5,10 @@
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/dein.vim'
+hook_add = '''
+  nnoremap <silent> <Space>up :<C-u>call dein#clear_state()<CR>:UpdateRemotePlugins<CR>
+  nnoremap <silent> <Space>uP :<C-u>call dein#update()<CR>
+'''
 
 #------------------------------------------------------------------------------
 # Functions and commands for Neovim GUI
@@ -138,6 +142,26 @@ repo = 'Shougo/neco-syntax'
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'hecal3/vim-leader-guide'
+hook_add = '''
+  function! s:my_displayfunc()
+    let g:leaderGuide#displayname =
+          \ substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
+    let g:leaderGuide#displayname =
+          \ substitute(g:leaderGuide#displayname, '^<Plug>', '', '')
+    let g:leaderGuide#displayname =
+          \ substitute(g:leaderGuide#displayname, '^:\c<C-u>', ':', '')
+  endfunction
+
+  let g:leaderGuide_displayfunc = [function("s:my_displayfunc")]
+  " register it with the guide:
+  call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
+  call leaderGuide#register_prefix_descriptions(",", "g:llmap")
+
+  nnoremap <silent> <Space>  :<C-u>LeaderGuide       '<Space>'<CR>
+  vnoremap <silent> <Space>  :<C-u>LeaderGuideVisual '<Space>'<CR>
+  map               <Space>.  <Plug>leaderguide-global
+  map               <Space>,  <Plug>leaderguide-buffer
+'''
 
 # === No meaning lazy plugins ===
 
@@ -165,6 +189,10 @@ repo = 'vim-python/python-syntax'
 [[plugins]]
 # extend % and g% for python
 repo = 'vim-scripts/python_match.vim'
+hook_add = '''
+  nmap <buffer> {{ [%
+  nmap <buffer> }} ]%
+'''
 
 # --- diff
 [[plugins]]

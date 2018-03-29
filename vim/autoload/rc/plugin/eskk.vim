@@ -1,4 +1,6 @@
 function! rc#plugin#eskk#hook_add() abort
+  imap <C-x>j  <Plug>(eskk:toggle)
+  cmap <C-x>j  <Plug>(eskk:toggle)
 endfunction
 
 function! rc#plugin#eskk#hook_source() abort

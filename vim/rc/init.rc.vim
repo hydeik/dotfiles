@@ -225,7 +225,6 @@ call s:source_rc('encoding.rc.vim')
 call s:source_rc('options.rc.vim')
 
 call s:source_rc('mappings.rc.vim')
-call s:source_rc('mappings_plugins.rc.vim')
 
 call s:source_rc('colorscheme.rc.vim')
 

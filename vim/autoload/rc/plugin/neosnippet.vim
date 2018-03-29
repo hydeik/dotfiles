@@ -10,4 +10,5 @@ function! rc#plugin#neosnippet#hook_source() abort
   let g:neosnippet#enable_completed_snippet = 1
   let g:neosnippet#expand_word_boundary = 1
   let g:neosnippet#snippets_directory = g:vimrc_root . '/snippets'
+  autocmd MyVimrc CompleteDone * call neosnippet#complete_done()
 endfunction
