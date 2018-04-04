@@ -97,11 +97,6 @@ nnoremap ZZ  <Nop>
 " Y: yank text from cursor position to the EOL
 nnoremap Y y$
 
-" +: increment
-nnoremap + <C-a>
-" -: decrement
-nnoremap - <C-x>
-
 " Stop highlighting by <ESC><ESC>
 nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
 

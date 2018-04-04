@@ -63,9 +63,9 @@ depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_event = 'InsertCharPre'
 on_ft = 'snippet'
 hook_source = '''
-  imap <silent><C-k>  <Plug>(neosnippet_expand_or_jump)
-  smap <silent><C-k>  <Plug>(neosnippet_expand_or_jump)
-  xmap <silent><C-k>  <Plug>(neosnippet_expand_target)
+  imap <silent><C-s>  <Plug>(neosnippet_expand_or_jump)
+  smap <silent><C-s>  <Plug>(neosnippet_expand_or_jump)
+  xmap <silent><C-s>  <Plug>(neosnippet_expand_target)
 
   let g:neosnippet#enable_snipmate_compatibility = 1
   let g:neosnippet#enable_completed_snippet = 1
@@ -170,14 +170,14 @@ hook_source = '''
 '''
 
 # --- Quickly highlight <cword> or visually selected word
-[[plugins]]
-repo   = 't9md/vim-quickhl'
-on_map = {nv = '<Plug>'}
-hook_add = '''
-  " TODO: key mapping conflict
-  nmap <Leader>, <Plug>(quickhl-manual-this)
-  xmap <Leader>, <Plug>(quickhl-manual-this)
-'''
+# [[plugins]]
+# repo   = 't9md/vim-quickhl'
+# on_map = {nv = '<Plug>'}
+# hook_add = '''
+#   " TODO: key mapping conflict
+#   nmap <Leader>, <Plug>(quickhl-manual-this)
+#   xmap <Leader>, <Plug>(quickhl-manual-this)
+# '''
 
 # ---  Show a git diff in the gutter and stages/undoes hunks
 [[plugins]]
@@ -211,17 +211,17 @@ hook_source = '''
 repo = 'MattesGroeger/vim-bookmarks'
 on_path = '.*'
 hook_add = '''
-	nmap <Leader>ma  :<C-u>cgetexpr bm#location_list()<CR> :<C-u>Denite quickfix -buffer-name=list<CR>
-	nmap <Leader>mn  <Plug>BookmarkNext
-	nmap <Leader>mp  <Plug>BookmarkPrev
-	nmap <Leader>mm  <Plug>BookmarkToggle
+  nmap <Leader>ma  :<C-u>cgetexpr bm#location_list()<CR> :<C-u>Denite quickfix -buffer-name=list<CR>
+  nmap <Leader>mn  <Plug>BookmarkNext
+  nmap <Leader>mp  <Plug>BookmarkPrev
+  nmap <Leader>mm  <Plug>BookmarkToggle
   nmap <Leader>mi  <Plug>BookmarkAnnotate
 '''
 hook_source = '''
   let g:bookmark_auto_save = 1
   let g:bookmark_save_per_working_dir = 1
-	let g:bookmark_no_default_key_mappings = 1
-	let g:bookmark_disable_ctrlp = 1
+  let g:bookmark_no_default_key_mappings = 1
+  let g:bookmark_disable_ctrlp = 1
 '''
 
 # --- Perform the replacement in |quickfix|
@@ -270,10 +270,10 @@ repo = 'osyo-manga/vim-textobj-multiblock'
 depends = 'vim-textobj-user'
 on_map = {ox = '<Plug>'}
 hook_add = '''
-	omap <silent> ab  <Plug>(textobj-multiblock-a)
-	omap <silent> ib  <Plug>(textobj-multiblock-i)
-	xmap <silent> ab  <Plug>(textobj-multiblock-a)
-	xmap <silent> ib  <Plug>(textobj-multiblock-i)
+  omap <silent> ab  <Plug>(textobj-multiblock-a)
+  omap <silent> ib  <Plug>(textobj-multiblock-i)
+  xmap <silent> ab  <Plug>(textobj-multiblock-a)
+  xmap <silent> ib  <Plug>(textobj-multiblock-i)
 '''
 
 [[plugins]]
@@ -318,8 +318,8 @@ on_map = {nxo = '<Plug>Dsf'}
 hook_add = '''
   let g:dsf_no_mappings = 1
 
-	nmap sdf  <Plug>DsfDelete
-	nmap sdf  <Plug>DsfChange
+  nmap sdf  <Plug>DsfDelete
+  nmap sdf  <Plug>DsfChange
 
   omap af   <PLug>DsfTextObjectA
   xmap af   <PLug>DsfTextObjectA
@@ -443,13 +443,13 @@ repo = 'w0rp/ale'
 on_path = '.*'
 
 # --- Auto format
-[[plugins]]
-repo = 'Chiel92/vim-autoformat'
-on_path = '.*'
-hook_source = '''
-  autocmd MyVimrc BufWrite * :Autoformat
-  autocmd MyVimrc FileType vim,tex  let b:autoformat_autoindent=0
-'''
+# [[plugins]]
+# repo = 'Chiel92/vim-autoformat'
+# on_path = '.*'
+# hook_source = '''
+# autocmd MyVimrc BufWrite * :Autoformat
+# autocmd MyVimrc FileType vim,tex,txt,org,toml  let b:autoformat_autoindent=0
+# '''
 
 # --- Language server protocol (LSP) client
 [[plugins]]
@@ -496,9 +496,9 @@ on_ft = 'csv'
 repo = 'rcmdnk/vim-markdown'
 on_ft = 'markdown'
 hook_add = '''
-  let g:vim_markdown_frontmatter = 1
-  let g:vim_markdown_math = 1
-  let g:vim_markdown_conceal = 0
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_math = 1
+let g:vim_markdown_conceal = 0
 '''
 
 [[plugins]]
@@ -510,7 +510,7 @@ on_ft = 'markdown'
 repo = 'mzlogin/vim-markdown-toc'
 on_cmd = ['GenTocGFM', 'GenTocRedcarpet', 'GenTocGitLab', 'UpdateToc']
 hook_source = '''
-  let g:vmt_auto_update_on_save = 0
+let g:vmt_auto_update_on_save = 0
 '''
 
 # Markdown live preview
@@ -523,7 +523,7 @@ depends = ['markdown-preview.vim']
 repo = 'iamcco/markdown-preview.vim'
 on_ft = 'markdown'
 hook_source = '''
-  let g:mkdp_refresh_slow = 1
+let g:mkdp_refresh_slow = 1
 '''
 # [[plugins]]
 # repo = 'euclio/vim-markdown-composer'

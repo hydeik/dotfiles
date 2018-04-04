@@ -21,14 +21,6 @@ function! rc#plugin#LanguageClient#hook_source() abort
   let g:LanguageClient_autoStart = 1
 
   " --- Language servers
-  " let g:LanguageClient_serverCommands = {
-  "       \ 'c':      ['clangd'],
-  "       \ 'cpp':    ['clangd'],
-  "       \ 'python': [$PYENV_ROOT . '/versions/neovim3/bin/pyls', '--log-file=/tmp/pyls.log'],
-  "       \ 'rust':   ['rustup', 'run', 'stable', 'rls'],
-  "       \ 'sh':     ['bash-language-server'],
-  "       \ }
-  " let cquery_exec_path = $HOME . '/src/github.com/cquery-project/cquery/build/cxx-release/bin/cquery'
   let g:LanguageClient_serverCommands = {
         \ 'c':      ['cquery', '--log-file=/tmp/cquery/cquery.log'],
         \ 'cpp':    ['cquery', '--log-file=/tmp/cquery/cquery.log'],
