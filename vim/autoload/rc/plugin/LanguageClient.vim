@@ -12,7 +12,7 @@ function! s:languageclient_config() abort
   nnoremap <buffer> <LocalLeader>S  :<C-u>Denite -auto-preview workspaceSymbol<CR>
   nnoremap <buffer> <LocalLeader>r  :<C-u>Denite -auto-preview -mode=normal references<CR>
 
-  " setlocal formatexpr=LanguageClient_textDocument_rangeFormatting()
+  setlocal formatexpr=LanguageClient_textDocument_rangeFormatting()
   setlocal cmdheight=3
 endfunction
 

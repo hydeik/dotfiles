@@ -73,6 +73,9 @@ call s:configure_path('$PATH', [
       \ '/usr/local/bin',
       \ '/usr/bin',
       \ '/bin',
+      \ '/usr/local/sbin',
+      \ '/usr/sbin',
+      \ '/sbin',
       \])
 call s:configure_path('$MANPATH', [
       \ '/usr/local/share/man/',

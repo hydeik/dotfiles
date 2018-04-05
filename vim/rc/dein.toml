@@ -60,11 +60,11 @@ repo = 'itchyny/vim-parenmatch'
 # Powerful repeat '.'
 [[plugins]]
 repo = 'tpope/vim-repeat'
-if = 'executable("editorconfig")'
 
 # --- EditorConfig
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
+if = 'executable("editorconfig")'
 hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 '''
@@ -166,7 +166,7 @@ hook_add = '''
 # === No meaning lazy plugins ===
 
 # --- Textobj extension
-[[plugins]]
+  [[plugins]]
 repo = 'kana/vim-textobj-user'
 
 # --- Operator extension
