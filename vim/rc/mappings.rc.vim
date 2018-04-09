@@ -188,9 +188,24 @@ let g:lmap.b.s = ['wall',      'Save all buffers (wall)']
 let g:lmap.b.n = ['bnext',     'Next buffer']
 let g:lmap.b.p = ['bprevious', 'Previous buffer']
 
+" <Leader>O mapping -- (toggle) options
+nnoremap <silent> <Leader>os  :setlocal spell!<CR>
+nnoremap <silent> <Leader>on  :setlocal nonumber!<CR>
+nnoremap <silent> <Leader>ol  :setlocal nolist!<CR>
+nnoremap <silent> <Leader>ow  :setlocal wrap! breakindent!<CR>
+
+let g:lmap.o.l = ['setlocal nolist!',   'Show tabs, white space [togglle]']
+let g:lmap.o.n = ['setlocal nonumber!', 'Show line numbers [togglle]']
+let g:lmap.o.s = ['setlocal spell!',    'Spell [togglle]']
+let g:lmap.o.w = ['setlocal wrap! breakindent!', 'Wrap lines [togglle]']
+
 " <Leader>Q mapping -- quit
 nnoremap <silent> <Leader>qq :qall<CR>
+nnoremap <silent> <Leader>qw :qall<CR>
 nnoremap <silent> <Leader>qQ :qall!<CR>
+let g:lmap.q.q = ['qall',  'Exit Vim']
+let g:lmap.q.w = ['wqall', 'Exit Vim (save changes)']
+let g:lmap.q.Q = ['qall!', 'Exit Vim (force)']
 
 " <Leader>W mapping -- window
 nnoremap <silent> <Leader>ws :split<CR>

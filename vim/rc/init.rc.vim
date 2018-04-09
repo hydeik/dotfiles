@@ -181,7 +181,8 @@ let g:lmap = {
       \ 'q' : { 'name' : 'Quit' },
       \ 'r' : { 'name' : 'Rename, Replace' },
       \ 's' : { 'name' : 'Session' },
-      \ 't' : { 'name' : 'Tab, Tags, Terminal, and Toggle' },
+      \ 't' : { 'name' : 'Tab, Terminal, and Toggle' },
+      \ 'o' : { 'name' : 'Options (toggle)' },
       \ 'u' : { 'name' : 'Undo, Update' },
       \ 'w' : { 'name' : 'Window' },
       \ }

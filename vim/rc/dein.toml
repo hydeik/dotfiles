@@ -155,7 +155,7 @@ hook_add = '''
   let g:leaderGuide_displayfunc = [function("s:my_displayfunc")]
   " register it with the guide:
   call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
-  call leaderGuide#register_prefix_descriptions(",", "g:llmap")
+  call leaderGuide#register_prefix_descriptions(";", "g:llmap")
 
   nnoremap <silent> <Space>  :<C-u>LeaderGuide       '<Space>'<CR>
   vnoremap <silent> <Space>  :<C-u>LeaderGuideVisual '<Space>'<CR>
