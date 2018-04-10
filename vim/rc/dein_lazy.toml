@@ -97,32 +97,31 @@ on_event = 'TextYankPost'
 on_source = 'denite.nvim'
 
 [[plugins]]
+repo = 'chemzqm/unite-location'
+on_source = 'denite.nvim'
+
+[[plugins]]
 repo = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
-#-----------------------------------------------------------------------------
-# Session manager
-#-----------------------------------------------------------------------------
 [[plugins]]
-repo = 'lambdalisue/session.vim'
-on_source = 'denite.vim'
-on_cmd = ['SessionOpen', 'SessionClose', 'SessionSave', 'SessionRemove']
-hook_add = '''
-  nnoremap <Leader>ss :<C-u>SessionSave<CR>
-  nnoremap <Leader>sl :<C-u>Denite session -mode=normal<CR>
-  nnoremap <Leader>so :<C-u>SessionOpen<CR>
-  nnoremap <Leader>sc :<C-u>SessionClose<CR>
-  nnoremap <Leader>sd :<C-u>SessionRemove<CR>
+repo = 'rafi/vim-denite-session'
+on_source = 'denite.nvim'
 
-  let g:lmap.s.s = ['SessionSave', 'Save session']
-  let g:lmap.s.o = ['SessionOpen', 'Open session']
-  let g:lmap.s.c = ['SessionClose', 'Close session']
-  let g:lmap.s.d = ['SessionRemove', 'Delete session']
-  let g:lmap.s.l = ['Denite session -mode=normal', 'List of sessions']
+#-----------------------------------------------------------------------------
+# Windows, Panes, Tabs
+#-----------------------------------------------------------------------------
+# Navigate windows like tmux's 'display-pane'
+[[plugins]]
+repo = 't9md/vim-choosewin'
+on_map = {n = '<Plug>'}
+hook_add = '''
+  nmap -           <Plug>(choosewin)
+  nmap <Leader>-  :<C-u>ChooseWinSwapStay<CR>
 '''
 
 #-----------------------------------------------------------------------------
-# Cursor moves
+# Extended commands
 #-----------------------------------------------------------------------------
 [[plugins]]
 repo = 'rhysd/accelerated-jk'
@@ -131,6 +130,13 @@ hook_add = '''
   nmap <silent>j <Plug>(accelerated_jk_gj)
   nmap <silent>k <Plug>(accelerated_jk_gk)
 '''
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+on_map = {n = '<Plug>'}
+hook_add = 'call rc#plugin#easymotion#hook_add()'
+hook_source = 'call rc#plugin#easymotion#hook_source()'
+
 
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
@@ -142,22 +148,7 @@ hook_add = '''
   xmap gk  <Plug>(edgemotion-k)
 '''
 
-# # --- Motions in CamelCase or snake_case words
-# [[plugins]]
-# repo = 'bkad/CamelCaseMotion'
-# on_map = {nvo = '<Plug>'}
-# hook_add = '''
-#   map <silent> w <Plug>CamelCaseMotion_w
-#   map <silent> b <Plug>CamelCaseMotion_b
-#   map <silent> e <Plug>CamelCaseMotion_e
-#   map <silent> ge <Plug>CamelCaseMotion_ge
-#   sunmap w
-#   sunmap b
-#   sunmap e
-#   sunmap ge
-# '''
-
-#-----------------------------------------------------------------------------
+#----------------------------------------------------------------------------et-
 # Interfaces
 #-----------------------------------------------------------------------------
 # --- Calendar
@@ -170,14 +161,14 @@ hook_source = '''
 '''
 
 # --- Quickly highlight <cword> or visually selected word
-# [[plugins]]
-# repo   = 't9md/vim-quickhl'
-# on_map = {nv = '<Plug>'}
-# hook_add = '''
-#   " TODO: key mapping conflict
-#   nmap <Leader>, <Plug>(quickhl-manual-this)
-#   xmap <Leader>, <Plug>(quickhl-manual-this)
-# '''
+[[plugins]]
+repo   = 't9md/vim-quickhl'
+on_map = {nv = '<Plug>'}
+hook_add = '''
+  " TODO: key mapping conflict
+  nmap <Leader>, <Plug>(quickhl-manual-this)
+  xmap <Leader>, <Plug>(quickhl-manual-this)
+'''
 
 # ---  Show a git diff in the gutter and stages/undoes hunks
 [[plugins]]
@@ -204,24 +195,6 @@ hook_source = '''
   let g:indent_guides_start_level = 2
   let g:indent_guides_exclude_filetypes = ['help', 'denite', 'nerdtree']
   let g:indend_guides_color_change_percent = 20
-'''
-
-# --- Bookmark
-[[plugins]]
-repo = 'MattesGroeger/vim-bookmarks'
-on_path = '.*'
-hook_add = '''
-  nmap <Leader>ma  :<C-u>cgetexpr bm#location_list()<CR> :<C-u>Denite quickfix -buffer-name=list<CR>
-  nmap <Leader>mn  <Plug>BookmarkNext
-  nmap <Leader>mp  <Plug>BookmarkPrev
-  nmap <Leader>mm  <Plug>BookmarkToggle
-  nmap <Leader>mi  <Plug>BookmarkAnnotate
-'''
-hook_source = '''
-  let g:bookmark_auto_save = 1
-  let g:bookmark_save_per_working_dir = 1
-  let g:bookmark_no_default_key_mappings = 1
-  let g:bookmark_disable_ctrlp = 1
 '''
 
 # --- Perform the replacement in |quickfix|
@@ -288,45 +261,6 @@ hook_add = '''
   xmap V  <Plug>(expand_region_shrink)
 '''
 
-# --- Move function arguments
-[[plugins]]
-repo   = 'AndrewRadev/sideways.vim'
-on_map = {ox = '<Plug>Sideways'}
-hook_add = '''
-  nnoremap <silent> m" :<C-u>SidewaysJumpLeft<CR>
-  nnoremap <silent> m' :<C-u>SidewaysJumpRight<CR>
-  omap <silent> aa <Plug>SidewaysArgumentTextobjA
-  xmap <silent> aa <Plug>SidewaysArgumentTextobjA
-  omap <silent> ia <Plug>SidewaysArgumentTextobjI
-  xmap <silent> ia <Plug>SidewaysArgumentTextobjI
-'''
-
-# --- Easily translate between single-line and multiline code
-[[plugins]]
-repo   = 'AndrewRadev/splitjoin.vim'
-on_map = {n = '<Plug>Splitjoin'}
-
-# --- Diffs in block code
-[[plugins]]
-repo   = 'AndrewRadev/linediff.vim'
-on_cmd = 'Linediff'
-
-# --- Delete surrounding function call
-[[plugins]]
-repo   = 'AndrewRadev/dsf.vim'
-on_map = {nxo = '<Plug>Dsf'}
-hook_add = '''
-  let g:dsf_no_mappings = 1
-
-  nmap sdf  <Plug>DsfDelete
-  nmap sdf  <Plug>DsfChange
-
-  omap af   <PLug>DsfTextObjectA
-  xmap af   <PLug>DsfTextObjectA
-  omap if   <PLug>DsfTextObjectI
-  xmap if   <PLug>DsfTextObjectI
-'''
-
 #------------------------------------------------------------------------------
 # Operator extensions
 #------------------------------------------------------------------------------
@@ -373,8 +307,21 @@ hook_add = '''
 repo = 'tyru/caw.vim'
 on_map = {nx = '<Plug>'}
 hook_add = '''
-  nmap <Leader>c  <Plug>(caw:prefix)
-  xmap <Leader>c  <Plug>(caw:prefix)
+  function! InitCaw() abort
+    if !&l:modifiable
+      silent! nunmap <buffer> gc
+      silent! xunmap <buffer> gc
+      silent! nunmap <buffer> gcc
+      silent! xunmap <buffer> gcc
+    else
+      nmap <buffer> gc <Plug>(caw:prefix)
+      xmap <buffer> gc <Plug>(caw:prefix)
+      nmap <buffer> gcc <Plug>(caw:hatpos:toggle)
+      xmap <buffer> gcc <Plug>(caw:hatpos:toggle)
+    endif
+  endfunction
+  autocmd MyVimrc FileType * call InitCaw()
+  call InitCaw()
 '''
 
 # --- Smart Align
@@ -429,27 +376,13 @@ on_cmd = 'Gina'
 hook_add = 'call rc#plugin#gina#hook_add()'
 hook_post_source = 'call rc#plugin#gina#hook_post_source()'
 
-# --- Python pyenv
-[[plugins]]
-repo = 'lambdalisue/vim-pyenv'
-on_ft = 'python'
-# Do not load vim-pyenv until *.py is opened and make sure that it is loaded
-# after jedi-vim is loaded.
-# depends = 'jedi-vim'
-
 # --- Asynchronous Lint Engine (ALE)
 [[plugins]]
 repo = 'w0rp/ale'
 on_path = '.*'
-
-# --- Auto format
-# [[plugins]]
-# repo = 'Chiel92/vim-autoformat'
-# on_path = '.*'
-# hook_source = '''
-# autocmd MyVimrc BufWrite * :Autoformat
-# autocmd MyVimrc FileType vim,tex,txt,org,toml  let b:autoformat_autoindent=0
-# '''
+hook_source = '''
+  let g:ale_fix_on_save = 1
+'''
 
 # --- Language server protocol (LSP) client
 [[plugins]]
@@ -477,6 +410,13 @@ hook_source = '''
 
 # --- Python
 [[plugins]]
+repo = 'lambdalisue/vim-pyenv'
+on_ft = 'python'
+# Do not load vim-pyenv until *.py is opened and make sure that it is loaded
+# after jedi-vim is loaded.
+# depends = 'jedi-vim'
+
+[[plugins]]
 repo = 'tmhedberg/SimpylFold'
 on_ft = 'python'
 
@@ -499,9 +439,9 @@ on_ft = 'csv'
 repo = 'rcmdnk/vim-markdown'
 on_ft = 'markdown'
 hook_add = '''
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_math = 1
-let g:vim_markdown_conceal = 0
+  let g:vim_markdown_frontmatter = 1
+  let g:vim_markdown_math = 1
+  let g:vim_markdown_conceal = 0
 '''
 
 [[plugins]]
@@ -513,7 +453,7 @@ on_ft = 'markdown'
 repo = 'mzlogin/vim-markdown-toc'
 on_cmd = ['GenTocGFM', 'GenTocRedcarpet', 'GenTocGitLab', 'UpdateToc']
 hook_source = '''
-let g:vmt_auto_update_on_save = 0
+  let g:vmt_auto_update_on_save = 0
 '''
 
 # Markdown live preview
@@ -526,18 +466,8 @@ depends = ['markdown-preview.vim']
 repo = 'iamcco/markdown-preview.vim'
 on_ft = 'markdown'
 hook_source = '''
-let g:mkdp_refresh_slow = 1
+  let g:mkdp_refresh_slow = 1
 '''
-# [[plugins]]
-# repo = 'euclio/vim-markdown-composer'
-# on_ft = 'markdown'
-# hook_post_update = '''
-#   if has('nvim')
-#     !cargo build --release
-#   else
-#     !cargo build --release --no-default-features --features json-rpc
-#   endif
-# '''
 
 # --- reStructuredText (rst)
 [[plugins]]

@@ -119,39 +119,26 @@ set packpath=
 "----------------------------------------------------------------------------
 " Prefix keys
 "----------------------------------------------------------------------------
-" Release some keymappings for plugins
-nnoremap ;  <Nop>
-nnoremap ,  <Nop>
-" nnoremap m  <Nop>
-nnoremap s  <Nop>
-xnoremap s  <Nop>
 
-" <Leader> and <LocalLeader>
-noremap <Leader>       <Nop>
-noremap <LocalLeader>  <Nop>
+" Use 'space' as <Leader> key and ';' as <LocalLeader> key
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ';'
 
-" Menu for keymapping (vim-leader-guide)
-let g:lmap = {
-      \ 'b' : { 'name' : 'Buffer' },
-      \ 'c' : { 'name' : 'Comment' },
-      \ 'd' : { 'name' : 'Denite' },
-      \ 'f' : { 'name' : 'File' },
-      \ 'g' : { 'name' : 'Git' },
-      \ 'h' : { 'name' : 'Help / Hunk' },
-      \ 'j' : { 'name' : 'Jump, Search' },
-      \ 'm' : { 'name' : 'Mark, Program' },
-      \ 'p' : { 'name' : 'Project' },
-      \ 'q' : { 'name' : 'Quit' },
-      \ 'r' : { 'name' : 'Rename, Replace' },
-      \ 's' : { 'name' : 'Session' },
-      \ 't' : { 'name' : 'Tab, Terminal, and Toggle' },
-      \ 'o' : { 'name' : 'Options (toggle)' },
-      \ 'u' : { 'name' : 'Undo, Update' },
-      \ 'w' : { 'name' : 'Window' },
-      \ }
-let g:llmap = {}
+" Release some keymappings for plugins
+nnoremap <Space>  <Nop>
+xnoremap <Space>  <Nop>
+
+nnoremap ;  <Nop>
+nnoremap ;  <Nop>
+
+nnoremap ,  <Nop>
+xnoremap ,  <Nop>
+
+nnoremap s  <Nop>
+xnoremap s  <Nop>
+
+nnoremap m  <Nop>
+xnoremap m  <Nop>
 
 "----------------------------------------------------------------------------
 " Disable default plugins

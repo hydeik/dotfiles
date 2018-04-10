@@ -6,8 +6,8 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 hook_add = '''
-  nnoremap <silent> <Space>up :<C-u>call dein#clear_state()<CR>:UpdateRemotePlugins<CR>
-  nnoremap <silent> <Space>uP :<C-u>call dein#update()<CR>
+  nnoremap <silent> <Leader>up :<C-u>call dein#clear_state()<CR>:UpdateRemotePlugins<CR>
+  nnoremap <silent> <Leader>uP :<C-u>call dein#update()<CR>
 '''
 
 #------------------------------------------------------------------------------
@@ -137,32 +137,6 @@ if = 'executable("look")'
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 
-#------------------------------------------------------------------------------
-# Leader guide
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'hecal3/vim-leader-guide'
-hook_add = '''
-  function! s:my_displayfunc()
-    let g:leaderGuide#displayname =
-          \ substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
-    let g:leaderGuide#displayname =
-          \ substitute(g:leaderGuide#displayname, '^<Plug>', '', '')
-    let g:leaderGuide#displayname =
-          \ substitute(g:leaderGuide#displayname, '^:\c<C-u>', ':', '')
-  endfunction
-
-  let g:leaderGuide_displayfunc = [function("s:my_displayfunc")]
-  " register it with the guide:
-  call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
-  call leaderGuide#register_prefix_descriptions(";", "g:llmap")
-
-  nnoremap <silent> <Space>  :<C-u>LeaderGuide       '<Space>'<CR>
-  vnoremap <silent> <Space>  :<C-u>LeaderGuideVisual '<Space>'<CR>
-  map               <Space>.  <Plug>leaderguide-global
-  map               <Space>,  <Plug>leaderguide-buffer
-'''
-
 # === No meaning lazy plugins ===
 
 # --- Textobj extension
@@ -229,6 +203,10 @@ repo = 'kballard/vim-fish'
 # --- zsh
 [[plugins]]
 repo = 'chrisbra/vim-zsh'
+
+# --- GNU As
+[[plugins]]
+repo = 'Shirk/vim-gas'
 
 # --- tmux
 [[plugins]]

@@ -1,5 +1,6 @@
 # Global hook_add, which is executed in dein#end().
 hook_add = '''
+    nnoremap L  <Nop>
 " -- C++
 let g:cpp_class_scope_highlight = 1
 

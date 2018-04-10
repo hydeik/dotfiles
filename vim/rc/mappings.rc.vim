@@ -1,6 +1,6 @@
 " mapping.vim --- setting vim/nvim key mappings
 
-" Easy escape:"{{{
+" Easy escape:
 inoremap jj        <ESC>
 inoremap j<Space>  j
 cnoremap <expr> j  getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
@@ -9,17 +9,16 @@ if exists(':tnoremap')
   tnoremap jj         <C-\><C-n>
   tnoremap j<Space>   j
 endif
-"}}}
 
-" Visual mode key mappings:"{{{
+" Visual mode key mappings:
 " indent by > and < instead of >> and <<
 nnoremap >   >>
 nnoremap <   <<
 " Maintain visual mode after shifting > and <
 xnoremap >   >gv
 xnoremap <   <gv
-"}}}
 
+" Insert mode key mappings
 " Emacs-like cursor move in insert mode and command line mode:"{{{
 inoremap <C-a>    <Home>
 inoremap <C-b>    <Left>
@@ -27,6 +26,7 @@ inoremap <C-d>    <Del>
 inoremap <C-e>    <End>
 inoremap <C-f>    <Right>
 
+" Command-line mode key mappings:
 " <C-a>: move to head
 cnoremap <C-a>    <Home>
 " <C-b>: previous char
@@ -45,7 +45,6 @@ cnoremap <C-p>    <Up>
 cnoremap <C-y>    <C-r>*
 " <C-g>: exit
 cnoremap <C-g>    <C-c>
-"}}}
 
 " Change current word in a repeatable manner
 nnoremap cn  *``cgn
@@ -82,17 +81,11 @@ endfunction
 " Better x
 nnoremap x "_x
 
-" Disable Ex-mode.
-" nnoremap Q  q
+" Disable Ex-mode
+" nnoremap Q  <Nop>
 
 " Disable ZZ.
 nnoremap ZZ  <Nop>
-
-" Move widows by Ctrl+h,j,k,l
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
 
 " Y: yank text from cursor position to the EOL
 nnoremap Y y$
@@ -124,37 +117,6 @@ endif
 " Map <F10> to reload current vim script
 nnoremap <silent><F10>  :<C-u>call <SID>source_script('%')<CR>
 
-" Toggle Quickfix window
-function! s:toggle_qf() abort
-  let nwin = winnr('$')
-  cclose
-  if nwin == winnr('$')
-    botright copen
-  endif
-endfunction
-nnoremap <silent> <Plug>(my-toggle-quickfix)  :<C-u>call <SID>toggle_qf()<CR>
-nmap Q <Plug>(my-toggle-quickfix)
-" Map q/<ESC> to close quickfix window
-autocmd MyVimrc FileType qf nnoremap <buffer> <silent>q      :q<CR>
-autocmd MyVimrc FileType qf nnoremap <buffer> <silent><ESC>  :q<CR>
-
-" Toggle LocationList window
-function! s:toggle_ll() abort
-  try
-    let nwin = winnr('$')
-    lclose
-    if nwin == winnr('$')
-      botright lopen
-    endif
-  catch /^Vim\%((\a\+)\)\=:E776/
-    echohl WarningMsg
-    redraw | echo 'No location list'
-    echohl None
-  endtry
-endfunction
-nnoremap <silent> <Plug>(my-toggle-locationlist)  :<C-u>call <SID>toggle_ll()<CR>
-nmap L <Plug>(my-toggle-locationlist)
-
 " Toggle window zoom
 "  <C-w>z      : maximize current window
 "  <C-w>z again: restore the previous windows
@@ -175,44 +137,33 @@ nmap <C-w><C-z> <Plug>(my-zoom-window)
 " [Space]: Other useful commands "{{{
 " Smart space mapping.
 
-" <Leader>B mapping -- buffer
-nnoremap <silent> <Leader>bd :<C-u>bdelete<CR>
-nnoremap <silent> <Leader>bD :<C-u>bdelete!<CR>
-nnoremap <silent> <Leader>bs :<C-u>wall<CR>
-nnoremap <silent> <Leader>bn :<C-u>bnext<CR>
-nnoremap <silent> <Leader>bp :<C-u>bprevious<CR>
+" <Leader>t mapping -- (toggle) options
+nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
+nnoremap <silent> <Leader>tn  :setlocal nonumber!<CR>
+nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
+nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
 
-let g:lmap.b.d = ['bdelete',   'delete current buffer']
-let g:lmap.b.D = ['bdelete!',  'delete current buffer (force)']
-let g:lmap.b.s = ['wall',      'save all buffers (wall)']
-let g:lmap.b.n = ['bnext',     'next buffer']
-let g:lmap.b.p = ['bprevious', 'previous buffer']
+" Window/Tabs operation
+" Move windown y TAB
+nnoremap <silent> <Tab>    <C-w>w
+nnoremap <silent> <S-Tab>  <C-w>W
+" Resize window by Shift+arrow
+nnoremap <S-Left>   <C-w><<CR>
+nnoremap <S-Right>  <C-w>><CR>
+nnoremap <S-Up>     <C-w>+<CR>
+nnoremap <S-Down>   <C-w>-<CR>
 
-" <Leader>O mapping -- (toggle) options
-nnoremap <silent> <Leader>os  :setlocal spell!<CR>
-nnoremap <silent> <Leader>on  :setlocal nonumber!<CR>
-nnoremap <silent> <Leader>ol  :setlocal nolist!<CR>
-nnoremap <silent> <Leader>ow  :setlocal wrap! breakindent!<CR>
-
-let g:lmap.o.l = ['setlocal nolist!',   'show tabs, white space [togglle]']
-let g:lmap.o.n = ['setlocal nonumber!', 'show line numbers [togglle]']
-let g:lmap.o.s = ['setlocal spell!',    'spell check [togglle]']
-let g:lmap.o.w = ['setlocal wrap! breakindent!', 'wrap lines [togglle]']
-
-" <Leader>Q mapping -- quit
-nnoremap <silent> <Leader>qq :qall<CR>
-nnoremap <silent> <Leader>qw :qall<CR>
-nnoremap <silent> <Leader>qQ :qall!<CR>
-let g:lmap.q.q = ['qall',  'exit Vim']
-let g:lmap.q.w = ['wqall', 'exit Vim (save changes)']
-let g:lmap.q.Q = ['qall!', 'exit Vim (force)']
-
-" <Leader>W mapping -- window
-nnoremap <silent> <Leader>ws :split<CR>
-nnoremap <silent> <Leader>wv :vsplit<CR>
-nnoremap <silent> <Leader>wd :close<CR>
-nnoremap <silent> <Leader>wO :only<CR>
-nnoremap <silent> <Leader>wD <c-w>j:close<CR>
+" split window horizontally and move to new windown
+nnoremap <silent> <Leader>ws :<C-u>split<CR>:wincmd w<CR>
+" split window vertically and move to new windown
+nnoremap <silent> <Leader>wv :<C-u>vsplit<CR>:wincmd w<CR>
+" new tab
+nnoremap <silent> <Leader>wt :<C-u>tabnew<CR>
+" close window
+nnoremap <silent> <Leader>wq :<C-u>close<CR>
+" only current window
+nnoremap <silent> <Leader>wo :<C-u>only<CR>
+" equal size window
 nnoremap <silent> <Leader>w= <c-w>=<CR>
 nmap     <silent> <Leader>wz <Plug>(my-zoom-window)
 
@@ -225,4 +176,3 @@ nnoremap <silent> <Leader>wH <c-w>H
 nnoremap <silent> <Leader>wJ <c-w>J
 nnoremap <silent> <Leader>wK <c-w>K
 nnoremap <silent> <Leader>wP <c-w>\|<c-w>_
-"}}}

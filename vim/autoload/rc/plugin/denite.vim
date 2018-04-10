@@ -4,70 +4,46 @@ function! rc#plugin#denite#hook_add() abort
   nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
   " Substitute 'n' command
   nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
+  " nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -select=+1 -immediately<CR>
+  " nnoremap <silent> N :<C-u>Denite -resume -buffer-name=search -select=-1 -immediately<CR>
 
-  " Press <Leader> twice to call a command or command history
-  nnoremap <silent> <Leader><Leader> :<C-u>Denite command command_history<CR>
+  nnoremap <silent> <LocalLeader>b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
+  nnoremap <silent> <LocalLeader>d  :<C-u>Denite directory_rec -default-action=cd<CR>
+  nnoremap <silent> <LocalLeader>f  :<C-u>Denite file_rec<CR>
+  nnoremap <silent> <LocalLeader>g  :<C-u>Denite grep -buffer-name=search -no-empty<CR>
+  nnoremap <silent> <LocalLeader>h  :<C-u>Denite help<CR>
+  nnoremap <silent> <LocalLeader>n  :<C-u>Denite dein -default-action=open<CR>
+  nnoremap <silent> <LocalLeader>j  :<C-u>Denite jump change file_point<CR>
+  nnoremap <silent> <LocalLeader>o  :<C-u>Denite outline<CR>
+  nnoremap <silent> <LocalLeader>;  :<C-u>Denite command command_history<CR>
 
-  " -- B mapping
-  nnoremap <silent> <Leader>bb :<C-u>Denite buffer -mode=normal<CR>
-  nnoremap <silent> <Leader>bf :<C-u>DeniteBufferDir file_rec -mode=insert<CR>
-  nnoremap <silent> <Leader>bF :<C-u>DeniteBufferDir file -mode=normal<CR>
+  " Tag jump
+  nnoremap <silent><expr> <LocalLeader>t &filetype == 'help' ? "g\<C-]>" :
+        \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
+  nnoremap <silent><expr> <LocalLeader>p  &filetype == 'help' ?
+        \ ":\<C-u>pop\<CR>" : ":\<C-u>Denite -mode=normal jump\<CR>"
 
-  " Grep current buffer
-  nnoremap <silent> <Leader>bg :<C-u>DeniteBufferDir grep -buffer-name=search -no-empty -mode=normal<CR>
-  xnoremap <silent> <Leader>bg :<C-u>DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty<CR>
-  nnoremap <silent> <Leader>bG :<C-u>DeniteBufferDir grep:::`expand('<cword>')` -no-empty<CR>
+  " register / neoyank
+  nnoremap <silent> <LocalLeade>r  :<C-u>Denite register neoyank -buffer-name=register<CR>
+  xnoremap <silent> <LocalLeade>r  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
 
-  let g:lmap.b.b = ['Denite buffer -mode=normal',            'buffer list']
-  let g:lmap.b.f = ['DeniteBufferDir file_rec -mode=insert', 'open file_rec']
-  let g:lmap.b.F = ['DeniteBufferDir file -mode=normal',     'open file']
-  let g:lmap.b.g = ['DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty', 'grep current buffer']
-  let g:lmap.b.G = ['DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty', 'grep current buffer <cword>']
+  " Quickfix and location list
+  if dein#tap('unite-location')
+    nnoremap L  <Nop>
+    nnoremap Q  <Nop>
+    nnoremap <silent>L  :<C-u>Denite location_list -buffer-name=list<CR>
+    nnoremap <silent>Q  :<C-u>Denite quickfix -buffer-name=list<CR>
+  endif
 
-  " -- D mapping
-  nnoremap <silent> <Leader>dg :<C-u>Denite ghq<CR>
-  nnoremap <silent> <Leader>dh :<C-u>Denite help<CR>
-  nnoremap <silent> <Leader>dj :<C-u>Denite jump change<CR>
-  nnoremap <silent> <Leader>do :<C-u>Denite outline<CR>
-  nnoremap <silent> <Leader>dp :<C-u>Denite dein -default-action=open<CR>
-  nnoremap <silent> <Leader>dr :<C-u>Denite -resume<CR>
-  nnoremap <silent> <Leader>dt :<C-u>Denite tag<CR>
+  " Manage Session
+  if dein#tap('vim-denite-session')
+    nnoremap <silent> <LocalLeader>s  :<C-u>Denite session -buffer-name=list<CR>
+  endif
 
-  " -- F mapping
-  nnoremap <silent> <Leader>ff :<C-u>Denite file_rec -path=`getcwd()`<CR>
-  nnoremap <silent> <Leader>fF :<C-u>Denite file -path=`getcwd()`<CR>
-  nnoremap <silent> <Leader>fd :<C-u>Denite file_rec -path=`g:vimrc_root`<CR>
-  nnoremap <silent> <Leader>fr :<C-u>Denite file_mru<CR>
-  nnoremap <silent> <Leader>fs :<C-u>call save_file(0)<CR>
-  nnoremap <silent> <Leader>fS :<C-u>call save_file(1)<CR>
-  nnoremap <silent> <Leader>ft :<C-u>Denite filetype<CR>
-
-  " -- H mapping
-  nnoremap <silent> <Leader>hh :<C-u>Denite help<CR>
-
-  " -- J mapping
-  nnoremap <silent> <Leader>jl :<C-u>Denite jump change<CR>
-
-  " -- P mapping
-  nnoremap <silent> <Leader>pf :<C-u>DeniteProjectDir file_rec<CR>
-  nnoremap <silent> <Leader>pF :<C-u>DeniteProjectDir file<CR>
-  nnoremap <silent> <Leader>pg :<C-u>DeniteProjectDir grep -buffer-name=search -no-empty -mode=normal<CR>
-  xnoremap <silent> <Leader>pg :<C-u>DeniteProjectDir grep:::`GetVisualSelectionESC()` -buffer-name=search -no-empty<CR>
-  nnoremap <silent> <Leader>pG :<C-u>DeniteProjectDir grep:::`expand('<cword>')` -buffer-name=search -no-empty<CR>
-
-  " -- Y mapping
-  nnoremap <silent> <Leader>yy :<C-u>Denite register neoyank -buffer-name=register<CR>
-  xnoremap <silent> <Leader>yy :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
-
-  function! s:GetVisualSelection() abort "{{{
-    return getline("'<")[getpos("'<")[1:2][1] - 1: getpos("'>")[1:2][1] - 1]
-  endfunction "}}}
-
-  " Save function
-  function! s:save_file(force)
-    let l:cmd = &readonly ? 'SudoWrite' : a:force ? 'w!' : 'w'
-    execute l:cmd
-  endfunction
+  " Repositories managed by 'ghq'
+  if dein#tap('denite-ghq')
+    nnoremap <silent> <LocalLeader>q  :<C-u>Denite ghq<CR>
+  endif
 endfunction
 
 function! rc#plugin#denite#hook_source() abort
@@ -122,21 +98,21 @@ function! rc#plugin#denite#hook_source() abort
   endif
 
   " Change matchers
-  call denite#custom#source('file_old', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
+  call denite#custom#source('file/old', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
   call denite#custom#source('tag', 'matchers', ['matcher_substring'])
   if has('nvim')
-    call denite#custom#source('file_rec', 'matchers', ['matcher_cpsm'])
+    call denite#custom#source('file/rec', 'matchers', ['matcher_cpsm'])
   endif
 
   " Change sorters
-  call denite#custom#source('file_rec', 'sorters', ['sorter_sublime'])
+  call denite#custom#source('file/rec', 'sorters', ['sorter_sublime'])
 
   " Change converters
   call denite#custom#source('file_old', 'converters', ['converter_relative_word'])
 
   " Define alias
-  call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-  call denite#custom#var('file_rec/git', 'command',
+  call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+  call denite#custom#var('file/rec/git', 'command',
         \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
   " Change default prompt
@@ -178,7 +154,7 @@ function! rc#plugin#denite#hook_source() abort
 
   " Display file icons in Denite* command: requires Vim-devicons
   if dein#tap('vim-devicons')
-    call denite#custom#source('file_rec,file_old,buffer,directory_rec',
+    call denite#custom#source('file/rec,file/old,buffer,directory_rec',
           \ 'converters', ['devicons_denite_converter'])
   endif
 endfunction
