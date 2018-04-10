@@ -1,9 +1,3 @@
-" ~/.config/nvim/init.vim
-
-if &compatible
-  set nocompatible
-endif
-
 "----------------------------------------------------------------------------
 " Environments
 "----------------------------------------------------------------------------
@@ -112,45 +106,15 @@ endif
 " endif
 
 "----------------------------------------------------------------------------
-" Utility function(s)
+" Options
 "----------------------------------------------------------------------------
-if has('nvim')
-  let g:vimrc_root = $XDG_CONFIG_HOME . '/nvim'
-else
-  let g:vimrc_root = $HOME . '/.vim'
+
+if has('multi_byte_ime')
+  set iminsert=0 imsearch=0
 endif
-let s:rc_base_dir = g:vimrc_root . '/rc'
 
-" Load vim scripts inside 'nvim/rc'
-function! s:source_rc(file)
-  let l:rc_file = s:rc_base_dir . '/' . a:file
-  if filereadable(l:rc_file)
-    execute 'source ' l:rc_file
-  endif
-endfunction
-
-function! s:on_filetype() abort "{{{
-  if execute('filetype') =~# 'OFF'
-    " Lazy loading
-    silent! filetype plugin indent on
-    syntax enable
-    filetype detect
-  endif
-endfunction "}}}
-
-"----------------------------------------------------------------------------
-" Set augroup
-"----------------------------------------------------------------------------
-augroup MyVimrc
-  autocmd!
-  autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?  call s:on_filetype()
-  " Re-detect filetype on save
-  autocmd BufWritePost *
-        \ if &filetype ==# '' && exists('b:ftdetect') |
-        \   unlet! b:ftdetect |
-        \   filetype detect |
-        \ endif
-augroup END
+" Disable packpath
+set packpath=
 
 "----------------------------------------------------------------------------
 " Prefix keys
@@ -175,6 +139,7 @@ let g:lmap = {
       \ 'd' : { 'name' : 'Denite' },
       \ 'f' : { 'name' : 'File' },
       \ 'g' : { 'name' : 'Git' },
+      \ 'h' : { 'name' : 'Help / Hunk' },
       \ 'j' : { 'name' : 'Jump, Search' },
       \ 'm' : { 'name' : 'Mark, Program' },
       \ 'p' : { 'name' : 'Project' },
@@ -202,37 +167,11 @@ let g:loaded_netrwPlugin       = 1
 let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 let g:loaded_rrhelper          = 1
+let g:loaded_spellfile_plugin  = 1
 let g:loaded_tar               = 1
 let g:loaded_tarPlugin         = 1
 let g:loaded_vimball           = 1
 let g:loaded_vimballPlugin     = 1
 let g:loaded_zip               = 1
 let g:loaded_zipPlugin         = 1
-
-"----------------------------------------------------------------------------
-" Load confituration files
-"----------------------------------------------------------------------------
-call s:source_rc('dein.rc.vim')
-if has('vim_starting') && !empty(argv())
-  call s:on_filetype()
-endif
-
-if !has('vim_starting')
-  call dein#call_hook('source')
-  call dein#call_hook('post_source')
-  filetype plugin indent on
-  syntax enable
-endif
-
-call s:source_rc('encoding.rc.vim')
-
-call s:source_rc('options.rc.vim')
-
-call s:source_rc('mappings.rc.vim')
-
-call s:source_rc('colorscheme.rc.vim')
-
-" Do not allow run some commands from vimrc or exrc when they are not owned by
-" you. You better set 'secure' at the end of .vimrc or init.vim
-set secure
 

@@ -18,6 +18,12 @@ function! rc#plugin#denite#hook_add() abort
   xnoremap <silent> <Leader>bg :<C-u>DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty<CR>
   nnoremap <silent> <Leader>bG :<C-u>DeniteBufferDir grep:::`expand('<cword>')` -no-empty<CR>
 
+  let g:lmap.b.b = ['Denite buffer -mode=normal',            'buffer list']
+  let g:lmap.b.f = ['DeniteBufferDir file_rec -mode=insert', 'open file_rec']
+  let g:lmap.b.F = ['DeniteBufferDir file -mode=normal',     'open file']
+  let g:lmap.b.g = ['DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty', 'grep current buffer']
+  let g:lmap.b.G = ['DeniteBufferDir grep:::`GetVisualSelectionESC()` -no-empty', 'grep current buffer <cword>']
+
   " -- D mapping
   nnoremap <silent> <Leader>dg :<C-u>Denite ghq<CR>
   nnoremap <silent> <Leader>dh :<C-u>Denite help<CR>
