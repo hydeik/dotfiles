@@ -3,7 +3,6 @@ function! rc#plugin#gina#hook_add() abort
   nnoremap <Leader>gb :<C-u>Gina branch<CR>
   nnoremap <Leader>gc :<C-u>Gina commit<CR>
   nnoremap <Leader>gl :<C-u>Gina log<CR>
-  nnoremap <Leader>g? :<C-u>map <Leader>g<CR>
 endfunction
 
 function! rc#plugin#gina#hook_post_source() abort

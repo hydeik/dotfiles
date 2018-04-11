@@ -134,8 +134,8 @@ nnoremap ;  <Nop>
 nnoremap ,  <Nop>
 xnoremap ,  <Nop>
 
-nnoremap s  <Nop>
-xnoremap s  <Nop>
+nmap s  <Nop>
+xmap s  <Nop>
 
 nnoremap m  <Nop>
 xnoremap m  <Nop>

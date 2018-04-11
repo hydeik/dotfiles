@@ -9,11 +9,11 @@ function! rc#plugin#denite#hook_add() abort
 
   nnoremap <silent> <LocalLeader>b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
   nnoremap <silent> <LocalLeader>d  :<C-u>Denite directory_rec -default-action=cd<CR>
-  nnoremap <silent> <LocalLeader>f  :<C-u>Denite file_rec<CR>
+  nnoremap <silent> <LocalLeader>f  :<C-u>Denite file/rec<CR>
   nnoremap <silent> <LocalLeader>g  :<C-u>Denite grep -buffer-name=search -no-empty<CR>
   nnoremap <silent> <LocalLeader>h  :<C-u>Denite help<CR>
   nnoremap <silent> <LocalLeader>n  :<C-u>Denite dein -default-action=open<CR>
-  nnoremap <silent> <LocalLeader>j  :<C-u>Denite jump change file_point<CR>
+  nnoremap <silent> <LocalLeader>j  :<C-u>Denite jump change file/point<CR>
   nnoremap <silent> <LocalLeader>o  :<C-u>Denite outline<CR>
   nnoremap <silent> <LocalLeader>;  :<C-u>Denite command command_history<CR>
 
@@ -69,9 +69,9 @@ function! rc#plugin#denite#hook_source() abort
 
   call denite#custom#map('normal', 'r', '<denite:do_action:quickfix>', 'noremap')
 
-  " Change file_rec and grep commmand
+  " Change file/rec and grep commmand
   if executable('rg')
-    call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
+    call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
     call denite#custom#var('grep', 'command', ['rg'])
     call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
     call denite#custom#var('grep', 'recursive_opts', [])
@@ -79,7 +79,7 @@ function! rc#plugin#denite#hook_source() abort
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opt', [])
   elseif executable('pt')
-    call denite#custom#var('file_rec', 'command', ['pt', '--follow', '--nocolor', '--nogroup',
+    call denite#custom#var('file/rec', 'command', ['pt', '--follow', '--nocolor', '--nogroup',
           \ (has('win32') ? '-g:' : '-g='), ''])
     call denite#custom#var('grep', 'command', ['pt'])
     call denite#custom#var('grep', 'default_opts', ['--nocolor', '--nogroup', '--smart-case'])
@@ -88,7 +88,7 @@ function! rc#plugin#denite#hook_source() abort
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opt', [])
   else
-    call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
     call denite#custom#var('grep', 'command', ['ag'])
     call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
     call denite#custom#var('grep', 'recursive_opts', [])
@@ -108,7 +108,7 @@ function! rc#plugin#denite#hook_source() abort
   call denite#custom#source('file/rec', 'sorters', ['sorter_sublime'])
 
   " Change converters
-  call denite#custom#source('file_old', 'converters', ['converter_relative_word'])
+  call denite#custom#source('file/old', 'converters', ['converter_relative_word'])
 
   " Define alias
   call denite#custom#alias('source', 'file/rec/git', 'file/rec')

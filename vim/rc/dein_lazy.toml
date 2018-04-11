@@ -116,8 +116,7 @@ on_source = 'denite.nvim'
 repo = 't9md/vim-choosewin'
 on_map = {n = '<Plug>'}
 hook_add = '''
-  nmap -           <Plug>(choosewin)
-  nmap <Leader>-  :<C-u>ChooseWinSwapStay<CR>
+  nmap -   <Plug>(choosewin)
 '''
 
 #-----------------------------------------------------------------------------
@@ -131,12 +130,12 @@ hook_add = '''
   nmap <silent>k <Plug>(accelerated_jk_gk)
 '''
 
-[[plugins]]
-repo = 'easymotion/vim-easymotion'
-on_map = {n = '<Plug>'}
-hook_add = 'call rc#plugin#easymotion#hook_add()'
-hook_source = 'call rc#plugin#easymotion#hook_source()'
-
+# [[plugins]]
+# repo = 'easymotion/vim-easymotion'
+# on_map = {n = '<Plug>'}
+# hook_add = 'call rc#plugin#easymotion#hook_add()'
+# hook_source = 'call rc#plugin#easymotion#hook_source()'
+#
 
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
@@ -202,7 +201,7 @@ hook_source = '''
 repo = 'thinca/vim-qfreplace'
 on_ft = ['denite', 'qf']
 hook_source = '''
-  autocmd MyVimrc FileType qf nnoremap <buffer> r :<C-u>Qfreplace<CR>
+  autocmd MyVimrc FileType qf nnoremap <buffer> R :<C-u>Qfreplace<CR>
 '''
 
 #------------------------------------------------------------------------------
@@ -221,83 +220,62 @@ hook_add = '''
     nmap <buffer> l        <Plug>(vaffle-open-selected)
   endfunction
 
-  nnoremap <silent> <Space>fe :<C-u>Vaffle<CR>
+  nnoremap <silent> <Leader>fe :<C-u>Vaffle<CR>
   autocmd MyVimrc FileType vaffle call s:customize_vaffle_mappings()
 '''
 
 #------------------------------------------------------------------------------
-# Textobj extensions
+# Textobj/Operator extensions
 #------------------------------------------------------------------------------
 [[plugins]]
+repo = 'machakann/vim-sandwich'
+on_map = {nvx = '<Plug>'}
+hook_source = '''
+  let g:textobj#sandwich#stimeoutlen = 100
+
+  let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+  let g:sandwich#recipes += [{'buns' : ['「', '」']}]
+  let g:sandwich#recipes += [{'buns' : ['【', '】']}]
+  let g:sandwich#recipes += [{'buns' : ['（', '）']}]
+  let g:sandwich#recipes += [{'buns' : ['『', '』']}]
+'''
+
+[[plugins]]
 repo = 'kana/vim-textobj-line'
-depends = 'vim-textobj-user'
+depends = ['vim-textobj-user']
 on_map = {ox = '<Plug>'}
 
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
-depends = 'vim-textobj-user'
+depends = ['vim-textobj-user']
 on_map = {ox = '<Plug>'}
-
-[[plugins]]
-repo = 'osyo-manga/vim-textobj-multiblock'
-depends = 'vim-textobj-user'
-on_map = {ox = '<Plug>'}
-hook_add = '''
-  omap <silent> ab  <Plug>(textobj-multiblock-a)
-  omap <silent> ib  <Plug>(textobj-multiblock-i)
-  xmap <silent> ab  <Plug>(textobj-multiblock-a)
-  xmap <silent> ib  <Plug>(textobj-multiblock-i)
-'''
 
 [[plugins]]
 repo = 'machakann/vim-textobj-delimited'
+on_map = {nvx = '<Plug>'}
 
 # --- Expand region
 [[plugins]]
 repo = 'terryma/vim-expand-region'
+depends = ['vim-sandwich', 'vim-textobj-delimited']
 on_map = {x = '<Plug>'}
 hook_add = '''
+  "ad: textobj-delimeted"
+  "ib: sandwich"
+  let g:expand_region_text_objects = {
+        \ 'iw'  : 0,
+        \ 'iW'  : 0,
+        \ 'iu'  : 0,
+        \ 'ad'  : 1,
+        \ 'ib'  : 1,
+        \ 'il'  : 0,
+        \ 'ip'  : 0,
+        \ 'ie'  : 0,
+        \ }
+
   xmap v  <Plug>(expand_region_expand)
   xmap V  <Plug>(expand_region_shrink)
 '''
-
-#------------------------------------------------------------------------------
-# Operator extensions
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'kana/vim-operator-replace'
-depends = 'vim-operator-user'
-on_map = {vnx = '<Plug>'}
-hook_add = '''
-  xmap p  <Plug>(operator-replace)
-'''
-
-[[plugins]]
-repo = 'rhysd/vim-operator-surround'
-depends = ['vim-operator-user', 'vim-textobj-multiblock']
-on_map = {vnx = '<Plug>'}
-hook_add = '''
-  " operator mappings
-  map <silent>sa <Plug>(operator-surround-append)
-  map <silent>sd <Plug>(operator-surround-delete)
-  map <silent>sr <Plug>(operator-surround-replace)
-
-  " delete or replace most inner surround
-  nmap <silent>saa <Plug>(operator-surround-append)<Plug>(textobj-multiblock-a)
-  nmap <silent>sai <Plug>(operator-surround-append)<Plug>(textobj-multiblock-i)
-  nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
-'''
-
-[[plugins]]
-repo = 'haya14busa/vim-operator-flashy'
-depends = 'vim-operator-user'
-on_map = {nx = '<Plug>'}
-hook_add = '''
-  map  y  <Plug>(operator-flashy)
-  nmap Y  <Plug>(operator-flashy)$
-'''
-
 
 #-----------------------------------------------------------------------------
 # Editting
@@ -307,21 +285,18 @@ hook_add = '''
 repo = 'tyru/caw.vim'
 on_map = {nx = '<Plug>'}
 hook_add = '''
-  function! InitCaw() abort
-    if !&l:modifiable
-      silent! nunmap <buffer> gc
-      silent! xunmap <buffer> gc
-      silent! nunmap <buffer> gcc
-      silent! xunmap <buffer> gcc
-    else
-      nmap <buffer> gc <Plug>(caw:prefix)
-      xmap <buffer> gc <Plug>(caw:prefix)
-      nmap <buffer> gcc <Plug>(caw:hatpos:toggle)
-      xmap <buffer> gcc <Plug>(caw:hatpos:toggle)
-    endif
-  endfunction
-  autocmd MyVimrc FileType * call InitCaw()
-  call InitCaw()
+  let g:caw_no_default_keymappings = 1
+
+  nmap <Leader>cc  <Plug>(caw:hatpos:toggle)
+  vmap <Leader>cc  <Plug>(caw:hatpos:toggle)
+  nmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
+  vmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
+  nmap <Leader>cb  <Plug>(caw:box:toggle)
+  vmap <Leader>cb  <Plug>(caw:box:toggle)
+  nmap <Leader>cw  <Plug>(caw:wrap:toggle)
+  vmap <Leader>cw  <Plug>(caw:wrap:toggle)
+  nmap <Leader>co  <Plug>(caw:jump:comment-next)
+  nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
 '''
 
 # --- Smart Align
