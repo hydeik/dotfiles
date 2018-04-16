@@ -1,12 +1,12 @@
+function! s:get_selection(cmdtype) abort
+  let l:temp = @s
+  normal! gv"sy
+  let @/ = substitute(escape(@s, '\'.a:cmdtype), '\n', '\\n', 'g')
+  let @s = l:temp
+endfunction
+
 function! rc#plugin#denite#hook_add() abort
   " --- Key mappings
-  "   Don't assign following keys
-  "   <Leader>c : prefix for comment/uncomment
-  "   <Leader>g : prefix for Git commands
-  "   <Leader>s : prefix for session manager
-  "   <Leader>t : prefix for toggle options
-  "   <Leader>w : prefix for window operations
-  "   <Leader>J : (jplus-input)
 
   " Substitute search commands by Denite line
   nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
@@ -33,31 +33,34 @@ function! rc#plugin#denite#hook_add() abort
   " Vim command/command_history (fuzzy-find)
   nnoremap <silent> <Leader><Leader>  :<C-u>Denite command command_history<CR>
 
-  " grep
-  nnoremap <silent> <Leader>/  :<C-u>Denite grep -buffer-name=search -no-empty<CR>
+  " Open Denite with word under cursor or selection
+  nnoremap <silent> <Leader>gf :DeniteCursorWord file_rec<CR>
 
-  " Tag jump
-  nnoremap <silent><expr> <Leader>t &filetype == 'help' ? "g\<C-]>" :
-        \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
-  nnoremap <silent><expr> <Leader>p  &filetype == 'help' ?
-        \ ":\<C-u>pop\<CR>" : ":\<C-u>Denite -mode=normal jump\<CR>"
+  " Grep
+  nnoremap <silent> <Leader>gg  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
+  nnoremap <silent> <Leader>g*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
+	vnoremap <silent> <Leader>g*  :<C-u>call <SID>get_selection('/')<CR>
+        \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
 
+
+  " " Tag jump
+  " nnoremap <silent><expr> <Leader>t &filetype == 'help' ? "g\<C-]>" :
+  "       \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
+  " nnoremap <silent><expr> <Leader>p  &filetype == 'help' ?
+  "       \ ":\<C-u>pop\<CR>" : ":\<C-u>Denite -mode=normal jump\<CR>"
+  "
   " register / neoyank
   nnoremap <silent> <Leade>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
   xnoremap <silent> <Leade>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
 
   " Quickfix and location list
-  if dein#tap('unite-location')
-    nnoremap L  <Nop>
-    nnoremap Q  <Nop>
-    nnoremap <silent>L  :<C-u>Denite location_list -buffer-name=list<CR>
-    nnoremap <silent>Q  :<C-u>Denite quickfix -buffer-name=list<CR>
-  endif
+  nnoremap <silent>L  :<C-u>Denite location_list -buffer-name=list<CR>
+  nnoremap <silent>Q  :<C-u>Denite quickfix -buffer-name=list<CR>
 
+  " Plugins managed by 'Dein'
+  nnoremap <silent> <Leader>Dn  :<C-u>Denite dein<CR>
   " Repositories managed by 'ghq'
-  if dein#tap('denite-ghq')
-    nnoremap <silent> <Leader>dg  :<C-u>Denite ghq<CR>
-  endif
+  nnoremap <silent> <Leader>Dg  :<C-u>Denite ghq<CR>
 endfunction
 
 function! rc#plugin#denite#hook_source() abort

@@ -6,8 +6,8 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 hook_add = '''
-  nnoremap <silent> <Leader>up :<C-u>call dein#clear_state()<CR>:UpdateRemotePlugins<CR>
-  nnoremap <silent> <Leader>uP :<C-u>call dein#update()<CR>
+  nnoremap <silent> <Leader>Du :<C-u>call dein#clear_state()<CR>:UpdateRemotePlugins<CR>
+  nnoremap <silent> <Leader>DU :<C-u>call dein#update()<CR>
 '''
 
 #------------------------------------------------------------------------------

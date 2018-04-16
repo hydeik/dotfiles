@@ -129,7 +129,7 @@ nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
 
 nnoremap ;  <Nop>
-nnoremap ;  <Nop>
+xnoremap ;  <Nop>
 
 nnoremap ,  <Nop>
 xnoremap ,  <Nop>

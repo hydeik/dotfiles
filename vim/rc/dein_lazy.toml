@@ -227,7 +227,7 @@ hook_add = '''
   function! s:customize_vaffle_mappings() abort
     " Customize key mappings here
     nmap <buffer> <Bslash> <Plug>(vaffle-open-root)
-    nmap <buffer> l        <Plug>(vaffle-open-selected)
+    nmap <buffer> l        <Plug>(vaffle-open-current)
   endfunction
 
   nnoremap <silent> <Leader>e :<C-u>Vaffle<CR>
