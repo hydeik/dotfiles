@@ -1,31 +1,30 @@
 # Global hook_add, which is executed in dein#end().
 hook_add = '''
-    nnoremap L  <Nop>
-" -- C++
-let g:cpp_class_scope_highlight = 1
+  " -- C++
+  let g:cpp_class_scope_highlight = 1
 
-" -- Python
-let g:python_highlight_all = 1
+  " -- Python
+  let g:python_highlight_all = 1
 
-" -- Vim
-let g:vimsyntax_noerror = 1
+  " -- Vim
+  let g:vimsyntax_noerror = 1
 
-" -- Bash
-let g:is_bash = 1
+  " -- Bash
+  let g:is_bash = 1
 
-" -- Markdown
-let g:markdown_fenced_languages = [
-  \ 'css',
-  \ 'javascript',
-  \ 'js=javascript',
-  \ 'json=javascript',
-  \ 'python',
-  \ 'py=python',
-  \ 'sh',
-  \ 'sass',
-  \ 'xml',
-  \ 'vim'
-  \ ]
+  " -- Markdown
+  let g:markdown_fenced_languages = [
+    \ 'css',
+    \ 'javascript',
+    \ 'js=javascript',
+    \ 'json=javascript',
+    \ 'python',
+    \ 'py=python',
+    \ 'sh',
+    \ 'sass',
+    \ 'xml',
+    \ 'vim'
+    \ ]
 
   " -- LaTeX
   let g:tex_stylish = 1
@@ -38,11 +37,11 @@ let g:markdown_fenced_languages = [
   let g:xml_syntax_folding = 1
   let g:php_folding = 1
   let g:perl_fold = 1
-  '''
+'''
 
-  [ftplugin]
+[ftplugin]
 # NOTE: '_' key is executed after all ftplugin
-  _ = '''
+_ = '''
   " Disable automatically insert comment.
   setlocal formatoptions-=ro | setlocal formatoptions+=mMBl
 
@@ -53,7 +52,7 @@ let g:markdown_fenced_languages = [
 
   " Use FoldCCtext().
   if &filetype !=# 'help'
-setlocal foldtext=FoldCCtext()
+  setlocal foldtext=FoldCCtext()
   endif
 
   if !&l:modifiable
@@ -63,37 +62,37 @@ setlocal foldtext=FoldCCtext()
   setlocal colorcolumn=
   endif
   endif
-  '''
+'''
 
 # Python
-  python = '''
+python = '''
   setlocal foldmethod=indent
-  '''
+'''
 
 # Ruby
-  ruby = '''
+ruby = '''
   setlocal iskeyword+=!
   setlocal iskeyword+=?
   setlocal omnifunc=
-  '''
+'''
 
 # TOML
-  toml = '''
+toml = '''
   syntax sync minlines=500
-  '''
+'''
 
 # VIM script
-  vim = '''
+vim = '''
   if 5000 < line('$')
-  syntax sync minlines=200
+    syntax sync minlines=200
   endif
   setlocal foldmethod=indent
-  '''
+'''
 
 # VIM help
-  help = '''
+help = '''
   setlocal iskeyword+=:
   setlocal iskeyword+=#
   setlocal iskeyword+=-
-  '''
+'''
 

@@ -82,7 +82,7 @@ endfunction
 nnoremap x "_x
 
 " Disable Ex-mode
-" nnoremap Q  <Nop>
+nnoremap Q  <Nop>
 
 " Disable ZZ.
 nnoremap ZZ  <Nop>

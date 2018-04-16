@@ -163,10 +163,6 @@ repo = 'vim-python/python-syntax'
 [[plugins]]
 # extend % and g% for python
 repo = 'vim-scripts/python_match.vim'
-hook_add = '''
-  nmap <buffer> {{ [%
-  nmap <buffer> }} ]%
-'''
 
 # --- diff
 [[plugins]]

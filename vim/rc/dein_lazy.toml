@@ -104,10 +104,6 @@ on_source = 'denite.nvim'
 repo = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
-[[plugins]]
-repo = 'rafi/vim-denite-session'
-on_source = 'denite.nvim'
-
 #-----------------------------------------------------------------------------
 # Windows, Panes, Tabs
 #-----------------------------------------------------------------------------
@@ -174,11 +170,6 @@ hook_add = '''
 repo = 'airblade/vim-gitgutter'
 if = 'has("signs")'
 on_path = '.*'
-hook_add = '''
-  nmap <silent> <Leader>gk  <Plug>GitGutterPrevHunkzz
-  nmap <silent> <Leader>gj  <Plug>GitGutterNextHunkzz
-  nmap <silent> <Leader>gp  <Plug>GitGutterNextHunkzz
-'''
 
 # --- Visually displaying indent levels in code
 [[plugins]]
@@ -204,6 +195,25 @@ hook_source = '''
   autocmd MyVimrc FileType qf nnoremap <buffer> R :<C-u>Qfreplace<CR>
 '''
 
+# --- Simple session manager (including Denite source)
+[[plugins]]
+repo = 'lambdalisue/session.vim'
+depends = 'denite.nvim'
+on_cmd = ['SessionSave', 'SessionRemove', 'SessionOpen', 'SessionClose', 'SessionList']
+hook_add = '''
+  nnoremap <silent><Leader>sc  :<C-u>SessionClose<CR>
+  nnoremap <silent><Leader>sd  :<C-u>SessionRemove<CR>
+  nnoremap <silent><Leader>sl  :<C-u>SessionList<CR>
+  nnoremap <silent><Leader>so  :<C-u>SessionOpen<CR>
+  nnoremap <silent><Leader>ss  :<C-u>SessionSave<CR>
+'''
+hook_source = '''
+  let g:session_dir = $XDG_CACHE_HOME . '/session.vim'
+  let g:session#default_opener = 'edit'
+  let g:session#default_session = 'default'
+  let g:session#default_mappings = 1
+'''
+
 #------------------------------------------------------------------------------
 # Filer
 #------------------------------------------------------------------------------
@@ -220,7 +230,7 @@ hook_add = '''
     nmap <buffer> l        <Plug>(vaffle-open-selected)
   endfunction
 
-  nnoremap <silent> <Leader>fe :<C-u>Vaffle<CR>
+  nnoremap <silent> <Leader>e :<C-u>Vaffle<CR>
   autocmd MyVimrc FileType vaffle call s:customize_vaffle_mappings()
 '''
 
@@ -230,29 +240,51 @@ hook_add = '''
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 on_map = {nvx = '<Plug>'}
-hook_source = '''
-  let g:textobj#sandwich#stimeoutlen = 100
-
-  let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
-  let g:sandwich#recipes += [{'buns' : ['「', '」']}]
-  let g:sandwich#recipes += [{'buns' : ['【', '】']}]
-  let g:sandwich#recipes += [{'buns' : ['（', '）']}]
-  let g:sandwich#recipes += [{'buns' : ['『', '』']}]
-'''
+hook_add = 'call rc#plugin#sandwich#hook_add()'
+hook_source = 'call rc#plugin#sandwich#hook_source()'
 
 [[plugins]]
 repo = 'kana/vim-textobj-line'
 depends = ['vim-textobj-user']
-on_map = {ox = '<Plug>'}
+on_func = 'textobj#user#'
 
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
 depends = ['vim-textobj-user']
-on_map = {ox = '<Plug>'}
+on_map = {nx = '<Plug>'}
 
 [[plugins]]
 repo = 'machakann/vim-textobj-delimited'
-on_map = {nvx = '<Plug>'}
+on_map = {ox = '<Plug>'}
+hook_add = '''
+  let g:textobj_delimited_no_default_key_mappings = 1
+
+  xmap id  <Plug>(textobj-delimited-forward-i)
+  omap id  <Plug>(textobj-delimited-forward-i)
+
+  xmap ad  <Plug>(textobj-delimited-forward-a)
+  omap ad  <Plug>(textobj-delimited-forward-a)
+
+  xmap iD  <Plug>(textobj-delimited-backward-i)
+  omap iD  <Plug>(textobj-delimited-backward-i)
+
+  xmap aD  <Plug>(textobj-delimited-backward-a)
+  omap aD  <Plug>(textobj-delimited-backward-a)
+'''
+
+# --- Move function arguments left and right
+[[plugins]]
+repo = 'AndrewRadev/sideways.vim'
+on_map = {ox = '<Plug>Sideways'}
+hook_add = '''
+  nnoremap <silent>sh   :<C-u>SidewaysLeft<CR>
+  nnoremap <silent>sl   :<C-u>SidewaysRight<CR>
+
+  omap <silent> a,  <Plug>SidewaysArgumentTextobjA
+  xmap <silent> a,  <Plug>SidewaysArgumentTextobjA
+  omap <silent> i,  <Plug>SidewaysArgumentTextobjI
+  xmap <silent> i,  <Plug>SidewaysArgumentTextobjI
+'''
 
 # --- Expand region
 [[plugins]]
@@ -283,7 +315,7 @@ hook_add = '''
 # --- Smart commenter
 [[plugins]]
 repo = 'tyru/caw.vim'
-on_map = {nx = '<Plug>'}
+on_map = {nv = '<Plug>'}
 hook_add = '''
   let g:caw_no_default_keymappings = 1
 

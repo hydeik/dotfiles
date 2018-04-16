@@ -1,5 +1,14 @@
 function! rc#plugin#denite#hook_add() abort
-  " Substitute search commands by denite
+  " --- Key mappings
+  "   Don't assign following keys
+  "   <Leader>c : prefix for comment/uncomment
+  "   <Leader>g : prefix for Git commands
+  "   <Leader>s : prefix for session manager
+  "   <Leader>t : prefix for toggle options
+  "   <Leader>w : prefix for window operations
+  "   <Leader>J : (jplus-input)
+
+  " Substitute search commands by Denite line
   nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
   nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
   " Substitute 'n' command
@@ -7,25 +16,35 @@ function! rc#plugin#denite#hook_add() abort
   " nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -select=+1 -immediately<CR>
   " nnoremap <silent> N :<C-u>Denite -resume -buffer-name=search -select=-1 -immediately<CR>
 
-  nnoremap <silent> <LocalLeader>b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
-  nnoremap <silent> <LocalLeader>d  :<C-u>Denite directory_rec -default-action=cd<CR>
-  nnoremap <silent> <LocalLeader>f  :<C-u>Denite file/rec<CR>
-  nnoremap <silent> <LocalLeader>g  :<C-u>Denite grep -buffer-name=search -no-empty<CR>
-  nnoremap <silent> <LocalLeader>h  :<C-u>Denite help<CR>
-  nnoremap <silent> <LocalLeader>n  :<C-u>Denite dein -default-action=open<CR>
-  nnoremap <silent> <LocalLeader>j  :<C-u>Denite jump change file/point<CR>
-  nnoremap <silent> <LocalLeader>o  :<C-u>Denite outline<CR>
-  nnoremap <silent> <LocalLeader>;  :<C-u>Denite command command_history<CR>
+  " buffer/file/directory navigation
+  nnoremap <silent> <Leader>b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
+  nnoremap <silent> <Leader>d  :<C-u>Denite directory_rec -default-action=cd<CR>
+  nnoremap <silent> <Leader>f  :<C-u>Denite file/rec<CR>
+  nnoremap <silent> <Leader>F  :<C-u>Denite file<CR>
+  nnoremap <silent> <Leader>j  :<C-u>Denite jump change file/point<CR>
+  nnoremap <silent> <Leader>o  :<C-u>Denite outline<CR>
+
+  " Resume the previous Denite buffer
+  nnoremap <silent> <Leader>r  :<C-u>Denite -resume<CR>
+
+  " Help (fuzzy-find)
+  nnoremap <silent> <Leader>?  :<C-u>Denite help<CR>
+
+  " Vim command/command_history (fuzzy-find)
+  nnoremap <silent> <Leader><Leader>  :<C-u>Denite command command_history<CR>
+
+  " grep
+  nnoremap <silent> <Leader>/  :<C-u>Denite grep -buffer-name=search -no-empty<CR>
 
   " Tag jump
-  nnoremap <silent><expr> <LocalLeader>t &filetype == 'help' ? "g\<C-]>" :
+  nnoremap <silent><expr> <Leader>t &filetype == 'help' ? "g\<C-]>" :
         \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
-  nnoremap <silent><expr> <LocalLeader>p  &filetype == 'help' ?
+  nnoremap <silent><expr> <Leader>p  &filetype == 'help' ?
         \ ":\<C-u>pop\<CR>" : ":\<C-u>Denite -mode=normal jump\<CR>"
 
   " register / neoyank
-  nnoremap <silent> <LocalLeade>r  :<C-u>Denite register neoyank -buffer-name=register<CR>
-  xnoremap <silent> <LocalLeade>r  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
+  nnoremap <silent> <Leade>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
+  xnoremap <silent> <Leade>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
 
   " Quickfix and location list
   if dein#tap('unite-location')
@@ -35,14 +54,9 @@ function! rc#plugin#denite#hook_add() abort
     nnoremap <silent>Q  :<C-u>Denite quickfix -buffer-name=list<CR>
   endif
 
-  " Manage Session
-  if dein#tap('vim-denite-session')
-    nnoremap <silent> <LocalLeader>s  :<C-u>Denite session -buffer-name=list<CR>
-  endif
-
   " Repositories managed by 'ghq'
   if dein#tap('denite-ghq')
-    nnoremap <silent> <LocalLeader>q  :<C-u>Denite ghq<CR>
+    nnoremap <silent> <Leader>dg  :<C-u>Denite ghq<CR>
   endif
 endfunction
 
@@ -139,7 +153,7 @@ function! rc#plugin#denite#hook_source() abort
         if !has_key(l:target, 'action__line') | continue | endif
         if !has_key(l:target, 'action__text') | continue | endif
 
-        call add(qflist, {
+        call add(l:qflist, {
               \ 'filename': l:target['action__path'],
               \ 'lnum':     l:target['action__line'],
               \ 'text':     l:target['action__text']
