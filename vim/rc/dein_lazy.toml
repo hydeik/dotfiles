@@ -387,9 +387,8 @@ hook_post_source = 'call rc#plugin#gina#hook_post_source()'
 [[plugins]]
 repo = 'w0rp/ale'
 on_path = '.*'
-hook_source = '''
-  let g:ale_fix_on_save = 1
-'''
+hook_add = 'call rc#plugin#ale#hook_add()'
+hook_source = 'call rc#plugin#ale#hook_source()'
 
 # --- Language server protocol (LSP) client
 [[plugins]]

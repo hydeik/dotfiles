@@ -1,12 +1,12 @@
 function! s:languageclient_config() abort
-  nnoremap <buffer> <silent> gd    :<C-u>call LanguageClient_textDocument_definition()<CR>
-  nnoremap <buffer> <silent> K     :<C-u>call LanguageClient_textDocument_hover()<CR>
-  nnoremap <buffer> <silent> <F2>  :<C-u>call LanguageClient_textDocument_rename()<CR>
+  nnoremap <buffer> <silent> gd    :<C-u>call LanguageClient#textDocument_definition()<CR>
+  nnoremap <buffer> <silent> K     :<C-u>call LanguageClient#textDocument_hover()<CR>
+  nnoremap <buffer> <silent> <F2>  :<C-u>call LanguageClient#textDocument_rename()<CR>
 
   " localleader mapping
-  nnoremap <buffer> <LocalLeader>ld  :<C-u>call LanguageClient_textDocument_definition()<CR>
-  nnoremap <buffer> <LocalLeader>lh  :<C-u>call LanguageClient_textDocument_hover()<CR>
-  nnoremap <buffer> <LocalLeader>lR  :<C-u>call LanguageClient_textDocument_rename()<CR>
+  nnoremap <buffer> <LocalLeader>ld  :<C-u>call LanguageClient#textDocument_definition()<CR>
+  nnoremap <buffer> <LocalLeader>lh  :<C-u>call LanguageClient#textDocument_hover()<CR>
+  nnoremap <buffer> <LocalLeader>lR  :<C-u>call LanguageClient#textDocument_rename()<CR>
   " LanguageClient also provides Denite sources
   nnoremap <buffer> <LocalLeader>ls  :<C-u>Denite -auto-preview -mode=normal documentSymbol<CR>
   nnoremap <buffer> <LocalLeader>lS  :<C-u>Denite -auto-preview workspaceSymbol<CR>
@@ -24,7 +24,7 @@ function! rc#plugin#LanguageClient#hook_source() abort
   let g:LanguageClient_serverCommands = {
         \ 'c':      ['cquery', '--log-file=/tmp/cquery/cquery.log'],
         \ 'cpp':    ['cquery', '--log-file=/tmp/cquery/cquery.log'],
-        \ 'python': [$PYENV_ROOT . '/versions/neovim3/bin/pyls', '--log-file=/tmp/pyls.log'],
+        \ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
         \ 'rust':   ['rustup', 'run', 'stable', 'rls'],
         \ 'sh':     ['bash-language-server'],
         \ }
