@@ -232,9 +232,9 @@ fi
 
 # Rust
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
-# if (( ${+commands[rustc]} )); then
-#     export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-# fi
+if (( ${+commands[rustc]} )); then
+    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
 
 # Golang
 export GOPATH=${HOME}
