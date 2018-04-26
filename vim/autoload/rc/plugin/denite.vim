@@ -50,8 +50,8 @@ function! rc#plugin#denite#hook_add() abort
   "       \ ":\<C-u>pop\<CR>" : ":\<C-u>Denite -mode=normal jump\<CR>"
   "
   " register / neoyank
-  nnoremap <silent> <Leade>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
-  xnoremap <silent> <Leade>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
+  nnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
+  xnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
 
   " Quickfix and location list
   nnoremap <silent>L  :<C-u>Denite location_list -buffer-name=list<CR>
@@ -84,6 +84,7 @@ function! rc#plugin#denite#hook_source() abort
   " jj to move to normal mode
   call denite#custom#map('insert', 'jj', '<denite:enter_mode:normal>', 'noremap')
 
+  call denite#custom#map('normal', '<C-g>', '<denite:leave_mode>', 'noremap')
   call denite#custom#map('normal', 'r', '<denite:do_action:quickfix>', 'noremap')
 
   " Change file/rec and grep commmand

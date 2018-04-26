@@ -396,10 +396,10 @@ repo = 'autozimu/LanguageClient-neovim'
 depends = ['deoplete.nvim', 'denite.nvim']
 rev = 'next'
 build = 'bash install.sh'
-on_ft = ['c', 'cpp', 'python', 'rust']
+on_ft = ['c', 'cpp', 'python', 'rust', 'sh']
 hook_source = 'call rc#plugin#LanguageClient#hook_source()'
 
-# --- Latex
+# --- LaTeX
 [[plugins]]
 repo = 'lervag/vimtex'
 depends = ['deoplete.nvim']
