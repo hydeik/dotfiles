@@ -242,35 +242,21 @@ export GOPATH=${HOME}
 ##
 ## Intel C/C++, Intel Fortran, and MKL
 ##
-#if [[ $ARCHI == "linux" ]]; then
-#    # For Intel Compiler Suite
-#    INTEL_CMP_DIR=/opt/intel/Compiler/13.1/072
-#    case "$MACHTYPE" in
-#       x86_64*)   INTEL_ARCH="intel64";;
-#       i*86*)     INTEL_ARCH="ia32";;
-#           *)     INTEL_ARCH= ;
-#    esac
-#    if [[ -x $INTEL_CMP_DIR/bin/iccvars.sh ]] && test ! `echo $PATH | ${GREP} -q ${INTEL_CMP_DIR}/bin/${INTEL_ARCH}` ; then
-#        source $INTEL_CMP_DIR/bin/iccvars.sh ${INTEL_ARCH}
-#    fi
-#    unset INTEL_CMP_DIR INTEL_ARCH
-#fi
-
-#if [[ $ARCHI == "linux" ]] || [[ $ARCHI == "darwin" ]]; then
-#    # For Intel Compiler Suite
-#    INTEL_CMP_DIR=/opt/intel/composerxe
-#    MKL_INTERFACE="lp64"
-#    # case "$MACHTYPE" in
-#    #    x86_64*)   INTEL_ARCH="intel64";;
-#    #    i*86*)     INTEL_ARCH="ia32";;
-#    #        *)     INTEL_ARCH= ;
-#    # esac
-#    INTEL_ARCH="intel64"
-#    if [[ -f $INTEL_CMP_DIR/bin/compilervars.sh ]] ; then
-#        source $INTEL_CMP_DIR/bin/compilervars.sh ${INTEL_ARCH} ${MKL_INTERFACE}
-#    fi
-#    unset INTEL_CMP_DIR INTEL_ARCH MKL_INTERFACE
-#fi
+case ${OSTYPE} in
+    linux*)
+        case "$MACHTYPE" in
+            x86_64*)   INTEL_ARCH="intel64";;
+            i*86*)     INTEL_ARCH="ia32";;
+                *)     INTEL_ARCH= ;;
+        esac
+        INTEL_COMPILER_DIR=/opt/intel/compilers_and_libraries
+        if [[ -f ${INTEL_COMPILER_DIR}/linux/bin/compilervars.sh ]]; then
+            . ${INTEL_COMPILER_DIR}/linux/bin/compilervars.sh ${INTEL_ARCH}
+        fi
+        unset INTEL_COMPILER_DIR INTEL_ARCH
+        ;;
+    *)  ;;
+esac
 
 ##
 ## Computational programs
