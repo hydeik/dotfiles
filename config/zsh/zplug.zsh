@@ -11,9 +11,10 @@ zplug "plugins/rust", lazy:true, from:oh-my-zsh
 zplug "esc/conda-zsh-completion", lazy:true
 zplug "mollifier/anyframe", lazy:true
 
-export AUTOENV_ENABLE_LEAVE=true
-zplug "kennethreitz/autoenv", use:"activate.sh", defer:2, from:github
+# export AUTOENV_ENABLE_LEAVE=true
+# zplug "kennethreitz/autoenv", use:"activate.sh", defer:2, from:github
 
+zplug "greymd/tmux-xpanes", defer:2
 
 case ${OSTYPE} in
     linux*)
@@ -44,10 +45,6 @@ case ${OSTYPE} in
             as:command, \
             from:gh-r, \
             rename-to:ghq
-
-        zplug "jhawthorn/fzy", \
-            as:command, \
-            hook-build:"make && sudo make install"
         ;;
     *)
         ;;
