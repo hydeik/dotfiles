@@ -14,7 +14,7 @@ zplug "mollifier/anyframe", lazy:true
 # export AUTOENV_ENABLE_LEAVE=true
 # zplug "kennethreitz/autoenv", use:"activate.sh", defer:2, from:github
 
-zplug "greymd/tmux-xpanes", defer:2
+zplug "greymd/tmux-xpanes"
 
 case ${OSTYPE} in
     linux*)

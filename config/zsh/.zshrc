@@ -112,8 +112,12 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 ##
 ## Machine local settings
 ##
-[[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
-[[ -f ${ZDOTDIR}/.zshrc_local ]] && . ${ZDOTDIR}/.zshrc_local
+if [[ -f ~/.zshrc_local ]]; then
+    source ~/.zshrc_local
+fi
+if [[ -f ${ZDOTDIR}/.zshrc_local ]]; then
+    source ${ZDOTDIR}/.zshrc_local
+fi
 
 # # for profiling
 # if type zprof > /dev/null 2>&1; then

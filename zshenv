@@ -49,7 +49,7 @@ export XDG_DATA_HOME=${HOME}/.local/share  # [default: $HOME/.local/share]
 ## [default: /usr/local/share:/usr/share]
 #export XDG_DATA_DIRS=/usr/local/share:/usr/share
 ## [default: /etc/xdg]
-#export XDG_CONFIG_DIRS=/etc/xdg 
+#export XDG_CONFIG_DIRS=/etc/xdg
 
 ##
 ## Set ZDOTFILE environment variable
