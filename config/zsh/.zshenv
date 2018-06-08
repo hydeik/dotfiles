@@ -267,7 +267,7 @@ if [[ -z $RSCATDIR ]]; then
     case "$HOST" in
         freya*) export RSCATDIR=$HOME/programs/rscat;;
         saga*)  export RSCATDIR=$HOME/programs/rscat;;
-             *) export RSCATDIR=$HOME/program/rscat;;
+             *) export RSCATDIR=$HOME/src/local/rscat;;
     esac
 fi
 [[ -r $RSCATDIR/rscatvars.sh ]] && . $RSCATDIR/rscatvars.sh
