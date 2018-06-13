@@ -239,7 +239,8 @@ hook_add = '''
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'machakann/vim-sandwich'
-on_map = {nvx = '<Plug>'}
+#on_map = {nxo = '<Plug>'}
+on_path = '.*'
 hook_add = 'call rc#plugin#sandwich#hook_add()'
 hook_source = 'call rc#plugin#sandwich#hook_source()'
 
