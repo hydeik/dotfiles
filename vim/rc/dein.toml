@@ -42,9 +42,9 @@ build = 'sh -c "PY3=ON ./install.sh"'
 [[plugins]]
 repo = 'thinca/vim-localrc'
 
-# Faster than the built-in 'matchparen' plugin
-[[plugins]]
-repo = 'itchyny/vim-parenmatch'
+# # Faster than the built-in 'matchparen' plugin
+# [[plugins]]
+# repo = 'itchyny/vim-parenmatch'
 
 # [[plugins]]
 # repo     = 'itchyny/vim-cursorword'

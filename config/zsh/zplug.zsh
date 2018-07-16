@@ -81,4 +81,3 @@ POWERLEVEL9K_STATUS_VERBOSE=false
 # Local plugins
 zplug "${ZDOTDIR}", from:local, use:"<->_*.zsh"
 
-
