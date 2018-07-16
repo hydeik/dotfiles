@@ -6,36 +6,25 @@ if [[ -n $VIMRUNTIME ]]; then
     return 0
 fi
 
-#
-# zplug -- Zsh Plugin Manager
-#
-#export ZPLUG_HOME=/usr/local/opt/zplug
-export ZPLUG_HOME=${XDG_DATA_HOME}/zplug/repos/zplug/zplug
-if [[ -f ${ZPLUG_HOME}/init.zsh ]]; then
-    export ZPLUG_LOADFILE=${ZDOTDIR}/zplug.zsh
-    export ZPLUG_USE_CACHE=true
-    export ZPLUG_CACHE_DIR=${XDG_CACHE_HOME}/zplug
-    export ZPLUG_REPOS=${XDG_DATA_HOME}/zplug/repos
-    #export ZPLUG_BIN=${HOME}/bin
+## Init ZSH completion
+autoload -Uz compinit
+compinit
 
-    source ${ZPLUG_HOME}/init.zsh
-
-    # if ! zplug check --verbose; then
-    #     printf "Install? [y/N]: "
-    #     if read -q; then
-    #         echo; zplug install
-    #     fi
-    #     echo
-    # fi
-
-    # zplug load --verbose
-    zplug load
+## zplugin -- An elastic and fast Zshell plugin manager
+if [[ -f ${ZDOTDIR}/.zplugin/bin/zplugin.zsh ]]; then
+    source "${ZDOTDIR}/.zplugin/bin/zplugin.zsh"
+    # if you place the `source` below compinit, then add those two lines after
+    # the `source`:
+    autoload -Uz _zplugin
+    (( ${+_comps} )) && _comps[zplugin]=_zplugin
+    # Load zplugin configuration file
+    source "${ZDOTDIR}/zplugin.rc.zsh"
 fi
 
 ## set keychain
 if [[ -x `which keychain` ]]; then
-   keychain ${HOME}/.ssh/id_ed25519 ${HOME}/.ssh/id_github_ed25519 2> /dev/null
-   source ${HOME}/.keychain/${HOST}-sh
+    keychain ${HOME}/.ssh/id_ed25519 ${HOME}/.ssh/id_github_ed25519 2> /dev/null
+    source ${HOME}/.keychain/${HOST}-sh
 fi
 
 #

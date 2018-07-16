@@ -1,4 +1,4 @@
-# has_command return true  if given name of command is exists 
+# has_command return true  if given name of command is exists
 function has_command() {
     type "${1:?too few arguments}" &>/dev/null
 }
@@ -45,14 +45,14 @@ ostype() {
 }
 
 # re-compile zsh configuration files
-function zsh_reload () {
-    autoload -U zrecompile
-    for f in ${ZDOTDIR}/.zshenv ${ZDOTDIR}/.zshrc ${ZDOTDIR}/<->_*.zsh
-    do
-        [[ -f $f ]] && zrecompile -p $f && command rm -f $f.zwc.old
-    done
-    [[ -f ${ZDOTDIR}/.zcompdump ]] && zrecompile -p -M ${ZDOTDIR}/.zcompdump
-    [[ -f ${ZPLUG_HOME}/zcompdump ]] && zrecompile -p -M ${ZPLUG_HOME}/zcompdump
+# function zsh_reload () {
+#     autoload -U zrecompile
+#     for f in ${ZDOTDIR}/.zshenv ${ZDOTDIR}/.zshrc ${ZDOTDIR}/<->_*.zsh
+#     do
+#         [[ -f $f ]] && zrecompile -p $f && command rm -f $f.zwc.old
+#     done
+#     [[ -f ${ZDOTDIR}/.zcompdump ]] && zrecompile -p -M ${ZDOTDIR}/.zcompdump
+#     [[ -f ${ZPLUG_HOME}/zcompdump ]] && zrecompile -p -M ${ZPLUG_HOME}/zcompdump
 
-    source ${ZDOTDIR}/.zshrc
-}
+#     source ${ZDOTDIR}/.zshrc
+# }

@@ -8,6 +8,7 @@ config/zsh/.zsh_history
 config/zsh/.zsh_local
 config/zsh/*.zwc
 config/zsh/*.zwc.old
+config/zsh/.zplugin
 config/fish/fishd.*
 config/fish/fundle
 config/fish/completions/*
