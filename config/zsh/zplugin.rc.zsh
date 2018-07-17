@@ -2,44 +2,33 @@ zplugin snippet "${ZDOTDIR}/10_utils.zsh"
 zplugin snippet "${ZDOTDIR}/20_modules.zsh"
 zplugin snippet "${ZDOTDIR}/30_aliases.zsh"
 
-# Optimized and extended zsh-syntax-highlighting
-zplugin ice wait"0" atinit"zpcompinit" lucid
-zplugin light zdharma/fast-syntax-highlighting
+# Zsh port of the fish history search
+zplugin light "zsh-users/zsh-history-substring-search"
 
-# Fish-like autosuggestions for zsh
-zplugin ice wait"1" atload"_zsh_autosuggest_start"
-zplugin light "zsh-users/zsh-autosuggestions"
-
-# zsh-completions
+# shell completion for rustc
 zplugin ice blockf
-zplugin light "zsh-users/zsh-completions"
-
-zplugin snippet "https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo"
 zplugin light "rust-lang/zsh-config"
-
-# peco/percol/fzf wrapper plugin for zsh
-zplugin light "mollifier/anyframe"
 
 # Directory listing for zsh with git features
 zplugin ice pick"k.sh"
 zplugin light "supercrabtree/k"
 
+# peco/percol/fzf wrapper plugin for zsh
+zplugin light "mollifier/anyframe"
+
 # Emoji completion on the command line (depends jq, and an interactive filter
 # such as fzf, peco, etc.)
 zplugin light "b4b4r07/emoji-cli"
-
-# Ultimate terminal divider powered by tmux
-zplugin light "greymd/tmux-xpanes"
 
 case ${OSTYPE} in
     linux*)
         zplugin ice from"gh-r" as"program" mv"fzf-* -> fzf"
         zplugin load "junegunn/fzf-bin"
 
-        zplugin ice from"gh-r" as"program"
+        zplugin ice from"gh-r" as"program" mv"jq-* -> jq" bpick"*linux*"
         zplugin load "stedolan/jq"
 
-        zplugin ice from"gh-r" as"program"
+        zplugin ice from"gh-r" as"program" bpick"*linux*"
         zplugin load "peco/peco"
 
         zplugin ice from"gh-r" as"program"
@@ -50,10 +39,6 @@ case ${OSTYPE} in
 esac
 
 # Powerlevel9k -- themes using Powerline fonts
-PS1="READY > "
-zplugin ice wait"!1" lucid
-zplugin light "bhilburn/powerlevel9k"
-
 POWERLEVEL9K_MODE="nerdfont-complete"
 
 # POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\ue0b0"
@@ -75,6 +60,26 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs pyenv virtualenv load
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
 POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M:%S \uf073 %y-%m-%d}"
 POWERLEVEL9K_STATUS_VERBOSE=false
+
+PS1="READY > "
+zplugin ice wait'!0'
+zplugin light "bhilburn/powerlevel9k"
+
+# zsh-completions
+zplugin ice wait'0' blockf
+zplugin light "zsh-users/zsh-completions"
+
+# Fish-like autosuggestions for zsh
+zplugin ice wait'1' atload"_zsh_autosuggest_start"
+zplugin light "zsh-users/zsh-autosuggestions"
+
+# Optimized and extended zsh-syntax-highlighting
+zplugin ice wait'0' atinit"zpcompinit; zpcdreplay"
+zplugin light zdharma/fast-syntax-highlighting
+
+# Ultimate terminal divider powered by tmux
+zplugin ice wait'[[ -n ${ZLAST_COMMANDS[(r)xpan*]} ]]'
+zplugin light "greymd/tmux-xpanes"
 
 # Other local plugins
 zplugin snippet "${ZDOTDIR}/40_keybinds.zsh"

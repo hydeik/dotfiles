@@ -1,16 +1,17 @@
 function! s:languageclient_config() abort
+  nnoremap <buffer> <silent> <Leader>l  :<C-u>call LanguageClient_contextMenu()<CR>
   nnoremap <buffer> <silent> gd    :<C-u>call LanguageClient#textDocument_definition()<CR>
   nnoremap <buffer> <silent> K     :<C-u>call LanguageClient#textDocument_hover()<CR>
   nnoremap <buffer> <silent> <F2>  :<C-u>call LanguageClient#textDocument_rename()<CR>
-
-  " localleader mapping
-  nnoremap <buffer> <LocalLeader>ld  :<C-u>call LanguageClient#textDocument_definition()<CR>
-  nnoremap <buffer> <LocalLeader>lh  :<C-u>call LanguageClient#textDocument_hover()<CR>
-  nnoremap <buffer> <LocalLeader>lR  :<C-u>call LanguageClient#textDocument_rename()<CR>
-  " LanguageClient also provides Denite sources
-  nnoremap <buffer> <LocalLeader>ls  :<C-u>Denite -auto-preview -mode=normal documentSymbol<CR>
-  nnoremap <buffer> <LocalLeader>lS  :<C-u>Denite -auto-preview workspaceSymbol<CR>
-  nnoremap <buffer> <LocalLeader>lr  :<C-u>Denite -auto-preview -mode=normal references<CR>
+  "
+  " " localleader mapping
+  " nnoremap <buffer> <LocalLeader>ld  :<C-u>call LanguageClient#textDocument_definition()<CR>
+  " nnoremap <buffer> <LocalLeader>lh  :<C-u>call LanguageClient#textDocument_hover()<CR>
+  " nnoremap <buffer> <LocalLeader>lR  :<C-u>call LanguageClient#textDocument_rename()<CR>
+  " " LanguageClient also provides Denite sources
+  " nnoremap <buffer> <LocalLeader>ls  :<C-u>Denite -auto-preview -mode=normal documentSymbol<CR>
+  " nnoremap <buffer> <LocalLeader>lS  :<C-u>Denite -auto-preview workspaceSymbol<CR>
+  " nnoremap <buffer> <LocalLeader>lr  :<C-u>Denite -auto-preview -mode=normal references<CR>
 
   setlocal formatexpr=LanguageClient_textDocument_rangeFormatting()
   setlocal cmdheight=3

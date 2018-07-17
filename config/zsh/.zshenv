@@ -233,7 +233,10 @@ fi
 # Rust
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
 if (( ${+commands[rustc]} )); then
-    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+    export RUST_SYS_ROOT="$(rustc --print sysroot)"
+    export RUST_SRC_PATH="${RUST_SYS_ROOT}/lib/rustlib/src/rust/src"
+    # for cargo completion
+    fpath=( ${RUST_SYS_ROOT}/share/zsh/site-functions $fpath[@] )
 fi
 
 # Golang

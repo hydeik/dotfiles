@@ -7,16 +7,16 @@ if [[ -n $VIMRUNTIME ]]; then
 fi
 
 ## Init ZSH completion
-autoload -Uz compinit
-compinit
+# autoload -Uz compinit
+# compinit
 
 ## zplugin -- An elastic and fast Zshell plugin manager
 if [[ -f ${ZDOTDIR}/.zplugin/bin/zplugin.zsh ]]; then
     source "${ZDOTDIR}/.zplugin/bin/zplugin.zsh"
     # if you place the `source` below compinit, then add those two lines after
     # the `source`:
-    autoload -Uz _zplugin
-    (( ${+_comps} )) && _comps[zplugin]=_zplugin
+    # autoload -Uz _zplugin
+    # (( ${+_comps} )) && _comps[zplugin]=_zplugin
     # Load zplugin configuration file
     source "${ZDOTDIR}/zplugin.rc.zsh"
 fi
