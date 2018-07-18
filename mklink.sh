@@ -13,7 +13,7 @@ do
     ln -fsv "${CWD}/${f}" "${HOME}/.${f}"
 done
 
-for dir in ${CWD}/config/{fish,zsh}
+for dir in ${CWD}/config/{fish,zsh,alacritty}
 do
     ln -fnsv "${dir}" "${XDG_CONFIG_HOME}/${dir##*/}"
 done
