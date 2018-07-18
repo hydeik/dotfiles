@@ -6,19 +6,24 @@ if [[ -n $VIMRUNTIME ]]; then
     return 0
 fi
 
-## Init ZSH completion
-# autoload -Uz compinit
-# compinit
+### Tmux
+# Attach tmux session automatically if exists, create new session otherwise.
+if (( ${+commands[tmux]} )); then
+    export TMUX_AUTO_START=true
+    export PERCOL=fzf
+    source ${ZDOTDIR}/tmux_auto.zsh
+fi
+
 
 ## zplugin -- An elastic and fast Zshell plugin manager
 if [[ -f ${ZDOTDIR}/.zplugin/bin/zplugin.zsh ]]; then
     source "${ZDOTDIR}/.zplugin/bin/zplugin.zsh"
-    # if you place the `source` below compinit, then add those two lines after
-    # the `source`:
+    # Load zplugin configuration file. This will call compinit
+    source "${ZDOTDIR}/zplugin.rc.zsh"
+    # if you `source` the zplugin.zsh after calling compinit,
+    # then add those two lines:
     # autoload -Uz _zplugin
     # (( ${+_comps} )) && _comps[zplugin]=_zplugin
-    # Load zplugin configuration file
-    source "${ZDOTDIR}/zplugin.rc.zsh"
 fi
 
 ## set keychain
@@ -32,39 +37,6 @@ fi
 # stty    intr    '^C'
 # stty    susp    '^Z'
 #
-
-############################################################
-## プロンプト設定
-# autoload -U colors; colors      # ${fg[red]}形式のカラー書式を有効化
-#
-# setopt prompt_subst				# ESCエスケープを有効にする
-#
-# if [[ $COLORTERM == 1 ]]; then
-#     if [[ $UID == 0 ]] ; then
-# 		PSCOLOR='01;01;31'
-#     else
-# 		PSCOLOR='01;01;32'		# 下線、緑
-#     fi
-#     # 右プロンプト
-#     RPROMPT=$'%{\e[${PSCOLOR}m%}[%{\e[36m%}%~%{\e[${PSCOLOR}m%}]%{\e[00m%}'
-#     PS1=$'%{\e[${PSCOLOR}m%}%n@%m${WINDOW:+"[$WINDOW]"} %{\e[34m%}$ '
-# fi
-# 1個目の $'...' は 「\e]2;「kterm のタイトル」\a」
-# 2個目の $'...' は 「\e]1;「アイコンのタイトル」\a」
-# 3個目の $'...' がプロンプト
-
-# \e を ESC コード()で置く必要があるかも
-# emacs では C-q ESC, vi では C-v ESC で入力する
-#	\e[00m 	初期状態へ
-#	\e[01m 	太字	(0は省略可能っぽい)
-#	\e[04m	アンダーライン
-#	\e[05m	blink(太字)
-#	\e[07m	反転
-#	\e[3?m	文字色をかえる
-#	\e[4?m	背景色をかえる
-#		?= 0:黒, 1:赤, 2:緑, 3:黄, 4:青, 5:紫, 6:空, 7:白
-
-
 
 #### time
 REPORTTIME=8                    # CPUを8秒以上使った時は time を表示

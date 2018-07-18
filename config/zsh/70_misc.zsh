@@ -1,7 +1,6 @@
 #
 # Miscillaneous configurations
 #
-export INTERACTIVE_FILTER="fzy:fzf:peco:percol:gof:pick"
 
 # junegunn/fzf
 export FZF_DEFAULT_OPTS='
