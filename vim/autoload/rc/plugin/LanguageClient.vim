@@ -3,7 +3,7 @@ function! s:languageclient_config() abort
   nnoremap <buffer> <silent> gd    :<C-u>call LanguageClient#textDocument_definition()<CR>
   nnoremap <buffer> <silent> K     :<C-u>call LanguageClient#textDocument_hover()<CR>
   nnoremap <buffer> <silent> <F2>  :<C-u>call LanguageClient#textDocument_rename()<CR>
-  "
+
   " " localleader mapping
   " nnoremap <buffer> <LocalLeader>ld  :<C-u>call LanguageClient#textDocument_definition()<CR>
   " nnoremap <buffer> <LocalLeader>lh  :<C-u>call LanguageClient#textDocument_hover()<CR>
@@ -22,9 +22,13 @@ function! rc#plugin#LanguageClient#hook_source() abort
   let g:LanguageClient_autoStart = 1
 
   " --- Language servers
+  let l:cquery_cache_dir = $XDG_CACHE_HOME . '/cquery'
+  let l:cquery_arg_log_file = '--log-file=/tmp/cquery/cquery.log'
+  let l:cquery_arg_init = '--init={"cacheDirectory": "' . l:cquery_cache_dir
+        \ . '", "completion": {"filterAndSort": false}}'
   let g:LanguageClient_serverCommands = {
-        \ 'c':      ['cquery', '--log-file=/tmp/cquery/cquery.log'],
-        \ 'cpp':    ['cquery', '--log-file=/tmp/cquery/cquery.log'],
+        \ 'c':      ['cquery', l:cquery_arg_log_file, l:cquery_arg_init],
+        \ 'cpp':    ['cquery', l:cquery_arg_log_file, l:cquery_arg_init],
         \ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
         \ 'rust':   ['rustup', 'run', 'stable', 'rls'],
         \ 'sh':     ['bash-language-server'],
@@ -35,4 +39,9 @@ function! rc#plugin#LanguageClient#hook_source() abort
   " let g:LanguageClient_trace = 'verbose'
 
   autocmd MyVimrc FileType c,cpp,python,rust,sh call s:languageclient_config()
+
+  " deoplete setting
+  if dein#tap("deoplete.nvim")
+    call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)
+  endif
 endfunction
