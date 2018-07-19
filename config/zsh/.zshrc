@@ -1,4 +1,6 @@
+# Set the default permission of file to 0644 (rw-r--r--)
 umask 022
+# Do not dump `core` file
 limit coredumpsize 0
 
 # Return if zsh is called from Vim
