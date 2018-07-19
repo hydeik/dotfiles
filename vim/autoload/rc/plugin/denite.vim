@@ -72,8 +72,9 @@ function! rc#plugin#denite#hook_source() abort
   call denite#custom#map('insert', '<C-f>', '<denite:move_caret_to_right>', 'noremap')
   call denite#custom#map('insert', '<C-h>', '<denite:delete_char_before_caret>', 'noremap')
   " <C-n>, <C-p> are mapped by default to recall command-line history.
-  " call denite#custom#map('insert', '<C-n>', '<denite:assign_next_text>', 'noremap')
-  " call denite#custom#map('insert', '<C-p>', '<denite:assign_previous_text>', 'noremap')
+  " Use <S-Down> and <S-Up> for these operations.
+  call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+  call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
   call denite#custom#map('insert', '<C-r>', '<denite:toggle_matchers:matcher_substring>', 'noremap')
   call denite#custom#map('insert', '<C-s>', '<denite:toggle_sorters:sorter_reverse>', 'noremap')
   " <C-g> to quit denite
