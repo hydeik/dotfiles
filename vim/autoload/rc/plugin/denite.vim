@@ -71,9 +71,6 @@ function! rc#plugin#denite#hook_source() abort
   call denite#custom#map('insert', '<C-e>', '<denite:move_caret_to_tail>', 'noremap')
   call denite#custom#map('insert', '<C-f>', '<denite:move_caret_to_right>', 'noremap')
   call denite#custom#map('insert', '<C-h>', '<denite:delete_char_before_caret>', 'noremap')
-  " Use <C-j>, <C-k> to move lines.
-  call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-  call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
   " <C-n>, <C-p> are mapped by default to recall command-line history.
   " call denite#custom#map('insert', '<C-n>', '<denite:assign_next_text>', 'noremap')
   " call denite#custom#map('insert', '<C-p>', '<denite:assign_previous_text>', 'noremap')
@@ -116,17 +113,17 @@ function! rc#plugin#denite#hook_source() abort
   endif
 
   " Change matchers
-  call denite#custom#source('file/old', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
-  call denite#custom#source('tag', 'matchers', ['matcher_substring'])
+  call denite#custom#source('file/old', 'matchers', ['matcher/fuzzy', 'matcher/project_files'])
+  call denite#custom#source('tag', 'matchers', ['matcher/substring'])
   if has('nvim')
-    call denite#custom#source('file/rec', 'matchers', ['matcher_cpsm'])
+    call denite#custom#source('file/rec,grep', 'matchers', ['matcher/cpsm'])
   endif
 
   " Change sorters
   call denite#custom#source('file/rec', 'sorters', ['sorter_sublime'])
 
   " Change converters
-  call denite#custom#source('file/old', 'converters', ['converter_relative_word'])
+  call denite#custom#source('file/old', 'converters', ['converter/relative_word'])
 
   " Define alias
   call denite#custom#alias('source', 'file/rec/git', 'file/rec')
@@ -144,7 +141,7 @@ function! rc#plugin#denite#hook_source() abort
   call denite#custom#option('_', 'highlight_mode_insert', 'Search')
 
   " Change ignore_globs
-  call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+  call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
         \ [ '.git/', '.ropeproject/', '__pycache__/',
         \   'venv/', '.venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 

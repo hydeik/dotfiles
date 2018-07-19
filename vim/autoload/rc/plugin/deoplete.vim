@@ -66,9 +66,14 @@ function! rc#plugin#deoplete#hook_post_source() abort
   call deoplete#custom#source('_', 'converters', [
         \ 'converter_remove_paren',
         \ 'converter_remove_overlap',
+        \ 'matcher_length',
         \ 'converter_truncate_abbr',
         \ 'converter_truncate_menu',
         \ 'converter_auto_delimiter',
         \ ])
+  " Capital letter matches to the uppercase only.
+  " Lower letter metches both the uppercase and lowercase.
+  "  e.g.)  "foB" matches "FooBar", not "foobar"
+  call deoplete#custom#option('camel_case', v:true)
 endfunction
 
