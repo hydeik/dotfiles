@@ -223,6 +223,8 @@ on_cmd = ['Vaffle']
 hook_add = '''
   " Changes the working directory to the selected one automatically
   let g:vaffle_auto_cd = 1
+  " Show hidden file by default
+  let g:vaffle_show_hidden_files = 1
 
   function! s:customize_vaffle_mappings() abort
     " Customize key mappings here
