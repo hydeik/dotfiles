@@ -21,6 +21,11 @@ endif
 set background=dark
 colorscheme onedark
 
+" " --- Powerline (does not support NeoVim)
+" python3 from powerline.vim import setup as powerline_setup
+" python3 powerline_setup()
+" python3 del powerline_setup
+
 " --- Customize status line with lightline
 let g:lightline = {
       \ 'colorscheme': 'onedark',
@@ -51,33 +56,33 @@ let g:lightline = {
       \ }
 
 function! LightlineModified()
-  if &filetype =~ "help\|vimfiler\|gundo"
-    return ""
+  if &filetype =~? 'help\|vimfiler\|gundo'
+    return ''
   elseif &modified
-    return "+"
+    return '+'
   elseif &modifiable
-    return ""
+    return ''
   else
-    return "-"
+    return '-'
   endif
 endfunction
 
 function! LightlineReadonly()
-  if &filetype !~ "help\|vimfiler\|gundo"
-    return ""
+  if &filetype !~? 'help\|vimfiler\|gundo'
+    return ''
   elseif &readonly
     return "\ue0a2"
   else
-    return ""
+    return ''
   endif
 endfunction
 
 function! LightlineFilename()
   let fname = expand('%:t')
-  return &ft == 'denite' ? denite#get_status_sources() . denite#get_status_path() : '' .
-        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+  return &filetype ==? 'denite' ? denite#get_status_sources() . denite#get_status_path() : '' .
+        \ ('' !=? LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ ('' !=? fname ? fname : '[No Name]') .
+        \ ('' !=? LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
 function! LightlineFileformat()
@@ -85,23 +90,23 @@ function! LightlineFileformat()
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+  return winwidth(0) > 70 ? (&filetype !=? '' ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 
 function! LightlineFileencoding()
-  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  return winwidth(0) > 70 ? (&fileencoding !=? '' ? &fileencoding : &encoding) : ''
 endfunction
 
 function! LightlineMode()
-  return &ft == 'denite' ? 'denite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
+  return  &filetype ==? 'denite' ? 'denite' :
+        \ &filetype ==? 'vimfiler' ? 'VimFiler' :
+        \ &filetype ==? 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
 function! LightlineGitstatus()
   let branch = gina#component#repo#branch()
-  if branch == ''
+  if branch ==# ''
     return ''
   else
     let staged = gina#component#status#staged()
@@ -120,6 +125,6 @@ function! LightlineGitstatus()
 endfunction
 
 function! LightlinePyenv()
-  return &filetype =~ 'python' ? " \ue73c " . pyenv#info#preset('short')[1:] : ''
+  return &filetype =~? 'python' ? " \ue73c " . pyenv#info#preset('short')[1:] : ''
 endfunction
 
