@@ -1,0 +1,14 @@
+---
+# Default options for dotbot
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: true
+
+# Directory to be checked for dead symbolic links
+- clean: ['~', '~/.config']
+
+# Shell command to be run
+- shell:
+    - ["git submodule update --init --recursive", "Installing submodules"]
