@@ -18,8 +18,13 @@ fi
 
 
 ## zplugin -- An elastic and fast Zshell plugin manager
-if [[ -f ${ZDOTDIR}/.zplugin/bin/zplugin.zsh ]]; then
-    source "${ZDOTDIR}/.zplugin/bin/zplugin.zsh"
+local -A ZPLGM  # initial Zplugin's hash definition
+ZPLGM[BIN_DIR]=${ZDOTDIR}/.zplugin/bin
+ZPLGM[HOME_DIR]=${ZDOTDIR}/.zplugin
+ZPLGM[ZCOMPDUMP_PATH]=${XDG_CACHE_HOME}/zsh/zcompdump
+
+if [[ -f ${ZPLGM[BIN_DIR]}/zplugin.zsh ]]; then
+    source "${ZPLGM[BIN_DIR]}/zplugin.zsh"
     # Load zplugin configuration file. This will call compinit
     source "${ZDOTDIR}/zplugin.rc.zsh"
     # if you `source` the zplugin.zsh after calling compinit,

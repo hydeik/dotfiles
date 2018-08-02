@@ -75,6 +75,15 @@ zplugin light "bhilburn/powerlevel9k"
 zplugin ice wait'0' blockf
 zplugin light "zsh-users/zsh-completions"
 
+# A next-generation `cd` command with an interactive filter
+export ENHANCD_DIR=${XDG_CACHE_HOME}/enhancd
+export ENHANCD_DISABLE_DOT=0
+export ENHANCD_DISABLE_HYPHEN=0
+export ENHANCD_DISABLE_HOME=0
+
+zplugin ice wait'0' pick'init.sh'
+zplugin light "b4b4r07/enhancd"
+
 # Fish-like autosuggestions for zsh
 zplugin ice wait'1' atload"_zsh_autosuggest_start"
 zplugin light "zsh-users/zsh-autosuggestions"
