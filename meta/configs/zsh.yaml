@@ -1,0 +1,15 @@
+---  # Zsh configurations
+- clean: ['~/.config/zsh', '~/.config/zsh/funcitons']
+
+- link:
+    ~/.zshenv: shells/zshenv
+    ~/.config/zsh/.zshenv: shells/zsh/.zshenv
+    ~/.config/zsh/.zshrc: shells/zsh/.zshrc
+    ~/.config/zsh:
+      glob: true
+      path: shells/zsh/*.zsh
+    ~/.config/zsh/functions/_rustup: shells/zsh/functions/_rustup
+    ~/.config/zsh/functions/ranger-cd: shells/zsh/functions/ranger-cd
+
+- shell:
+    - [mkdir -p ~/.cache/zsh, Create Zsh cache directory]    

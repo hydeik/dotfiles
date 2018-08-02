@@ -1,0 +1,13 @@
+---  # Fish configurations
+- clean: ['~/.config/fish', '~/.config/fisherman']
+
+- link:
+    ~/.config/fish/alias.fish: shells/fish/alias.fish
+    ~/.config/fish/config.fish: shells/fish/config.fish
+    ~/.config/fish/env.fish: shells/fish/env.fish
+    ~/.config/fish/fishfile: shells/fish/fishfile
+    ~/.config/fish/functions/fish_user_key_bindings.fish: shells/fish/functions/fish_user_key_bindings.fish
+    ~/.config/fish/functions/fisher.fish: shells/fish/functions/fisher.fish
+
+- shell:
+    - [fish -c 'fisher and fisher up', Installing fisher plugins]

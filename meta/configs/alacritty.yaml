@@ -1,0 +1,3 @@
+---  # Alacritty terminal emulator configurations
+- link:
+    ~/.config/alacritty/alacritty.yml: terminals/alacritty/alacritty.yml

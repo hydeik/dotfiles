@@ -1,0 +1,5 @@
+---  # Tmux configurations
+- clean: [~/.config/tmux]
+
+- link:
+    ~/.config/tmux/tmux.conf: terminals/tmux/tmux.conf
