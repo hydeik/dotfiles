@@ -1,0 +1,9 @@
+# workaround for the issue that `enhancd` does not understand '--'
+anyframe-source-ghq-repository \
+  | anyframe-selector-auto \
+  | anyframe-action-execute builtin cd --
+
+# Local Variables:
+# mode: Shell-Script
+# End:
+# vim: ft=zsh

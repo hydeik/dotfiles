@@ -1,4 +1,4 @@
-- clean: ['~/.config/zsh', '~/.config/zsh/funcitons']
+- clean: ['~/.config/zsh', '~/.config/zsh/funcitons', '~/.config/zsh/funcitons/anyframe-functions/widgets']
 
 - link:
     ~/.zshenv: shells/zshenv
@@ -9,6 +9,9 @@
       path: shells/zsh/*.zsh
     ~/.config/zsh/functions/_rustup: shells/zsh/functions/_rustup
     ~/.config/zsh/functions/ranger-cd: shells/zsh/functions/ranger-cd
+    ~/.config/zsh/functions/anyframe-functions/widgets: 
+      glob: true
+      path: shells/zsh/functions/anyframe-functions/widgets/*
 
 - shell:
     - [mkdir -p ~/.cache/zsh, Create Zsh cache directory]    

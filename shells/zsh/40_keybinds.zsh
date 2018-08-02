@@ -22,29 +22,21 @@ bindkey -M emacs '^N' history-substring-search-down
 # Anyframe
 add-zsh-hook chpwd chpwd_recent_dirs
 autoload -Uz anyframe-init
-zstyle ":anyframe:selector:" use fzf
+#zstyle ":anyframe:selector:" use fzf
 anyframe-init
 
-bindkey '^xb'  anyframe-widget-cdr
-bindkey '^x^b' anyframe-widget-checkout-git-branch
+bindkey '^]'   anyframe-widget-builtin-cdr
 
-bindkey '^r'   anyframe-widget-execute-history
+bindkey '^r'   anyframe-widget-put-history
 bindkey '^x^r' anyframe-widget-execute-history
 
-bindkey '^xp'  anyframe-widget-put-history
-bindkey '^x^p' anyframe-widget-put-history
-
-bindkey '^g'   anyframe-widget-cd-ghq-repository
-bindkey '^x^g' anyframe-widget-cd-ghq-repository
-
-bindkey '^xk'  anyframe-widget-kill
 bindkey '^x^k' anyframe-widget-kill
-
-bindkey '^xi'  anyframe-widget-insert-git-branch
-bindkey '^x^i' anyframe-widget-insert-git-branch
-
-bindkey '^xf'  anyframe-widget-insert-filename
 bindkey '^x^f' anyframe-widget-insert-filename
+
+bindkey '^g^g' anyframe-widget-builtin-cd-ghq-repository
+bindkey '^g^a' anyframe-widget-git-add
+bindkey '^g^b' anyframe-widget-checkout-git-branch
+bindkey '^g^i' anyframe-widget-insert-git-branch
 
 # Ranger
 if (( ${+commands[ranger]} )); then
