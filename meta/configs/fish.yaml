@@ -10,3 +10,4 @@
 
 - shell:
     - [fish -c 'fisher and fisher up', Installing fisher plugins]
+    - [mkdir -p ~/.cache/less, Create Less cache directory]

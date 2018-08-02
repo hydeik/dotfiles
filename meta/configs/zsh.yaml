@@ -12,3 +12,4 @@
 
 - shell:
     - [mkdir -p ~/.cache/zsh, Create Zsh cache directory]    
+    - [mkdir -p ~/.cache/less, Create Less cache directory]    
