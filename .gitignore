@@ -1,5 +1,3 @@
-*.swp
-*~
 *.elc
 *_flymake*
 *.pyc
