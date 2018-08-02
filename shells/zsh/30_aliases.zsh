@@ -73,14 +73,13 @@ alias les="less"	# for typo
 # if it has an alias. [...] If the last character of the alias value is
 # a space or tab character, then the next command word following the
 # alias is also checked for alias expansion
-if [[ $ARCHI == "darwin" ]]; then
-    alias sudo="${ZSH_VERSION:+nocorrect} sudo "
-else;
-    alias sudo='sudo '
-fi
+case ${OSTYPE} in
+    darwin*) alias sudo="${ZSH_VERSION:+nocorrect} sudo ";;
+    linux*)  alias sudo='sudo '
+esac
 
 #### gnuplot with rlwrap
-if [[ -x `which rlwrap` ]]; then
+if (( ${+commands[rlwrap]} )); then
     alias gnuplot="rlwrap -a -c gnuplot"
 fi
 
@@ -127,6 +126,9 @@ function bak() {
         fi
     done
 }
+
+# XDG compliancy fix for Tmux
+alias tmux="tmux -f ${XDG_CONFIG_HOME}/tmux/tmux.conf"
 
 #function emacs() {
 #    gnuclient "$@" 2> /dev/null || command emacs "$@" 2> /dev/null &

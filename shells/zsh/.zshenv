@@ -34,9 +34,8 @@ esac
 ## fpath -- set before compinit
 typeset -gxU fpath
 fpath=(
-    $HOME/.zsh/Completion(N-/)
-    $HOME/.zsh/functions(N-/)
-    $HOME/.zsh/plugins/zsh-completions(N-/)
+    $XDG_DATA_HOME/zsh/site-functions(N-/)
+    $ZDOTDIR/Completion(N-/)
     $ZDOTDIR/functions(N-/)
     $ZDOTDIR/plugins/zsh-completions(N-/)
     /usr/local/share/zsh/site-functions(N-/)
@@ -47,7 +46,8 @@ fpath=(
 typeset -gxU path
 path=(
     $HOME/bin(N-/)
-    $HOME/.local/bin(N-/) # for pip --user
+    # $HOME/.local/bin(N-/) # for pip --user
+    $XDG_BIN_HOME(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
     # *nix local, HomeBrew
@@ -74,6 +74,7 @@ typeset -gxU manpath
 manpath=(
     $HOME/man(N-/)
     $HOME/dev/man(N-/)
+    $XDG_DATA_HOME/man(N-/)
     /sw/share/man(N-/)
     /opt/local/share/man(N-/)
     /usr/local/share/jman(N-/)
@@ -91,6 +92,7 @@ typeset -gxTU INFOPATH infopath  # tie the new array to the variables
 infopath=(
     $HOME/share/info(N-/)
     $HOME/dev/share/info(N-/)
+    $XDG_DATA_HOME/info(N-/)
     /usr/local/share/info(N-/)
     /usr/share/info(N-/)
     $infopath[@]
@@ -119,6 +121,7 @@ ld_library_path=(
     $HOME/lib(N-/)
     $HOME/opt/oski/lib/oski(N-/)
     $HOME/opt/lib(N-/)
+    $XDG_LIB_HOME(N-/)
     /opt/gotoblas(N-/)
     /usr/local/lib(N-/)
     /usr/local/lib32(N-/)
@@ -136,7 +139,7 @@ fi;
 export host=`echo $HOST | sed -e 's/\..*//'`
 
 export UID
-SHELL=`which zsh`; export SHELL
+# SHELL=`which zsh`; export SHELL
 
 ##
 ## Language, Locale
@@ -150,7 +153,8 @@ export LC_CTYPE=${LANGUAGE}
 ## History
 ##
 # History file
-export HISTFILE=${ZDOTDIR}/.zsh_history
+#export HISTFILE=${ZDOTDIR}/.zsh_history
+export HISTFILE="${XDG_CACHE_HOME}/zsh/history"
 # History size in memory
 export HISTSIZE=100000
 # The number of histsize
@@ -170,6 +174,8 @@ export PAGER=less
 # Less status line
 export LESS='-R -f -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
 export LESSCHARSET='utf-8'
+# Less history file
+export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 
 # LESS man page colors (makes Man pages more readable).
 # Source: http://unix.stackexchange.com/a/147
