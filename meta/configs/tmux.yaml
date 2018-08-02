@@ -1,4 +1,3 @@
----  # Tmux configurations
 - clean: [~/.config/tmux]
 
 - link:

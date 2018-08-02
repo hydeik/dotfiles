@@ -1,4 +1,3 @@
----  # Vim configurations
 - clean: [~/.config/vim]
 
 - link:

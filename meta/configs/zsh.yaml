@@ -1,4 +1,3 @@
----  # Zsh configurations
 - clean: ['~/.config/zsh', '~/.config/zsh/funcitons']
 
 - link:

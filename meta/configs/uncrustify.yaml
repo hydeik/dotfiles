@@ -1,0 +1,4 @@
+- clean: [~/.config/uncrustify]
+
+- link:
+    ~/.config/uncrustify/uncrustify.cfg: development/uncrustify/uncrustify.cfg

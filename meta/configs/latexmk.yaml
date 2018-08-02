@@ -1,3 +1,2 @@
----  # latexmk configurations
 - link:
     ~/.config/latexmk/latexmkrc: development/latexmk/latexmkrc

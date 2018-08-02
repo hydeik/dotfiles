@@ -1,0 +1,6 @@
+- clean: [~/.hammerspoon]
+
+- link:
+    ~/.hammerspoon:
+        glob: true
+        path: apps/hammerspoon/*.lua
