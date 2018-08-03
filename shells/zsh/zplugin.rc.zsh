@@ -16,6 +16,10 @@ zplugin light "supercrabtree/k"
 # peco/percol/fzf wrapper plugin for zsh
 zplugin light "mollifier/anyframe"
 
+# Emoji on the command line
+zplugin ice as"command" pick"emojify"
+zplugin light "mrowa44/emojify"
+
 # Emoji completion on the command line (depends jq, and an interactive filter
 # such as fzf, peco, etc.)
 zplugin light "b4b4r07/emoji-cli"

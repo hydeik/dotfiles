@@ -33,10 +33,13 @@ bindkey '^x^r' anyframe-widget-execute-history
 bindkey '^x^k' anyframe-widget-kill
 bindkey '^x^f' anyframe-widget-insert-filename
 
-bindkey '^g^g' anyframe-widget-builtin-cd-ghq-repository
-bindkey '^g^a' anyframe-widget-git-add
-bindkey '^g^b' anyframe-widget-checkout-git-branch
-bindkey '^g^i' anyframe-widget-insert-git-branch
+bindkey '^g'   anyframe-widget-builtin-cd-ghq-repository
+bindkey '^x^a' anyframe-widget-git-add
+bindkey '^x^b' anyframe-widget-checkout-git-branch
+bindkey '^x^i' anyframe-widget-insert-git-branch
+
+# emoji-cli
+bindkey '^x^e' emoji::cli
 
 # Ranger
 if (( ${+commands[ranger]} )); then
