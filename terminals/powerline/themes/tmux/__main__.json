@@ -1,0 +1,18 @@
+{
+    "segment_data": {
+        "date": {
+            "before": "  "
+        },
+        "time": {
+            "before": " "
+        },
+        "powerline.segments.common.net.network_load": {
+            "args": {
+                "recv_format": " ﯴ {value:>8}",
+
+                "sent_format": " ﯲ {value:>8}"
+
+            }
+        }
+    }
+}

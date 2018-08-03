@@ -1,0 +1,21 @@
+- clean:
+    - ~/.config/powerline
+    - ~/.config/powerline/colorschemes
+    - ~/.config/powerline/themes/shell
+    - ~/.config/powerline/themes/tmux
+
+- link:
+    ~/.config/powerline/config.json: terminals/powerline/config.json
+    ~/.config/powerline/colorschemes:
+      glob: true,
+      path: terminals/powerline/colorschemes/*.json
+    # ~/.config/powerline/themes:
+    #   glob: true,
+    #   path: terminals/powerline/themes/*.json
+    ~/.config/powerline/themes/shell:
+      glob: true,
+      path: terminals/powerline/themes/shell/*.json
+    ~/.config/powerline/themes/tmux:
+      glob: true,
+      path: terminals/powerline/themes/tmux/*.json
+
