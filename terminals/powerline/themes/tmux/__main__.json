@@ -6,12 +6,16 @@
         "time": {
             "before": " "
         },
+        "powerline.segments.common.net.hostname": {
+            "args": {
+                "exclude_domain": true,
+                "only_if_ssh": false
+            }
+        },
         "powerline.segments.common.net.network_load": {
             "args": {
                 "recv_format": " ﯴ {value:>8}",
-
                 "sent_format": " ﯲ {value:>8}"
-
             }
         }
     }

@@ -2,13 +2,15 @@
     "segment_data": {
         "hostname": {
             "args": {
-                "only_if_ssh": true
+                "exclude_domain": true,
+                "only_if_ssh": false
             }
         },
         "cwd": {
             "args": {
                 "dir_limit_depth": 3
-            }
+            },
+            "before": " "
         },
         "branch_dirty": {
             "after": " 𥉉"
@@ -20,6 +22,9 @@
             "args": {
                 "status_colors": true
             }
+        },
+        "powerline.segments.common.env.virtualenv": {
+            "before": " "
         }
     }
 }

@@ -1,0 +1,13 @@
+{
+    "name": "One dark for shell",
+    "groups": {
+        "mode": { "fg": "onedark:white", "bg": "onedark:green", "attrs": ["bold"] }
+    },
+    "mode_translations": {
+        "vicmd": {
+            "groups": {
+                "mode": { "fg": "onedark:white", "bg": "onedark:blue", "attrs": ["bold"] }
+            }
+        }
+    }
+}
