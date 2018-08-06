@@ -48,20 +48,20 @@ esac
 # # POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\ue0b0"
 # # POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR="\ue0b2"
 #
-# # Prompt
-# POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-# POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-# POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-#
-# # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="\n"
-# POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-# POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="\uf0da "
+# # # Prompt
+# # POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+# # POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+# # POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+# #
+# # # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="\n"
+# # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+# # POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="\uf0da "
 #
 # #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(icons_test)
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir_writable dir)
 # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs pyenv virtualenv vcs)
 #
-# POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
+# POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 # POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M:%S \uf073 %y-%m-%d}"
 # POWERLEVEL9K_STATUS_VERBOSE=false
 #
@@ -69,7 +69,7 @@ esac
 # zplugin ice wait'!0'
 # zplugin light "bhilburn/powerlevel9k"
 
-# Qowerline (prompt)
+# Powerline (prompt)
 #   Install powerline by 'pip install powerline-status'
 PS1="READY > "
 zplugin ice wait'!0' pick"powerline/bindings/zsh/powerline.zsh" atload'!powerline-daemon -q'
