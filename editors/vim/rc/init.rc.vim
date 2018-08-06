@@ -33,6 +33,10 @@ function! IsMac() abort
         \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
 endfunction
 
+if has('multi_byte_ime')
+  set iminsert=0 imsearch=0
+endif
+
 " --- Set executable path and manpath.
 " These variables might not be set properly in GVim/MacVim
 function! s:configure_path(name, pathlist) abort
