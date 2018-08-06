@@ -34,9 +34,29 @@ if [[ -f ${ZPLGM[BIN_DIR]}/zplugin.zsh ]]; then
 fi
 
 ## set keychain
-if [[ -x `which keychain` ]]; then
+if (( ${+commands[keychain]} )); then
     keychain ${HOME}/.ssh/id_ed25519 ${HOME}/.ssh/id_github_ed25519 2> /dev/null
     source ${HOME}/.keychain/${HOST}-sh
+fi
+
+## prompt (requires powerline-rs)
+if (( ${+commands[powerline-rs]} )); then
+    function powerline_precmd() {
+        PS1="$(powerline-rs --shell zsh $?)"
+    }
+
+    function install_powerline_precmd() {
+        for s in "${precmd_functions[@]}"; do
+            if [ "$s" = "powerline_precmd" ]; then
+                return
+            fi
+        done
+        precmd_functions+=(powerline_precmd)
+    }
+
+    if [ "$TERM" != "linux" ]; then
+        install_powerline_precmd
+    fi
 fi
 
 #
