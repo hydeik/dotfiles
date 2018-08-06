@@ -1,59 +1,52 @@
 " vim/rc/encoding.rc.vim -- Detect encoding automatically
-"  (this script is taken from http://www.kawaz.jp/pukiwiki/?vim)
+"
+" This script is taken from Shougo's vimrc
+" [https://github.com/Shougo/shougo-s-github]
 
-" 文字コードの自動認識
-if &encoding !=# 'utf-8'
-  set encoding=japan
-  set fileencoding=japan
-endif
-if has('iconv')
-  let s:enc_euc = 'euc-jp'
-  let s:enc_jis = 'iso-2022-jp'
-  " iconvがeucJP-msに対応しているかをチェック
-  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'eucjp-ms'
-    let s:enc_jis = 'iso-2022-jp-3'
-  " iconvがJISX0213に対応しているかをチェック
-  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'euc-jisx0213'
-    let s:enc_jis = 'iso-2022-jp-3'
+" When do not include Japanese, use encoding for fileencoding.
+function! s:ReCheck_FENC() abort
+  let is_multi_byte = search("[^\x01-\x7e]", 'n', 100, 100)
+  if &fileencoding =~# 'iso-2022-jp' && !is_multi_byte
+    let &fileencoding = &encoding
   endif
-  " fileencodingsを構築
-  if &encoding ==# 'utf-8'
-    let s:fileencodings_default = &fileencodings
-    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-    let &fileencodings = &fileencodings .','. s:fileencodings_default
-    unlet s:fileencodings_default
-  else
-    let &fileencodings = &fileencodings .','. s:enc_jis
-    set fileencodings+=utf-8,ucs-2le,ucs-2
-    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-      set fileencodings+=cp932
-      set fileencodings-=euc-jp
-      set fileencodings-=euc-jisx0213
-      set fileencodings-=eucjp-ms
-      let &encoding = s:enc_euc
-      let &fileencoding = s:enc_euc
-    else
-      let &fileencodings = &fileencodings .','. s:enc_euc
-    endif
-  endif
-  " 定数を処分
-  unlet s:enc_euc
-  unlet s:enc_jis
-endif
-" 日本語を含まない場合は fileencoding に encoding を使うようにする
-if has('autocmd')
-  function! AU_ReCheck_FENC()
-    if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-      let &fileencoding=&encoding
-    endif
-  endfunction
-  autocmd BufReadPost * call AU_ReCheck_FENC()
-endif
-" 改行コードの自動認識
+endfunction
+
+autocmd MyVimrc BufReadPost * call s:ReCheck_FENC()
+
+" Default fileformat.
+set fileformat=unix
+" Automatic recognition of a new line cord.
 set fileformats=unix,dos,mac
-" " □とか○の文字があってもカーソル位置がずれないようにする
-" if exists('&ambiwidth')
-"   set ambiwidth=double
-" endif
+
+" Command group opening with a specific character code again.
+" In particular effective when I am garbled in a terminal.
+" Open in UTF-8 again.
+command! -bang -bar -complete=file -nargs=? Utf8
+      \ edit<bang> ++enc=utf-8 <args>
+" Open in iso-2022-jp again.
+command! -bang -bar -complete=file -nargs=? Iso2022jp
+      \ edit<bang> ++enc=iso-2022-jp <args>
+" Open in Shift_JIS again.
+command! -bang -bar -complete=file -nargs=? Cp932
+      \ edit<bang> ++enc=cp932 <args>
+" Open in EUC-jp again.
+command! -bang -bar -complete=file -nargs=? Euc
+      \ edit<bang> ++enc=euc-jp <args>
+" Open in UTF-16 again.
+command! -bang -bar -complete=file -nargs=? Utf16
+      \ edit<bang> ++enc=ucs-2le <args>
+" Open in latin1 again.
+command! -bang -bar -complete=file -nargs=? Latin
+      \ edit<bang> ++enc=latin1 <args>
+
+" Tried to make a file note version.
+command! WUtf8 setlocal fenc=utf-8
+command! WCp932 setlocal fenc=cp932
+command! WLatin1 setlocal fenc=latin1
+
+" Appoint a line feed.
+command! -bang -complete=file -nargs=? WUnix
+      \ write<bang> ++fileformat=unix <args> | edit <args>
+command! -bang -complete=file -nargs=? WDos
+      \ write<bang> ++fileformat=dos <args> | edit <args>
+
