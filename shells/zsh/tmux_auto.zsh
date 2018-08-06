@@ -8,11 +8,15 @@
 # Auto start tmux when the terminal launched.
 #
 
+launch_tmux() {
+    tmux -f ${XDG_CONFIG_HOME}/tmux/tmux.conf "$@"
+}
+
 tmux-new-session() {
     if [[ -n $TMUX ]]; then
-        tmux switch-client -t "$(TMUX= tmux -S "${TMUX%,*,*}" new-session -dP "$@")"
+        launch_tmux switch-client -t "$(TMUX= tmux -S "${TMUX%,*,*}" new-session -dP "$@")"
     else
-        tmux new-session "$@"
+        launch_tmux new-session "$@"
     fi
 }
 
@@ -34,9 +38,9 @@ tmux_sessions() {
         tmux-new-session
     elif [[ -n "$ID" ]]; then
         if [[ -n $TMUX ]]; then
-            tmux switch-client -t "$ID"
+            launch_tmux switch-client -t "$ID"
         else
-            tmux attach-session -t "$ID"
+            launch_tmux attach-session -t "$ID"
         fi
     else
         :  # Start terminal normally
