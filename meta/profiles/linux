@@ -1,0 +1,8 @@
+editorconfig
+git
+latexmk
+uncrustify
+vim
+fish
+zsh
+tmux
