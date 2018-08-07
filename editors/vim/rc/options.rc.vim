@@ -49,6 +49,16 @@ endif
 "   - start : allow backspacing over the start of insert;
 "             CTRL-W and CTRL-U stop once at the start of insert.
 set backspace=indent,eol,start
+
+" Use system clipboard
+if (!has('nvim') || $DISPLAY != '') && has('clipboard')
+  if has('unnamedplus')
+    set clipboard& clipboard+=unnamedplus
+  else
+    set clipboard& clipboard+=unnamed
+  endif
+endif
+
 " Auto indent
 set autoindent
 " Round indent ('>' and '<' commands) to multiple of 'shiftwidth'
