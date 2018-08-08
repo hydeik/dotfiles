@@ -3,10 +3,10 @@ umask 022
 # Do not dump `core` file
 limit coredumpsize 0
 
-# Return if zsh is called from Vim
-if [[ -n $VIMRUNTIME ]]; then
-    return 0
-fi
+# # Return if zsh is called from Vim
+# if [[ -n $VIMRUNTIME ]]; then
+#     return 0
+# fi
 
 ### Tmux
 # Attach tmux session automatically if exists, create new session otherwise.
