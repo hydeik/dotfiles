@@ -1,0 +1,17 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "link": {
+            "~/.config/vim": "editors/vim",
+            "~/.config/nvim": "editors/vim"
+        }
+    }
+]

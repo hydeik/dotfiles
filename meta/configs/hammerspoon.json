@@ -1,0 +1,16 @@
+[
+    {
+        "clean": ["~/.hammerspoon"]
+    },
+    {
+        "link": {
+            "~/.hammerspoon": {
+                "path": "apps/hammerspoon/*.lua",
+                "create": true,
+                "relink": true,
+                "force": true,
+                "glob": true
+            }
+        }
+    }
+]

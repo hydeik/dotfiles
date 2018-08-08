@@ -1,0 +1,22 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "clean": [
+            "~/.config/git"
+        ]
+    },
+    {
+        "link": {
+            "~/.config/git/config": "development/git/config",
+            "~/.config/git/ignore": "development/git/ignore"
+        }
+    }
+]

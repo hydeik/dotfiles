@@ -1,0 +1,19 @@
+[
+    {
+        "clean": [
+            "~/.config/karabiner",
+            "~/.config/karabiner/assets/complex_modifications"
+        ]
+    },
+    {
+        "link": {
+            "~/.config/karabiner/assets/complex_modifications": {
+                "path": "apps/karabiner/assets/complex_modifications/*.json",
+                "create": true,
+                "relink": true,
+                "force": true,
+                "glob": true
+            }
+        }
+    }
+]

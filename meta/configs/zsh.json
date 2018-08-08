@@ -1,0 +1,45 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "clean": [
+            "~/.config/zsh",
+            "~/.config/zsh/functions",
+            "~/.config/zsh/functions/anyframe-functions/widgets"
+        ]
+    },
+    {
+        "link": {
+            "~/.zshenv": "shells/zshenv",
+            "~/.config/zsh/.zshenv": "shells/zsh/.zshenv",
+            "~/.config/zsh/.zshrc": "shells/zsh/.zshrc",
+            "~/.config/zsh": {
+                "path": "shells/zsh/*.zsh",
+                "glob": true
+            },
+            "~/.config/zsh/functions/_rustup": "shells/zsh/functions/_rustup",
+            "~/.config/zsh/functions/ranger-cd": "shells/zsh/functions/ranger-cd",
+            "~/.config/zsh/functions/anyframe-functions/widgets": {
+                "path": "shells/zsh/functions/anyframe-functions/widgets/*",
+                "glob": true
+            }
+        }
+    },
+    {
+        "shell": [
+            ["mkdir -p ~/.cache/zsh", "Create Zsh cache directory"],
+            ["mkdir -p ~/.cache/less", "Create Less cache directory"],
+            [
+                "ZDOTDIR=~/.config/zsh sh -c \"$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)\"",
+                "Install Zsh plugin manager"
+            ]
+        ]
+    }
+]

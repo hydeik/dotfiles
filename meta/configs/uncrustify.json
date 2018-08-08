@@ -1,0 +1,22 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "clean": [
+            "~/.config/uncrustify"
+        ]
+    },
+    {
+        "link": {
+            "~/.config/uncrustify/uncrustify.cfg": "development/uncrustify/uncrustify.cfg"
+        }
+    }
+]
+

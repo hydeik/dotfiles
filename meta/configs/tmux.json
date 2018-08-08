@@ -1,0 +1,29 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "clean": [
+            "~/.config/tmux",
+            "~/.config/tmux/plugins"
+        ]
+    },
+    {
+        "link": {
+            "~/.config/tmux/tmux.conf": "terminals/tmux/tmux.conf",
+            "~/.config/tmux/clipboard-copy.sh": "terminals/tmux/clipboard-copy.sh",
+            "~/.config/tmux/plugins/tpm": "terminals/tmux/plugins/tpm"
+        }
+    },
+    {
+        "shell": [
+            ["git submodule update --init --recursive", "Installing submodules"]
+        ]
+    }
+]

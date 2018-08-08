@@ -1,6 +1,0 @@
-- clean: [~/.config/karabiner, ~/.config/karabiner/assets/complex_modifications]
-
-- link:
-    ~/.config/karabiner/assets/complex_modifications:
-        glob: true
-        path: apps/karabiner/assets/complex_modifications/*.json

@@ -2,8 +2,10 @@
 
 set -e
 
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 BASE_CONFIG="base"
-CONFIG_SUFFIX=".yaml"
+CONFIG_SUFFIX=".json"
 
 META_DIR="meta"
 CONFIG_DIR="configs"
@@ -11,21 +13,20 @@ PROFILES_DIR="profiles"
 
 DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
+DOTBOT_CMD="${BASE_DIR}/${META_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}"
 
-BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 
 cd "${BASE_DIR}"
 git submodule update --init --recursive --remote
 
 
-"${BASE_DIR}/${META_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASE_DIR}" \
+"${DOTBOT_CMD}" -d "${BASE_DIR}" \
     --plugin-dir "${META_DIR}/dotbot-brew" \
     -c "${META_DIR}/${BASE_CONFIG}${CONFIG_SUFFIX}"
 
 for config in ${@}; do
-    configContent="$(<"${BASE_DIR}/${META_DIR}/${BASE_CONFIG}${CONFIG_SUFFIX}")\n$(<"${BASE_DIR}/${META_DIR}/${CONFIG_DIR}/${config}${CONFIG_SUFFIX}")"
-    "${BASE_DIR}/${META_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASE_DIR}" \
+    "${DOTBOT_CMD}" -d "${BASE_DIR}" \
         --plugin-dir "${META_DIR}/dotbot-brew" \
-        -c <(echo -e "$configContent")
+        -c "${META_DIR}/${CONFIG_DIR}/${config}${CONFIG_SUFFIX}"
 done
