@@ -4,11 +4,11 @@
 # zmodload zsh/zprof && zprof
 
 ##
-## HTTP proxy (if necessary)
+## Prevent to load system provided configuration files /etc/z*.
+## If $ZDOTDIR environment variable is pointing different directory from $HOME,
+## this option should be specified both the $HOME/.zshenv and $ZDOTDIR/.zshenv.
 ##
-# export http_proxy=
-# export ftp_proxy=
-#emacsMarkMode export RSYNC_PROXY=
+unsetopt global_rcs
 
 ##==============================================================================
 ## Increase stack size (required for large scale simulation on linux)

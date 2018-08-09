@@ -32,9 +32,17 @@
 # 2. /etc/zlogout
 
 ##
-## Don't load /etc/profile, /etc/zprofile
+## Prevent to load system provided configuration files:
+##  - /etc/zprofile
+##  - /etc/zshrc
+##  - /etc/zlogin
+##  - /etc/zlogout
 ##
-setopt no_global_rcs
+## This option should be specified in ${ZDOTDIR}/.zshenv, too: otherwise,
+## zsh launched as a subprocess from e.g. Tmux / GNU screen loads
+## ${ZDOTDIR}/.zshenv, but does not $HOME/.zshenv.
+##
+unsetopt global_rcs
 
 ##
 ## XDG Base Directory Specification
@@ -57,7 +65,12 @@ export XDG_LIB_HOME=${HOME}/.local/lib
 ## Set ZDOTFILE environment variable
 ##
 export ZDOTDIR=${XDG_CONFIG_HOME}/zsh
-if [ -f ${ZDOTDIR}/.zshenv ]; then
-    source ${ZDOTDIR}/.zshenv
+if [[ -z "$TMUX" ]] && [[ -z "$STY" ]]; then
+    echo "tmux not running"
+    if [ -f ${ZDOTDIR}/.zshenv ]; then
+        source ${ZDOTDIR}/.zshenv
+    fi
+else
+    echo "tmux running"
+    exit
 fi
-
