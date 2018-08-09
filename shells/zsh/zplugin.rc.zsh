@@ -42,6 +42,12 @@ case ${OSTYPE} in
         ;;
 esac
 
+# # Powerline (prompt)
+# #   Install powerline by 'pip install powerline-status'
+# PS1="READY > "
+# zplugin ice wait'!0' pick"powerline/bindings/zsh/powerline.zsh" atload'!powerline-daemon -q'
+# zplugin light "powerline/powerline"
+
 # zsh-completions
 zplugin ice wait'0' blockf
 zplugin light "zsh-users/zsh-completions"
