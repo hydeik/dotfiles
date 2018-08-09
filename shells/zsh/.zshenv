@@ -50,7 +50,13 @@ path=(
     $XDG_BIN_HOME(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
-    # *nix local, HomeBrew
+    # for OSX, GNU commands installed with Homebrew
+    /usr/local/opt/coreutils/libexec/gnubin(N-/)
+    /usr/local/opt/findutils/libexec/gnubin(N-/)
+    /usr/local/opt/gnu-sed/libexec/gnubin(N-/)
+    /usr/local/opt/gnu-tar/libexec/gnubin(N-/)
+    /usr/local/opt/grep/libexec/gnubin(N-/)
+    # *nix local, Homebrew
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
     # MacPorts
@@ -75,6 +81,11 @@ manpath=(
     $HOME/man(N-/)
     $HOME/dev/man(N-/)
     $XDG_DATA_HOME/man(N-/)
+    /usr/local/opt/coreutils/libexec/gnuman(N-/)
+    /usr/local/opt/findutils/libexec/gnuman(N-/)
+    /usr/local/opt/gnu-sed/libexec/gnuman(N-/)
+    /usr/local/opt/gnu-tar/libexec/gnuman(N-/)
+    /usr/local/opt/grep/libexec/gnuman(N-/)
     /sw/share/man(N-/)
     /opt/local/share/man(N-/)
     /usr/local/share/jman(N-/)
