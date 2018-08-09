@@ -9,13 +9,8 @@
         }
     },
     {
-        "clean": [
-            "~/.config/alacritty"
-        ]
-    },
-    {
         "link": {
-            "~/.editorconfig": "terminals/alacritty/alacritty.yml"
+            "~/.editorconfig": "development/editorconfig"
         }
     }
 ]
