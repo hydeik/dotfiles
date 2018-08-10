@@ -16,15 +16,15 @@ function! rc#plugin#gina#hook_post_source() abort
         \ '--opener', 'vsplit'
         \)
 
-	call gina#custom#command#option('/\%(status\|commit\)', '-u|--untracked-files')
-	call gina#custom#command#option('/\%(status\|changes\)', '--ignore-submodules')
+  call gina#custom#command#option('/\%(status\|commit\)', '-u|--untracked-files')
+  call gina#custom#command#option('/\%(status\|changes\)', '--ignore-submodules')
 
   " Custom aliases
-	call gina#custom#action#alias('branch', 'track', 'checkout:track')
+  call gina#custom#action#alias('branch', 'track', 'checkout:track')
 
-	call gina#custom#action#alias('branch', 'merge', 'commit:merge')
+  call gina#custom#action#alias('branch', 'merge', 'commit:merge')
 
-	call gina#custom#action#alias('branch', 'rebase', 'commit:rebase')
+  call gina#custom#action#alias('branch', 'rebase', 'commit:rebase')
 
   " Custom key mappings
   call gina#custom#mapping#nmap(
@@ -37,13 +37,13 @@ function! rc#plugin#gina#hook_post_source() abort
         \ {'noremap': 1, 'silent': 1}
         \)
 
-	call gina#custom#mapping#nmap(
-	      \ 'branch', 'g<CR>',
-	      \ '<Plug>(gina-commit-checkout-track)'
-	      \)
+  call gina#custom#mapping#nmap(
+        \ 'branch', 'g<CR>',
+        \ '<Plug>(gina-commit-checkout-track)'
+        \)
 
-	call gina#custom#execute(
-	      \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
-	      \ 'setlocal winfixheight',
-	      \)
+  call gina#custom#execute(
+        \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
+        \ 'setlocal winfixheight',
+        \)
 endfunction
