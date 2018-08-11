@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#
+# anyenv installer
+#
+# The script is modified from `pyenv-installer`.
+#
+set -e
+[ -n "$ANYENV_DEBUG" ] && set -x
+
+if [ -z "$ANYENV_ROOT" ]; then
+    ANYENV_ROOT="${HOME}/.anyenv"
+fi
+
+shell="$1"
+if [ -z "$shell" ]; then
+    shell="$(ps c -p "$PPID" -o 'ucomm=' 2>/dev/null || true)"
+    shell="${shell##-}"
+    shell="${shell%% *}"
+    shell="$(basename "${shell:-$SHELL}")"
+fi
+
+colorize() {
+    if [ -t 1 ]; then printf "\e[%sm%s\e[m" "$1" "$2"
+    else echo -n "$2"
+    fi
+}
+
+failed_checkout() {
+    echo "Failed to git clone $1"
+    exit -1
+}
+
+checkout() {
+    [ -d "$2" ] || git clone --depth 1 "$1" "$2" || failed_checkout "$1"
+}
+
+if ! command -v git 1>/dev/null 2>&1; then
+    echo "anyenv: Git is not installed, can't continue." >&2
+    exit 1
+fi
+
+if [ -n "${USE_GIT_URI}" ]; then
+    GITHUB="git://github.com"
+else
+    GITHUB="https://github.com"
+fi
+
+checkout "${GITHUB}/riywo/anyenv.git"           "${ANYENV_ROOT}"
+checkout "${GITHUB}/znz/anyenv-update.git"      "${ANYENV_ROOT}/plugins/anyenv-update"
+checkout "${GITHUB}/znz/anyenv-git.git"         "${ANYENV_ROOT}/plugins/anyenv-git"
+checkout "${GITHUB}/momo-lab/anyenv-plugin.git" "${ANYENV_ROOT}/plugins/anyenv-plugin"
+
