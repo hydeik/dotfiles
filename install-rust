@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+has_command() {
+    command -v "$1" > /dev/null 2>&1
+}
+
+RUSTUP="${CARGO_HOME:-$HOME/.cargo}/bin/rustup"
+CARGO="${CARGO_HOME:-$HOME/.cargo}/bin/cargo"
+
+has_toolchain() {
+    "$RUSTUP" toolchain list | grep "$1" > /dev/null 2>&1
+}
+
+if [ -x "$RUSTUP" ]; then
+    "$RUSTUP" update
+else
+    curl https://sh.rustup.rs -sSf | sh -s -- --no-modify-path
+fi
+
+for toolchain in stable beta nightly; do
+    if ! has_toolchain "$toolchain"; then
+        "$RUSTUP" toolchain install $toolchain
+        for component in rustfmt-preview rls-preview rust-analysis rust-src; do
+            "$RUSTUP" component add --toolchain "$toolchain" "$component";
+        done
+    fi
+done
+
+if ! has_toolchain nightly; then
+    "$RUSTUP" component add --toolchain nightly clippy-preview
+fi
+
+is_installed() {
+    "$CARGO" install --list | grep "$1" > /dev/null 2>&1
+}
+
+CARGO_INSTALL_TARGET=(
+    # Cargo tools
+    cargo-update
+    cargo-outdated
+    cargo-expand
+    cargo-tree
+    cargo-benchcmp
+    # replacement for `cat`
+    bat
+    # replacement for `du`
+    du-dust
+    # replacement for `ls`
+    exa
+    # replacement for `find`
+    fd-find
+    # fuzzy finder `rg`
+    ripgrep
+    # powerline prompt
+    powerline-rs
+)
+
+CARGO_INSTALL_TARGET_NIGHTLY=(
+    cargo-modules
+    racer
+)
+
+for target in "${CARGO_INSTALL_TARGET[@]}"; do
+    if ! is_installed "$target"; then
+        "$CARGO" install "$target"
+    fi
+done
+
+for target in "${CARGO_INSTALL_TARGET_NIGHTLY[@]}"; do
+    if ! is_installed "$target"; then
+        "$CARGO" +nightly install "$target"
+    fi
+done
+
+# Update all packagesa installed by cargo
+"$CARGO" install-update --all
