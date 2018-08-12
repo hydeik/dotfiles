@@ -4,6 +4,3 @@
 [submodule "meta/dotbot-brew"]
 	path = meta/dotbot-brew
 	url = https://github.com/d12frosted/dotbot-brew.git
-[submodule "terminals/tmux/plugins/tpm"]
-	path = terminals/tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm.git
