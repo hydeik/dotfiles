@@ -46,11 +46,7 @@
     {
         "shell": [
             ["mkdir -p ~/.cache/zsh", "Create Zsh cache directory"],
-            ["mkdir -p ~/.cache/less", "Create Less cache directory"],
-            [
-                "ZDOTDIR=~/.config/zsh sh -c \"$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)\"",
-                "Install Zsh plugin manager"
-            ]
+            ["mkdir -p ~/.cache/less", "Create Less cache directory"]
         ]
     }
 ]

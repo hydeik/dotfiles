@@ -44,14 +44,35 @@ ostype() {
     echo ${(L):-$(uname)}
 }
 
-# re-compile zsh configuration files
-function zsh_reload () {
-    autoload -U zrecompile
-    for f in ${ZDOTDIR}/.zshenv ${ZDOTDIR}/.zshrc ${ZDOTDIR}/<->_*.zsh
-    do
-        [[ -f $f ]] && zrecompile -p $f && command rm -f $f.zwc.old
-    done
-    [[ -f ${ZDOTDIR}/.zcompdump ]] && zrecompile -p -M ${ZDOTDIR}/.zcompdump
+# compile zsh scripts if modified.
+zcompare() {
+    if [[ -s "${1}" && ( ! -s "${1}.zwc" || "${1}" -nt "${1}.zwc") ]]; then
+        zcompile "${1}"
+    fi
+}
 
-    source ${ZDOTDIR}/.zshrc
+# load file if exists
+loadlib() {
+    local f="${1:?'too few argument: you have to specify a file to source'}"
+    if [[ -s "$f" ]]; then
+        zcompare "$f"
+        source "$f"
+    fi
+}
+
+# re-compile zsh configuration files
+zsh_reload () {
+    zcompare "${ZDOTDIR}/.zshenv"
+    zcompare "${ZDOTDIR}/.zshrc"
+    for conf in ${ZDOTDIR}/rc/<->_*.zsh; do
+        zcompare "${conf}"
+    done
+    if [[ -n "${ZPLUG_HOME}" ]]; then
+        zcompare "${ZPLUG_HOME}/zcompdump"
+    else
+        zcompare "${ZDOTDIR:-$HOME}/.zcompdump"
+    fi
+
+    source "${ZDOTDIR}/.zshenv"
+    source "${ZDOTDIR}/.zshrc"
 }

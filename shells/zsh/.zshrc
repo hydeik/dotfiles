@@ -11,22 +11,31 @@ if (( ${+commands[tmux]} )); then
     source ${ZDOTDIR}/scripts/tmux_auto.zsh
 fi
 
-
-## zplugin -- An elastic and fast Zshell plugin manager
-local -A ZPLGM  # initial Zplugin's hash definition
-ZPLGM[BIN_DIR]=${ZDOTDIR}/.zplugin/bin
-ZPLGM[HOME_DIR]=${ZDOTDIR}/.zplugin
-ZPLGM[ZCOMPDUMP_PATH]=${XDG_CACHE_HOME}/zsh/zcompdump
-
-if [[ -f ${ZPLGM[BIN_DIR]}/zplugin.zsh ]]; then
-    source "${ZPLGM[BIN_DIR]}/zplugin.zsh"
-    # Load zplugin configuration file. This will call compinit
-    source "${ZDOTDIR}/zplugin.rc.zsh"
-    # if you `source` the zplugin.zsh after calling compinit,
-    # then add those two lines:
-    # autoload -Uz _zplugin
-    # (( ${+_comps} )) && _comps[zplugin]=_zplugin
+## Zplug
+export ZPLUG_HOME="${ZDOTDIR:-$HOME}/.zplug"
+export ZPLUG_USE_CACHE=true
+export ZPLUG_LOADFILE="${ZDOTDIR}/zplug_plugins.zsh"
+if [[ ! -f "${ZPLUG_HOME}/init.zsh" ]]; then
+    # Install zplug
+    git clone https://github.com/zplug/zplug "${ZPLUG_HOME}"
+    source "${ZPLUG_HOME}/init.zsh" && zplug update --self
 fi
+
+source "${ZPLUG_HOME}/init.zsh"
+
+if [[ "$ZPLUG_LOADFILE" -nt "$ZPLUG_CACHE_DIR/interface" || ! -f "$ZPLUG_CACHE_DIR/interface" ]]; then
+    zplug check || zplug install
+fi
+
+if __zplug::core::cache::diff; then
+    __zplug::core::load::from_cache
+else
+    zplug load
+fi
+
+for conf in ${ZDOTDIR}/rc/<->_*.zsh; do
+    source "${conf}"
+done
 
 ## set keychain
 if (( ${+commands[keychain]} )); then
@@ -95,11 +104,11 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 ##
 ## Machine local settings
 ##
-[[ -f "${ZDOTDIR:-$HOME}/.zshrc_local" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_local"
+loadlib "${ZDOTDIR:-$HOME}/.zshrc_local"
 
 ##
 ## Profiling
 ##
-# if type zprof > /dev/null 2>&1; then
-#   zprof | less
-# fi
+#if type zprof > /dev/null 2>&1; then
+#  zprof | less
+#fi
