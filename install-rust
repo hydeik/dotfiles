@@ -31,7 +31,7 @@ if ! has_toolchain nightly; then
 fi
 
 is_installed() {
-    "$CARGO" install --list | grep "$1" > /dev/null 2>&1
+    has_command "$1" || "$CARGO" install --list | grep "$1" > /dev/null 2>&1
 }
 
 CARGO_INSTALL_TARGET=(
