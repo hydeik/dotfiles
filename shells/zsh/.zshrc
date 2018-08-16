@@ -1,14 +1,9 @@
-# Set the default permission of file to 0644 (rw-r--r--)
-umask 022
-# Do not dump `core` file
-limit coredumpsize 0
-
 # # Return if zsh is called from Vim
 # if [[ -n $VIMRUNTIME ]]; then
 #     return 0
 # fi
 
-### Tmux
+## Tmux
 # Attach tmux session automatically if exists, create new session otherwise.
 if (( ${+commands[tmux]} )); then
     export TMUX_AUTO_START=true
@@ -100,14 +95,11 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 ##
 ## Machine local settings
 ##
-if [[ -f ~/.zshrc_local ]]; then
-    source ~/.zshrc_local
-fi
-if [[ -f ${ZDOTDIR}/.zshrc_local ]]; then
-    source ${ZDOTDIR}/.zshrc_local
-fi
+[[ -f "${ZDOTDIR:-$HOME}/.zshrc_local" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_local"
 
-# # for profiling
+##
+## Profiling
+##
 # if type zprof > /dev/null 2>&1; then
 #   zprof | less
 # fi

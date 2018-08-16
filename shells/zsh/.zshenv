@@ -1,8 +1,11 @@
-#
-# Setting for profiling `zplof`
-#
+##
+## Setting for profiling `zplof`
+##
 # zmodload zsh/zprof && zprof
 
+##==============================================================================
+## System configuration
+##==============================================================================
 ##
 ## Prevent to load system provided configuration files /etc/z*.
 ## If $ZDOTDIR environment variable is pointing different directory from $HOME,
@@ -10,13 +13,21 @@
 ##
 unsetopt global_rcs
 
-##==============================================================================
+##
 ## Increase stack size (required for large scale simulation on linux)
-##==============================================================================
+##
 case ${OSTYPE} in
     darwin*) ulimit -s unlimited ;;
     linux*)  ulimit -s unlimited ;;
 esac
+##
+## Set the default permission of file to 0644 (rw-r--r--)
+##
+umask 022
+##
+## Do not dump `core` file
+##
+limit coredumpsize 0
 
 ##==============================================================================
 ## Set path environment
@@ -97,7 +108,7 @@ manpath=(
 )
 
 ## infopath / INFOPATH
-typeset -gxU infopath INFOPATH
+typeset -gxU  infopath INFOPATH
 typeset -gxTU INFOPATH infopath  # tie the new array to the variables
 infopath=(
     $HOME/share/info(N-/)
@@ -109,11 +120,12 @@ infopath=(
 )
 
 ## pag_config_path / PKG_CONFIG_PATH
-typeset -gxU pkg_config_path PKG_CONFIG_PATH
-typeset -gxU PKG_CONFIG_PATH pkg_config_path
+typeset -gxU  pkg_config_path PKG_CONFIG_PATH
+typeset -gxTU PKG_CONFIG_PATH pkg_config_path
 pkg_config_path=(
     $HOME/.linuxbrew/lib/pkgconfig(N-/)
     /usr/local/lib/pkgconfig(N-/)
+    /usr/local/share/pkgconfig(N-/)
     /usr/lib/x86_64-linux-gnu/pkgconfig(N-/)
     /usr/share/pkgconfig(N-/)
     /usr/lib/pkgconfig(N-/)
@@ -139,16 +151,18 @@ ld_library_path=(
     $ld_library_path[@]
 )
 
-##
+##============================================================================
+## Other environment variables
+##============================================================================
+
 ## HOST
-##
 if (( ${+commands[hostname]} )); then
     export HOST=$(hostname)
 fi;
 export host=$(echo ${HOST} | sed -e 's/\..*//')
 
+## UID
 export UID
-# SHELL=`which zsh`; export SHELL
 
 ##
 ## Language, Locale
@@ -162,7 +176,6 @@ export LC_CTYPE="${LANGUAGE}"
 ## History
 ##
 # History file
-#export HISTFILE=${ZDOTDIR}/.zsh_history
 export HISTFILE="${XDG_CACHE_HOME}/zsh/history"
 # History size in memory
 export HISTSIZE=100000
@@ -176,10 +189,22 @@ if [[ "$UID" == 0 ]]; then
     export SAVEHIST=0
 fi
 
+##
+## EDITOR
+##
+if (( ${+commands[nvim]} )); then
+    export EDITOR='nvim'
+elif (( ${+commands[vim]} )); then
+    export EDITOR="vim"
+else
+    export EDITOR="vi"
+fi
+export VISUAL="${EDITOR}"
 
-#### PAGER
+##
+## PAGER
+##
 export PAGER=less
-
 # Less status line
 export LESS='-R -f -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
 export LESSCHARSET='utf-8'
@@ -205,41 +230,20 @@ if [[ -n "$TERM" ]]; then
     export LESS_TERMCAP_ZW=$(tput rsupm)
 fi
 
-# Colors for ls
-## for GNU ls
+## Colors for ls
+# for GNU ls
 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-## for BSD, OSX
+# for BSD, OSX (builtin)
 export LSCOLORS=exfxcxdxbxegedabagacad
 
-#### EDITOR
-if (( ${+commands[nvim]} )); then
-    export EDITOR='nvim'
-elif (( ${+commands[vim]} )); then
-    export EDITOR="vim"
-else
-    export EDITOR="vi"
-fi
 
-#### $COLORTERM
-# export COLORTERM=0
-# case "$TERM" in
-#     kterm*);    COLORTERM=1 ;;
-#     xterm*);    COLORTERM=1 ;;
-#     rxvt*);     COLORTERM=1 ;;
-#     mlterm*);   COLORTERM=1 ;;
-#     Eterm*);    COLORTERM=1 ;;
-#     screen*);   COLORTERM=1 ;;
-#     eterm*);    COLORTERM=1 ;;  # eterm on GNU Emacs
-#     dumb*);     COLORTERM=0 ;;  #
-#     # emacs*);  COLORTERM=1 ;;
-#     ct100*);    COLORTERM=1 ;;  # TeraTermPro
-# esac
-
-##
+##============================================================================
 ## Development environment
-##
+##============================================================================
 
-# --- Anyenv
+##
+## Anyenv
+##
 #
 # NOTE:
 #
@@ -273,9 +277,11 @@ path=(
     ${RBENV_ROOT}/bin(N-/)
     ${RBENV_ROOT}/shims(N-/)
     $path[@]
-    )
+)
 
-# --- Rust
+##
+## Rust
+##
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
 if (( ${+commands[rustc]} )); then
     export RUST_SYS_ROOT="$(rustc --print sysroot)"
@@ -285,7 +291,9 @@ if (( ${+commands[rustc]} )); then
     manpath=( ${RUST_SYS_ROOT}/share/man $manpath[@] )
 fi
 
-# --- Go
+##
+## Go
+##
 export GOPATH=${HOME}
 
 ##
@@ -307,11 +315,11 @@ case ${OSTYPE} in
     *)  ;;
 esac
 
-##
+##============================================================================
 ## Computational programs
-##
+##============================================================================
 
-# rscat
+## rscat
 if [[ -z "$RSCATDIR" ]]; then
     case "$HOST" in
         freya*) export RSCATDIR="$HOME/programs/rscat";;
@@ -330,7 +338,7 @@ fi
 # available $INTERACTIVE_FILTER
 export INTERACTIVE_FILTER="fzf:fzf-tmux:peco:percol:gof:pick"
 
-##
-## Machine local configurations
-##
+##============================================================================
+## Machine local enviriments if provided
+##============================================================================
 [[ -f "${ZDOTDIR:-$HOME}/.secret" ]] && "${ZDOTDIR:-$HOME}/.secret"
