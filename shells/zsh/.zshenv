@@ -35,7 +35,7 @@ esac
 typeset -gxU fpath
 fpath=(
     $XDG_DATA_HOME/zsh/site-functions(N-/)
-    $ZDOTDIR/Completion(N-/)
+    $ZDOTDIR/completions(N-/)
     $ZDOTDIR/functions(N-/)
     $ZDOTDIR/plugins/zsh-completions(N-/)
     /usr/local/share/zsh/site-functions(N-/)

@@ -24,10 +24,21 @@
                 "path": "shells/zsh/*.zsh",
                 "glob": true
             },
-            "~/.config/zsh/functions/_rustup": "shells/zsh/functions/_rustup",
+            "~/.config/zsh/completions": {
+                "path": "shells/zsh/completions/*",
+                "glob": true
+            },
             "~/.config/zsh/functions/ranger-cd": "shells/zsh/functions/ranger-cd",
             "~/.config/zsh/functions/anyframe-functions/widgets": {
                 "path": "shells/zsh/functions/anyframe-functions/widgets/*",
+                "glob": true
+            },
+            "~/.config/zsh/rc": {
+                "path": "shells/zsh/rc/*.zsh",
+                "glob": true
+            },
+            "~/.config/zsh/scripts": {
+                "path": "shells/zsh/scripts/*",
                 "glob": true
             }
         }

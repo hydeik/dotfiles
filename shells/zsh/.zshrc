@@ -13,7 +13,7 @@ limit coredumpsize 0
 if (( ${+commands[tmux]} )); then
     export TMUX_AUTO_START=true
     export PERCOL=fzf
-    source ${ZDOTDIR}/tmux_auto.zsh
+    source ${ZDOTDIR}/scripts/tmux_auto.zsh
 fi
 
 
