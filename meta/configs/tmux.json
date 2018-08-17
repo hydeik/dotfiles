@@ -17,13 +17,11 @@
     {
         "link": {
             "~/.config/tmux/tmux.conf": "terminals/tmux/tmux.conf",
-            "~/.config/tmux/clipboard-copy.sh": "terminals/tmux/clipboard-copy.sh",
-            "~/.config/tmux/plugins/tpm": "terminals/tmux/plugins/tpm"
+            "~/.config/tmux/clipboard-copy.sh": "terminals/tmux/clipboard-copy.sh"
         }
     },
     {
         "shell": [
-            ["git submodule update --init --recursive", "Installing submodules"]
         ]
     }
 ]
