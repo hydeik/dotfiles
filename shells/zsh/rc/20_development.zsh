@@ -26,19 +26,35 @@ goenv() {
     esac
 }
 
-# ndenv
-ndenv() {
-    typeset command
+# # ndenv
+# ndenv() {
+#     typeset command
+#     command="$1"
+#     if [ "$#" -gt 0 ]; then
+#         shift
+#     fi
+#
+#     case "$command" in
+#         rehash|shell|update)
+#             eval "`ndenv "sh-$command" "$@"`";;
+#         *)
+#             command ndenv "$command" "$@";;
+#     esac
+# }
+
+# nodenv
+nodenv() {
+    local command
     command="$1"
     if [ "$#" -gt 0 ]; then
         shift
     fi
 
     case "$command" in
-        rehash|shell|update)
-            eval "`ndenv "sh-$command" "$@"`";;
+        rehash|shell)
+            eval "$(nodenv "sh-$command" "$@")";;
         *)
-            command ndenv "$command" "$@";;
+            command nodenv "$command" "$@";;
     esac
 }
 
@@ -73,4 +89,3 @@ rbenv() {
             command rbenv "$command" "$@";;
     esac
 }
-
