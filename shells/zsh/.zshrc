@@ -11,31 +11,53 @@ if (( ${+commands[tmux]} )); then
     source ${ZDOTDIR}/scripts/tmux_auto.zsh
 fi
 
-## Zplug
-export ZPLUG_HOME="${ZDOTDIR:-$HOME}/.zplug"
-export ZPLUG_USE_CACHE=true
-export ZPLUG_LOADFILE="${ZDOTDIR}/zplug_plugins.zsh"
-if [[ ! -f "${ZPLUG_HOME}/init.zsh" ]]; then
-    # Install zplug
-    git clone https://github.com/zplug/zplug "${ZPLUG_HOME}"
-    source "${ZPLUG_HOME}/init.zsh" && zplug update --self
+##
+## Utility functions for shell configuration
+##
+source "${ZDOTDIR}/scripts/utils.zsh"
+
+##
+## Zgen plugin manager
+##
+export ZGEN_DIR="${ZDOTDIR:-${HOME}}/.zgen"
+export ZGEN_INIT="${ZGEN_DIR}/init.zsh"
+export ZGEN_CUSTOM_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump"
+
+# Load zgen only if a user types a zgen command
+zgen () {
+    unset -f zgen
+    if [[ ! -s "${ZGEN_DIR}/zgen.zsh" ]]; then
+        git clone --recursive https://github.com/tarjoilija/zgen.git "${ZGEN_DIR}"
+    fi
+    source "${ZGEN_DIR}/zgen.zsh"
+    zgen "$@"
+}
+
+# Generate zgen init script (cache) if needed
+if [[ ! -s "${ZGEN_DIR}/init.zsh" ]]; then
+    # plugins
+    # zgen load "b4b4r07/enhancd" "init.sh"
+    zgen load "greymd/tmux-xpanes"
+    zgen load "mollifier/anyframe"
+    zgen load "zsh-users/zsh-completions"
+    zgen load "39e/zsh-completions-anyenv"
+    zgen load "zsh-users/zsh-autosuggestions"
+    zgen load "zdharma/fast-syntax-highlighting"
+    zgen load "zsh-users/zsh-history-substring-search"
+
+    # local configuration files
+    for conf in ${ZDOTDIR}/rc/*.zsh; do
+        zgen load "${conf}"
+    done
+
+    # generate $ZGEN_INIT file
+    zgen save
+
+    # Compile files if necessary
+    zsh_compile_all
 fi
 
-source "${ZPLUG_HOME}/init.zsh"
-
-if [[ "$ZPLUG_LOADFILE" -nt "$ZPLUG_CACHE_DIR/interface" || ! -f "$ZPLUG_CACHE_DIR/interface" ]]; then
-    zplug check || zplug install
-fi
-
-if __zplug::core::cache::diff; then
-    __zplug::core::load::from_cache
-else
-    zplug load
-fi
-
-for conf in ${ZDOTDIR}/rc/<->_*.zsh; do
-    source "${conf}"
-done
+source "${ZGEN_INIT}"
 
 ## set keychain
 if (( ${+commands[keychain]} )); then
@@ -109,6 +131,6 @@ loadlib "${ZDOTDIR:-$HOME}/.zshrc_local"
 ##
 ## Profiling
 ##
-#if type zprof > /dev/null 2>&1; then
-#  zprof | less
-#fi
+# if type zprof > /dev/null 2>&1; then
+#     zprof | less
+# fi

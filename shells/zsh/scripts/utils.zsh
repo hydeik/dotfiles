@@ -1,5 +1,5 @@
 # has_command return true  if given name of command is exists
-function has_command() {
+has_command() {
     type "${1:?too few arguments}" &>/dev/null
 }
 
@@ -51,6 +51,13 @@ zcompare() {
     fi
 }
 
+# compile all the files provided as arguments
+zcompile_all() {
+    for f in "$*"; do
+        zcompare "$f"
+    done
+}
+
 # load file if exists
 loadlib() {
     local f="${1:?'too few argument: you have to specify a file to source'}"
@@ -60,19 +67,28 @@ loadlib() {
     fi
 }
 
-# re-compile zsh configuration files
-zsh_reload () {
+# Compile zsh configurations and scripts
+zsh_compile_all() {
     zcompare "${ZDOTDIR}/.zshenv"
     zcompare "${ZDOTDIR}/.zshrc"
     for conf in ${ZDOTDIR}/rc/<->_*.zsh; do
         zcompare "${conf}"
     done
-    if [[ -n "${ZPLUG_HOME}" ]]; then
-        zcompare "${ZPLUG_HOME}/zcompdump"
+
+    if [[ -n "${ZGEN_CUSTOM_COMPDUMP}" ]]; then
+        zcompare "${ZGEN_CUSTOM_COMPDUMP}"
     else
         zcompare "${ZDOTDIR:-$HOME}/.zcompdump"
     fi
 
-    source "${ZDOTDIR}/.zshenv"
-    source "${ZDOTDIR}/.zshrc"
+    # Compile plugin files managed by Zgen
+    for f in ${ZGEN_DIR}/**/*.zsh; do
+        zcompare "$f"
+    done
+
+    if [[ -d "${zgen_dir}/zdharma/fast-syntax-highlighting-master" ]]; then
+        for f in fast-highlight fast-read-ini-file fast-string-highlight; do
+            zcompare "${zgen_dir}/zdharma/fast-syntax-highlighting-master/${f}"
+        done
+    fi
 }

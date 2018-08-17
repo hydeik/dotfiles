@@ -11,8 +11,11 @@
     {
         "clean": [
             "~/.config/zsh",
+            "~/.config/zsh/completions",
             "~/.config/zsh/functions",
-            "~/.config/zsh/functions/anyframe-functions/widgets"
+            "~/.config/zsh/functions/anyframe-functions/widgets",
+            "~/.config/zsh/rc",
+            "~/.config/zsh/scripts"
         ]
     },
     {

@@ -39,7 +39,7 @@ bindkey '^x^b' anyframe-widget-checkout-git-branch
 bindkey '^x^i' anyframe-widget-insert-git-branch
 
 # emoji-cli
-bindkey '^x^e' emoji::cli
+# bindkey '^x^e' emoji::cli
 
 # Ranger
 if (( ${+commands[ranger]} )); then
