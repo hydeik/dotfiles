@@ -50,3 +50,23 @@ checkout "${GITHUB}/znz/anyenv-update.git"      "${ANYENV_ROOT}/plugins/anyenv-u
 checkout "${GITHUB}/znz/anyenv-git.git"         "${ANYENV_ROOT}/plugins/anyenv-git"
 checkout "${GITHUB}/momo-lab/anyenv-plugin.git" "${ANYENV_ROOT}/plugins/anyenv-plugin"
 
+PATH="${ANYENV_ROOT}/bin:${PATH}"
+eval "$(anyenv init -)"
+
+# install **envs
+anyenv install goenv
+anyenv install nodenv
+anyenv install pyenv
+anyenv install rbenv
+
+# plugins
+anyenv plugin-install pyenv pyenv/pyenv-installer
+anyenv plugin-install pyenv pyenv/pyenv-doctor
+anyenv plugin-install pyenv pyenv/pyenv-update
+anyenv plugin-install pyenv pyenv/pyenv-virtualenv
+anyenv plugin-install pyenv pyenv/pyenv-which-ext
+anyenv plugin-install pyenv jawshooah/pyenv-default-packages
+anyenv plugin-install pyenv massongit/pyenv-pip-update
+
+anyenv plugin-install rbenv rbenv/rbenv-default-gems
+anyenv plugin-install rbenv rkh/rbenv-update
