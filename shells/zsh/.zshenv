@@ -1,7 +1,43 @@
 ##
 ## Setting for profiling `zplof`
 ##
-# zmodload zsh/zprof && zprof
+#zmodload zsh/zprof && zprof
+
+##
+## NOTE: Zsh configuration file loading order
+##
+
+# -- login shell
+# 1. /etc/zshenv
+# 2. ${ZDOTDIR}/.zshenv
+# 3. /etc/zprofile
+# 4. ${ZDOTDIR}/.zprofile
+# 5. /etc/zshrc
+# 6. ${ZDOTDIR}/.zshrc
+# 7. /etc/zlogin
+# 8. ${ZDOTDIR}/.zlogin
+
+# -- interactive shell
+# 1. /etc/zshenv
+# 2. ${ZDOTDIR}/.zshenv
+# 3. /etc/zshrc
+# 4. ${ZDOTDIR}/.zshrc
+
+# -- shell script (non-interactive)
+# 1. /etc/zshenv
+# 2. ${ZDOTDIR}/.zshenv
+
+# -- logout
+# 1. ${ZDOTDIR}/.zlogout
+# 2. /etc/zlogout
+
+##
+## Prevent to load system provided configuration files:
+##  - /etc/zprofile
+##  - /etc/zshrc
+##  - /etc/zlogin
+##  - /etc/zlogout
+##
 
 ##==============================================================================
 ## System configuration
@@ -28,6 +64,24 @@ umask 022
 ## Do not dump `core` file
 ##
 limit coredumpsize 0
+
+
+##==============================================================================
+## XDG Base Directory Specification
+##==============================================================================
+# --- User directories
+export XDG_CONFIG_HOME="${HOME}/.config"     # [default: $HOME/.config]
+export XDG_CACHE_HOME="${HOME}/.cache"       # [default: $HOME/.cache]
+export XDG_DATA_HOME="${HOME}/.local/share"  # [default: $HOME/.local/share]
+export XDG_BIN_HOME="${HOME}/.local/bin"
+export XDG_LIB_HOME="${HOME}/.local/lib"
+# export XDG_RUNTIME_DIR                     # [default: ?]
+
+# --- System directories
+## [default: /usr/local/share:/usr/share]
+#export XDG_DATA_DIRS=/usr/local/share:/usr/share
+## [default: /etc/xdg]
+#export XDG_CONFIG_DIRS=/etc/xdg
 
 ##==============================================================================
 ## Set path environment
@@ -193,7 +247,7 @@ fi
 ## EDITOR
 ##
 if (( ${+commands[nvim]} )); then
-    export EDITOR='nvim'
+    export EDITOR="nvim"
 elif (( ${+commands[vim]} )); then
     export EDITOR="vim"
 else

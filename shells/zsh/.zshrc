@@ -59,11 +59,11 @@ fi
 
 source "${ZGEN_INIT}"
 
-## set keychain
-if (( ${+commands[keychain]} )); then
-    keychain ${HOME}/.ssh/id_ed25519 ${HOME}/.ssh/id_github_ed25519 2> /dev/null
-    source ${HOME}/.keychain/${HOST}-sh
-fi
+# ## set keychain
+# if (( ${+commands[keychain]} )); then
+#     keychain ${HOME}/.ssh/id_ed25519 ${HOME}/.ssh/id_github_ed25519 2> /dev/null
+#     source ${HOME}/.keychain/${HOST}-sh
+# fi
 
 ## prompt (requires powerline-rs)
 if (( ${+commands[powerline-rs]} )); then
@@ -131,6 +131,6 @@ loadlib "${ZDOTDIR:-$HOME}/.zshrc_local"
 ##
 ## Profiling
 ##
-# if type zprof > /dev/null 2>&1; then
-#     zprof | less
-# fi
+#if type zprof > /dev/null 2>&1; then
+#    zprof | less
+#fi
