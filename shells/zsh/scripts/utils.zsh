@@ -69,6 +69,8 @@ loadlib() {
 
 # Compile zsh configurations and scripts
 zsh_compile_all() {
+    setopt extended_glob
+    local zsh_glob='^(.git*|LICENSE|README.md|*.zwc)(.)'
     zcompare "${ZDOTDIR}/.zshenv"
     zcompare "${ZDOTDIR}/.zshrc"
     for conf in ${ZDOTDIR}/rc/<->_*.zsh; do
@@ -86,9 +88,16 @@ zsh_compile_all() {
         zcompare "$f"
     done
 
-    if [[ -d "${zgen_dir}/zdharma/fast-syntax-highlighting-master" ]]; then
+    if [[ -d "${ZGEN_DIR}/zdharma/fast-syntax-highlighting-master" ]]; then
         for f in fast-highlight fast-read-ini-file fast-string-highlight; do
-            zcompare "${zgen_dir}/zdharma/fast-syntax-highlighting-master/${f}"
+            zcompare "${ZGEN_DIR}/zdharma/fast-syntax-highlighting-master/${f}"
+        done
+    fi
+
+    if [[ -d "${ZGEN_DIR}/mollifier/anyframe-master" ]]; then
+        zcompare "${ZGEN_DIR}/mollifier/anyframe-master/anyframe-init"
+        for f in ${ZGEN_DIR}/mollifier/anyframe-master/**/^(README.md|*.zwc)(.); do
+            zcompare "$f"
         done
     fi
 }

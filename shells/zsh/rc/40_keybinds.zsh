@@ -20,12 +20,11 @@ bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 
 # Anyframe
-add-zsh-hook chpwd chpwd_recent_dirs
-autoload -Uz anyframe-init
-#zstyle ":anyframe:selector:" use fzf
-anyframe-init
+# zstyle ":anyframe:selector:" use fzf
+# autoload -Uz anyframe-init
+# anyframe-init
 
-bindkey '^]'   anyframe-widget-builtin-cdr
+bindkey '^]'   anyframe-widget-cdr
 
 bindkey '^r'   anyframe-widget-put-history
 bindkey '^x^r' anyframe-widget-execute-history
@@ -33,7 +32,7 @@ bindkey '^x^r' anyframe-widget-execute-history
 bindkey '^x^k' anyframe-widget-kill
 bindkey '^x^f' anyframe-widget-insert-filename
 
-bindkey '^g'   anyframe-widget-builtin-cd-ghq-repository
+bindkey '^g'   anyframe-widget-cd-ghq-repository
 bindkey '^x^a' anyframe-widget-git-add
 bindkey '^x^b' anyframe-widget-checkout-git-branch
 bindkey '^x^i' anyframe-widget-insert-git-branch

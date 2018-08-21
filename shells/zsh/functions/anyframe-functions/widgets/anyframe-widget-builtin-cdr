@@ -1,9 +1,0 @@
-# workaround for the issue that `enhancd` does not understand '--'
-anyframe-source-cdr \
-  | anyframe-selector-auto \
-  | anyframe-action-execute builtin cd --
-
-# Local Variables:
-# mode: Shell-Script
-# End:
-# vim: ft=zsh
