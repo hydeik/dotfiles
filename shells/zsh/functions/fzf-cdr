@@ -1,5 +1,5 @@
 local selected_dir
-selected_dir=$(ghq list --full-path | fzf --no-multi --prompt="Repogitory > " --query="$LBUFFER")
+selected_dir=$(cdr -l | sed 's/^[^ ][^ ]*  *//' | fzf --no-multi --prompt="Directory > " --query="$LBUFFER")
 
 if [ -n "$selected_dir" ]; then
     BUFFER="builtin cd ${selected_dir}"

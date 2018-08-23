@@ -19,13 +19,6 @@ bindkey "^[^H" run-help           # Bind to C-M-h
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 
-if (( ${+commands[fzf]} )); then
-    autoload -Uz fzf-cd-ghq-repo
-    zle -N fzf-cd-ghq-repo
-
-    bindkey '^g' fzf-cd-ghq-repo
-fi
-
 # # Anyframe
 # # zstyle ":anyframe:selector:" use fzf
 # # autoload -Uz anyframe-init
