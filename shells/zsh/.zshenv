@@ -65,6 +65,19 @@ umask 022
 ##
 limit coredumpsize 0
 
+## HOST
+export HOST=$(uname -n)
+
+## UID
+export UID
+
+##
+## Language, Locale
+##
+export LANGUAGE=en_US.UTF-8
+export LANG="${LANGUAGE}"
+export LC_ALL="${LANGUAGE}"
+export LC_CTYPE="${LANGUAGE}"
 
 ##==============================================================================
 ## XDG Base Directory Specification
@@ -99,10 +112,10 @@ export XDG_LIB_HOME="${HOME}/.local/lib"
 ## fpath -- set before compinit
 typeset -gxU fpath
 fpath=(
-    $XDG_DATA_HOME/zsh/site-functions(N-/)
-    $ZDOTDIR/completions(N-/)
-    $ZDOTDIR/functions(N-/)
-    $ZDOTDIR/plugins/zsh-completions(N-/)
+    ${XDG_DATA_HOME}/zsh/site-functions(N-/)
+    ${ZDOTDIR}/completions(N-/)
+    ${ZDOTDIR}/functions(N-/)
+    ${ZDOTDIR}/plugins/zsh-completions(N-/)
     /usr/local/share/zsh/site-functions(N-/)
     $fpath[@]
 )
@@ -110,9 +123,9 @@ fpath=(
 ##  path / PATH
 typeset -gxU path
 path=(
-    $HOME/bin(N-/)
+    ${HOME}/bin(N-/)
     # $HOME/.local/bin(N-/) # for pip --user
-    $XDG_BIN_HOME(N-/)
+    ${XDG_BIN_HOME}(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
     # for OSX, GNU commands installed with Homebrew
@@ -143,9 +156,9 @@ path=(
 ## manpath / MANPATH
 typeset -gxU manpath
 manpath=(
-    $HOME/man(N-/)
-    $HOME/dev/man(N-/)
-    $XDG_DATA_HOME/man(N-/)
+    ${HOME}/man(N-/)
+    ${HOME}/dev/man(N-/)
+    ${XDG_DATA_HOME}/man(N-/)
     /usr/local/opt/coreutils/libexec/gnuman(N-/)
     /usr/local/opt/findutils/libexec/gnuman(N-/)
     /usr/local/opt/gnu-sed/libexec/gnuman(N-/)
@@ -165,9 +178,9 @@ manpath=(
 typeset -gxU  infopath INFOPATH
 typeset -gxTU INFOPATH infopath  # tie the new array to the variables
 infopath=(
-    $HOME/share/info(N-/)
-    $HOME/dev/share/info(N-/)
-    $XDG_DATA_HOME/info(N-/)
+    ${HOME}/share/info(N-/)
+    ${HOME}/dev/share/info(N-/)
+    ${XDG_DATA_HOME}/info(N-/)
     /usr/local/share/info(N-/)
     /usr/share/info(N-/)
     $infopath[@]
@@ -177,7 +190,7 @@ infopath=(
 typeset -gxU  pkg_config_path PKG_CONFIG_PATH
 typeset -gxTU PKG_CONFIG_PATH pkg_config_path
 pkg_config_path=(
-    $HOME/.linuxbrew/lib/pkgconfig(N-/)
+    ${HOME}/.linuxbrew/lib/pkgconfig(N-/)
     /usr/local/lib/pkgconfig(N-/)
     /usr/local/share/pkgconfig(N-/)
     /usr/lib/x86_64-linux-gnu/pkgconfig(N-/)
@@ -193,10 +206,10 @@ pkg_config_path=(
 [ -z "$ld_library_path" ] && typeset -gxT LD_LIBRARY_PATH ld_library_path
 typeset -U ld_library_path
 ld_library_path=(
-    $HOME/lib(N-/)
-    $HOME/opt/oski/lib/oski(N-/)
-    $HOME/opt/lib(N-/)
-    $XDG_LIB_HOME(N-/)
+    ${HOME}/lib(N-/)
+    ${HOME}/opt/oski/lib/oski(N-/)
+    ${HOME}/opt/lib(N-/)
+    ${XDG_LIB_HOME}(N-/)
     /opt/gotoblas(N-/)
     /usr/local/lib(N-/)
     /usr/local/lib32(N-/)
@@ -208,23 +221,6 @@ ld_library_path=(
 ##============================================================================
 ## Other environment variables
 ##============================================================================
-
-## HOST
-if (( ${+commands[hostname]} )); then
-    export HOST=$(hostname)
-fi;
-export host=$(echo ${HOST} | sed -e 's/\..*//')
-
-## UID
-export UID
-
-##
-## Language, Locale
-##
-export LANGUAGE=en_US.UTF-8
-export LANG="${LANGUAGE}"
-export LC_ALL="${LANGUAGE}"
-export LC_CTYPE="${LANGUAGE}"
 
 ##
 ## History
@@ -268,7 +264,7 @@ export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 # LESS man page colors (makes Man pages more readable).
 # Source: http://unix.stackexchange.com/a/147
 # More info: http://unix.stackexchange.com/a/108840
-if [[ -n "$TERM" ]]; then
+if [[ -n "${TERM}" ]]; then
     export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
     export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
     export LESS_TERMCAP_me=$(tput sgr0)
@@ -349,13 +345,14 @@ fi
 ## Go
 ##
 export GOPATH=${HOME}
+# path=( ${GOPATH}/bin(N-/) $path[@] )
 
 ##
 ## Intel C/C++, Intel Fortran, and MKL
 ##
 case ${OSTYPE} in
     linux*)
-        case "$MACHTYPE" in
+        case "${MACHTYPE}" in
             x86_64*)   INTEL_ARCH="intel64";;
             i*86*)     INTEL_ARCH="ia32";;
                 *)     INTEL_ARCH= ;;
@@ -374,14 +371,14 @@ esac
 ##============================================================================
 
 ## rscat
-if [[ -z "$RSCATDIR" ]]; then
-    case "$HOST" in
-        freya*) export RSCATDIR="$HOME/programs/rscat";;
-        saga*)  export RSCATDIR="$HOME/programs/rscat";;
-             *) export RSCATDIR="$HOME/src/local/rscat";;
+if [[ -z "${RSCATDIR}" ]]; then
+    case "${HOST}" in
+        freya*) export RSCATDIR="${HOME}/programs/rscat";;
+        saga*)  export RSCATDIR="${HOME}/programs/rscat";;
+             *) export RSCATDIR="${HOME}/src/local/rscat";;
     esac
 fi
-[[ -r "$RSCATDIR/rscatvars.sh" ]] && . "$RSCATDIR/rscatvars.sh"
+[[ -r "${RSCATDIR}/rscatvars.sh" ]] && . "${RSCATDIR}/rscatvars.sh"
 
 
 # # WIEN2k

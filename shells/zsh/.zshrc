@@ -1,3 +1,7 @@
+##
+## .zshrc -- Zsh configuration file (for interactive mode)
+##
+
 # # Return if zsh is called from Vim
 # if [[ -n $VIMRUNTIME ]]; then
 #     return 0
@@ -59,12 +63,6 @@ fi
 
 source "${ZGEN_INIT}"
 
-# ## set keychain
-# if (( ${+commands[keychain]} )); then
-#     keychain ${HOME}/.ssh/id_ed25519 ${HOME}/.ssh/id_github_ed25519 2> /dev/null
-#     source ${HOME}/.keychain/${HOST}-sh
-# fi
-
 ## prompt (requires powerline-rs)
 if (( ${+commands[powerline-rs]} )); then
     function powerline_precmd() {
@@ -80,7 +78,7 @@ if (( ${+commands[powerline-rs]} )); then
         precmd_functions+=(powerline_precmd)
     }
 
-    if [ "$TERM" != "linux" ]; then
+    if [ "${TERM}" != "linux" ]; then
         install_powerline_precmd
     fi
 fi
