@@ -1,0 +1,13 @@
+#compdef anyenv
+
+_anyenv() {
+	local -a cmds
+
+	if (( CURRENT == 2 )); then
+		cmds=( $(anyenv commands) )
+		_describe -t commands "all commands" cmds
+	else
+		cmds=( $(anyenv completions ${words[2]}) )
+		_describe -t commands "sub commands" cmds
+	fi
+}
