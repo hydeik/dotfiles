@@ -43,6 +43,8 @@ if [[ ! -s "${ZGEN_DIR}/init.zsh" ]]; then
     # zgen load "b4b4r07/enhancd" "init.sh"
     zgen load "greymd/tmux-xpanes"
     zgen load "mollifier/anyframe"
+    zgen load "junegunn/fzf"  "shell/key-bindings.zsh"
+    zgen load "junegunn/fzf"  "shell/completion.zsh"
     zgen load "zsh-users/zsh-completions"
     zgen load "39e/zsh-completions-anyenv"
     zgen load "zsh-users/zsh-autosuggestions"

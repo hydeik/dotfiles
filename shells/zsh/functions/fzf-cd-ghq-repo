@@ -1,0 +1,13 @@
+local selected
+selected_dir=$(ghq list --full-path | fzf --ansi --no-multi --query="$LBUFFER" --prompt="Repogitory > ")
+
+if [ -n "$selected_dir" ]; then
+    BUFFER="builtin cd ${selected_dir}"
+    zle accept-line
+fi
+zle clear-screen
+
+# Local Variables:
+# mode: Shell-Script
+# End:
+# vim: ft=zsh

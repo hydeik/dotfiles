@@ -19,23 +19,30 @@ bindkey "^[^H" run-help           # Bind to C-M-h
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 
-# Anyframe
-# zstyle ":anyframe:selector:" use fzf
-# autoload -Uz anyframe-init
-# anyframe-init
+if (( ${+commands[fzf]} )); then
+    autoload -Uz fzf-cd-ghq-repo
+    zle -N fzf-cd-ghq-repo
 
-bindkey '^]'   anyframe-widget-cdr
+    bindkey '^g' fzf-cd-ghq-repo
+fi
 
-bindkey '^r'   anyframe-widget-put-history
-bindkey '^x^r' anyframe-widget-execute-history
-
-bindkey '^x^k' anyframe-widget-kill
-bindkey '^x^f' anyframe-widget-insert-filename
-
-bindkey '^g'   anyframe-widget-cd-ghq-repository
-bindkey '^x^a' anyframe-widget-git-add
-bindkey '^x^b' anyframe-widget-checkout-git-branch
-bindkey '^x^i' anyframe-widget-insert-git-branch
+# # Anyframe
+# # zstyle ":anyframe:selector:" use fzf
+# # autoload -Uz anyframe-init
+# # anyframe-init
+#
+# bindkey '^]'   anyframe-widget-cdr
+#
+# bindkey '^r'   anyframe-widget-put-history
+# bindkey '^x^r' anyframe-widget-execute-history
+#
+# bindkey '^x^k' anyframe-widget-kill
+# bindkey '^x^f' anyframe-widget-insert-filename
+#
+# bindkey '^g'   anyframe-widget-cd-ghq-repository
+# bindkey '^x^a' anyframe-widget-git-add
+# bindkey '^x^b' anyframe-widget-checkout-git-branch
+# bindkey '^x^i' anyframe-widget-insert-git-branch
 
 # emoji-cli
 # bindkey '^x^e' emoji::cli
