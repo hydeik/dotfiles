@@ -13,7 +13,6 @@
             "~/.config/zsh",
             "~/.config/zsh/completions",
             "~/.config/zsh/functions",
-            "~/.config/zsh/functions/anyframe-functions/widgets",
             "~/.config/zsh/rc",
             "~/.config/zsh/scripts"
         ]
@@ -23,17 +22,12 @@
             "~/.zshenv": "shells/zshenv",
             "~/.config/zsh/.zshenv": "shells/zsh/.zshenv",
             "~/.config/zsh/.zshrc": "shells/zsh/.zshrc",
-            "~/.config/zsh": {
-                "path": "shells/zsh/*.zsh",
-                "glob": true
-            },
             "~/.config/zsh/completions": {
                 "path": "shells/zsh/completions/*",
                 "glob": true
             },
-            "~/.config/zsh/functions/ranger-cd": "shells/zsh/functions/ranger-cd",
-            "~/.config/zsh/functions/anyframe-functions/widgets": {
-                "path": "shells/zsh/functions/anyframe-functions/widgets/*",
+            "~/.config/zsh/functions": {
+                "path": "shells/zsh/functions/*",
                 "glob": true
             },
             "~/.config/zsh/rc": {
