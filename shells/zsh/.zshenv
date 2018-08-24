@@ -231,6 +231,10 @@ ld_library_path=(
 ##============================================================================
 ## Other environment variables
 ##============================================================================
+##
+## Pager
+##
+export PAGER=less
 
 ##
 ## EDITOR
@@ -243,42 +247,6 @@ else
     export EDITOR="vi"
 fi
 export VISUAL="${EDITOR}"
-
-##
-## PAGER
-##
-export PAGER=less
-# Less status line
-export LESS='-R -f -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
-export LESSCHARSET='utf-8'
-# Less history file
-export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
-
-# LESS man page colors (makes Man pages more readable).
-# Source: http://unix.stackexchange.com/a/147
-# More info: http://unix.stackexchange.com/a/108840
-if [[ -n "${TERM}" ]]; then
-    export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
-    export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
-    export LESS_TERMCAP_me=$(tput sgr0)
-    export LESS_TERMCAP_so=$(tput bold; tput setaf 0; tput setab 4) # black on blue
-    export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
-    export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 7) # white
-    export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
-    export LESS_TERMCAP_mr=$(tput rev)
-    export LESS_TERMCAP_mh=$(tput dim)
-    export LESS_TERMCAP_ZN=$(tput ssubm)
-    export LESS_TERMCAP_ZV=$(tput rsubm)
-    export LESS_TERMCAP_ZO=$(tput ssupm)
-    export LESS_TERMCAP_ZW=$(tput rsupm)
-fi
-
-## Colors for ls
-# for GNU ls
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# for BSD, OSX (builtin)
-export LSCOLORS=exfxcxdxbxegedabagacad
-
 
 ##============================================================================
 ## Development environment
@@ -327,11 +295,22 @@ path=(
 ##
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
 if (( ${+commands[rustc]} )); then
-    export RUST_SYS_ROOT="$(rustc --print sysroot)"
-    export RUST_SRC_PATH="${RUST_SYS_ROOT}/lib/rustlib/src/rust/src"
-    # for cargo completion
-    fpath=( ${RUST_SYS_ROOT}/share/zsh/site-functions $fpath[@] )
-    manpath=( ${RUST_SYS_ROOT}/share/man $manpath[@] )
+    RUST_SYS_ROOT=""
+    case ${OSTYPE} in
+        darwin*)
+            RUST_SYS_ROOT=${HOME}/.rustup/toolchains/stable-${MACHTYPE}-apple-darwin
+            ;;
+        linux*gnu)
+            RUST_SYS_ROOT=${HOME}/.rustup/toolchains/stable-${MACHTYPE}-unknown-linux-gnu
+            ;;
+        # TODO: add setting for other architecture
+    esac
+    if [[ "x$RUST_SYS_ROOT" != "x" ]]; then
+        export RUST_SRC_PATH="${RUST_SYS_ROOT}/lib/rustlib/src/rust/src"
+        # for cargo completion
+        fpath=( ${RUST_SYS_ROOT}/share/zsh/site-functions $fpath[@] )
+        manpath=( ${RUST_SYS_ROOT}/share/man $manpath[@] )
+    fi
 fi
 
 ##

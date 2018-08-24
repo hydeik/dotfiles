@@ -540,6 +540,46 @@ zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<-
 ## Customize
 ##=====================================================================
 
+## --- Colors for ls
+# {{{
+# for GNU ls
+export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+# for BSD, OSX (builtin)
+export LSCOLORS=exfxcxdxbxegedabagacad
+# }}}
+
+## --- less
+# {{{
+
+# Less status line
+export LESS='-R -f -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
+export LESSCHARSET='utf-8'
+# Less history file
+export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
+
+# LESS man page colors (makes Man pages more readable).
+# Source: http://unix.stackexchange.com/a/147
+# More info: http://unix.stackexchange.com/a/108840
+less() {
+    export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
+    export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
+    export LESS_TERMCAP_me=$(tput sgr0)
+    export LESS_TERMCAP_so=$(tput bold; tput setaf 0; tput setab 4) # black on blue
+    export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+    export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 7) # white
+    export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
+    export LESS_TERMCAP_mr=$(tput rev)
+    export LESS_TERMCAP_mh=$(tput dim)
+    export LESS_TERMCAP_ZN=$(tput ssubm)
+    export LESS_TERMCAP_ZV=$(tput rsubm)
+    export LESS_TERMCAP_ZO=$(tput ssupm)
+    export LESS_TERMCAP_ZW=$(tput rsupm)
+    unset -f less
+    less "$@"
+}
+
+# }}}
+
 ## --- History
 # {{{
 
