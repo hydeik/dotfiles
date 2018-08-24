@@ -1,7 +1,4 @@
-##
-## Setting for profiling `zplof`
-##
-#zmodload zsh/zprof && zprof
+## .zshenv --- Zsh configuration file
 
 ##
 ## NOTE: Zsh configuration file loading order
@@ -32,6 +29,27 @@
 # 2. /etc/zlogout
 
 ##
+## Setting for profiling `zplof`
+##
+if [[ -z "$PROFILE_STARTUP" ]]; then
+    PROFILE_STARUP=false
+fi
+if [[ "$PROFILE_STARTUP" == true ]]; then
+    # zmodload zsh/zprof && zprof
+    zmodload zsh/datetime
+    PS4='+$EPOCHREALTIME %N:%i> '
+
+    logfile=$(mktemp zsh_profile.XXXXXXXX)
+    echo "Logging to $logfile"
+    exec 3>&2 2>$logfile
+    setopt prompt_subst xtrace
+fi
+
+##==============================================================================
+## System configuration
+##==============================================================================
+
+##
 ## Prevent to load system provided configuration files:
 ##  - /etc/zprofile
 ##  - /etc/zshrc
@@ -39,14 +57,6 @@
 ##  - /etc/zlogout
 ##
 
-##==============================================================================
-## System configuration
-##==============================================================================
-##
-## Prevent to load system provided configuration files /etc/z*.
-## If $ZDOTDIR environment variable is pointing different directory from $HOME,
-## this option should be specified both the $HOME/.zshenv and $ZDOTDIR/.zshenv.
-##
 unsetopt global_rcs
 
 ##
@@ -221,23 +231,6 @@ ld_library_path=(
 ##============================================================================
 ## Other environment variables
 ##============================================================================
-
-##
-## History
-##
-# History file
-export HISTFILE="${XDG_CACHE_HOME}/zsh/history"
-# History size in memory
-export HISTSIZE=100000
-# The number of histsize
-export SAVEHIST=1000000
-# The size of asking history
-export LISTMAX=50
-# Do not add in root
-if [[ "$UID" == 0 ]]; then
-    unset HISTFILE
-    export SAVEHIST=0
-fi
 
 ##
 ## EDITOR
