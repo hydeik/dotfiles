@@ -110,6 +110,10 @@ repo = 'joshdick/onedark.vim'
 [[plugins]]
 repo = 'KeitaNakamura/neodark.vim'
 
+#  PaperColor -- truecolor / GUI-color and 256-color support
+[[plugins]]
+repo = 'NLKNguyen/papercolor-theme'
+
 #------------------------------------------------------------------------------
 # Vim help in Japanese
 #------------------------------------------------------------------------------

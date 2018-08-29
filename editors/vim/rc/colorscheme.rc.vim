@@ -19,7 +19,7 @@ endif
 
 " --- Colorscheme
 set background=dark
-colorscheme onedark
+colorscheme PaperColor
 
 " " --- Powerline (does not support NeoVim)
 " python3 from powerline.vim import setup as powerline_setup
@@ -28,7 +28,7 @@ colorscheme onedark
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'PaperColor',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitstatus', 'filename' ] ],
