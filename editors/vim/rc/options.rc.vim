@@ -142,7 +142,7 @@ set cmdheight=2
 " Enhanced command line completion
 set wildmenu
 " Completion style in wildmenu mode
-set wildmode=longest,full
+set wildmode=list:longest,full
 " Ignore compiled files
 set wildignore&
 set wildignore=.git,.hg,.svn
@@ -151,7 +151,7 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.dylib,*.manifest,*.so,*.out,*.class
 set wildignore+=*.swp,*.swo,*.swn
 set wildignore+=*.DS_Store
 
-" ----- Windows
+" ----- Window
 " Create a new window below the current window when :split is called
 set splitbelow
 " Create a new window right side of the current window when :vsplit is called
