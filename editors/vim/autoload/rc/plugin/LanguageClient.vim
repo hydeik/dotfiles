@@ -41,7 +41,7 @@ function! rc#plugin#LanguageClient#hook_source() abort
   autocmd MyVimrc FileType c,cpp,python,rust,sh call s:languageclient_config()
 
   " deoplete setting
-  if dein#tap("deoplete.nvim")
+  if dein#tap('deoplete.nvim')
     call deoplete#custom#source('LanguageClient', 'min_pattern_length', 2)
   endif
 endfunction
