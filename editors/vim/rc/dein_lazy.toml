@@ -217,24 +217,31 @@ hook_source = '''
 #------------------------------------------------------------------------------
 # Filer
 #------------------------------------------------------------------------------
+# [[plugins]]
+# repo = 'cocopon/vaffle.vim'
+# on_cmd = ['Vaffle']
+# hook_add = '''
+#   " Changes the working directory to the selected one automatically
+#   let g:vaffle_auto_cd = 1
+#   " Show hidden file by default
+#   let g:vaffle_show_hidden_files = 1
+#
+#   function! s:customize_vaffle_mappings() abort
+#     " Customize key mappings here
+#     nmap <buffer> <Bslash> <Plug>(vaffle-open-root)
+#     nmap <buffer> l        <Plug>(vaffle-open-current)
+#   endfunction
+#
+#   nnoremap <silent> <Leader>e :<C-u>Vaffle<CR>
+#   autocmd MyVimrc FileType vaffle call s:customize_vaffle_mappings()
+# '''
+
 [[plugins]]
-repo = 'cocopon/vaffle.vim'
-on_cmd = ['Vaffle']
+repo = 'Shougo/defx.nvim'
 hook_add = '''
-  " Changes the working directory to the selected one automatically
-  let g:vaffle_auto_cd = 1
-  " Show hidden file by default
-  let g:vaffle_show_hidden_files = 1
-
-  function! s:customize_vaffle_mappings() abort
-    " Customize key mappings here
-    nmap <buffer> <Bslash> <Plug>(vaffle-open-root)
-    nmap <buffer> l        <Plug>(vaffle-open-current)
-  endfunction
-
-  nnoremap <silent> <Leader>e :<C-u>Vaffle<CR>
-  autocmd MyVimrc FileType vaffle call s:customize_vaffle_mappings()
+  nnoremap <silent> <Leader>e  :<C-u>Defx<CR>
 '''
+hook_source = 'call rc#plugin#defx#hook_source()'
 
 #------------------------------------------------------------------------------
 # Textobj/Operator extensions
