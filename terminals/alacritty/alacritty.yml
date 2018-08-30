@@ -93,37 +93,70 @@ render_timer: false
 # and cursor.background colors, otherwise invert the colors of the cursor.
 custom_cursor_colors: false
 
-# Colors (One Dark)
+# # Colors (One Dark)
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x282c34'
+#     foreground: '0xabb2bf'
+#
+#   # Normal colors
+#   normal:
+#     # NOTE: Use '0x131613' for the `black` color if you'd like to see
+#     # black text on the background.
+#     black:   '0x282c34'
+#     red:     '0xe06c75'
+#     green:   '0x98c379'
+#     yellow:  '0xd19a66'
+#     blue:    '0x61afef'
+#     magenta: '0xc678dd'
+#     cyan:    '0x56b6c2'
+#     white:   '0xabb2bf'
+#
+#   # Bright colors
+#   bright:
+#     black:   '0x5c6370'
+#     red:     '0xe06c75'
+#     green:   '0x98c379'
+#     yellow:  '0xd19a66'
+#     blue:    '0x61afef'
+#     magenta: '0xc678dd'
+#     cyan:    '0x56b6c2'
+#     white:   '0xffffff'
+
+# Colors (Oceanic Next)
 colors:
   # Default colors
   primary:
-    background: '0x282c34'
-    foreground: '0xabb2bf'
+    background: '0x1b2b34'
+    foreground: '0xD8DEE9'
+
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  cursor:
+    text: '0xec5f67'
+    cursor: '0xec5f67'
 
   # Normal colors
   normal:
-    # NOTE: Use '0x131613' for the `black` color if you'd like to see
-    # black text on the background.
-    black:   '0x282c34'
-    red:     '0xe06c75'
-    green:   '0x98c379'
-    yellow:  '0xd19a66'
-    blue:    '0x61afef'
-    magenta: '0xc678dd'
-    cyan:    '0x56b6c2'
-    white:   '0xabb2bf'
+    black:   '0x343d46'
+    red:     '0xEC5f67'
+    green:   '0x99C794'
+    yellow:  '0xFAC863'
+    blue:    '0x6699cc'
+    magenta: '0xc594c5'
+    cyan:    '0x5fb3b3'
+    white:   '0xd8dee9'
 
   # Bright colors
   bright:
-    black:   '0x5c6370'
-    red:     '0xe06c75'
-    green:   '0x98c379'
-    yellow:  '0xd19a66'
-    blue:    '0x61afef'
-    magenta: '0xc678dd'
-    cyan:    '0x56b6c2'
-    white:   '0xffffff'
-
+    black:   '0x343d46'
+    red:     '0xEC5f67'
+    green:   '0x99C794'
+    yellow:  '0xFAC863'
+    blue:    '0x6699cc'
+    magenta: '0xc594c5'
+    cyan:    '0x5fb3b3'
+    white:   '0xd8dee9'
 
 # Visual Bell
 #
@@ -152,7 +185,7 @@ visual_bell:
   duration: 0
 
 # Background opacity
-background_opacity: 0.8
+background_opacity: 0.9
 
 # Mouse bindings
 #
@@ -192,7 +225,7 @@ mouse:
   faux_scrollback_lines: 1
 
 selection:
-  semantic_escape_chars: ",隨擾ｼ｡|:\"' ()[]{}<>"
+  semantic_escape_chars: ",　、｡|:\"' ()[]{}<>"
 
 dynamic_title: true
 
