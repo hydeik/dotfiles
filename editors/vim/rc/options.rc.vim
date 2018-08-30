@@ -151,3 +151,8 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.dylib,*.manifest,*.so,*.out,*.class
 set wildignore+=*.swp,*.swo,*.swn
 set wildignore+=*.DS_Store
 
+" ----- Windows
+" Create a new window below the current window when :split is called
+set splitbelow
+" Create a new window right side of the current window when :vsplit is called
+set splitright
