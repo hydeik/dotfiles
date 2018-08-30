@@ -89,10 +89,6 @@ repo = 'ryanoasis/vim-devicons'
 # [[plugins]]
 # repo = 'morhetz/gruvbox'
 
-# #  tender
-# [[plugins]]
-# repo = 'jacoborus/tender.vim'
-
 #  Oceanic-Next
 [[plugins]]
 repo = 'mhartington/oceanic-next'
