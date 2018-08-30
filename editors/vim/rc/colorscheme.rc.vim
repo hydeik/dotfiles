@@ -2,7 +2,13 @@
 
 " Enable true color if supported
 if !has('gui_running')
-  if has('termguicolors') && $COLORTERM ==# 'truecolor'
+  "
+  " TODO: We should check if the terminal emulater has truecolor supports, but
+  " there is no reliable ways to do that. Some terminal emulater provides
+  " $COLORTERM environment variable set to 'truecolor' or '24bit' so we also
+  " checkt this variable.
+  "
+  if has('termguicolors') && ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
     " Enable true color in Vim on tmux (not necessary for NeoVim)
     if !has('nvim')
       let &t_8f = "\e[38;2;%lu;%lu;%lum"
@@ -19,7 +25,13 @@ endif
 
 " --- Colorscheme
 set background=dark
-colorscheme PaperColor
+" colorscheme onedark
+let g:oceanic_next_bold = 1
+let g:oceanic_next_italic = 1
+colorscheme OceanicNext
+highlight Normal     ctermbg=NONE guibg=NONE
+highlight LineNr     ctermbg=NONE guibg=NONE
+highlight SignColumn ctermbg=NONE guibg=NONE
 
 " " --- Powerline (does not support NeoVim)
 " python3 from powerline.vim import setup as powerline_setup
@@ -28,7 +40,7 @@ colorscheme PaperColor
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'PaperColor',
+      \ 'colorscheme': 'oceanicnext',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitstatus', 'filename' ] ],

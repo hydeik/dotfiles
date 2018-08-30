@@ -42,9 +42,9 @@ build = 'sh -c "PY3=ON ./install.sh"'
 [[plugins]]
 repo = 'thinca/vim-localrc'
 
-# # Faster than the built-in 'matchparen' plugin
-# [[plugins]]
-# repo = 'itchyny/vim-parenmatch'
+# Faster than the built-in 'matchparen' plugin
+[[plugins]]
+repo = 'itchyny/vim-parenmatch'
 
 # [[plugins]]
 # repo     = 'itchyny/vim-cursorword'
@@ -80,39 +80,34 @@ repo = 'itchyny/lightline.vim'
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
-# Create tmux powerline theme from vim powerline theme
-# (requires powerline/vim-airline/lightline)
-[[plugins]]
-repo = 'edkolev/tmuxline.vim'
+# #  Dracula
+# [[plugins]]
+# repo = 'dracula/vim'
+# name = 'dracula'
 
-#  Dracula
-[[plugins]]
-repo = 'dracula/vim'
-name = 'dracula'
+# #  gruvbox
+# [[plugins]]
+# repo = 'morhetz/gruvbox'
 
-#  Iceberg -- with lightline colorscheme
-[[plugins]]
-repo = 'cocopon/iceberg.vim'
+# #  tender
+# [[plugins]]
+# repo = 'jacoborus/tender.vim'
 
-#  gruvbox -- truecolor support with lightline colorscheme
+#  Oceanic-Next
 [[plugins]]
-repo = 'morhetz/gruvbox'
+repo = 'mhartington/oceanic-next'
 
-#  tender -- truecolor support with lightline colorscheme
-[[plugins]]
-repo = 'jacoborus/tender.vim'
-
-#  onedark -- truecolor support with lightline colorscheme
+#  onedark
 [[plugins]]
 repo = 'joshdick/onedark.vim'
 
-#  neodark -- truecolor support with lightline colorscheme
-[[plugins]]
-repo = 'KeitaNakamura/neodark.vim'
+# #  neodark
+# [[plugins]]
+# repo = 'KeitaNakamura/neodark.vim'
 
-#  PaperColor -- truecolor / GUI-color and 256-color support
-[[plugins]]
-repo = 'NLKNguyen/papercolor-theme'
+# #  PaperColor
+# [[plugins]]
+# repo = 'NLKNguyen/papercolor-theme'
 
 #------------------------------------------------------------------------------
 # Vim help in Japanese
@@ -157,8 +152,11 @@ repo = 'kana/vim-operator-user'
 repo = 'Shougo/context_filetype.vim'
 
 # --- C++
+# [[plugins]]
+# repo = 'octol/vim-cpp-enhanced-highlight'
+
 [[plugins]]
-repo = 'octol/vim-cpp-enhanced-highlight'
+repo = 'bfrg/vim-cpp-modern'
 
 # --- Python
 [[plugins]]
