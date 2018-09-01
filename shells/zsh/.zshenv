@@ -136,6 +136,8 @@ path=(
     ${HOME}/bin(N-/)
     # $HOME/.local/bin(N-/) # for pip --user
     ${XDG_BIN_HOME}(N-/)
+    # Yarn bin dir (set by `yarn config set prefix $HOME/.yarn`)
+    ${HOME}/.yarn/bin
     # for OSX
     /Library/Tex/texbin(N-/)
     # for OSX, GNU commands installed with Homebrew
