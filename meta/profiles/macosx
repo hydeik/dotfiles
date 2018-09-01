@@ -1,6 +1,7 @@
 karabiner
 editorconfig
 git
+ipython
 latexmk
 uncrustify
 vim

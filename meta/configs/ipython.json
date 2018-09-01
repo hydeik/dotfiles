@@ -1,0 +1,25 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "clean": [
+            "~/.config/ipython"
+        ]
+    },
+    {
+        "link": {
+            "~/.config/ipython":
+            {
+                "path": "development/ipython/*",
+                "glob": true
+            }
+        }
+    }
+]
