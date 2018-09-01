@@ -253,7 +253,7 @@ export VISUAL="${EDITOR}"
 ##============================================================================
 
 ##
-## Anyenv
+## Anyenv (for python, ruby, Go, Node.js)
 ##
 #
 # NOTE:
@@ -288,6 +288,26 @@ path=(
     ${RBENV_ROOT}/bin(N-/)
     ${RBENV_ROOT}/shims(N-/)
     $path[@]
+)
+
+##
+## IPython
+##
+export IPYTHONDIR="${XDG_CONFIG_HOME}/ipython"
+
+##
+## Jupyter
+##
+export JUPYTER_CONFIG_DIR="${XDG_CONFIG_HOME}/jupyter"
+export JUPYTER_DATA_DIR="${XDG_DATA_HOME}/jupyter"
+typeset -gxU  jupyter_path JUPYTER_PATH
+typeset -gxTU JUPYTER_PATH jupyter_path
+jupyter_path=(
+    ${JUPYTER_DATA_DIR}(N-/)
+    ${PYENV_ROOT}/versions/jupyter3/share/jupyter(N-/)
+    /usr/local/share/jupyter(N-/)
+    /usr/share/jupyter(N-/)
+    $jupyter_path[@]
 )
 
 ##
