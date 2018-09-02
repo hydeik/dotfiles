@@ -81,6 +81,8 @@ if [[ ! -s "${ZGEN_DIR}/init.zsh" ]]; then
         zgen load "$f"
     done
 
+    zgen load "denysdovhan/spaceship-prompt" "spaceship"
+
     # generate $ZGEN_INIT file
     zgen save
 
