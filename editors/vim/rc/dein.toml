@@ -97,6 +97,10 @@ repo = 'mhartington/oceanic-next'
 [[plugins]]
 repo = 'joshdick/onedark.vim'
 
+#  one
+[[plugins]]
+repo = 'rakr/vim-one'
+
 # #  neodark
 # [[plugins]]
 # repo = 'KeitaNakamura/neodark.vim'

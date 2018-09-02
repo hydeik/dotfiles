@@ -25,10 +25,13 @@ endif
 
 " --- Colorscheme
 set background=dark
-" colorscheme onedark
-let g:oceanic_next_bold = 1
-let g:oceanic_next_italic = 1
-colorscheme OceanicNext
+let g:one_allow_italics = 1
+colorscheme one
+
+" let g:oceanic_next_bold = 1
+" let g:oceanic_next_italic = 1
+" colorscheme OceanicNext
+
 highlight Normal     ctermbg=NONE guibg=NONE
 highlight LineNr     ctermbg=NONE guibg=NONE
 highlight SignColumn ctermbg=NONE guibg=NONE
@@ -40,7 +43,7 @@ highlight SignColumn ctermbg=NONE guibg=NONE
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'oceanicnext',
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitstatus', 'filename' ] ],
