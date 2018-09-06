@@ -111,7 +111,7 @@ pyenv() {
     fi
 
     case "$command" in
-        activate|deactivate|rehash|shell)
+        activate|deactivate|rehash|shell|virtualenvwrapper|virtualenvwrapper_lazy)
             eval "$(pyenv "sh-$command" "$@")";;
         *)
             command pyenv "$command" "$@";;
