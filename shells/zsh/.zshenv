@@ -295,6 +295,12 @@ path=(
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 ##
+## Pipenv
+##
+export PIPENV_CACHE_DIR="${XDG_CACHE_HOME}/pipenv"
+export PIPENV_VENV_IN_PROJECT=1
+
+##
 ## IPython
 ##
 export IPYTHONDIR="${XDG_CONFIG_HOME}/ipython"
