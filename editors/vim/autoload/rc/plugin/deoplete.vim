@@ -53,10 +53,10 @@ function! rc#plugin#deoplete#hook_source() abort
   inoremap <expr><C-h>  deoplete#smart_close_popup()."\<C-h>"
   inoremap <expr><BS>   deoplete#smart_close_popup()."\<C-h>"
   " inoremap <expr><C-g> deoplete#undo_completion()
-  " <C-g>: refresh the candidates
-  inoremap         <expr><C-g>  deoplete#refresh()
-  " <C-l>: complete common string in the candidates
-  inoremap <silent><expr><C-l>  deoplete#complete_common_string()
+  " <C-l>: refresh the candidates
+  inoremap <silent><expr><C-l>  pumvisible() ? deoplete#refresh() : "\<C-l>"
+  " <C-f>: complete common string in the candidates
+  inoremap <silent><expr><C-f>  pumvisible() ? deoplete#complete_common_string() : "\<C-f>"
   " <CR>: close popup and save indent.
   inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 endfunction
