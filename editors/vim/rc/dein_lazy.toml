@@ -126,12 +126,12 @@ hook_add = '''
   nmap <silent>k <Plug>(accelerated_jk_gk)
 '''
 
-# [[plugins]]
-# repo = 'easymotion/vim-easymotion'
-# on_map = {n = '<Plug>'}
-# hook_add = 'call rc#plugin#easymotion#hook_add()'
-# hook_source = 'call rc#plugin#easymotion#hook_source()'
-#
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+on_map = {n = '<Plug>'}
+hook_add = 'call rc#plugin#easymotion#hook_add()'
+hook_source = 'call rc#plugin#easymotion#hook_source()'
+
 
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
