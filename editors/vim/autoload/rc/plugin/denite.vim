@@ -17,41 +17,41 @@ function! rc#plugin#denite#hook_add() abort
   " nnoremap <silent> N :<C-u>Denite -resume -buffer-name=search -select=-1 -immediately<CR>
 
   " buffer/file/directory navigation
-  nnoremap <silent> <Leader>b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
-  nnoremap <silent> <Leader>d  :<C-u>Denite directory_rec -default-action=cd<CR>
-  nnoremap <silent> <Leader>f  :<C-u>Denite file/rec<CR>
-  nnoremap <silent> <Leader>F  :<C-u>Denite file<CR>
-  nnoremap <silent> <Leader>j  :<C-u>Denite jump change file/point<CR>
-  nnoremap <silent> <Leader>o  :<C-u>Denite outline<CR>
+  nnoremap <silent> <LocalLeader>b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
+  nnoremap <silent> <LocalLeader>d  :<C-u>Denite directory_rec -default-action=cd<CR>
+  nnoremap <silent> <LocalLeader>f  :<C-u>Denite file/rec<CR>
+  nnoremap <silent> <LocalLeader>F  :<C-u>Denite file<CR>
+  nnoremap <silent> <LocalLeader>j  :<C-u>Denite jump change file/point<CR>
+  nnoremap <silent> <LocalLeader>o  :<C-u>Denite outline<CR>
 
   " Resume the previous Denite buffer
-  nnoremap <silent> <Leader>r  :<C-u>Denite -resume<CR>
+  nnoremap <silent> <LocalLeader>r  :<C-u>Denite -resume<CR>
 
   " Help (fuzzy-find)
-  nnoremap <silent> <Leader>?  :<C-u>Denite help<CR>
+  nnoremap <silent> <LocalLeader>h  :<C-u>Denite help<CR>
 
   " Vim command/command_history (fuzzy-find)
-  nnoremap <silent> <Leader><Leader>  :<C-u>Denite command command_history<CR>
+  nnoremap <silent> <LocalLeader><LocalLeader>  :<C-u>Denite command command_history<CR>
 
   " Open Denite with word under cursor or selection
-  nnoremap <silent> <Leader>gf :DeniteCursorWord file_rec<CR>
+  nnoremap <silent> <LocalLeader>gf :DeniteCursorWord file_rec<CR>
 
   " Grep
-  nnoremap <silent> <Leader>gg  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
-  nnoremap <silent> <Leader>g*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
-	vnoremap <silent> <Leader>g*  :<C-u>call <SID>get_selection('/')<CR>
+  nnoremap <silent> <LocalLeader>gg  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
+  nnoremap <silent> <LocalLeader>g*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
+	vnoremap <silent> <LocalLeader>g*  :<C-u>call <SID>get_selection('/')<CR>
         \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
 
 
-  " " Tag jump
-  " nnoremap <silent><expr> <Leader>t &filetype == 'help' ? "g\<C-]>" :
-  "       \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
-  " nnoremap <silent><expr> <Leader>p  &filetype == 'help' ?
-  "       \ ":\<C-u>pop\<CR>" : ":\<C-u>Denite -mode=normal jump\<CR>"
-  "
+  " Tag jump
+  nnoremap <silent><expr> <LocalLeader>t  &filetype == 'help' ? "g\<C-]>" :
+        \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
+  nnoremap <silent><expr> <LocalLeader>p  &filetype == 'help' ?
+        \ ":\<C-u>pop\<CR>" : ":\<C-u>Denite -mode=normal jump\<CR>"
+
   " register / neoyank
-  nnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
-  xnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
+  nnoremap <silent> <LocalLeader>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
+  xnoremap <silent> <LocalLeader>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
 
   " Quickfix and location list
   nnoremap <silent>L  :<C-u>Denite location_list -buffer-name=list<CR>
@@ -80,30 +80,30 @@ function! rc#plugin#denite#hook_source() abort
   " <C-g> to quit denite
   call denite#custom#map('insert', '<C-g>', '<denite:leave_mode>', 'noremap')
   " jj to move to normal mode
-  call denite#custom#map('insert', 'jj', '<denite:enter_mode:normal>', 'noremap')
+  call denite#custom#map('insert', 'jj',    '<denite:enter_mode:normal>', 'noremap')
 
   call denite#custom#map('normal', '<C-g>', '<denite:leave_mode>', 'noremap')
-  call denite#custom#map('normal', 'r', '<denite:do_action:quickfix>', 'noremap')
+  call denite#custom#map('normal', 'r',     '<denite:do_action:quickfix>', 'noremap')
 
-  " Change file/rec and grep commmand
-  if executable('rg')
+  " Change file/rec and directory_rec command
+  if execute('fd')
+    call denite#custom#var('file/rec', 'command', ['fd', '--type', 'file', '--follow', '--hidden', '--exclude', '.git'])
+    call denite#custom#var('file/rec', 'command', ['fd', '--type', 'directory', '--follow', '--hidden'])
+  elseif execute('rg')
     call denite#custom#var('file/rec', 'command', ['rg', '--files', '--hidden', '--glob', '!.git'])
+  elseif execute('ag')
+    call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+  endif
+
+  " Change grep commmand
+  if executable('rg')
     call denite#custom#var('grep', 'command', ['rg'])
     call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
     call denite#custom#var('grep', 'recursive_opts', [])
     call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opt', [])
-  elseif executable('pt')
-    call denite#custom#var('file/rec', 'command', ['pt', '--follow', '--nocolor', '--nogroup',
-          \ '--hidden', (has('win32') ? '-g:' : '-g='), ''])
-    call denite#custom#var('grep', 'command', ['pt'])
-    call denite#custom#var('grep', 'default_opts', ['--nocolor', '--nogroup', '--smart-case'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opt', [])
-  else
+  elseif executable('ag')
     call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
     call denite#custom#var('grep', 'command', ['ag'])
     call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
@@ -111,6 +111,15 @@ function! rc#plugin#denite#hook_source() abort
     call denite#custom#var('grep', 'pattern_opt', [])
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opt', [])
+  elseif executable('ack')
+    call denite#custom#var('grep', 'command', ['ack'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', ['--match'])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
+    call denite#custom#var('grep', 'default_opts',
+          \ ['--ackrc', $HOME.'/.config/ackrc', '-H',
+          \ '--nopager', '--nocolor', '--nogroup', '--column'])
   endif
 
   " Change matchers

@@ -1,14 +1,16 @@
 function! s:defx_my_settings() abort
   " --- Define mappings ---
   nnoremap <silent><buffer><expr> <CR>    defx#do_action('open')
-  nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
+  " <Space> is used as the leader key
+  " nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
   nnoremap <silent><buffer><expr> *       defx#do_action('toggle_select_all')
   nnoremap <silent><buffer><expr> ~       defx#do_action('cd')
   nnoremap <silent><buffer><expr> h       defx#do_action('cd', ['..'])
   nnoremap <silent><buffer><expr> j       line('.') == line('$') ? 'gg' : 'j'
   nnoremap <silent><buffer><expr> k       line('.') == 1 ? 'G' : 'k'
   nnoremap <silent><buffer><expr> l       defx#do_action('open')
-  nnoremap <silent><buffer><expr> m       defx#do_action('rename')
+  " nnoremap <silent><buffer><expr> m       defx#do_action('rename')
+  nnoremap <silent><buffer><expr> m       defx#do_action('toggle_select') . 'j'
   nnoremap <silent><buffer><expr> r       defx#do_action('rename')
   " Note: 'remove_trash' action requires the Send2Trash python package
   nnoremap <silent><buffer><expr> x       defx#do_action('remove_trash')
