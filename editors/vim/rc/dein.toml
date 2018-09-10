@@ -45,7 +45,7 @@ repo = 'thinca/vim-localrc'
 # Faster than the built-in 'matchparen' plugin
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
-if = '!has("gui_running")'
+if = 'has("gui_running")'
 
 # [[plugins]]
 # repo     = 'itchyny/vim-cursorword'
@@ -98,9 +98,9 @@ repo = 'mhartington/oceanic-next'
 [[plugins]]
 repo = 'joshdick/onedark.vim'
 
-#  one
-[[plugins]]
-repo = 'rakr/vim-one'
+# #  one
+# [[plugins]]
+# repo = 'rakr/vim-one'
 
 # #  neodark
 # [[plugins]]
@@ -153,9 +153,6 @@ repo = 'kana/vim-operator-user'
 repo = 'Shougo/context_filetype.vim'
 
 # --- C++
-# [[plugins]]
-# repo = 'octol/vim-cpp-enhanced-highlight'
-
 [[plugins]]
 repo = 'bfrg/vim-cpp-modern'
 
