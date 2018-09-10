@@ -163,7 +163,7 @@ nnoremap <silent> [Window]o  :<C-u>only<CR>
 " split window horizontally
 nnoremap <silent> [Window]-  :<C-u>split<CR>
 " split window virtically
-nnoremap <silent> [Window]|  :<C-u>split<CR>
+nnoremap <silent> [Window]\| :<C-u>vsplit<CR>
 " equal size window
 nnoremap <silent> [Window]=   <c-w>=<CR>
 " Zoom window
