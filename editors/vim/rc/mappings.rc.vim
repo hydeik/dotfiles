@@ -5,9 +5,7 @@ inoremap jj        <ESC>
 inoremap j<Space>  j
 cnoremap <expr> j  getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 if exists(':tnoremap')
-  tnoremap <ESC>      <C-\><C-n>
-  tnoremap jj         <C-\><C-n>
-  tnoremap j<Space>   j
+  tnoremap <ESC>  <C-\><C-n>
 endif
 
 " Visual mode key mappings:
