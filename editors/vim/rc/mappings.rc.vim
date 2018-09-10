@@ -132,8 +132,6 @@ nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>toggle_window_zoom()<CR
 nmap <C-w>z       <Plug>(my-zoom-window)
 nmap <C-w><C-z>   <Plug>(my-zoom-window)
 
-" [Space]: Other useful commands "{{{
-" Smart space mapping.
 
 " <Leader>t mapping -- (toggle) options
 nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
@@ -142,28 +140,32 @@ nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
 nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
 
 " Window/Tabs operation
-" nnoremap [Window] <Nop>
-" nmap s   [Window]
+" use 's' key as prefix
+nnoremap [Window] <Nop>
+nmap s   [Window]
+
 " Move windown y TAB
 nnoremap <silent> <Tab>    <C-w>w
 nnoremap <silent> <S-Tab>  <C-w>W
+
 " Resize window by Shift+arrow
 nnoremap <S-Left>   <C-w><
 nnoremap <S-Right>  <C-w>>
 nnoremap <S-Up>     <C-w>+
 nnoremap <S-Down>   <C-w>-
 
-" split window horizontally and move to new windown
-nnoremap <silent> <Leader>ws  :<C-u>split<CR>:wincmd w<CR>
-" split window vertically and move to new windown
-nnoremap <silent> <Leader>wv  :<C-u>vsplit<CR>:wincmd w<CR>
 " new tab
-nnoremap <silent> <Leader>wt  :<C-u>tabnew<CR>
+nnoremap <silent> [Window]t  :<C-u>tabnew<CR>
 " close window
-nnoremap <silent> <Leader>wd  :<C-u>close<CR>
+nnoremap <silent> [Window]c  :<C-u>close<CR>
 " only current window
-nnoremap <silent> <Leader>wo  :<C-u>only<CR>
+nnoremap <silent> [Window]o  :<C-u>only<CR>
+" split window horizontally
+nnoremap <silent> [Window]-  :<C-u>split<CR>
+" split window virtically
+nnoremap <silent> [Window]|  :<C-u>split<CR>
 " equal size window
-nnoremap <silent> <Leader>w=   <c-w>=<CR>
-" Zoom windown
-nmap     <silent> <Leader>wz   <Plug>(my-zoom-window)
+nnoremap <silent> [Window]=   <c-w>=<CR>
+" Zoom window
+nmap     <silent> [Window]z   <Plug>(my-zoom-window)
+
