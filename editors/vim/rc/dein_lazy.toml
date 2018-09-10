@@ -329,16 +329,18 @@ on_map = {nv = '<Plug>'}
 hook_add = '''
   let g:caw_no_default_keymappings = 1
 
-  nmap <Leader>cc  <Plug>(caw:hatpos:toggle)
-  vmap <Leader>cc  <Plug>(caw:hatpos:toggle)
-  nmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
-  vmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
-  nmap <Leader>cb  <Plug>(caw:box:toggle)
-  vmap <Leader>cb  <Plug>(caw:box:toggle)
-  nmap <Leader>cw  <Plug>(caw:wrap:toggle)
-  vmap <Leader>cw  <Plug>(caw:wrap:toggle)
-  nmap <Leader>co  <Plug>(caw:jump:comment-next)
-  nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
+  nmap gc   <Plug>(caw:prefix)
+  xmap gc   <Plug>(caw:prefix)
+  nmap gcc  <Plug>(caw:hatpos:toggle)
+  xmap gcc  <Plug>(caw:hatpos:toggle)
+  nmap gca  <Plug>(caw:dollarpos:toggle)
+  xmap gca  <Plug>(caw:dollarpos:toggle)
+  nmap gcb  <Plug>(caw:box:toggle)
+  xmap gcb  <Plug>(caw:box:toggle)
+  nmap gcw  <Plug>(caw:wrap:toggle)
+  xmap gcw  <Plug>(caw:wrap:toggle)
+  nmap gco  <Plug>(caw:jump:comment-next)
+  nmap gcO  <Plug>(caw:jump:comment-prev)
 '''
 
 # --- Smart Align
