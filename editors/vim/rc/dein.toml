@@ -45,6 +45,7 @@ repo = 'thinca/vim-localrc'
 # Faster than the built-in 'matchparen' plugin
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
+if = '!has("gui_running")'
 
 # [[plugins]]
 # repo     = 'itchyny/vim-cursorword'
