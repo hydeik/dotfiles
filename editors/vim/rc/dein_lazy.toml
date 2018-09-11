@@ -404,17 +404,32 @@ on_cmd = [
   'Gvsplit', 'Gtabedit', 'Gpedit', 'Gread', 'Gwrite', 'Gwq', 'Gdiff',
   'Gvdiff', 'Gmove', 'Grename', 'Gdelete', 'Gremove', 'Gblame', 'Gbrowse'
   ]
-hook_add = 'call rc#plugin#fugitive#hook_add()'
+hook_add = '''
+  nnoremap <Leader>ga :<C-u>Gwrite<CR>
+  nnoremap <Leader>gb :<C-u>Gblame<CR>
+  nnoremap <Leader>gc :<C-u>Gcommit<CR>
+  nnoremap <Leader>gC :<C-u>Git commit --amend<CR>
+  nnoremap <Leader>gd :<C-u>Gdiff<CR>
+  nnoremap <Leader>gr :<C-u>Gread<CR>
+  nnoremap <Leader>gs :<C-u>Gstatus<CR>
+'''
 
 [[plugins]]
 repo = 'tpope/vim-rhubarb'
 depends = ['vim-fugitive']
 on_source = 'vim-fugitive'
+hook_add = '''
+  nnoremap <Leader>gB :<C-u>Gbrowse<CR>
+'''
 
 [[plugins]]
 repo = 'junegunn/gv.vim'
 depends = ['vim-fugitive']
 on_source = 'vim-fugitive'
+hook_add = '''
+  nnoremap <Leader>gv :<C-u>GV!<CR>
+  nnoremap <Leader>gV :<C-u>GV<CR>
+'''
 
 [[plugins]]
 repo = 'christoomey/vim-conflicted'
