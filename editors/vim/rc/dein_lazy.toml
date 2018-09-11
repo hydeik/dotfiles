@@ -393,8 +393,8 @@ hook_source = 'call echodoc#enable()'
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
-hook_add = 'call rc#plugin#gina#hook_add()'
-hook_post_source = 'call rc#plugin#gina#hook_post_source()'
+# hook_add = 'call rc#plugin#gina#hook_add()'
+# hook_post_source = 'call rc#plugin#gina#hook_post_source()'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
@@ -404,21 +404,22 @@ on_cmd = [
   'Gvsplit', 'Gtabedit', 'Gpedit', 'Gread', 'Gwrite', 'Gwq', 'Gdiff',
   'Gvdiff', 'Gmove', 'Grename', 'Gdelete', 'Gremove', 'Gblame', 'Gbrowse'
   ]
+hook_add = 'call rc#plugin#fugitive#hook_add()'
 
 [[plugins]]
 repo = 'tpope/vim-rhubarb'
 depends = ['vim-fugitive']
-on_cmd = ['Gbrowse']
+on_source = 'vim-fugitive'
 
 [[plugins]]
 repo = 'junegunn/gv.vim'
 depends = ['vim-fugitive']
-on_cmd = ['GV']
+on_source = 'vim-fugitive'
 
 [[plugins]]
-repo = 'idanarye/vim-merginal'
+repo = 'christoomey/vim-conflicted'
 depends = ['vim-fugitive']
-on_cmd = ['Merginal', 'MerginalToggle', 'MerginalClose']
+on_source = 'vim-fugitive'
 
 # --- Asynchronous Lint Engine (ALE)
 [[plugins]]
