@@ -86,12 +86,12 @@ function! rc#plugin#denite#hook_source() abort
   call denite#custom#map('normal', 'r',     '<denite:do_action:quickfix>', 'noremap')
 
   " Change file/rec and directory_rec command
-  if execute('fd')
-    call denite#custom#var('file/rec', 'command', ['fd', '--type', 'file', '--follow', '--hidden', '--exclude', '.git'])
-    call denite#custom#var('file/rec', 'command', ['fd', '--type', 'directory', '--follow', '--hidden'])
-  elseif execute('rg')
+  if executable('fd')
+    call denite#custom#var('file/rec', 'command', ['fd', '--type', 'file', '--follow', '--full-path', '--hidden', '--exclude', '.git'])
+    call denite#custom#var('directory_rec', 'command', ['fd', '--type', 'directory', '--full-path', '--follow', '--hidden'])
+  elseif executable('rg')
     call denite#custom#var('file/rec', 'command', ['rg', '--files', '--hidden', '--glob', '!.git'])
-  elseif execute('ag')
+  elseif executable('ag')
     call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
   endif
 
