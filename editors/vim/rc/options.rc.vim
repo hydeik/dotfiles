@@ -154,6 +154,6 @@ set wildignore+=*.DS_Store
 
 " ----- Window
 " Create a new window below the current window when :split is called
-set splitbelow
+" set splitbelow
 " Create a new window right side of the current window when :vsplit is called
 set splitright
