@@ -23,6 +23,7 @@ function! rc#plugin#denite#hook_add() abort
   nnoremap <silent> <LocalLeader>F  :<C-u>Denite file<CR>
   nnoremap <silent> <LocalLeader>j  :<C-u>Denite jump change file/point<CR>
   nnoremap <silent> <LocalLeader>o  :<C-u>Denite outline<CR>
+  " nnoremap <silent> <LocalLeader>p  :<C-u>DeniteProjectDir file/rec<CR>
 
   " Resume the previous Denite buffer
   nnoremap <silent> <LocalLeader>r  :<C-u>Denite -resume<CR>
@@ -33,15 +34,13 @@ function! rc#plugin#denite#hook_add() abort
   " Vim command/command_history (fuzzy-find)
   nnoremap <silent> <LocalLeader><LocalLeader>  :<C-u>Denite command command_history<CR>
 
-  " Open Denite with word under cursor or selection
-  nnoremap <silent> <LocalLeader>gf :DeniteCursorWord file_rec<CR>
-
   " Grep
   nnoremap <silent> <LocalLeader>gg  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
   nnoremap <silent> <LocalLeader>g*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
 	vnoremap <silent> <LocalLeader>g*  :<C-u>call <SID>get_selection('/')<CR>
         \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
 
+  nnoremap <silent> <LocalLeader>G   :<C-u>DeniteProjectDir grep -no-empty -buffer-name=search -mode=normal<CR>
 
   " Tag jump
   nnoremap <silent><expr> <LocalLeader>t  &filetype == 'help' ? "g\<C-]>" :

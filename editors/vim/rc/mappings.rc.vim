@@ -52,6 +52,10 @@ nnoremap cN  *``cgN
 vnoremap <expr> cn  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
 vnoremap <expr> cN  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 
+" Fast save
+nnoremap <silent><Leader>w  :write<CR>
+vnoremap <silent><Leader>w  <ESC>:write<CR>
+
 " Open/close folding:"{{{
 nnoremap <expr> l  foldclosed('.') != -1 ? 'zo' : 'l'
 xnoremap <expr> l  foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
@@ -138,6 +142,7 @@ nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
 nnoremap <silent> <Leader>tn  :setlocal nonumber!<CR>
 nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
 nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
+nnoremap <silent> <Leader>th  :nohlsearch<CR>
 
 " Window/Tabs operation
 " use 's' key as prefix
