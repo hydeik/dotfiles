@@ -87,7 +87,8 @@ set foldenable
 set foldmethod=marker
 " Show folding level
 set foldcolumn=2
-set fillchars=vert:\|
+" set fillchars=vert:\|
+set fillchars=""
 set commentstring=%s
 
 augroup foldmethod
