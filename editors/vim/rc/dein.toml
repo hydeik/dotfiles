@@ -90,17 +90,17 @@ repo = 'ryanoasis/vim-devicons'
 # [[plugins]]
 # repo = 'morhetz/gruvbox'
 
-#  Oceanic-Next
-[[plugins]]
-repo = 'mhartington/oceanic-next'
+# #  Oceanic-Next
+# [[plugins]]
+# repo = 'mhartington/oceanic-next'
 
 #  onedark
 [[plugins]]
 repo = 'joshdick/onedark.vim'
 
-# #  one
-# [[plugins]]
-# repo = 'rakr/vim-one'
+#  one
+[[plugins]]
+repo = 'rakr/vim-one'
 
 # #  neodark
 # [[plugins]]
