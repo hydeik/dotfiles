@@ -7,15 +7,13 @@ endfunction
 
 function! rc#plugin#gina#hook_post_source() abort
   " Set default options for commands
-  call gina#custom#command#option('status', '--opener', 'split')
-  call gina#custom#command#option('commit', '-v|--verbose')
   call gina#custom#command#option('branch', '-v', 'v')
   call gina#custom#command#option('/\%(log\|reflog\)', '--opener', 'vsplit')
-  call gina#custom#command#option(
-        \ '/\%(branch\|changes\|grep\|log\)',
-        \ '--opener', 'vsplit'
-        \)
-
+  call gina#custom#command#option('/\%(branch\|changes\|grep\|log\)', '--opener', 'vsplit')
+  call gina#custom#command#option('log', '--group', 'log-viwer')
+  call gina#custom#command#option('reflog', '--group', 'reflog-viwer')
+  call gina#custom#command#option('commit', '-v|--verbose')
+  call gina#custom#command#option('status', '--opener', 'split')
   call gina#custom#command#option('/\%(status\|commit\)', '-u|--untracked-files')
   call gina#custom#command#option('/\%(status\|changes\)', '--ignore-submodules')
 
@@ -28,22 +26,46 @@ function! rc#plugin#gina#hook_post_source() abort
 
   " Custom key mappings
   call gina#custom#mapping#nmap(
-        \ 'status', '<C-c><C-c>', ':<C-u>Gina commit<CR>',
+        \ 'branch', 'D',
+        \ ':call gina#action#call(''branch:delete'')<CR>',
         \ {'noremap': 1, 'silent': 1}
-        \)
+        \ )
 
   call gina#custom#mapping#nmap(
-        \ 'status', 'q', ':quit<CR>',
+        \ 'branch', 'N',
+        \ ':call gina#action#call(''branch:new'')<CR>',
         \ {'noremap': 1, 'silent': 1}
-        \)
+        \ )
+
+  call gina#custom#mapping#nmap(
+        \ 'branch', 'm',
+        \ ':call gina#action#call(''branch:move'')<CR>',
+        \ {'noremap': 1, 'silent': 1}
+        \ )
+
+  call gina#custom#mapping#nmap(
+        \ 'branch', 'r',
+        \ ':call gina#action#call(''branch:refresh'')<CR>',
+        \ {'noremap': 1, 'silent': 1}
+        \ )
+
+  call gina#custom#mapping#nmap(
+        \ 'status', 'C', ':<C-u>Gina commit<CR>',
+        \ {'noremap': 1, 'silent': 1}
+        \ )
+
+  call gina#custom#mapping#nmap(
+        \ '/\%(status\|branch\|blame\|log\|reflog\)', 'q', ':quit<CR>',
+        \ {'noremap': 1, 'silent': 1}
+        \ )
 
   call gina#custom#mapping#nmap(
         \ 'branch', 'g<CR>',
         \ '<Plug>(gina-commit-checkout-track)'
-        \)
+        \ )
 
   call gina#custom#execute(
         \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
         \ 'setlocal winfixheight',
-        \)
+        \ )
 endfunction
