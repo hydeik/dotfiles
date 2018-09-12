@@ -72,7 +72,7 @@ let g:lightline = {
       \ }
 
 function! LightlineModified()
-  if &filetype =~? 'help\|vimfiler\|gundo'
+  if &filetype =~? 'help\|defx\|gundo'
     return ''
   elseif &modified
     return '+'
@@ -84,7 +84,7 @@ function! LightlineModified()
 endfunction
 
 function! LightlineReadonly()
-  if &filetype !~? 'help\|vimfiler\|gundo'
+  if &filetype !~? 'help\|defx\|gundo'
     return ''
   elseif &readonly
     return "\ue0a2"
@@ -115,7 +115,7 @@ endfunction
 
 function! LightlineMode()
   return  &filetype ==? 'denite' ? 'denite' :
-        \ &filetype ==? 'vimfiler' ? 'VimFiler' :
+        \ &filetype ==? 'defx' ? 'defx' :
         \ &filetype ==? 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
