@@ -44,12 +44,13 @@ highlight SignColumn ctermbg=NONE guibg=NONE
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitstatus', 'filename' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ],
-      \              [ 'pyenv' ] ],
+      \   'left': [ ['mode', 'paste'],
+      \             ['filename', 'modified'],
+      \             ['gitrepo_branch', 'gitrepo_changed', 'gitrepo_conflicted'] ],
+      \   'right': [ ['lineinfo'],
+      \              ['percent'],
+      \              ['fileformat', 'fileencoding', 'filetype'],
+      \              ['pyenv'] ],
       \ },
       \ 'component' : {
       \   'lineinfo': "\ue0a1 %3l:%-2v"
@@ -57,13 +58,23 @@ let g:lightline = {
       \ 'component_function': {
       \   'modified': 'LightlineModified',
       \   'readonly': 'LightlineReadonly',
-      \   'gitstatus': 'LightlineGitstatus',
       \   'filename': 'LightlineFilename',
       \   'fileformat': 'LightlineFileformat',
       \   'filetype': 'LightlineFiletype',
       \   'fileencoding': 'LightlineFileencoding',
       \   'mode': 'LightlineMode',
       \   'pyenv': 'LightlinePyenv',
+      \ },
+      \ 'component_expand' : {
+      \   'gitrepo_branch' : 'LightlineGitRepoBranch',
+      \   'gitrepo_changed' : 'LightlineGitRepoChanged',
+      \   'gitrepo_conflicted' : 'LightlineGitRepoConflicted',
+      \   'dummy': 'error'
+      \ },
+      \ 'component_type' : {
+      \   'gitrepo_branch' : 'raw',
+      \   'gitrepo_changed' : 'warning',
+      \   'gitrepo_conflicted' : 'error'
       \ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
@@ -118,24 +129,50 @@ function! LightlineMode()
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-function! LightlineGitstatus()
+" function! LightlineGitstatus()
+"   let branch = gina#component#repo#branch()
+"   if branch ==# ''
+"     return ''
+"   else
+"     let staged = gina#component#status#staged()
+"     let unstaged = gina#component#status#unstaged()
+"     let conflicted = gina#component#status#conflicted()
+"     let ahead = gina#component#traffic#ahead()
+"     let behind = gina#component#traffic#behind()
+"     return  "\ue725 " . branch .
+"           \ (winwidth(0) < 100 ? '' :
+"           \   (ahead      ? " \uf01b ".ahead      : '') .
+"           \   (behind     ? " \uf01a ".behind     : '') .
+"           \   (staged     ? " \uf055 ".staged     : '') .
+"           \   (unstaged   ? " \uf06a ".unstaged   : '') .
+"           \   (conflicted ? " \uf057 ".conflicted : '') )
+"   end
+" endfunction
+
+function! LightlineGitRepoBranch()
   let branch = gina#component#repo#branch()
-  if branch ==# ''
-    return ''
-  else
-    let staged = gina#component#status#staged()
-    let unstaged = gina#component#status#unstaged()
-    let conflicted = gina#component#status#conflicted()
-    let ahead = gina#component#traffic#ahead()
-    let behind = gina#component#traffic#behind()
-    return  "\ue725 " . branch .
+  let ahead = gina#component#traffic#ahead()
+  let behind = gina#component#traffic#behind()
+  return branch ==# '' ? '' :
+        \ " \ue725 " . branch .
+        \ (winwidth(0) < 100 ? '' :
+        \ (ahead ? " \uf01b ".ahead : '') . (behind ? " \uf01a ".behind : '') )
+endfunction
+
+function! LightlineGitRepoChanged()
+  let branch = gina#component#repo#branch()
+  let staged = gina#component#status#staged()
+  let unstaged = gina#component#status#unstaged()
+  return branch ==# '' ? '' :
           \ (winwidth(0) < 100 ? '' :
-          \   (ahead      ? " \uf01b ".ahead      : '') .
-          \   (behind     ? " \uf01a ".behind     : '') .
-          \   (staged     ? " \uf055 ".staged     : '') .
-          \   (unstaged   ? " \uf06a ".unstaged   : '') .
-          \   (conflicted ? " \uf057 ".conflicted : '') )
-  end
+          \   (staged   ? "\uf055 ".staged   : '') .
+          \   (unstaged ? "\uf06a ".unstaged : '') )
+endfunction
+
+function! LightlineGitRepoConflicted()
+  let branch = gina#component#repo#branch()
+  let conflicted = gina#component#status#conflicted()
+  return branch ==# '' ? '' : (conflicted ? " \uf057 ".conflicted : '')
 endfunction
 
 function! LightlinePyenv()
