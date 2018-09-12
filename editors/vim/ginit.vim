@@ -2,4 +2,4 @@
 " if ('g:GuiLoaded')
 "   Guifont Knack Nerd Font:h14
 " endif
-Guifont Knack Nerd Font:h14
+Guifont Hack Nerd Font:h14

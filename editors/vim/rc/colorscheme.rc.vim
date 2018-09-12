@@ -18,11 +18,6 @@ if !has('gui_running')
   endif
 endif
 
-" --- Font in GUI Vim
-if has('gui_running')
-  set guifont=Knack\ Nerd\ Font:h14
-endif
-
 " --- Colorscheme
 set background=dark
 
