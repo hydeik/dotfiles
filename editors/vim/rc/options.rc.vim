@@ -82,6 +82,7 @@ set timeout timeoutlen=1000
 " Wait 50 msec for a key code
 set ttimeout ttimeoutlen=50
 
+" ----- Folding
 " Enable folding
 set foldenable
 set foldmethod=marker
@@ -152,8 +153,10 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.dylib,*.manifest,*.so,*.out,*.class
 set wildignore+=*.swp,*.swo,*.swn
 set wildignore+=*.DS_Store
 
-" ----- Window
 " Create a new window below the current window when :split is called
 " set splitbelow
 " Create a new window right side of the current window when :vsplit is called
 set splitright
+
+" Diff
+set diffopt+=vertical
