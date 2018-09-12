@@ -26,19 +26,15 @@ endif
 " --- Colorscheme
 set background=dark
 
-" let g:one_allow_italics = 1
-" colorscheme one
-" call one#highlight('Visual', '', '3e4452', 'none')
+let g:one_allow_italics = 1
+colorscheme one
+call one#highlight('Visual', '', '3e4452', 'none')
 
-colorscheme onedark
-
-" let g:oceanic_next_bold = 1
-" let g:oceanic_next_italic = 1
-" colorscheme OceanicNext
-
-highlight Normal     ctermbg=NONE guibg=NONE
-highlight LineNr     ctermbg=NONE guibg=NONE
-highlight SignColumn ctermbg=NONE guibg=NONE
+if !has('gui_running')
+  highlight Normal     ctermbg=NONE guibg=NONE
+  highlight LineNr     ctermbg=NONE guibg=NONE
+  highlight SignColumn ctermbg=NONE guibg=NONE
+endif
 
 " --- Customize status line with lightline
 let g:lightline = {
