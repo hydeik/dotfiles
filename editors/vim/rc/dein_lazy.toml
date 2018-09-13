@@ -195,24 +195,24 @@ hook_source = '''
   autocmd MyVimrc FileType qf nnoremap <buffer> R :<C-u>Qfreplace<CR>
 '''
 
-# --- Simple session manager (including Denite source)
-[[plugins]]
-repo = 'lambdalisue/session.vim'
-depends = 'denite.nvim'
-on_cmd = ['SessionSave', 'SessionRemove', 'SessionOpen', 'SessionClose', 'SessionList']
-hook_add = '''
-  nnoremap <silent><Leader>sc  :<C-u>SessionClose<CR>
-  nnoremap <silent><Leader>sd  :<C-u>SessionRemove<CR>
-  nnoremap <silent><Leader>sl  :<C-u>SessionList<CR>
-  nnoremap <silent><Leader>so  :<C-u>SessionOpen<CR>
-  nnoremap <silent><Leader>ss  :<C-u>SessionSave<CR>
-'''
-hook_source = '''
-  let g:session_dir = $XDG_CACHE_HOME . '/session.vim'
-  let g:session#default_opener = 'edit'
-  let g:session#default_session = 'default'
-  let g:session#default_mappings = 1
-'''
+# # --- Simple session manager (including Denite source)
+# [[plugins]]
+# repo = 'lambdalisue/session.vim'
+# depends = 'denite.nvim'
+# on_cmd = ['SessionSave', 'SessionRemove', 'SessionOpen', 'SessionClose', 'SessionList']
+# hook_add = '''
+#   nnoremap <silent><Leader>sc  :<C-u>SessionClose<CR>
+#   nnoremap <silent><Leader>sd  :<C-u>SessionRemove<CR>
+#   nnoremap <silent><Leader>sl  :<C-u>SessionList<CR>
+#   nnoremap <silent><Leader>so  :<C-u>SessionOpen<CR>
+#   nnoremap <silent><Leader>ss  :<C-u>SessionSave<CR>
+# '''
+# hook_source = '''
+#   let g:session_dir = $XDG_CACHE_HOME . '/session.vim'
+#   let g:session#default_opener = 'edit'
+#   let g:session#default_session = 'default'
+#   let g:session#default_mappings = 1
+# '''
 
 #------------------------------------------------------------------------------
 # Filer
@@ -283,19 +283,19 @@ hook_add = '''
   omap aD  <Plug>(textobj-delimited-backward-a)
 '''
 
-# --- Move function arguments left and right
-[[plugins]]
-repo = 'AndrewRadev/sideways.vim'
-on_map = {ox = '<Plug>Sideways'}
-hook_add = '''
-  nnoremap <silent>sh   :<C-u>SidewaysLeft<CR>
-  nnoremap <silent>sl   :<C-u>SidewaysRight<CR>
-
-  omap <silent> a,  <Plug>SidewaysArgumentTextobjA
-  xmap <silent> a,  <Plug>SidewaysArgumentTextobjA
-  omap <silent> i,  <Plug>SidewaysArgumentTextobjI
-  xmap <silent> i,  <Plug>SidewaysArgumentTextobjI
-'''
+# # --- Move function arguments left and right
+# [[plugins]]
+# repo = 'AndrewRadev/sideways.vim'
+# on_map = {ox = '<Plug>Sideways'}
+# hook_add = '''
+#   " nnoremap <silent>sh   :<C-u>SidewaysLeft<CR>
+#   " nnoremap <silent>sl   :<C-u>SidewaysRight<CR>
+#
+#   omap <silent> a,  <Plug>SidewaysArgumentTextobjA
+#   xmap <silent> a,  <Plug>SidewaysArgumentTextobjA
+#   omap <silent> i,  <Plug>SidewaysArgumentTextobjI
+#   xmap <silent> i,  <Plug>SidewaysArgumentTextobjI
+# '''
 
 # --- Expand region
 [[plugins]]
