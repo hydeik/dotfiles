@@ -50,7 +50,7 @@ function! rc#plugin#gina#hook_post_source() abort
         \ )
 
   call gina#custom#mapping#nmap(
-        \ 'status', 'C', ':<C-u>Gina commit<CR>',
+        \ 'status', '<C-c><C-c>', ':<C-u>Gina commit<CR>',
         \ {'noremap': 1, 'silent': 1}
         \ )
 
