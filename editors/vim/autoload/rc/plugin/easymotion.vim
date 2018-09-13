@@ -20,7 +20,7 @@ function! rc#plugin#easymotion#hook_source() abort
   " Jump to first with enter & space
   let g:EasyMotion_space_jump_first = 1
   " Prompt
-  let g:EasyMotion_prompt = '{n}> '
+  let g:EasyMotion_prompt = 'Search for {n} chars> '
 endfunction
 
 function! rc#plugin#easymotion#hook_add() abort
@@ -28,27 +28,25 @@ function! rc#plugin#easymotion#hook_add() abort
   vmap ss <Plug>(easymotion-s2)
   omap ss <Plug>(easymotion-s2)
 
-  " smart f & F
-  nmap f <Plug>(easymotion-bd-fl)
+  " Line jumps
+  map sh <Plug>(easymotion-linebackward)
+  map sj <Plug>(easymotion-j)
+  map sk <Plug>(easymotion-k)
+  map sl <Plug>(easymotion-lineforward)
+
+  " smart f & F (visual mode and operator mode)
   omap f <Plug>(easymotion-bd-fl)
   xmap f <Plug>(easymotion-bd-fl)
+  omap F <Plug>(easymotion-Fl)
+  xmap F <Plug>(easymotion-Fl)
+  omap t <Plug>(easymotion-tl)
+  xmap t <Plug>(easymotion-tl)
+  omap T <Plug>(easymotion-Tl)
+  xmap T <Plug>(easymotion-Tl)
 
   " Search and jump
   map  s/ <Plug>(easymotion-sn)
   omap s/ <Plug>(easymotion-tn)
   map  sn <Plug>(easymotion-next)
   map  sp <Plug>(easymotion-prev)
-
-  " omap F <Plug>(easymotion-Fl)
-  " xmap F <Plug>(easymotion-Fl)
-  " omap t <Plug>(easymotion-tl)
-  " xmap t <Plug>(easymotion-tl)
-  " omap T <Plug>(easymotion-Tl)
-  " xmap T <Plug>(easymotion-Tl)
-
-  " " hjkl
-  " map ;h <Plug>(easymotion-linebackward)
-  " map ;j <Plug>(easymotion-j)
-  " map ;k <Plug>(easymotion-k)
-  " map ;l <Plug>(easymotion-lineforward)
 endfunction
