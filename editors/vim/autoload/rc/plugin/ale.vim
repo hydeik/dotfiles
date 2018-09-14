@@ -1,10 +1,10 @@
 function! rc#plugin#ale#hook_add() abort
   " jump errors
-  nmap <silent> <Localleader>j  <Plug>(ale_previous_wrap)
-  nmap <silent> <Localleader>k  <Plug>(ale_next_wrap)
+  nmap <silent> <Localleader>aj  <Plug>(ale_previous_wrap)
+  nmap <silent> <Localleader>ak  <Plug>(ale_next_wrap)
 
   " Fix (auto-format) the buffer
-  nmap <silent> <Localleader>lf  <Plug>(ale_fix)
+  nmap <silent> <Localleader>af  <Plug>(ale_fix)
 endfunction
 
 function! rc#plugin#ale#hook_source() abort
