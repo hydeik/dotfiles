@@ -7,7 +7,6 @@ endfunction
 
 function! rc#plugin#denite#hook_add() abort
   " --- Key mappings
-
   " Substitute search commands by Denite line
   nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
   nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
@@ -103,7 +102,6 @@ function! rc#plugin#denite#hook_source() abort
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opt', [])
   elseif executable('ag')
-    call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
     call denite#custom#var('grep', 'command', ['ag'])
     call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
     call denite#custom#var('grep', 'recursive_opts', [])
