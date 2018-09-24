@@ -80,7 +80,7 @@ hook_source = '''
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-depends = 'vim-qfreplace'
+depends = ['vim-qfreplace']
 on_cmd = 'Denite'
 hook_add = 'call rc#plugin#denite#hook_add()'
 hook_source = 'call rc#plugin#denite#hook_source()'
@@ -185,14 +185,6 @@ hook_source = '''
   let g:indent_guides_start_level = 2
   let g:indent_guides_exclude_filetypes = ['help', 'denite', 'nerdtree']
   let g:indend_guides_color_change_percent = 20
-'''
-
-# --- Perform the replacement in |quickfix|
-[[plugins]]
-repo = 'thinca/vim-qfreplace'
-on_ft = ['denite', 'qf']
-hook_source = '''
-  autocmd MyVimrc FileType qf nnoremap <buffer> R :<C-u>Qfreplace<CR>
 '''
 
 # # --- Simple session manager (including Denite source)
