@@ -120,11 +120,9 @@ function! rc#plugin#denite#hook_source() abort
   endif
 
   " Change matchers
-  call denite#custom#source('file/old', 'matchers', ['matcher/fuzzy', 'matcher/project_files'])
+  call denite#custom#source('file/rec', 'matchers', ['matcher/fruzzy'])
+  call denite#custom#source('file/old', 'matchers', ['matcher/fruzzy', 'matcher/project_files'])
   call denite#custom#source('tag', 'matchers', ['matcher/substring'])
-  if has('nvim')
-    call denite#custom#source('file/rec,grep', 'matchers', ['matcher/cpsm'])
-  endif
 
   " Change sorters
   call denite#custom#source('file/rec', 'sorters', ['sorter_sublime'])
