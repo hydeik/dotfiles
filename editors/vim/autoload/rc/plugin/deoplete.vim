@@ -14,7 +14,7 @@ function! rc#plugin#deoplete#hook_source() abort
   " Start deoplete
   let g:deoplete#enable_at_startup = 1
 
-  let g:deoplete#enable_refresh_always = 0
+  let g:deoplete#enable_refresh_always = 1
   let g:deoplete#enable_camel_case = 1
   " let g:deoplete#auto_complete_delay = 50
   " let g:deoplete#auto_complete_start_length = 3
@@ -62,6 +62,13 @@ function! rc#plugin#deoplete#hook_source() abort
 endfunction
 
 function! rc#plugin#deoplete#hook_post_source() abort
+  " Default matchers
+  call deoplete#custom#source('_', 'matchers', [
+        \ 'matcher_fuzzy',
+        \ 'matcher_length'
+        \ ])
+  " Filetype
+  call deoplete#custom#source('zsh', 'filetypes', ['zsh', 'sh'])
   " Default converters
   call deoplete#custom#source('_', 'converters', [
         \ 'converter_remove_paren',
@@ -71,9 +78,7 @@ function! rc#plugin#deoplete#hook_post_source() abort
         \ 'converter_truncate_menu',
         \ 'converter_auto_delimiter',
         \ ])
-  " Capital letter matches to the uppercase only.
-  " Lower letter metches both the uppercase and lowercase.
-  "  e.g.)  "foB" matches "FooBar", not "foobar"
-  call deoplete#custom#option('camel_case', v:true)
+  call deoplete#custom#option('auto_complete_delay', 0)
+  call deoplete#custom#option('async_timeout', 100)
 endfunction
 
