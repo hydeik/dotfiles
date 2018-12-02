@@ -56,6 +56,10 @@ vnoremap <expr> cN  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 nnoremap <silent><Leader>w  :write<CR>
 vnoremap <silent><Leader>w  <ESC>:write<CR>
 
+" Buffer delete
+nnoremap <silent><Leader>q  :bdelete<CR>
+vnoremap <silent><Leader>q  <ESC>:bdelete<CR>
+
 " Open/close folding:"{{{
 nnoremap <expr> l  foldclosed('.') != -1 ? 'zo' : 'l'
 xnoremap <expr> l  foldclosed(line('.')) != -1 ? 'zogv0' : 'l'

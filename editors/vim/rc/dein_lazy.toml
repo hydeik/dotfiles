@@ -40,6 +40,10 @@ on_ft = 'vim'
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_event = 'InsertCharPre'
+hook_source = '''
+  let g:lexima_ctrlh_as_backspace = 1
+'''
+
 hook_post_source = '''
   call lexima#add_rule({'char': '<C-h>', 'at': '(\%#)',   'delete': 1})
   call lexima#add_rule({'char': '<C-h>', 'at': '{\%#}',   'delete': 1})
@@ -80,7 +84,7 @@ hook_source = '''
 #------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-depends = 'vim-qfreplace'
+depends = ['vim-qfreplace']
 on_cmd = 'Denite'
 hook_add = 'call rc#plugin#denite#hook_add()'
 hook_source = 'call rc#plugin#denite#hook_source()'
@@ -199,14 +203,6 @@ hook_source = '''
   let g:indend_guides_color_change_percent = 20
 '''
 
-# --- Perform the replacement in |quickfix|
-[[plugins]]
-repo = 'thinca/vim-qfreplace'
-on_ft = ['denite', 'qf']
-hook_source = '''
-  autocmd MyVimrc FileType qf nnoremap <buffer> R :<C-u>Qfreplace<CR>
-'''
-
 # # --- Simple session manager (including Denite source)
 # [[plugins]]
 # repo = 'lambdalisue/session.vim'
@@ -225,6 +221,29 @@ hook_source = '''
 #   let g:session#default_session = 'default'
 #   let g:session#default_mappings = 1
 # '''
+
+# --- Neoterm
+repo = 'kassio/neoterm'
+on_cmd = ['T', 'Texe', 'Tnew', 'Tclear', 'Tkill', 'Tmap', 'Tpos',
+          'TREPLSetTerm', 'TREPLSendFile', 'TREPLSendLine', 'TREPLSendSelection',
+          'Topen', 'Tclose', 'TcloseAll', 'Ttoggle', 'TtoggleAll', 'Tnext', 'Tprevious']
+hook_add = '''
+  let g:neoterm_autoscroll = 1
+  nnoremap [Term] <Nop>
+  nmap     <Leader>T [Term]
+
+  nnoremap [Term]n  :Tnew<CR>
+  nnoremap [Term]v  :vertical Tnew<CR>
+  " 3<leader>Tl will clear neoterm-3.
+  nnoremap [Term]l  :<C-u>exec v:count.'Tclear'<CR>
+
+  " REPL operators (work with textobj)
+  nmap gx  <Plug>(neoterm-repl-send)
+  " Send section to REPL
+  xmap gx  <Plug>(neoterm-repl-send)
+  " Send the current line to REPL
+  nmap gxx <Plug>(neoterm-repl-line)
+'''
 
 #------------------------------------------------------------------------------
 # Filer
@@ -342,18 +361,18 @@ on_map = {nv = '<Plug>'}
 hook_add = '''
   let g:caw_no_default_keymappings = 1
 
-  nmap gc   <Plug>(caw:prefix)
-  xmap gc   <Plug>(caw:prefix)
-  nmap gcc  <Plug>(caw:hatpos:toggle)
-  xmap gcc  <Plug>(caw:hatpos:toggle)
-  nmap gca  <Plug>(caw:dollarpos:toggle)
-  xmap gca  <Plug>(caw:dollarpos:toggle)
-  nmap gcb  <Plug>(caw:box:toggle)
-  xmap gcb  <Plug>(caw:box:toggle)
-  nmap gcw  <Plug>(caw:wrap:toggle)
-  xmap gcw  <Plug>(caw:wrap:toggle)
-  nmap gco  <Plug>(caw:jump:comment-next)
-  nmap gcO  <Plug>(caw:jump:comment-prev)
+  nmap <Leader>c   <Plug>(caw:prefix)
+  xmap <Leader>c   <Plug>(caw:prefix)
+  nmap <Leader>cc  <Plug>(caw:hatpos:toggle)
+  xmap <Leader>cc  <Plug>(caw:hatpos:toggle)
+  nmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
+  xmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
+  nmap <Leader>cb  <Plug>(caw:box:toggle)
+  xmap <Leader>cb  <Plug>(caw:box:toggle)
+  nmap <Leader>cw  <Plug>(caw:wrap:toggle)
+  xmap <Leader>cw  <Plug>(caw:wrap:toggle)
+  nmap <Leader>co  <Plug>(caw:jump:comment-next)
+  nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
 '''
 
 # --- Smart Align

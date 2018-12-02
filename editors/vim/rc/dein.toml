@@ -63,6 +63,13 @@ hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 '''
 
+# --- Perform the replacement in |quickfix|
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+hook_add = '''
+  autocmd MyVimrc FileType qf nnoremap <buffer> R :<C-u>Qfreplace<CR>
+'''
+
 #------------------------------------------------------------------------------
 # Lightline + Colorscheme
 #------------------------------------------------------------------------------
