@@ -29,6 +29,20 @@ if = '!has("nvim")'
 repo = 'https://github.com/roxma/nvim-yarp'
 
 #------------------------------------------------------------------------------
+# Vim Tmux Navigator
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'christoomey/vim-tmux-navigator'
+hook_add = '''
+  let g:tmux_navigator_no_mappings = 1
+  nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
+  nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
+  nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
+  nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
+  nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
+'''
+
+#------------------------------------------------------------------------------
 # Utilities
 #------------------------------------------------------------------------------
 # Enable configuration file in each directory
