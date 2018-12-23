@@ -43,6 +43,22 @@ hook_add = '''
 '''
 
 #------------------------------------------------------------------------------
+# Vim which-key
+#------------------------------------------------------------------------------
+[[plugins]]
+repo = 'liuchengxu/vim-which-key'
+hook_add = '''
+  " Leader key      : Space
+  " Local leader key: ;
+  nnoremap <Leader>      :<C-u>WhichKey       '<Space>'<CR>
+  vnoremap <Leader>      :<C-u>WhichKeyVisual '<Space>'<CR>
+  nnoremap <LocalLeader> :<C-u>WhichKey       ';'<CR>
+  vnoremap <LocalLeader> :<C-u>WhichKeyVisual ';'<CR>
+  nnoremap g             :<C-u>WhichKey       'g'<CR>
+  vnoremap g             :<C-u>WhichKeyVisual 'g'<CR>
+'''
+
+#------------------------------------------------------------------------------
 # Utilities
 #------------------------------------------------------------------------------
 # Enable configuration file in each directory
