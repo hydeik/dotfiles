@@ -96,6 +96,9 @@ source "${ZGEN_INIT}"
 ## Machine local settings
 ##=====================================================================
 loadlib "${ZDOTDIR:-$HOME}/.zshrc_local"
+if [[ -e "${ZDOTDIR:-$HOME}/.zshrc_secret" ]]; then
+    source "${ZDOTDIR:-$HOME}/.zshrc_secret"
+fi
 
 ##=====================================================================
 ## Profiling
