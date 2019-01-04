@@ -1,19 +1,62 @@
 # === Plugins (lazy loading) ===
 
-#-----------------------------------------------------------------------------
-# Asyncronous execution
 #------------------------------------------------------------------------------
+# Denite
+#------------------------------------------------------------------------------
+# Dark powered asynchronous unite all interfaces for Neovim/Vim8
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-hook_post_update = '''
-  if dein#util#_is_windows()
-    let cmd = 'tools\\update-dll-mingw'
-  elseif executable('gmake')
-    let cmd =
-  else
-    let cmd = 'make'
-  endif
-  let g:dein#plugin.build = cmd
+repo = 'Shougo/denite.nvim'
+depends = ['vim-qfreplace']
+on_cmd = 'Denite'
+hook_add = 'call rc#plugin#denite#hook_add()'
+hook_source = 'call rc#plugin#denite#hook_source()'
+
+# Freaky fast fuzzy Denite/CrtlP matcher for vim/neovim
+[[plugins]]
+repo = 'raghur/fruzzy'
+on_source = ['denite.nvim']
+hook_source = '''
+  let g:fruzzy#usenative = 1
+  let g:fruzzy#sortonempty = 0
+'''
+hook_post_update = 'call fruzzy#install()'
+
+# Denite plugin for temporary files
+[[plugins]]
+repo = 'Shougo/junkfile.vim'
+on_source = 'denite.nvim'
+hook_source = '''
+  let g:junkfile#directory = $XDG_CACHE_HOME . '/nvim/junkfile'
+'''
+
+# Denite plugin for MRU
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_source = 'denite.nvim'
+
+# Denite plugin for yank history
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_if = 1
+on_event = 'TextYankPost'
+on_source = 'denite.nvim'
+
+# Denite location andd quickfix lists
+[[plugins]]
+repo = 'chemzqm/unite-location'
+on_source = 'denite.nvim'
+
+# Denite source for ghq list
+[[plugins]]
+repo = 'Jagua/vim-denite-ghq'
+on_source = 'denite.nvim'
+
+# Browse and open sesions
+[[plugins]]
+repo = 'rafi/vim-denite-session'
+on_source = 'denite.nvim'
+hook_source = '''
+  let g:session_directory = $XDG_CACHE_HOME . '/nvim/sessions'
 '''
 
 #------------------------------------------------------------------------------
@@ -78,47 +121,6 @@ hook_source = '''
 
   autocmd MyVimrc CompleteDone * call neosnippet#complete_done()
 '''
-
-#------------------------------------------------------------------------------
-# Denite
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-depends = ['vim-qfreplace']
-on_cmd = 'Denite'
-hook_add = 'call rc#plugin#denite#hook_add()'
-hook_source = 'call rc#plugin#denite#hook_source()'
-
-# --- Denite sources
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-on_source = 'denite.nvim'
-
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_if = 1
-on_event = 'TextYankPost'
-on_source = 'denite.nvim'
-
-[[plugins]]
-repo = 'chemzqm/unite-location'
-on_source = 'denite.nvim'
-
-[[plugins]]
-repo = 'Jagua/vim-denite-ghq'
-on_source = 'denite.nvim'
-
-#------------------------------------------------------------------------------
-# Freaky fast fuzzy Denite/CrtlP matcher for vim/neovim
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'raghur/fruzzy'
-on_source = ['denite.nvim']
-hook_source = '''
-  let g:fruzzy#usenative = 1
-  let g:fruzzy#sortonempty = 0
-'''
-hook_post_update = 'call fruzzy#install()'
 
 #-----------------------------------------------------------------------------
 # Windows, Panes, Tabs
@@ -412,7 +414,7 @@ hook_add = 'call rc#plugin#eskk#hook_add()'
 hook_source = 'call rc#plugin#eskk#hook_source()'
 
 #-----------------------------------------------------------------------------
-# Programming
+# Language, Filetypes
 #-----------------------------------------------------------------------------
 # --- Print document on echo area
 [[plugins]]
