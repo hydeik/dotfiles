@@ -349,15 +349,6 @@ on_path = '.*'
 hook_add = 'call rc#plugin#sandwich#hook_add()'
 hook_source = 'call rc#plugin#sandwich#hook_source()'
 
-# # Operator extension
-# [[plugins]]
-# repo = 'kana/vim-operator-user'
-
-# Textobj extension
-  [[plugins]]
-repo = 'kana/vim-textobj-user'
-on_func = 'textobj#user#'
-
 [[plugins]]
 repo = 'kana/vim-textobj-line'
 depends = ['vim-textobj-user']
@@ -525,11 +516,6 @@ hook_source = '''
   let g:mkdp_refresh_slow = 1
 '''
 
-# --- reStructuredText (rst)
-[[plugins]]
-repo = 'gu-fan/riv.vim'
-on_ft = 'rst'
-
 # --- Emmet
 [[plugins]]
 repo = 'mattn/emmet-vim'
@@ -542,9 +528,4 @@ on_cmd = 'Vinarise'
 hook_add = '''
   let g:vinarise_enable_auto_detect = 1
 '''
-
-# --- Fish shell
-[[plugins]]
-repo = 'dag/vim-fish'
-on_ft = 'fish'
 

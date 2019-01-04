@@ -198,6 +198,11 @@ repo = 'cespare/vim-toml'
 [[plugins]]
 repo = 'ekalinin/Dockerfile.vim'
 
+# --- Fish
+[[plugins]]
+repo = 'dag/vim-fish'
+on_ft = 'fish'
+
 # --- zsh
 [[plugins]]
 repo = 'chrisbra/vim-zsh'
@@ -217,4 +222,16 @@ repo = 'tmux-plugins/vim-tmux'
 # --- nginx configuration (fork official nvim nginx)
 [[plugins]]
 repo = 'othree/nginx-contrib-vim'
+
+#------------------------------------------------------------------------------
+# Textobj/operator extension
+#------------------------------------------------------------------------------
+# Operator extension
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+# Textobj extension
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
 
