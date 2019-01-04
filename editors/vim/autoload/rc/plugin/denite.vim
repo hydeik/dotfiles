@@ -7,58 +7,55 @@ endfunction
 
 function! rc#plugin#denite#hook_add() abort
   " --- Key mappings
+  " use ';' key as the Denite prefix
+  nnoremap [Denite] <Nop>
+  nmap ;   [Denite]
+
   " Substitute search commands by Denite line
   nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
   nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
-  " Substitute 'n' command
   nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
-  " nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -select=+1 -immediately<CR>
-  " nnoremap <silent> N :<C-u>Denite -resume -buffer-name=search -select=-1 -immediately<CR>
-
-  " buffer/file/directory navigation
-  nnoremap <silent> <LocalLeader>b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
-  nnoremap <silent> <LocalLeader>d  :<C-u>Denite directory_rec -default-action=cd<CR>
-  nnoremap <silent> <LocalLeader>f  :<C-u>Denite file/rec<CR>
-  nnoremap <silent> <LocalLeader>F  :<C-u>Denite file<CR>
-  nnoremap <silent> <LocalLeader>j  :<C-u>Denite jump change file/point<CR>
-  nnoremap <silent> <LocalLeader>o  :<C-u>Denite outline<CR>
-  " nnoremap <silent> <LocalLeader>p  :<C-u>DeniteProjectDir file/rec<CR>
-
-  " Resume the previous Denite buffer
-  nnoremap <silent> <LocalLeader>r  :<C-u>Denite -resume<CR>
-
-  " Help (fuzzy-find)
-  nnoremap <silent> <LocalLeader>h  :<C-u>Denite help<CR>
-
-  " Vim command/command_history (fuzzy-find)
-  nnoremap <silent> <LocalLeader><LocalLeader>  :<C-u>Denite command command_history<CR>
-
-  " Grep
-  nnoremap <silent> <LocalLeader>gg  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
-  nnoremap <silent> <LocalLeader>g*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
-	vnoremap <silent> <LocalLeader>g*  :<C-u>call <SID>get_selection('/')<CR>
-        \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
-
-  nnoremap <silent> <LocalLeader>G   :<C-u>DeniteProjectDir grep -no-empty -buffer-name=search -mode=normal<CR>
-
-  " Tag jump
-  nnoremap <silent><expr> <LocalLeader>t  &filetype == 'help' ? "g\<C-]>" :
-        \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
-  nnoremap <silent><expr> <LocalLeader>p  &filetype == 'help' ?
-        \ ":\<C-u>pop\<CR>" : ":\<C-u>Denite -mode=normal jump\<CR>"
-
-  " register / neoyank
-  nnoremap <silent> <LocalLeader>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
-  xnoremap <silent> <LocalLeader>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
 
   " Quickfix and location list
   nnoremap <silent>L  :<C-u>Denite location_list -buffer-name=list<CR>
   nnoremap <silent>Q  :<C-u>Denite quickfix -buffer-name=list<CR>
 
+  " switch buffers
+  nnoremap <silent> [Denite]b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
+  " find file
+  nnoremap <silent> [Denite]f  :<C-u>Denite file/rec<CR>
+  " jump
+  nnoremap <silent> [Denite]j  :<C-u>Denite jump change file/point<CR>
+  " outline
+  nnoremap <silent> [Denite]o  :<C-u>Denite outline<CR>
+  " Resume
+  nnoremap <silent> [Denite]r  :<C-u>Denite -resume<CR>
+  " Command/command history
+  nnoremap <silent> [Denite];  :<C-u>Denite command command_history<CR>
+  " Help
+  nnoremap <silent> [Denite]h  :<C-u>Denite help<CR>
+
+  " Grep
+  nnoremap <silent> [Denite]gg  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
+  nnoremap <silent> [Denite]g*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
+	vnoremap <silent> [Denite]g*  :<C-u>call <SID>get_selection('/')<CR>
+        \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
+  nnoremap <silent> [Denite]G   :<C-u>DeniteProjectDir grep -no-empty -buffer-name=search -mode=normal<CR>
+
+  " Tag jump
+  nnoremap <silent><expr> [Denite]t  &filetype == 'help' ? "g\<C-]>" :
+        \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
+  nnoremap <silent><expr> [Denite]p  &filetype == 'help' ? ":\<C-u>pop\<CR>" :
+        \ ":\<C-u>Denite -mode=normal jump\<CR>"
+
+  " register / neoyank
+  nnoremap <silent> [Denite]y  :<C-u>Denite register neoyank -buffer-name=register<CR>
+  xnoremap <silent> [Denite]y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
+
   " Plugins managed by 'Dein'
-  nnoremap <silent> <Leader>Dn  :<C-u>Denite dein<CR>
+  nnoremap <silent> [Denite]N  :<C-u>Denite dein<CR>
   " Repositories managed by 'ghq'
-  nnoremap <silent> <Leader>Dg  :<C-u>Denite ghq<CR>
+  nnoremap <silent> [Denite]P :<C-u>Denite ghq<CR>
 endfunction
 
 function! rc#plugin#denite#hook_source() abort
