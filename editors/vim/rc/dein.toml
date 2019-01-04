@@ -3,60 +3,14 @@
 #------------------------------------------------------------------------------
 # Plugin manager
 #------------------------------------------------------------------------------
+# Dark powered Vim/Neovim plugin manager
 [[plugins]]
 repo = 'Shougo/dein.vim'
-hook_add = '''
-  nnoremap <silent> <Leader>Du :<C-u>call dein#clear_state()<CR>:UpdateRemotePlugins<CR>
-  nnoremap <silent> <Leader>DU :<C-u>call dein#update()<CR>
-'''
 
-#------------------------------------------------------------------------------
-# Functions and commands for Neovim GUI
-#------------------------------------------------------------------------------
+# Utility commands for dein.vim
 [[plugins]]
-repo = 'equalsraf/neovim-gui-shim'
-if = 'has("nvim")'
-
-#------------------------------------------------------------------------------
-# Remote Plugin Framework
-#------------------------------------------------------------------------------
-# for Vim 8
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-if = '!has("nvim")'
-
-[[plugins]]
-repo = 'https://github.com/roxma/nvim-yarp'
-
-#------------------------------------------------------------------------------
-# Vim Tmux Navigator
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'christoomey/vim-tmux-navigator'
-hook_add = '''
-  let g:tmux_navigator_no_mappings = 1
-  nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
-  nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
-  nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
-  nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
-  nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
-'''
-
-#------------------------------------------------------------------------------
-# Vim which-key
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'liuchengxu/vim-which-key'
-hook_add = '''
-  " Leader key      : Space
-  " Local leader key: ;
-  nnoremap <Leader>      :<C-u>WhichKey       '<Space>'<CR>
-  vnoremap <Leader>      :<C-u>WhichKeyVisual '<Space>'<CR>
-  nnoremap <LocalLeader> :<C-u>WhichKey       ';'<CR>
-  vnoremap <LocalLeader> :<C-u>WhichKeyVisual ';'<CR>
-  nnoremap g             :<C-u>WhichKey       'g'<CR>
-  vnoremap g             :<C-u>WhichKeyVisual 'g'<CR>
-'''
+repo = 'haya14busa/dein-command.vim'
+depends = ['dein.vim']
 
 #------------------------------------------------------------------------------
 # Utilities
@@ -68,7 +22,7 @@ repo = 'thinca/vim-localrc'
 # Faster than the built-in 'matchparen' plugin
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
-if = 'has("gui_running")'
+#if = 'has("gui_running")'
 
 # [[plugins]]
 # repo     = 'itchyny/vim-cursorword'
@@ -85,7 +39,7 @@ if = 'has("gui_running")'
 [[plugins]]
 repo = 'tpope/vim-repeat'
 
-# --- EditorConfig
+# EditorConfig
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 if = 'executable("editorconfig")'
@@ -93,28 +47,66 @@ hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 '''
 
-# --- Perform the replacement in |quickfix|
+# Seemless navitation between Tmux and Vim
 [[plugins]]
-repo = 'thinca/vim-qfreplace'
+repo = 'christoomey/vim-tmux-navigator'
 hook_add = '''
-  autocmd MyVimrc FileType qf nnoremap <buffer> R :<C-u>Qfreplace<CR>
+  let g:tmux_navigator_no_mappings = 1
+  nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
+  nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
+  nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
+  nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
+  nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
 '''
 
+# Which key
+[[plugins]]
+repo = 'liuchengxu/vim-which-key'
+hook_add = '''
+  nnoremap <Leader>      :<C-u>WhichKey       '<Space>'<CR>
+  vnoremap <Leader>      :<C-u>WhichKeyVisual '<Space>'<CR>
+  nnoremap <LocalLeader> :<C-u>WhichKey       ';'<CR>
+  vnoremap <LocalLeader> :<C-u>WhichKeyVisual ';'<CR>
+  " nnoremap g             :<C-u>WhichKey       'g'<CR>
+  " vnoremap g             :<C-u>WhichKeyVisual 'g'<CR>
+'''
+
+# Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+# Functions and commands for Neovim GUI
+[[plugins]]
+repo = 'equalsraf/neovim-gui-shim'
+if = 'has("nvim")'
+
+# Remote Plugin Framework
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+if = '!has("nvim")'
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+
 #------------------------------------------------------------------------------
-# Lightline + Colorscheme
+# Themes
 #------------------------------------------------------------------------------
 # Custom status line
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 
+# Display 256 xterm colors with RGB equivalents
+[[plugins]]
+repo = 'guns/xterm-color-table.vim'
+
 # Add filetype glyphs (icons) to other plugins
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
-# #  Dracula
-# [[plugins]]
-# repo = 'dracula/vim'
-# name = 'dracula'
+#  Dracula
+[[plugins]]
+repo = 'dracula/vim'
+name = 'dracula'
 
 # #  gruvbox
 # [[plugins]]
@@ -141,17 +133,6 @@ repo = 'rakr/vim-one'
 # repo = 'NLKNguyen/papercolor-theme'
 
 #------------------------------------------------------------------------------
-# Vim help in Japanese
-#------------------------------------------------------------------------------
-[[plugins]]
-repo = 'vim-jp/vimdoc-ja'
-hook_add = 'set helplang=ja,en'
-
-# Introduction of VIM script
-[[plugins]]
-repo = 'mattn/learn-vimscript'
-
-#------------------------------------------------------------------------------
 # Plugins for completion
 #------------------------------------------------------------------------------
 # --- Snippet definitions for neosnippet
@@ -167,21 +148,9 @@ if = 'executable("look")'
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 
-# === No meaning lazy plugins ===
-
-# --- Textobj extension
-  [[plugins]]
-repo = 'kana/vim-textobj-user'
-
-# --- Operator extension
-[[plugins]]
-repo = 'kana/vim-operator-user'
-
-# --- Find fenced code blocks and filetype
-#     (e.g., Javascript blocks inside HTML)
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
+#------------------------------------------------------------------------------
+# Syntax, filetype (not necessary for lazy loading)
+#------------------------------------------------------------------------------
 # --- C++
 [[plugins]]
 repo = 'bfrg/vim-cpp-modern'
@@ -191,8 +160,15 @@ repo = 'bfrg/vim-cpp-modern'
 repo = 'vim-python/python-syntax'
 
 [[plugins]]
+repo = 'Vimjas/vim-python-pep8-indent'
+
+[[plugins]]
 # extend % and g% for python
 repo = 'vim-scripts/python_match.vim'
+
+# --- Lua
+[[plugins]]
+repo = 'tbastos/vim-lua'
 
 # --- diff
 [[plugins]]
@@ -222,10 +198,6 @@ repo = 'cespare/vim-toml'
 [[plugins]]
 repo = 'ekalinin/Dockerfile.vim'
 
-# --- fish
-[[plugins]]
-repo = 'kballard/vim-fish'
-
 # --- zsh
 [[plugins]]
 repo = 'chrisbra/vim-zsh'
@@ -234,11 +206,15 @@ repo = 'chrisbra/vim-zsh'
 [[plugins]]
 repo = 'Shirk/vim-gas'
 
+# --- vim
+[[plugins]]
+repo = 'vim-jp/syntax-vim-ex'
+
 # --- tmux
 [[plugins]]
 repo = 'tmux-plugins/vim-tmux'
 
-# --- vim
+# --- nginx configuration (fork official nvim nginx)
 [[plugins]]
-repo = 'vim-jp/syntax-vim-ex'
+repo = 'othree/nginx-contrib-vim'
 
