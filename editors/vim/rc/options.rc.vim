@@ -1,72 +1,92 @@
 " options.vim --- setting vim/nvim options
 
-"-----------------------------------------------------------------------------
-" Language
+" --- Vim files & directories
+" {{{
+set nobackup        " Don't create backup file
+set undofile        " Create undo file
+set swapfile        " Use swap file
+
+" directory to store backup files
+set backupdir=$VIM_CACHE_HOME/backup,~/tmp,/tmp
+" directory to store swap files
+set directory=$VIM_CACHE_HOME/swap,~/tmp,/tmp
+" directory to store undo files
+set undodir=$VIM_CACHE_HOME/undo,~/tmp,/tmp
+" directory to store files for |:mkview|
+set viewdir=$VIM_CACHE_HOME/view,~/tmp,/tmp
+
+" viminfo/shada
+"   ' - Maximum number of previously edited files marks
+"   f - 1: store global marks (A-Z and 0-9), 0: nothing is stored
+"   < - number of lines saved for each register
+"   s - maximum size of an item contents in KiB
+"   : - number of lines to save from the command line history
+"   @ - number of lines to save from the input line history
+"   / - number of lines to save from the search history
+"   r - removable media, for which no marks will be stored
+"       (can be used several times)
+"   ! - global variables that start with an uppercase letter and
+"       don't contain lowercase letters
+"   h - disable 'hlsearch' highlighting when starting
+"   % - the buffer list (only restored when starting Vim w/o file arguments)
+"   c - convert the text using 'encoding'
+"   n - name used for the ShaDa file (must be the last option)
+if has('nvim')
+  " stored to $XDG_DATA_HOME/nvim/shada/main.shada by default
+  set shada='1000,<50,@100,s10,h
+else
+  " stored to ~/.viminfo by default
+  set viminfo='1000,<20,@50,h,n$VIM_CACHE_HOME/viminfo
+endif
+" }}}
+
+" --- Language
 " {{{
 " Prefer English help
 set helplang=en,ja
+
 " Set default language for spell check
 " cjk - ignore spell check on Asian characters (China, Japan, Korea)
 set nospell
 set spelllang=en_us,cjk
+" The words list file where words are added by `zw` and `zg` command
+set spellfile=$VIM_DATA_HOME/spell/en.utf-8.add
+
 " Use double in unicode emoji characters
 set emoji
 " Use single in ambiguous characters
 set ambiwidth=single
 
+" Prevent that the langmap option applies to characters that result from a
+" mapping. If set (default), this may break plugins (but it's backward
+" compatible).
 if has('langmap') && exists('+langremap')
-  " Prevent that the langmap option applies to characters that result from a
-  " mapping. If set (default), this may break plugins (but it's backward
-  " compatible).
   set nolangremap
 endif
 " }}}
 
-"-----------------------------------------------------------------------------
-" Search
+" --- Editting
 " {{{
-" Ignore cases in pattern
-set ignorecase
-" Override 'ignorecase' if pattern contains upper cases.
-set smartcase
-" Searches wrap around the end of the file
-set wrapscan
-" Highlights matches
-set hlsearch
-" Incremental search
-set incsearch
-" Program used to 'K' command
-set keywordprg=:help
+" Tabs, Indentations -> use editorconfig
+" set textwidth=80    " Text width maximum chars before wrapping
+" set expandtab       " Expand tabs to spaces.
+" set tabstop=4       " The number of spaces a tab is
+" set softtabstop=4   " While performing editing operations
+" set shiftwidth=4    " Number of spaces to use in auto(indent)
+set smarttab        " Tab insert blanks according to 'shiftwidth'
+set autoindent      " Use same indenting on new lines
+set smartindent     " Smart autoindenting on new lines
+set copyindent      " copy the structure of the existing lines indent when
+                    " autoindenting a new line
+set preserveindent  " Use :retab to clean up whitespace
+set shiftround      " Round indent to multiple of 'shiftwidth'
 
-" ----- Tabs, Indentations -> use editorconfig
-" set smarttab
-" set expandtab
-" set tabstop=4
-" set shiftwidth=4
-" set softtabstop=4
+" Bases for numbers used by CTRL-A (increment) and CTRL-X (decrement) command.
+set nrformats=alpha,hex,bin
 
-" ----- Files
-set confirm
-" Make a buffer becomes hidden when it is abandoned. This allows to switch
-" buffer even if modified (unsaved) buffer is present.
-set hidden
-" When a file has been detected to have been changed outside of Vim and it has
-" not been changed inside of Vim, automatically read it again.
-set autoread
-" Do not make a backup file before overwriting a file
-set nobackup
-" Do not make a swapfile
-set noswapfile
-" Number of lines to be checked as modeline
-set modelines=5
-" Persistent undo
-if exists('persistet_undo')
-  set undofile
-  " Directory to store undo file (default: '$XDG_DATA_HOME/nvim/undo')
-  " set undodir=
-endif
+" Allow virtual editing in Visual block mode.
+set virtualedit=block
 
-" ----- Edit
 " Behavior of <BS>, <DEL>, CTRL-W, CTRL-U in insert mode
 "   - indent: allow backspacing over autoindent
 "   - eol   : allow backspacing over line breakds (join lines)
@@ -83,37 +103,173 @@ if (!has('nvim') || $DISPLAY != '') && has('clipboard')
   endif
 endif
 
-" Auto indent
-set autoindent
-" Round indent ('>' and '<' commands) to multiple of 'shiftwidth'
-set shiftround
-" When a bracket is inserted, briefly jump to the matching one.
-set showmatch
-" Time to show the matching paren, when 'showmatch' is set. (0.1 second)
-set matchtime=1
-" Set additional format options for Japanese text
-"   m - Also break at a multi-byte character above 255.  This is useful for
-"       Asian text where every character is a word on its own.
-"   M - When joining lines, don't insert a space before or after a multi-byte
-"       character.  Overrules the 'B' flag.
-set formatoptions+=mM
-" Bases for numbers used by CTRL-A (increment) and CTRL-X (decrement) command.
-set nrformats=alpha,hex,bin
-" Allow virtual editing in Visual block mode.
-set virtualedit=block
-" Wait 500 msec for a mapped sequence to complete
-set timeout timeoutlen=1000
-" Wait 50 msec for a key code
-set ttimeout ttimeoutlen=50
+set showmatch       " Jump to matching bracket
+set matchtime=1     " Tenths of a second to show the matching paren
+set matchpairs+=<:> " Add HTML brackets to pair matching
+" }}}
 
-" ----- Folding
+" --- Timing
+" {{{
+set timeout
+set ttimeout
+set timeoutlen=1000 " Time out for a mapped sequence (ms)
+set ttimeoutlen=50  " Time out for a key code sequence (ms)
+set updatetime=1000 " Idle time to write swap and trigger CursorHold (ms)
+" }}}
+
+" --- Search
+" {{{
+set ignorecase      " Ignore cases in pattern
+set smartcase       " Override 'ignorecase' if pattern contains upper cases.
+set infercase       " Adjust case in insert completion mode
+set hlsearch        " Highlight match results
+set wrapscan        " Searches wrap around the end of the file
+" }}}
+
+" --- Behavior
+" {{{
+set history=10000      " Amount of command line history
+set hidden             " Hide buffers when abandoned instead of unload
+set autoread           " Automatically read a file changed outside Vim
+set nostartofline      " Cursor in same column for few commands
+set linebreak          " Break long lines at 'breakat'
+set showbreak=\        " String to put at the start of wrapped lines
+set breakat=\ \	;:,!?  " Chars to break long lines
+set splitbelow         " :split opens new window bottom of current window
+set splitright         " :vsplit opens new window right of the current window
+" Move to next/prev line on certain keys
+"   char key        mode
+"   b    <BS>       Normal and Visual
+"   s    <Space>    Normal and Visual
+"   h    "h"        Normal and Visual (not recommended)
+"   l    "l"        Normal and Visual (not recommended)
+"   <    <Left>     Normal and Visual
+"   >    <Right>    Normal and Visual
+"   ~    "~"        Normal
+"   [    <Left>     Insert and Replace
+"   ]    <Right>    Insert and Replace
+set whichwrap+=h,l,<,>,[,],b,s~
+if exists('+breakindent')
+  set breakindent      " Every wrapped line will continue visually indented
+  set wrap             " Wrap lines by default
+else
+  set nowrap           " Don't wrap lines by default
+endif
+
+" Behavior of switching between buffers
+"  useopen - Jump to the first open window
+"  usetab  - Jump to the first open window (consider windows in otehr tabs)
+"  split   - split the current window before loading qf buffer (error)
+"  vsplit  - similar to split, but split vertically
+"  newtab  - similar to split, but open a new tab page
+set switchbuf=useopen,usetab,vsplit
+
+" Keywork completion
+set showfulltag                " Show tag and tidy search in completion
+set complete=.                 " No wins, buffs, tags, include scanning
+set completeopt=menuone        " Show menu even for one item
+set completeopt+=noselect      " Do not select a match in the menu
+if has('patch-7.4.775')
+  set completeopt+=noinsert
+endif
+
+" Diff mode
+set diffopt=filler,iwhite      " Show fillers, ignore whitespace
+if has('nvim') || has('patch-8.1.0360')
+  " use internal diff library
+  set diffopt+=internal,algorithm:histogram,indent-heuristic
+endif
+
+if exists('+inccommand')
+  set inccommand=nosplit
+endif
+
+" What to save for views:
+set viewoptions-=options       " Don't save local options and mappings
+set viewoptions+=unix          " Use UNIX end-of-line format even when Windows
+set viewoptions+=slash         " Replace \ in file names with /
+
+" What to save in sessions:
+set sessionoptions-=blank      " Don't save empty window
+set sessionoptions-=buffers    " Don't save hidden and unloaded buffers
+set sessionoptions-=globals    " Don't save global variables
+set sessionoptions-=help       " Don't save help window
+set sessionoptions-=options    " Don't save all options and mappings
+set sessionoptions-=folds      " Don't save folds
+" }}}
+
+" --- Editor UI Appearances
+" {{{
+set title               " Display title on the window (e.g. terminal)
+set nonumber            " Don't show line numbers
+set noruler             " Disable default status ruler
+set list                " Show hidden characters
+set noshowmode          " Don't display mode in cmd window
+set noshowcmd           " Don't show command in status line
+set showtabline=2       " Always display the tabs line
+set laststatus=2        " Always display a status line
+set signcolumn=yes      " Draw sign column
+
+set scrolloff=2         " Keep at least 2 lines above/below
+set sidescrolloff=5     " Keep at least 5 lines left/right
+set winwidth=30         " Minimum width for active window
+set winminwidth=10      " Minimum width for inactive windows
+set winheight=1         " Minimum height for active window
+set pumheight=15        " Pop-up menu's line height
+set helpheight=12       " Minimum help window height
+set previewheight=8     " Completion preview height
+set cmdheight=2         " Height of the command line
+set cmdwinheight=5      " Command-line lines
+
+set noequalalways       " Don't resize windows on split or close
+set colorcolumn=80      " Highlight the 80th character limit
+set display=lastline    " Don't omit line in @
+set report=0            " always report changes
+
+if IsWindows()
+  set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
+else
+  set listchars=tab:▸\ ,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+endif
+
+set shortmess=aoOTI     " Shorten messages and don't show intro
+" Do not display completion messages
+" Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
+if has('patch-7.4.314')
+  set shortmess+=c
+endif
+" Do not display message when editing files
+if has('patch-7.4.1570')
+  set shortmess+=F
+endif
+
+" Disable annoying bells
+set noerrorbells
+set novisualbell
+set t_vb=
+set belloff=all
+
+" Characters to fill the statuslines and vertical separators
+set fillchars=""
+
+" For conceal
+set conceallevel=2 concealcursor=niv
+" }}}
+
+" --- Folding
+" {{{
 " Enable folding
 set foldenable
-set foldmethod=marker
-" Show folding level
-set foldcolumn=2
-" set fillchars=vert:\|
-set fillchars=""
+" Show fold column (single column, max 12 columns)
+set foldcolumn=1
+" Kind of folding
+"   manual - Folds are created manually.
+"   indent - Lines with equal indent form a fold.
+"   expr   - 'foldexpr' gives the fold level of a line.
+"   marker - Markers are used to specify folds.
+"   syntax - Syntax highlighting items specify folds.
+"   diff   - Fold text that is not changed.
+set foldmethod=syntax
 set commentstring=%s
 
 augroup foldmethod
@@ -140,35 +296,14 @@ if exists('*FoldCCtext')
   " Use FoldCCtext
   set foldtext=FoldCCtext()
 endif
+" }}}
 
-" ----- Display
-" Don't redraw while executing macros
-set lazyredraw
-" Show the line and column number of the cursor position
-set ruler
-" Display unprinted characters.
-set list
-" Display long text line properly
-set display=lastline
-" Always display status line
-set laststatus=2
-" Show (partial) command in the last line of the screen.
-set showcmd
-" Do not show current mode (insert, visutl, normal, etc.) -> set by lightline
-set noshowmode
-" Display title on the window (e.g. terminal)
-set title
-" " Highlight the screen line of the cursor
-" set cursorline
-" Max number of items in popup menu
-set pumheight=10
-" Set height of command-line. This is set to supress unwanted 'Press ENTER...'
-" prompts.
-set cmdheight=2
-" Enhanced command line completion
-set wildmenu
+" --- Wildmenu: enhanced command line completion
+" {{{
+set nowildmenu
 " Completion style in wildmenu mode
 set wildmode=list:longest,full
+set wildoptions=tagfile
 " Ignore compiled files
 set wildignore&
 set wildignore=.git,.hg,.svn
@@ -176,14 +311,7 @@ set wildignore+=*.jpg,*.jpeg,*.bmp,*.gif,*.png
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.dylib,*.manifest,*.so,*.out,*.class
 set wildignore+=*.swp,*.swo,*.swn
 set wildignore+=*.DS_Store
-
-" Create a new window below the current window when :split is called
-" set splitbelow
-" Create a new window right side of the current window when :vsplit is called
-set splitright
-
-" Diff
-set diffopt+=vertical
+" }}}
 
 "----------------------------------------------------------------------------
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
