@@ -40,8 +40,8 @@ command! -bang -bar -complete=file -nargs=? Latin
       \ edit<bang> ++enc=latin1 <args>
 
 " Tried to make a file note version.
-command! WUtf8 setlocal fenc=utf-8
-command! WCp932 setlocal fenc=cp932
+command! WUtf8   setlocal fenc=utf-8
+command! WCp932  setlocal fenc=cp932
 command! WLatin1 setlocal fenc=latin1
 
 " Appoint a line feed.
@@ -50,3 +50,5 @@ command! -bang -complete=file -nargs=? WUnix
 command! -bang -complete=file -nargs=? WDos
       \ write<bang> ++fileformat=dos <args> | edit <args>
 
+"----------------------------------------------------------------------------
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

@@ -1,6 +1,30 @@
 " options.vim --- setting vim/nvim options
 
-" ----- Search
+"-----------------------------------------------------------------------------
+" Language
+" {{{
+" Prefer English help
+set helplang=en,ja
+" Set default language for spell check
+" cjk - ignore spell check on Asian characters (China, Japan, Korea)
+set nospell
+set spelllang=en_us,cjk
+" Use double in unicode emoji characters
+set emoji
+" Use single in ambiguous characters
+set ambiwidth=single
+
+if has('langmap') && exists('+langremap')
+  " Prevent that the langmap option applies to characters that result from a
+  " mapping. If set (default), this may break plugins (but it's backward
+  " compatible).
+  set nolangremap
+endif
+" }}}
+
+"-----------------------------------------------------------------------------
+" Search
+" {{{
 " Ignore cases in pattern
 set ignorecase
 " Override 'ignorecase' if pattern contains upper cases.
@@ -160,3 +184,6 @@ set splitright
 
 " Diff
 set diffopt+=vertical
+
+"----------------------------------------------------------------------------
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

@@ -1,3 +1,5 @@
+" Vim startup settings
+
 "----------------------------------------------------------------------------
 " Utility function
 "----------------------------------------------------------------------------
@@ -15,8 +17,20 @@ function! IsMac() abort
         \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
 endfunction
 
-" --- Set executable path and manpath.
-" These variables might not be set properly in GVim/MacVim
+" mkdir
+if has('nvim')
+  let s:mkdir = function('mkdir')
+else
+  function! s:mkdir(...) abort
+    if isdirectory(a:1)
+      return
+    endif
+    return call('mkdir', a:000)
+  endfunction
+endif
+
+" Set executable path and manpath.
+" NOTE: These variables might not be set properly in GVim/MacVim
 function! s:configure_path(name, pathlist) abort
   let l:path_separator = s:is_windows ? ';' : ':'
   let l:pathlist = split(expand(a:name), l:path_separator)
@@ -128,20 +142,63 @@ if has('nvim')
   let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
   let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
 endif
-" }}}
 
-" --- Enable Vim to use system clipboard
-" -> Disabled because of the problem of lectangular yank
-" if has('clipboard')
-"   set clipboard&   " <- set to default
-"   " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
-"   " - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows (but yank)
-"   if has('win32') || has('win64') || has('mac')
-"     set clipboard^=unnamed
-"   else
-"     set clipboard^=unnamed,unnamedplus
-"   endif
-" endif
+" --- Directories for Vim files
+if has('nvim')
+  let $VIM_CONFIG_HOME = $XDG_CONFIG_HOME . '/nvim'
+  let $VIM_DATA_HOME   = $XDG_DATA_HOME   . '/nvim'
+  let $VIM_CACHE_HOME  = $XDG_CACHE_HOME  . '/nvim'
+else
+  let $VIM_CONFIG_HOME = $XDG_CONFIG_HOME . '/vim'
+  let $VIM_DATA_HOME   = $XDG_DATA_HOME   . '/vim'
+  let $VIM_CACHE_HOME  = $XDG_CACHE_HOME  . '/vim'
+  " update runtime path
+  set runtimepath=$VIM_CONFIG_HOME,$VIMRUNTIME,$VIM_CONFIG_HOME/after
+endif
+
+" backup files
+set backupdir=$VIM_CACHE_HOME/backup
+" swap files
+set directory=$VIM_CACHE_HOME/swap
+" undo files
+set undodir=$VIM_CACHE_HOME/undo
+" files for |:mkview|
+set viewdir=$VIM_CACHE_HOME/view
+" spell file
+set spellfile=$VIM_DATA_HOME/spell/en.utf-8.add
+" viminfo/shada
+"   ' - Maximum number of previously edited files marks
+"   f - 1: store global marks (A-Z and 0-9), 0: nothing is stored
+"   < - number of lines saved for each register
+"   s - maximum size of an item contents in KiB
+"   : - number of lines to save from the command line history
+"   @ - number of lines to save from the input line history
+"   / - number of lines to save from the search history
+"   r - removable media, for which no marks will be stored
+"       (can be used several times)
+"   ! - global variables that start with an uppercase letter and
+"       don't contain lowercase letters
+"   h - disable 'hlsearch' highlighting when starting
+"   % - the buffer list (only restored when starting Vim w/o file arguments)
+"   c - convert the text using 'encoding'
+"   n - name used for the ShaDa file (must be the last option)
+if has('nvim')
+  " stored to $XDG_DATA_HOME/nvim/shada/main.shada by default
+  set shada='1000,<50,@100,s10,h
+else
+  " stored to ~/.viminfo by default
+  set viminfo='1000,<20,@50,h,n$VIM_CACHE_HOME/viminfo
+endif
+
+call s:mkdir(&backupdir, 'p')
+call s:mkdir(&directory, 'p')
+call s:mkdir(&undodir, 'p')
+call s:mkdir(&viewdir, 'p')
+call s:mkdir(fnamemodify(&spellfile, ':p:h'), 'p')
+
+" Disable packpath
+set packpath=
+" }}}
 
 "----------------------------------------------------------------------------
 " Options
@@ -158,9 +215,6 @@ endif
 set timeout
 set ttimeout
 set ttimeoutlen=100
-
-" Disable packpath
-set packpath=
 " }}}
 
 "----------------------------------------------------------------------------
@@ -168,23 +222,23 @@ set packpath=
 "----------------------------------------------------------------------------
 " {{{
 " Use 'space' as <Leader> key and ',' as <LocalLeader> key
+" REMARK: Required before loading plugins!
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 
-" Release some keymappings for plugins
-" Leader
+" Release some keymappings for use of plugins
+"   Space -> Leader
+"   ,     -> LocalLeader
+"   ;     -> prefix for Denite commands
+"   s     -> prefix for window, tab, easymotion
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
-" Localleader
 nnoremap ,  <Nop>
 xnoremap ,  <Nop>
-" Denite prefix
 nnoremap ;  <Nop>
 xnoremap ;  <Nop>
-" Prefix for window, tab, easymotion
-nmap s  <Nop>
-xmap s  <Nop>
-" nnoremap m  <Nop>
+nmap     s  <Nop>
+xmap     s  <Nop>
 " }}}
 
 "----------------------------------------------------------------------------
@@ -195,9 +249,10 @@ let g:loaded_2html_plugin      = 1
 let g:loaded_getscript         = 1
 let g:loaded_getscriptPlugin   = 1
 let g:loaded_gzip              = 1
+let g:loaded_logiPat           = 1
 let g:loaded_matchit           = 1
 let g:loaded_matchparen        = 1
-let g:loaded_netrw             = 1
+let g:netrw_nogx               = 1
 let g:loaded_netrwPlugin       = 1
 let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
@@ -209,4 +264,9 @@ let g:loaded_vimball           = 1
 let g:loaded_vimballPlugin     = 1
 let g:loaded_zip               = 1
 let g:loaded_zipPlugin         = 1
+" Disable ruby support in neovim
+let g:loaded_ruby_provider     = 1
 " }}}
+
+"----------------------------------------------------------------------------
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
