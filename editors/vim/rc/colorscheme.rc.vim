@@ -170,3 +170,5 @@ function! LightlinePyenv()
   return &filetype =~? 'python' ? " \ue73c " . pyenv#info#preset('short')[1:] : ''
 endfunction
 
+"----------------------------------------------------------------------------
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

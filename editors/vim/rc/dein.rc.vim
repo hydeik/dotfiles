@@ -37,3 +37,6 @@ if has('vim_starting') && dein#check_install()
   " Install plugin(s) automatically if necessary
   call dein#install()
 endif
+
+"----------------------------------------------------------------------------
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
