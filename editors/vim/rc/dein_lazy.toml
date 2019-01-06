@@ -305,6 +305,35 @@ hook_source = '''
   let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 '''
 
+# Indent based folding of anything and everything
+[[plugins]]
+repo = 'pseewald/vim-anyfold'
+on_event = 'BufEnter'
+hook_source = '''
+  " Fold multiline comments
+  let g:anyfold_fold_comments = 1
+
+  let g:AnyFoldExclude = ['diff', 'help', 'denite', 'defx', 'qf']
+  " activate anyfold by default
+  augroup anyfold
+    autocmd!
+    autocmd Filetype * if index(g:AnyFoldExclude, &ft) < 0 | AnyFoldActivate
+  augroup END
+
+  " disable anyfold for large files
+  let g:LargeFile = 1000000 " file is large if size greater than 1MB
+  autocmd BufReadPre,BufRead * let f=getfsize(expand("<afile>")) |
+      \ if f > g:LargeFile || f == -2 | call LargeFile() | endif
+
+  function LargeFile()
+    augroup anyfold
+      autocmd! " remove AnyFoldActivate
+      " fall back to indent folding
+      autocmd Filetype * if index(g:AnyFoldExclude, &ft) < 0 | setlocal foldmethod=indent
+    augroup END
+  endfunction
+'''
+
 # Calendar
 [[plugins]]
 repo = 'itchyny/calendar.vim'
