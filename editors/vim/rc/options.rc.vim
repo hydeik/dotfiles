@@ -254,13 +254,9 @@ set fillchars=""
 
 " For conceal
 set conceallevel=2 concealcursor=niv
-" }}}
 
-" --- Folding
-" {{{
 " Enable folding
 set foldenable
-" Show fold column (single column, max 12 columns)
 set foldcolumn=1
 " Kind of folding
 "   manual - Folds are created manually.
@@ -269,33 +265,7 @@ set foldcolumn=1
 "   marker - Markers are used to specify folds.
 "   syntax - Syntax highlighting items specify folds.
 "   diff   - Fold text that is not changed.
-set foldmethod=syntax
-set commentstring=%s
-
-augroup foldmethod
-  autocmd!
-  autocmd BufRead,BufNewFile *.toml,*.zshrc setlocal commentstring=#%s
-  autocmd BufRead,BufNewFile *.vim          setlocal commentstring=\"%s
-  autocmd BufRead,BufNewFile *.html         setlocal commentstring=<!--%s-->
-  autocmd BufRead,BufNewFile *.md,*.mkd     setlocal commentstring=<!--%s-->
-augroup END
-
-" Fast fold
-autocmd MyVimrc TextChangedI,TextChanged *
-      \ if &l:foldenable && &l:foldmethod !=# 'manual' |
-      \   let b:foldmethod_save = &l:foldmethod |
-      \   let &l:foldmethod = 'manual' |
-      \ endif
-autocmd MyVimrc BufWritePost *
-      \ if &l:foldmethod ==# 'manual' && exists('b:foldmethod_save') |
-      \   let &l:foldmethod = b:foldmethod_save |
-      \   execute 'normal! zx' |
-      \ endif
-
-if exists('*FoldCCtext')
-  " Use FoldCCtext
-  set foldtext=FoldCCtext()
-endif
+" set foldmethod=syntax
 " }}}
 
 " --- Wildmenu: enhanced command line completion

@@ -39,6 +39,26 @@ repo = 'itchyny/vim-parenmatch'
 [[plugins]]
 repo = 'tpope/vim-repeat'
 
+# Visually displaying indent levels with thin vertical lines
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+  let g:indentLine_enable = 1
+  let g:indentLine_char = '¦'
+'''
+
+# Better whitespace highlighting for Vim
+[[plugins]]
+repo = 'ntpeters/vim-better-whitespace'
+hook_add = '''
+  let g:better_whitespace_enabled = 1
+  let g:strip_whitespace_on_save  = 1
+  let g:show_spaces_that_precede_tabs = 1
+  let g:better_whitespace_filetypes_blacklist = [
+      \ 'diff', 'gitcommit', 'denite', 'qf', 'help', 'markdown'
+      \ ]
+'''
+
 # EditorConfig
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
@@ -65,8 +85,8 @@ repo = 'liuchengxu/vim-which-key'
 hook_add = '''
   nnoremap <Leader>      :<C-u>WhichKey       '<Space>'<CR>
   vnoremap <Leader>      :<C-u>WhichKeyVisual '<Space>'<CR>
-  nnoremap <LocalLeader> :<C-u>WhichKey       ';'<CR>
-  vnoremap <LocalLeader> :<C-u>WhichKeyVisual ';'<CR>
+  nnoremap <LocalLeader> :<C-u>WhichKey       ','<CR>
+  vnoremap <LocalLeader> :<C-u>WhichKeyVisual ','<CR>
   " nnoremap g             :<C-u>WhichKey       'g'<CR>
   " vnoremap g             :<C-u>WhichKeyVisual 'g'<CR>
 '''
@@ -185,6 +205,9 @@ repo = 'hail2u/vim-css3-syntax'
 # --- JSON
 [[plugins]]
 repo = 'elzr/vim-json'
+hook_add = '''
+  let g:vim_json_syntax_conceal = 0
+'''
 
 # --- YAML
 [[plugins]]

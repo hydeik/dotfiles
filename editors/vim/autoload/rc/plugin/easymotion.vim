@@ -29,10 +29,10 @@ function! rc#plugin#easymotion#hook_add() abort
   omap ss <Plug>(easymotion-s2)
 
   " Line jumps
-  map sh <Plug>(easymotion-linebackward)
-  map sj <Plug>(easymotion-j)
-  map sk <Plug>(easymotion-k)
-  map sl <Plug>(easymotion-lineforward)
+  " map sh <Plug>(easymotion-linebackward)
+  " map sj <Plug>(easymotion-j)
+  " map sk <Plug>(easymotion-k)
+  " map sl <Plug>(easymotion-lineforward)
 
   " smart f & F (visual mode and operator mode)
   omap f <Plug>(easymotion-bd-fl)

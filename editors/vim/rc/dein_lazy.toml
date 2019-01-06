@@ -87,17 +87,9 @@ hook_source = '''
   let g:lexima_ctrlh_as_backspace = 1
 '''
 hook_post_source = '''
-  " call lexima#add_rule({'char': '<C-h>', 'at': '(\%#)',   'delete': 1})
-  " call lexima#add_rule({'char': '<C-h>', 'at': '{\%#}',   'delete': 1})
-  " call lexima#add_rule({'char': '<C-h>', 'at': '\[\%#\]', 'delete': 1})
-  " call lexima#add_rule({'char': '<C-h>', 'at': '"\%#"',   'delete': 1})
-  " call lexima#add_rule({'char': '<C-h>', 'at': "'\\%#'",  'delete': 1})
-  " call lexima#add_rule({'char': '<C-h>', 'at': '`\%#`',   'delete': 1})
-
   call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
   call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
   call lexima#add_rule({'char': '<BS>',  'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
-  " call lexima#add_rule({'char': '<C-h>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
 '''
 
 #------------------------------------------------------------------------------
@@ -191,28 +183,24 @@ hook_add = '''
 '''
 on_map = {x = '<Plug>'}
 
-# # --- Neoterm
-# repo = 'kassio/neoterm'
-# on_cmd = ['T', 'Texe', 'Tnew', 'Tclear', 'Tkill', 'Tmap', 'Tpos',
-#           'TREPLSetTerm', 'TREPLSendFile', 'TREPLSendLine', 'TREPLSendSelection',
-#           'Topen', 'Tclose', 'TcloseAll', 'Ttoggle', 'TtoggleAll', 'Tnext', 'Tprevious']
-# hook_add = '''
-#   let g:neoterm_autoscroll = 1
-#   nnoremap [Term] <Nop>
-#   nmap     <Leader>T [Term]
-#
-#   nnoremap [Term]n  :Tnew<CR>
-#   nnoremap [Term]v  :vertical Tnew<CR>
-#   " 3<leader>Tl will clear neoterm-3.
-#   nnoremap [Term]l  :<C-u>exec v:count.'Tclear'<CR>
-#
-#   " REPL operators (work with textobj)
-#   nmap gx  <Plug>(neoterm-repl-send)
-#   " Send section to REPL
-#   xmap gx  <Plug>(neoterm-repl-send)
-#   " Send the current line to REPL
-#   nmap gxx <Plug>(neoterm-repl-line)
-# '''
+# --- Diffs on blocks of code
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
+on_cmd = ['Linediff', 'LinediffAdd', 'LinediffReset', 'LinediffShow']
+hook_add = '''
+  vnoremap <Leader>df :Linediff<CR>
+  vnoremap <Leader>da :LinediffAdd<CR>
+  nnoremap <Leader>ds :<C-u>LinediffShow<CR>
+  nnoremap <Leader>dr :<C-u>LinediffReset<CR>
+'''
+
+# --- Switch between single-line and multiline forms of code
+[[plugins]]
+# use default mapping
+#   gS -> SplitjoinSplit
+#   gJ -> SplitjoinJoin
+repo = 'AndrewRadev/splitjoin.vim'
+on_map = {n = '<Plug>Splitjoin'}
 
 #----------------------------------------------------------------------------et-
 # Interfaces
@@ -300,6 +288,22 @@ hook_add = '''
   nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
 '''
 
+# Fast folding
+[[plugins]]
+repo = 'Konfekt/FastFold'
+on_event = 'BufEnter'
+hook_add = '''
+  " Update folds
+  nmap zuz      <Plug>(FastFoldUpdate)
+  " Create a fold text object
+  xnoremap iz  :<C-u>FastFoldUpdate<CR><ESC>:<C-u>normal! ]zv[z<CR>
+  xnoremap az  :<C-u>FastFoldUpdate<CR><ESC>:<C-u>normal! ]zV[z<CR>
+'''
+hook_source = '''
+  let g:fastfold_savehook = 1
+  let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+  let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+'''
 
 # Calendar
 [[plugins]]
@@ -323,21 +327,6 @@ on_path = 'COMMIT_EDITMSG'
 hook_source = '''
   let g:committia_min_window_width = 100
 '''
-# Visually displaying indent levels in code
-[[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
-on_cmd = ['IndentGuidesEnable', 'IndentGuidesDisable', 'IndentGuidesToggle']
-hook_add = '''
-  nmap <silent><Leader>ti :<C-u>IndentGuidesToggle<CR>
-'''
-hook_source = '''
-  let g:indent_guides_enable_on_vim_startup = 0
-  let g:indent_guides_default_mapping = 0
-  let g:indent_guides_indent_levels = 15
-  let g:indent_guides_start_level = 2
-  let g:indent_guides_exclude_filetypes = ['help', 'denite', 'codi']
-  let g:indend_guides_color_change_percent = 20
-'''
 
 #------------------------------------------------------------------------------
 # Textobj/Operator extensions
@@ -350,47 +339,77 @@ hook_add = 'call rc#plugin#sandwich#hook_add()'
 hook_source = 'call rc#plugin#sandwich#hook_source()'
 
 [[plugins]]
+repo = 'kana/vim-textobj-entire'
+depends = ['vim-textobj-user']
+on_func = 'textobj#user#'
+hook_add = '''
+  let g:textobj_entire_no_default_key_mappings = 1
+  omap ae <Plug>(textobj-entire-a)
+  omap ie <Plug>(textobj-entire-i)
+  xmap ae <Plug>(textobj-entire-a)
+  xmap ie <Plug>(textobj-entire-i)
+'''
+
+[[plugins]]
 repo = 'kana/vim-textobj-line'
 depends = ['vim-textobj-user']
 on_func = 'textobj#user#'
-
-[[plugins]]
-repo = 'kana/vim-textobj-entire'
-depends = ['vim-textobj-user']
-on_map = {nx = '<Plug>'}
-
-[[plugins]]
-repo = 'machakann/vim-textobj-delimited'
-on_map = {ox = '<Plug>'}
 hook_add = '''
-  let g:textobj_delimited_no_default_key_mappings = 1
-
-  xmap id  <Plug>(textobj-delimited-forward-i)
-  omap id  <Plug>(textobj-delimited-forward-i)
-
-  xmap ad  <Plug>(textobj-delimited-forward-a)
-  omap ad  <Plug>(textobj-delimited-forward-a)
-
-  xmap iD  <Plug>(textobj-delimited-backward-i)
-  omap iD  <Plug>(textobj-delimited-backward-i)
-
-  xmap aD  <Plug>(textobj-delimited-backward-a)
-  omap aD  <Plug>(textobj-delimited-backward-a)
+  let g:textobj_line_no_default_key_mappings = 1
+  omap al <Plug>(textobj-line-a)
+  omap il <Plug>(textobj-line-i)
+  xmap al <Plug>(textobj-line-a)
+  xmap il <Plug>(textobj-line-i)
 '''
 
-# # --- Move function arguments left and right
-# [[plugins]]
-# repo = 'AndrewRadev/sideways.vim'
-# on_map = {ox = '<Plug>Sideways'}
-# hook_add = '''
-#   " nnoremap <silent>sh   :<C-u>SidewaysLeft<CR>
-#   " nnoremap <silent>sl   :<C-u>SidewaysRight<CR>
-#
-#   omap <silent> a,  <Plug>SidewaysArgumentTextobjA
-#   xmap <silent> a,  <Plug>SidewaysArgumentTextobjA
-#   omap <silent> i,  <Plug>SidewaysArgumentTextobjI
-#   xmap <silent> i,  <Plug>SidewaysArgumentTextobjI
-# '''
+[[plugins]]
+repo = 'thinca/vim-textobj-comment'
+depends = ['vim-textobj-user']
+on_func = 'textobj#user#'
+hook_add = '''
+  let g:textobj_comment_no_default_key_mappings = 1
+  omap ac <Plug>(textobj-comment-a)
+  omap ic <Plug>(textobj-comment-i)
+  xmap ac <Plug>(textobj-comment-a)
+  xmap ic <Plug>(textobj-comment-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-fold'
+depends = ['vim-textobj-user']
+on_func = 'textobj#user#'
+hook_add = '''
+  let g:textobj_fold_no_default_key_mappings = 1
+  omap az <Plug>(textobj-fold-a)
+  omap iz <Plug>(textobj-fold-i)
+  xmap az <Plug>(textobj-fold-a)
+  xmap iz <Plug>(textobj-fold-i)
+'''
+
+[[plugins]]
+repo = 'mattn/vim-textobj-url'
+depends = 'vim-textobj-user'
+hook_add = '''
+  let g:textobj_url_no_default_key_mappings = 1
+  omap au <Plug>(textobj-url-a)
+  omap iu <Plug>(textobj-url-i)
+  xmap au <Plug>(textobj-url-a)
+  xmap iu <Plug>(textobj-url-i)
+'''
+
+# --- Move function arguments left and right
+[[plugins]]
+repo = 'AndrewRadev/sideways.vim'
+on_map = {ox = '<Plug>Sideways'}
+hook_add = '''
+  nnoremap <silent>sh   :<C-u>SidewaysLeft<CR>
+  nnoremap <silent>sl   :<C-u>SidewaysRight<CR>
+
+  omap <silent> a,  <Plug>SidewaysArgumentTextobjA
+  xmap <silent> a,  <Plug>SidewaysArgumentTextobjA
+  omap <silent> i,  <Plug>SidewaysArgumentTextobjI
+  xmap <silent> i,  <Plug>SidewaysArgumentTextobjI
+'''
 
 # --- Expand region
 [[plugins]]
