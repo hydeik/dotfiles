@@ -62,12 +62,32 @@ hook_source = '''
 #------------------------------------------------------------------------------
 # Auto completion
 #------------------------------------------------------------------------------
+# --- Dark powered asynchronous completion framework for neovim/Vim8
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# depends = ['context_filetype.vim']
+# on_event = 'InsertEnter'
+# hook_source = 'call rc#plugin#deoplete#hook_source()'
+# hook_post_source = 'call rc#plugin#deoplete#hook_post_source()'
+
+# ---
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = ['context_filetype.vim']
-on_event = 'InsertEnter'
-hook_source = 'call rc#plugin#deoplete#hook_source()'
-hook_post_source = 'call rc#plugin#deoplete#hook_post_source()'
+repo = 'neoclide/coc.nvim'
+depends = ['denite.nvim']
+build = 'yarn install'
+on_event = 'BufEnter'
+hook_source = 'call rc#plugin#coc#hook_source()'
+hook_post_source = 'call rc#plugin#coc#hook_post_source()'
+
+[[plugins]]
+repo = 'neoclide/coc-neco'
+depends = ['neco-vim', 'coc.nvim']
+on_source = 'coc.nvim'
+
+[[plugins]]
+repo = 'jsfaint/coc-neoinclude'
+depends = ['neoinclude.vim', 'coc.nvim']
+on_source = 'coc.nvim'
 
 # --- Deoplete sources
 [[plugins]]
@@ -92,9 +112,6 @@ hook_post_source = '''
   call lexima#add_rule({'char': '<BS>',  'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
 '''
 
-#------------------------------------------------------------------------------
-# Snippets
-#------------------------------------------------------------------------------
 [[plugins]]
 repo = 'Shougo/neosnippet'
 depends = ['neosnippet-snippets', 'context_filetype.vim']
@@ -350,6 +367,11 @@ hook_source = '''
 repo = 'airblade/vim-gitgutter'
 if = 'has("signs")'
 on_path = '.*'
+hook_add = '''
+  " remap keys to jump between hunk
+  nmap ]h  <Plug>GitGutterNextHunk
+  nmap [h  <Plug>GitGutterPrevHunk
+'''
 
 # More pleasant editing on commit messages
 [[plugins]]
@@ -481,19 +503,19 @@ on_path = '.*'
 hook_add = 'call rc#plugin#ale#hook_add()'
 hook_source = 'call rc#plugin#ale#hook_source()'
 
-# --- Language server protocol (LSP) client
-[[plugins]]
-repo = 'autozimu/LanguageClient-neovim'
-depends = ['deoplete.nvim', 'denite.nvim']
-rev = 'next'
-build = 'bash install.sh'
-on_ft = ['c', 'cpp', 'python', 'rust', 'sh']
-hook_source = 'call rc#plugin#LanguageClient#hook_source()'
+# # --- Language server protocol (LSP) client
+# [[plugins]]
+# repo = 'autozimu/LanguageClient-neovim'
+# depends = ['deoplete.nvim', 'denite.nvim']
+# rev = 'next'
+# build = 'bash install.sh'
+# on_ft = ['c', 'cpp', 'python', 'rust', 'sh']
+# hook_source = 'call rc#plugin#LanguageClient#hook_source()'
 
 # --- LaTeX
 [[plugins]]
 repo = 'lervag/vimtex'
-depends = ['deoplete.nvim']
+# depends = ['deoplete.nvim']
 on_ft = 'tex'
 hook_source = 'call rc#plugin#vimtex#hook_source()'
 
