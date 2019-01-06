@@ -7,7 +7,6 @@ endif
 "----------------------------------------------------------------------------
 " Utility functions
 "----------------------------------------------------------------------------
-" {{{
 " Load vim scripts inside 'nvim/rc'
 if has('nvim')
   let g:vimrc_root = $XDG_CONFIG_HOME . '/nvim'
@@ -31,12 +30,10 @@ function! s:on_filetype() abort
     filetype detect
   endif
 endfunction
-" }}}
 
 "----------------------------------------------------------------------------
 " Set augroup
 "----------------------------------------------------------------------------
-"{{{
 augroup MyVimrc
   autocmd!
   autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?  call s:on_filetype()
@@ -47,12 +44,10 @@ augroup MyVimrc
         \   filetype detect |
         \ endif
 augroup END
-" }}}
 
 "----------------------------------------------------------------------------
 " Load configuration files
 "----------------------------------------------------------------------------
-" {{{
 if has('vim_starting')
   call s:source_rc('init.rc.vim')
 endif
@@ -76,11 +71,7 @@ call s:source_rc('options.rc.vim')
 call s:source_rc('mappings.rc.vim')
 
 call s:source_rc('colorscheme.rc.vim')
-" }}}
 
 " Do not allow run some commands from vimrc or exrc when they are not owned by
 " you. You better set 'secure' at the end of .vimrc or init.vim
 set secure
-
-"----------------------------------------------------------------------------
-" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

@@ -179,4 +179,4 @@ nnoremap <silent> [Window]=   <c-w>=<CR>
 nmap     <silent> [Window]z   <Plug>(my-zoom-window)
 
 "----------------------------------------------------------------------------
-" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
+" vim: foldmethod=marker

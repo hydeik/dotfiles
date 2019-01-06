@@ -79,6 +79,11 @@ _ = '''
 #   setlocal foldmethod=indent
 # '''
 
+# C++
+cpp = '''
+  setlocal foldignore=#/
+'''
+
 # Ruby
 ruby = '''
   setlocal iskeyword+=!

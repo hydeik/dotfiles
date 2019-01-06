@@ -49,6 +49,3 @@ command! -bang -complete=file -nargs=? WUnix
       \ write<bang> ++fileformat=unix <args> | edit <args>
 command! -bang -complete=file -nargs=? WDos
       \ write<bang> ++fileformat=dos <args> | edit <args>
-
-"----------------------------------------------------------------------------
-" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
