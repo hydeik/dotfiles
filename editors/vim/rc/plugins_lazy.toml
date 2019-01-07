@@ -395,6 +395,7 @@ hook_source = 'call rc#plugin#sandwich#hook_source()'
 repo = 'kana/vim-textobj-entire'
 depends = ['vim-textobj-user']
 on_func = 'textobj#user#'
+on_map = {ox = '<Plug>'}
 hook_add = '''
   let g:textobj_entire_no_default_key_mappings = 1
   omap ae <Plug>(textobj-entire-a)
@@ -406,7 +407,7 @@ hook_add = '''
 [[plugins]]
 repo = 'kana/vim-textobj-line'
 depends = ['vim-textobj-user']
-on_func = 'textobj#user#'
+on_map = {ox = '<Plug>'}
 hook_add = '''
   let g:textobj_line_no_default_key_mappings = 1
   omap al <Plug>(textobj-line-a)
@@ -418,7 +419,7 @@ hook_add = '''
 [[plugins]]
 repo = 'thinca/vim-textobj-comment'
 depends = ['vim-textobj-user']
-on_func = 'textobj#user#'
+on_map = {ox = '<Plug>'}
 hook_add = '''
   let g:textobj_comment_no_default_key_mappings = 1
   omap ac <Plug>(textobj-comment-a)
@@ -430,7 +431,7 @@ hook_add = '''
 [[plugins]]
 repo = 'kana/vim-textobj-fold'
 depends = ['vim-textobj-user']
-on_func = 'textobj#user#'
+on_map = {ox = '<Plug>'}
 hook_add = '''
   let g:textobj_fold_no_default_key_mappings = 1
   omap az <Plug>(textobj-fold-a)
@@ -442,12 +443,25 @@ hook_add = '''
 [[plugins]]
 repo = 'mattn/vim-textobj-url'
 depends = 'vim-textobj-user'
+on_map = {ox = '<Plug>'}
 hook_add = '''
   let g:textobj_url_no_default_key_mappings = 1
   omap au <Plug>(textobj-url-a)
   omap iu <Plug>(textobj-url-i)
   xmap au <Plug>(textobj-url-a)
   xmap iu <Plug>(textobj-url-i)
+'''
+
+[[plugins]]
+repo = 'machakann/vim-textobj-delimited'
+on_map = {ox = '<Plug>'}
+hook_add = '''
+  let g:textobj_delimited_no_defautl_key_mappings = 1
+
+  omap ad <Plug>(textobj-delimited-forward-a)
+  omap id <Plug>(textobj-delimited-forward-i)
+  xmap ad <Plug>(textobj-delimited-forward-a)
+  xmap id <Plug>(textobj-delimited-forward-i)
 '''
 
 # --- Move function arguments left and right
@@ -478,7 +492,7 @@ hook_add = '''
         \ 'iu'  : 0,
         \ 'ad'  : 1,
         \ 'ib'  : 1,
-        \ 'il'  : 0,
+        \ 'il'  : 1,
         \ 'ip'  : 0,
         \ 'ie'  : 0,
         \ }
