@@ -5,7 +5,7 @@
 
 let s:base = fnamemodify(expand('<sfile>'), ':p:h')
 
-let s:dein_dir      = $VIM_CACHE_HOME . '/dein'
+let s:dein_dir      = $VIM_DATA_HOME . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 " Install dein.vim from github repository if dein_dir does not exist
