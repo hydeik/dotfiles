@@ -1,7 +1,7 @@
 " options.vim --- setting vim/nvim options
 
-" --- Vim files & directories
-" {{{
+" Vim files & directories {{{
+" -----
 set nobackup        " Don't create backup file
 set undofile        " Create undo file
 set swapfile        " Use swap file
@@ -40,8 +40,8 @@ else
 endif
 " }}}
 
-" --- Language
-" {{{
+" Language {{{
+" -----
 " Prefer English help
 set helplang=en,ja
 
@@ -65,8 +65,8 @@ if has('langmap') && exists('+langremap')
 endif
 " }}}
 
-" --- Editting
-" {{{
+" Editting {{{
+" -----
 " Tabs, Indentations -> use editorconfig
 " set textwidth=80    " Text width maximum chars before wrapping
 " set expandtab       " Expand tabs to spaces.
@@ -108,8 +108,8 @@ set matchtime=1     " Tenths of a second to show the matching paren
 set matchpairs+=<:> " Add HTML brackets to pair matching
 " }}}
 
-" --- Timing
-" {{{
+" Timing {{{
+" -----
 set timeout
 set ttimeout
 set timeoutlen=1000 " Time out for a mapped sequence (ms)
@@ -117,8 +117,8 @@ set ttimeoutlen=50  " Time out for a key code sequence (ms)
 set updatetime=1000 " Idle time to write swap and trigger CursorHold (ms)
 " }}}
 
-" --- Search
-" {{{
+" Search {{{
+" -----
 set ignorecase      " Ignore cases in pattern
 set smartcase       " Override 'ignorecase' if pattern contains upper cases.
 set infercase       " Adjust case in insert completion mode
@@ -126,8 +126,8 @@ set hlsearch        " Highlight match results
 set wrapscan        " Searches wrap around the end of the file
 " }}}
 
-" --- Behavior
-" {{{
+" Behavior {{{
+" -----
 set history=10000      " Amount of command line history
 set hidden             " Hide buffers when abandoned instead of unload
 set autoread           " Automatically read a file changed outside Vim
@@ -198,8 +198,8 @@ set sessionoptions-=options    " Don't save all options and mappings
 set sessionoptions-=folds      " Don't save folds
 " }}}
 
-" --- Editor UI Appearances
-" {{{
+" Editor UI Appearances {{{
+" -----
 set title               " Display title on the window (e.g. terminal)
 set nonumber            " Don't show line numbers
 set noruler             " Disable default status ruler
@@ -268,8 +268,8 @@ set foldcolumn=1
 " set foldmethod=syntax
 " }}}
 
-" --- Wildmenu: enhanced command line completion
-" {{{
+" Wildmenu: enhanced command line completion {{{
+" -----
 set nowildmenu
 " Completion style in wildmenu mode
 set wildmode=list:longest,full

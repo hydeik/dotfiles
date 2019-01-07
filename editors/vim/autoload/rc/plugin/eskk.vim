@@ -53,5 +53,5 @@ function! rc#plugin#eskk#hook_source() abort
   let g:eskk#start_completion_length = 2
 
   " --- easy escape with 'jj'
-  autocmd MyVimrc User eskk-initialize-post EskkMap -remap jj <ESC>
+  autocmd MyAutoCmd User eskk-initialize-post EskkMap -remap jj <ESC>
 endfunction

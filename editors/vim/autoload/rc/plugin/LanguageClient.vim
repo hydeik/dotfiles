@@ -47,7 +47,7 @@ function! rc#plugin#LanguageClient#hook_source() abort
   let g:LanguageClient_settingsPath = $VIM_CONFIG_HOME . '/settings.json'
   " let g:LanguageClient_trace = 'verbose'
 
-  autocmd MyVimrc FileType c,cpp,python,rust call s:languageclient_config()
+  autocmd MyAutoCmd FileType c,cpp,python,rust call s:languageclient_config()
 
   " deoplete setting
   if dein#tap('deoplete.nvim')

@@ -127,7 +127,7 @@ hook_source = '''
   let g:neosnippet#expand_word_boundary = 1
   let g:neosnippet#snippets_directory = $VIM_CONFIG_HOME . '/snippets'
 
-  autocmd MyVimrc CompleteDone * call neosnippet#complete_done()
+  autocmd MyAutoCmd CompleteDone * call neosnippet#complete_done()
 '''
 
 #-----------------------------------------------------------------------------

@@ -1,48 +1,65 @@
-" mapping.vim --- setting vim/nvim key mappings
+"-----------------------------------------------------------------------------
+" ~/.config/nvim/rc/mapping.vim --- setting vim/nvim key mappings
 
-" Easy escape:
-inoremap jj        <ESC>
-inoremap j<Space>  j
-cnoremap <expr> j  getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
-if exists(':tnoremap')
-  tnoremap <ESC>  <C-\><C-n>
-endif
+" Disable dangerous/annoying default mappings
+"   ZZ - Save current file and quit
+"   ZQ - Quit without checking changes (:q!)
+nnoremap ZZ  <Nop>
+nnoremap ZQ  <Nop>
 
-" Visual mode key mappings:
-" indent by > and < instead of >> and <<
-nnoremap >   >>
-nnoremap <   <<
-" Maintain visual mode after shifting > and <
-xnoremap >   >gv
-xnoremap <   <gv
+" Disable Ex-mode
+nnoremap Q  q
 
-" Insert mode key mappings
-" Emacs-like cursor move in insert mode and command line mode:"{{{
+" Useless command. M - to middle line of window
+nnoremap M  m
+
+" Y: yank text from cursor position to the EOL
+nnoremap Y y$
+
+" Better x
+nnoremap x "_x
+
+" Emacs-like cursor move in insert/command mode
 inoremap <C-a>    <Home>
 inoremap <C-b>    <Left>
 inoremap <C-d>    <Del>
 inoremap <C-e>    <End>
 inoremap <C-f>    <Right>
 
-" Command-line mode key mappings:
-" <C-a>: move to head
 cnoremap <C-a>    <Home>
-" <C-b>: previous char
 cnoremap <C-b>    <Left>
-" <C-d>: delete char
 cnoremap <C-d>    <Del>
-" <C-e>: move to end
 cnoremap <C-e>    <End>
-" <C-f>: next char
 cnoremap <C-f>    <Right>
-" <C-n>: next history
 cnoremap <C-n>    <Down>
-" <C-p>: previous history
 cnoremap <C-p>    <Up>
+
+" Smart scroll with <C-f>, <C-b>.
+noremap <expr> <C-f> max([winheight(0) - 2, 1])
+      \ . "\<C-d>" . (line('w$') >= line('$') ? "L" : "M")
+noremap <expr> <C-b> max([winheight(0) - 2, 1])
+      \ . "\<C-u>" . (line('w0') <= 1 ? "H" : "M")
+
+" Enable undo <C-w> and <C-u> in insert mode.
+inoremap <C-w>  <C-g>u<C-w>
+inoremap <C-u>  <C-g>u<C-u>
+
 " <C-y>: paste
 cnoremap <C-y>    <C-r>*
 " <C-g>: exit
 cnoremap <C-g>    <C-c>
+
+" Indent by > and < instead of >> and <<
+nnoremap >   >>
+nnoremap <   <<
+" Maintain visual mode after shifting > and <
+xnoremap >   >gv
+xnoremap <   <gv
+
+" Easy escape
+inoremap jj        <ESC>
+inoremap j<Space>  j
+cnoremap <expr> j  getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 
 " Change current word in a repeatable manner
 nnoremap cn  *``cgn
@@ -59,8 +76,17 @@ vnoremap <silent><Leader>w  <ESC>:write<CR>
 " Buffer delete
 nnoremap <silent><Leader>q  :bdelete<CR>
 vnoremap <silent><Leader>q  <ESC>:bdelete<CR>
+autocmd MyAutoCmd FileType help,man nnoremap <buffer><silent> q :<C-u>quit<CR>
 
-" Open/close folding:"{{{
+" Toggle editor visuals
+nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
+nnoremap <silent> <Leader>tn  :setlocal nonumber!<CR>
+nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
+nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
+nnoremap <silent> <Leader>th  :nohlsearch<CR>
+
+" Open/close folding: "{{{
+" -----
 nnoremap <expr> l  foldclosed('.') != -1 ? 'zo' : 'l'
 xnoremap <expr> l  foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
 
@@ -84,44 +110,39 @@ function! s:smart_foldcloser()
 endfunction
 "}}}
 
-" Better x
-nnoremap x "_x
+" Window/Tabs operation {{{
+" -----
+" Use 's' key as the prefix to control window/tab
+" The prefix key.
+nnoremap [Window]  <Nop>
+nmap     s         [Window]
 
-" Disable Ex-mode
-" nnoremap Q  <Nop>
+" new tab
+nnoremap <silent> [Window]t  :<C-u>tabnew<CR>
+" close window
+nnoremap <silent> [Window]c  :<C-u>close<CR>
+" only current window
+nnoremap <silent> [Window]o  :<C-u>only<CR>
+" split window horizontally
+nnoremap <silent> [Window]-  :<C-u>split<CR>
+" split window virtically
+nnoremap <silent> [Window]\| :<C-u>vsplit<CR>
+" equal size window
+nnoremap <silent> [Window]=   <c-w>=<CR>
 
-" Disable ZZ.
-nnoremap ZZ  <Nop>
+" Move windown with TAB
+nnoremap <silent> <Tab>    <C-w>w
+nnoremap <silent> <S-Tab>  <C-w>W
 
-" Y: yank text from cursor position to the EOL
-nnoremap Y y$
+" Resize window by Shift+arrow
+nnoremap <S-Left>   <C-w><
+nnoremap <S-Right>  <C-w>>
+nnoremap <S-Up>     <C-w>+
+nnoremap <S-Down>   <C-w>-
 
-" Stop highlighting by <ESC><ESC>
-nnoremap <silent><ESC><ESC> :<C-u>set nohlsearch<CR>
-
-" Quit help by 'q'
-autocmd MyVimrc FileType help nnoremap <buffer> <silent> q  :q<CR>
-
-" leave terminal mode by <ESC>
-if has('nvim')
-  tnoremap <silent><ESC>    <C-\><C-n>
-endif
-
-" Source a vim script
-if !exists('*s:source_script')
-  function s:source_script(path) abort
-    let path = expand(a:path)
-    if !filereadable(path)
-      return
-    endif
-    execute 'source' fnameescape(path)
-    echomsg printf('"%s" has sourced (%s)',
-          \ simplify(fnamemodify(path, ':~:.')), strftime('%c'))
-  endfunction
-endif
-
-" Map <F10> to reload current vim script
-nnoremap <silent><F10>  :<C-u>call <SID>source_script('%')<CR>
+" Zoom window temporary
+nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>toggle_window_zoom()<CR>
+nmap     <silent> [Window]z   <Plug>(my-zoom-window)
 
 " Toggle window zoom
 "  <C-w>z      : maximize current window
@@ -136,47 +157,7 @@ function! s:toggle_window_zoom() abort
     vertical resize
   endif
 endfunction
-nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>toggle_window_zoom()<CR>
-nmap <C-w>z       <Plug>(my-zoom-window)
-nmap <C-w><C-z>   <Plug>(my-zoom-window)
+" }}}
 
-
-" <Leader>t mapping -- (toggle) options
-nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
-nnoremap <silent> <Leader>tn  :setlocal nonumber!<CR>
-nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
-nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
-nnoremap <silent> <Leader>th  :nohlsearch<CR>
-
-" Window/Tabs operation
-" use 's' key as prefix
-nnoremap [Window] <Nop>
-nmap s   [Window]
-
-" Move windown y TAB
-nnoremap <silent> <Tab>    <C-w>w
-nnoremap <silent> <S-Tab>  <C-w>W
-
-" Resize window by Shift+arrow
-nnoremap <S-Left>   <C-w><
-nnoremap <S-Right>  <C-w>>
-nnoremap <S-Up>     <C-w>+
-nnoremap <S-Down>   <C-w>-
-
-" new tab
-nnoremap <silent> [Window]t  :<C-u>tabnew<CR>
-" close window
-nnoremap <silent> [Window]c  :<C-u>close<CR>
-" only current window
-nnoremap <silent> [Window]o  :<C-u>only<CR>
-" split window horizontally
-nnoremap <silent> [Window]-  :<C-u>split<CR>
-" split window virtically
-nnoremap <silent> [Window]\| :<C-u>vsplit<CR>
-" equal size window
-nnoremap <silent> [Window]=   <c-w>=<CR>
-" Zoom window
-nmap     <silent> [Window]z   <Plug>(my-zoom-window)
-
-"----------------------------------------------------------------------------
+"-----------------------------------------------------------------------------
 " vim: foldmethod=marker

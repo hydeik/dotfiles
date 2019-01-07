@@ -121,7 +121,7 @@ call s:configure_path('$MANPATH', [
 
 " Set augroup {{{
 " -----
-augroup MyVimrc
+augroup MyAutoCmd
   autocmd!
   autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?  call s:on_filetype()
   " Re-detect filetype on save
@@ -187,5 +187,5 @@ call s:source_rc('lightline.vim')
 " you. You better set 'secure' at the end of .vimrc or init.vim
 set secure
 
-"------------------------------------------------------------------------------
+"-----------------------------------------------------------------------------
 " vim: foldmethod=marker

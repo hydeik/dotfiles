@@ -53,5 +53,5 @@ function! s:defx_my_settings() abort
 endfunction
 
 function! rc#plugin#defx#hook_source() abort
-  autocmd MyVimrc FileType defx call s:defx_my_settings()
+  autocmd MyAutoCmd FileType defx call s:defx_my_settings()
 endfunction

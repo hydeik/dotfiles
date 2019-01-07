@@ -11,7 +11,7 @@ function! s:ReCheck_FENC() abort
   endif
 endfunction
 
-autocmd MyVimrc BufReadPost * call s:ReCheck_FENC()
+autocmd MyAutoCmd BufReadPost * call s:ReCheck_FENC()
 
 " Default fileformat.
 set fileformat=unix
