@@ -44,7 +44,7 @@ function! rc#plugin#LanguageClient#hook_source() abort
   let g:LanguageClient_autoStart = 1
 
   let g:LanguageClient_loadSettings = 1
-  let g:LanguageClient_settingsPath = g:vimrc_root . '/settings.json'
+  let g:LanguageClient_settingsPath = $VIM_CONFIG_HOME . '/settings.json'
   " let g:LanguageClient_trace = 'verbose'
 
   autocmd MyVimrc FileType c,cpp,python,rust call s:languageclient_config()
