@@ -157,11 +157,11 @@ endfunction
 
 " Configuration on startup
 if has('vim_starting')
-  call s:source_rc('init.rc.vim')
+  call s:source_rc('init.vim')
 endif
 
 " Confiugre dein.vim plugin manager and load plugins
-call s:source_rc('dein.rc.vim')
+call s:source_rc('dein.vim')
 if has('vim_starting') && !empty(argv())
   call s:on_filetype()
 endif
@@ -174,10 +174,10 @@ if !has('vim_starting')
 endif
 
 " Other configurations
-call s:source_rc('encoding.rc.vim')
-call s:source_rc('options.rc.vim')
-call s:source_rc('mappings.rc.vim')
-call s:source_rc('colorscheme.rc.vim')
+call s:source_rc('encoding.vim')
+call s:source_rc('options.vim')
+call s:source_rc('mappings.vim')
+call s:source_rc('lightline.vim')
 " }}}
 
 " Do not allow run some commands from vimrc or exrc when they are not owned by
