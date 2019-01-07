@@ -1,23 +1,5 @@
 " colorscheme.vim --- setup colorscheme on vim/nvim and costomize lightline
 
-" Enable true color if supported
-if !has('gui_running')
-  "
-  " TODO: We should check if the terminal emulater has truecolor supports, but
-  " there is no reliable ways to do that. Some terminal emulater provides
-  " $COLORTERM environment variable set to 'truecolor' or '24bit' so we also
-  " checkt this variable.
-  "
-  if has('termguicolors') && ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
-    " Enable true color in Vim on tmux (not necessary for NeoVim)
-    if !has('nvim')
-      let &t_8f = "\e[38;2;%lu;%lu;%lum"
-      let &t_8b = "\e[48;2;%lu;%lu;%lum"
-    endif
-    set termguicolors
-  endif
-endif
-
 " --- Colorscheme
 set background=dark
 

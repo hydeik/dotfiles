@@ -158,6 +158,9 @@ endfunction
 " Configuration on startup
 if has('vim_starting')
   call s:source_rc('init.vim')
+  if !has('gui_running')
+    call s:source_rc('terminal.vim')
+  endif
 endif
 
 " Confiugre dein.vim plugin manager and load plugins
