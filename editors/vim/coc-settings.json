@@ -16,7 +16,7 @@
     // To enable commit characters feature, use:
     "coc.preferences.acceptSuggestionOnCommitCharacter": true,
     // To change the indicator of snippet item, use:
-    "coc.preferences.snippetIndicator": "►",
+    "coc.preferences.snippetIndicator": "\ff0d0",
     // executable path for https://facebook.github.io/watchman/, detected from
     // $PATH by default "coc.preferences.watchmanPath": "",
     // enable diagnostic
@@ -24,8 +24,8 @@
     "coc.preferences.diagnostic.signOffset": 1000,
     "coc.preferences.diagnostic.errorSign": "\uf00d",
     "coc.preferences.diagnostic.warningSign": "\uf071",
-    "coc.preferences.diagnostic.infoSign": "\uf129",
-    "coc.preferences.diagnostic.hintSign": "\f111",
+    "coc.preferences.diagnostic.infoSign": "\uf05a",
+    "coc.preferences.diagnostic.hintSign": "\uf27b",
     // Language server configurations
     "languageserver": {
         "ccls": {

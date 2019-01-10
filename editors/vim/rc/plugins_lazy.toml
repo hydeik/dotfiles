@@ -74,10 +74,10 @@ hook_source = '''
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 depends = ['denite.nvim']
-build = 'yarn install'
-on_event = 'BufEnter'
+on_event = 'VimEnter'
 hook_source = 'call rc#plugin#coc#hook_source()'
 hook_post_source = 'call rc#plugin#coc#hook_post_source()'
+hook_post_update = 'call rc#plugin#coc#hook_post_update()'
 
 [[plugins]]
 repo = 'neoclide/coc-neco'

@@ -209,6 +209,9 @@ hook_add = '''
   let g:vim_json_syntax_conceal = 0
 '''
 
+[[plugins]]
+repo = 'neoclide/jsonc.vim'
+
 # --- YAML
 [[plugins]]
 repo = 'stephpy/vim-yaml'

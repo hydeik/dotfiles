@@ -1,3 +1,29 @@
+" List of coc-extensions to be instalBufEnterled
+let s:coc_extension_list = [
+      \ 'coc-css',
+      \ 'coc-emmet',
+      \ 'coc-emoji',
+      \ 'coc-eslint',
+      \ 'coc-html',
+      \ 'coc-json',
+      \ 'coc-neosnippet',
+      \ 'coc-prettier',
+      \ 'coc-pyls',
+      \ 'coc-rls',
+      \ 'coc-tsserver',
+      \ 'coc-vetur',
+      \ 'coc-word',
+      \ 'coc-yaml'
+      \ ]
+
+function! s:coc_check_extensions() abort
+  " Get list of installed extensions
+  if !coc#rpc#ready() | return [] | endif
+  let list = map(CocAction('extensionStats'), 'v:val["id"]')
+  return filter(get(s:, 'coc_extension_list', []), 'index(list, v:val) < 0')
+endfunction
+
+" Utility funcitons for key mapping
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
@@ -11,6 +37,7 @@ function! s:show_documentation()
   endif
 endfunction
 
+" Hook functions called from dein
 function! rc#plugin#coc#hook_add() abort
 endfunction
 
@@ -95,5 +122,15 @@ function! rc#plugin#coc#hook_post_source() abort
   command! -nargs=0 Format :call CocAction('format')
   " Use `:Fold` for fold current buffer
   command! -nargs=? Fold   :call CocAction('fold', <f-args>)
+
+  let missing = s:coc_check_extensions()
+  if !empty(missing)
+    call coc#util#install_extension(join(missing))
+  endif
+endfunction
+
+function! rc#plugin#coc#hook_post_update() abort
+  call coc#util#install()
+  call coc#util#update()
 endfunction
 
