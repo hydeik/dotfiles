@@ -16,11 +16,13 @@ let s:coc_extension_list = [
       \ 'coc-yaml'
       \ ]
 
-function! s:coc_check_extensions() abort
+function! s:coc_install_my_extensions() abort
   " Get list of installed extensions
-  if !coc#rpc#ready() | return [] | endif
   let list = map(CocAction('extensionStats'), 'v:val["id"]')
-  return filter(get(s:, 'coc_extension_list', []), 'index(list, v:val) < 0')
+  let missing = filter(s:coc_extension_list, 'index(list, v:val) < 0')
+  if !empty(missing)
+    call coc#util#install_extension(join(missing))
+  endif
 endfunction
 
 " Utility funcitons for key mapping
@@ -118,15 +120,27 @@ function! rc#plugin#coc#hook_source() abort
 endfunction
 
 function! rc#plugin#coc#hook_post_source() abort
+  " --- Custom commands
   " Use `:Format` for format current buffer
   command! -nargs=0 Format :call CocAction('format')
   " Use `:Fold` for fold current buffer
   command! -nargs=? Fold   :call CocAction('fold', <f-args>)
+  " Install extensions not installed yet
+  command! -nargs=0 CocInstallMyExtensions :call s:coc_install_my_extensions()
 
-  let missing = s:coc_check_extensions()
-  if !empty(missing)
-    call coc#util#install_extension(join(missing))
-  endif
+  " --- Autocmd
+  augroup MyAutoCmd
+    " Highlight symbols under cursor.
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+    " Trigger signature help
+    autocmd CursorHoldI,CursorMovedI call CocActionAsync('showSignatureHelp')
+    autocmd User CocJumpPlaceholder  call CocActionAsync('showSignatureHelp')
+    " Open quickfix using denite.vim
+    autocmd User CocQuickfixChange :Denite -mode=normal quickfix
+
+    autocmd FileType typescript,c,cpp,python,rust
+          \ setlocal formatexpr=CocAction('formatSelected')
+  augroup END
 endfunction
 
 function! rc#plugin#coc#hook_post_update() abort
