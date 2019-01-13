@@ -8,7 +8,7 @@ nnoremap ZZ  <Nop>
 nnoremap ZQ  <Nop>
 
 " Disable Ex-mode
-nnoremap Q  q
+nnoremap Q  <Nop>
 
 " Useless command. M - to middle line of window
 nnoremap M  m
@@ -61,6 +61,9 @@ inoremap jj        <ESC>
 inoremap j<Space>  j
 cnoremap <expr> j  getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 
+" Start new line from any cursor position
+inoremap <S-Return> <C-o>o
+
 " Change current word in a repeatable manner
 nnoremap cn  *``cgn
 nnoremap cN  *``cgN
@@ -68,22 +71,6 @@ nnoremap cN  *``cgN
 " Change selected word in a repeatable manner
 vnoremap <expr> cn  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
 vnoremap <expr> cN  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
-
-" Fast save
-nnoremap <silent><Leader>w  :write<CR>
-vnoremap <silent><Leader>w  <ESC>:write<CR>
-
-" Buffer delete
-nnoremap <silent><Leader>q  :bdelete<CR>
-vnoremap <silent><Leader>q  <ESC>:bdelete<CR>
-autocmd MyAutoCmd FileType help,man nnoremap <buffer><silent> q :<C-u>quit<CR>
-
-" Toggle editor visuals
-nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
-nnoremap <silent> <Leader>tn  :setlocal nonumber!<CR>
-nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
-nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
-nnoremap <silent> <Leader>th  :nohlsearch<CR>
 
 " Open/close folding: "{{{
 " -----
@@ -157,6 +144,44 @@ function! s:toggle_window_zoom() abort
     vertical resize
   endif
 endfunction
+" }}}
+
+" Leader mappings {{{
+let g:which_key_leader_map = get(g:, 'which_key_leader_map', {})
+
+" Fast save
+nnoremap <silent><Leader>w  :write<CR>
+vnoremap <silent><Leader>w  <ESC>:write<CR>
+
+" Buffer delete
+nnoremap <silent><Leader>q  :bdelete<CR>
+vnoremap <silent><Leader>q  <ESC>:bdelete<CR>
+nnoremap <silent><Leader>Q  :<C-u>qall!<CR>
+vnoremap <silent><Leader>Q  <ESC>:<C-u>qall!<CR>
+
+" Toggle editor visuals
+nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
+nnoremap <silent> <Leader>tn  :setlocal number! relativenumber!<CR>
+nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
+nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
+nnoremap <silent> <Leader>th  :nohlsearch<CR>
+
+let g:which_key_leader_map = get(g:, 'which_key_leader_map', {})
+
+let g:which_key_leader_map.b = 'buffer list'
+let g:which_key_leader_map.q = 'close'
+let g:which_key_leader_map.Q = 'quit all'
+let g:which_key_leader_map.w = 'save file'
+let g:which_key_leader_map['t'] = {
+      \ 'name': '+toggle',
+      \ 'n': 'toggle line number',
+      \ 'h': 'clear highlight',
+      \ 'l': 'toggle list mode',
+      \ 'p': 'toggle paste mode',
+      \ 's': 'toggle spell checker',
+      \ 'w': 'toggle text wrap',
+      \ }
+
 " }}}
 
 "-----------------------------------------------------------------------------

@@ -51,12 +51,14 @@ on_source = 'denite.nvim'
 repo = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
-# Browse and open sesions
+# Simple session manager with denite interface
 [[plugins]]
-repo = 'rafi/vim-denite-session'
+repo = 'lambdalisue/session.vim'
 on_source = 'denite.nvim'
 hook_source = '''
-  let g:session_directory = $VIM_CACHE_HOME . '/session'
+  let g:session_dir = $VIM_CACHE_HOME . '/session'
+  let g:session#default_opener = 'edit'
+  let g:session#default_session = 'default'
 '''
 
 #------------------------------------------------------------------------------
@@ -140,7 +142,8 @@ on_cmd = ['Defx']
 hook_add = '''
   nnoremap <silent><Leader>f  :<C-u>Defx<CR>
 '''
-hook_source = 'call rc#plugin#defx#hook_source()'
+[plugins.ftplugin]
+defx = 'call rc#plugin#defx#ftplugin()'
 
 # Git status implementation for Defx
 [[plugins]]
@@ -222,6 +225,12 @@ on_map = {n = '<Plug>Splitjoin'}
 #----------------------------------------------------------------------------et-
 # Interfaces
 #-----------------------------------------------------------------------------
+# Which key --- display available keybindings in popup
+[[plugins]]
+repo = 'liuchengxu/vim-which-key'
+on_event = 'VimEnter'
+hook_source = 'call rc#plugin#which_key#hook_source()'
+
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim'
@@ -291,18 +300,18 @@ on_map = {nv = '<Plug>'}
 hook_add = '''
   let g:caw_no_default_keymappings = 1
 
-  nmap <Leader>c   <Plug>(caw:prefix)
-  xmap <Leader>c   <Plug>(caw:prefix)
-  nmap <Leader>cc  <Plug>(caw:hatpos:toggle)
-  xmap <Leader>cc  <Plug>(caw:hatpos:toggle)
-  nmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
-  xmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
-  nmap <Leader>cb  <Plug>(caw:box:toggle)
-  xmap <Leader>cb  <Plug>(caw:box:toggle)
-  nmap <Leader>cw  <Plug>(caw:wrap:toggle)
-  xmap <Leader>cw  <Plug>(caw:wrap:toggle)
-  nmap <Leader>co  <Plug>(caw:jump:comment-next)
-  nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
+  " nmap <Leader>c   <Plug>(caw:prefix)
+  " xmap <Leader>c   <Plug>(caw:prefix)
+  " nmap <Leader>cc  <Plug>(caw:hatpos:toggle)
+  " xmap <Leader>cc  <Plug>(caw:hatpos:toggle)
+  " nmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
+  " xmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
+  " nmap <Leader>cb  <Plug>(caw:box:toggle)
+  " xmap <Leader>cb  <Plug>(caw:box:toggle)
+  " nmap <Leader>cw  <Plug>(caw:wrap:toggle)
+  " xmap <Leader>cw  <Plug>(caw:wrap:toggle)
+  " nmap <Leader>co  <Plug>(caw:jump:comment-next)
+  " nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
 '''
 
 # Fast folding

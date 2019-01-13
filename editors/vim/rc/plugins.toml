@@ -55,7 +55,7 @@ hook_add = '''
   let g:strip_whitespace_on_save  = 1
   let g:show_spaces_that_precede_tabs = 1
   let g:better_whitespace_filetypes_blacklist = [
-      \ 'diff', 'gitcommit', 'denite', 'qf', 'help', 'markdown'
+      \ 'diff', 'gitcommit', 'defx', 'denite', 'qf', 'help', 'markdown'
       \ ]
 '''
 
@@ -77,18 +77,6 @@ hook_add = '''
   nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
   nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
   nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
-'''
-
-# Which key
-[[plugins]]
-repo = 'liuchengxu/vim-which-key'
-hook_add = '''
-  nnoremap <Leader>      :<C-u>WhichKey       '<Space>'<CR>
-  vnoremap <Leader>      :<C-u>WhichKeyVisual '<Space>'<CR>
-  nnoremap <LocalLeader> :<C-u>WhichKey       ','<CR>
-  vnoremap <LocalLeader> :<C-u>WhichKeyVisual ','<CR>
-  " nnoremap g             :<C-u>WhichKey       'g'<CR>
-  " vnoremap g             :<C-u>WhichKeyVisual 'g'<CR>
 '''
 
 # Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)

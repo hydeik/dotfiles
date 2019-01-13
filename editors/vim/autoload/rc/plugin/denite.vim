@@ -78,6 +78,8 @@ function! rc#plugin#denite#hook_source() abort
   " jj to move to normal mode
   call denite#custom#map('insert', 'jj',    '<denite:enter_mode:normal>', 'noremap')
 
+  call denite#custom#map('normal', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+  call denite#custom#map('normal', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
   call denite#custom#map('normal', '<C-g>', '<denite:leave_mode>', 'noremap')
   call denite#custom#map('normal', 'r',     '<denite:do_action:quickfix>', 'noremap')
 
