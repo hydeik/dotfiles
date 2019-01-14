@@ -7,11 +7,35 @@ let g:one_allow_italics = 1
 colorscheme one
 call one#highlight('Visual', '', '3e4452', 'none')
 
-if !has('gui_running')
+" Transparent background
+" if !has('gui_running')
+"   highlight Normal     ctermbg=NONE guibg=NONE
+"   highlight LineNr     ctermbg=NONE guibg=NONE
+"   highlight SignColumn ctermbg=NONE guibg=NONE
+" endif
+
+function! s:transparent() abort
   highlight Normal     ctermbg=NONE guibg=NONE
   highlight LineNr     ctermbg=NONE guibg=NONE
   highlight SignColumn ctermbg=NONE guibg=NONE
-endif
+  " highlight Normal ctermbg=NONE guibg=NONE
+  " highlight NonText ctermbg=NONE guibg=NONE
+  " highlight EndOfBuffer ctermbg=NONE guibg=NONE
+  " highlight Folded ctermbg=NONE guibg=NONE
+  " highlight LineNr ctermbg=NONE guibg=NONE
+  " highlight CursorLineNr ctermbg=NONE guibg=NONE
+  " highlight SpecialKey ctermbg=NONE guibg=NONE
+  " highlight ALEErrorSign ctermbg=NONE guibg=NONE
+  " highlight ALEWarningSign ctermbg=NONE guibg=NONE
+  " highlight GitGutterAdd ctermbg=NONE guibg=NONE
+  " highlight GitGutterChange ctermbg=NONE guibg=NONE
+  " highlight GitGutterChangeDelete ctermbg=NONE guibg=NONE
+  " highlight GitGutterDelete ctermbg=NONE guibg=NONE
+endfunction
+autocmd MyAutoCmd VimEnter *
+      \ if !has("gui_running") |
+      \   call s:transparent() |
+      \ endif
 
 " --- Customize status line with lightline
 let g:lightline = {
