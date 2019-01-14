@@ -19,9 +19,7 @@ function! rc#plugin#denite#hook_add() abort
   " switch buffers
   nnoremap <silent> [Denite]b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
   " find file
-  nnoremap <silent> [Denite]f  :<C-u>Denite file/point file/old
-        \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`
-        \ file file:new<CR> -sorters=sorter/rank
+  nnoremap <silent> [Denite]f  :<C-u>Denite file/point file/old file/rec file file:new -sorters=sorter/rank<CR>
   " Grep
   nnoremap <silent> [Denite]g  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
   nnoremap <silent> [Denite]*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
