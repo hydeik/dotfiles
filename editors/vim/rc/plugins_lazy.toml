@@ -51,12 +51,14 @@ on_source = 'denite.nvim'
 repo = 'Jagua/vim-denite-ghq'
 on_source = 'denite.nvim'
 
-# Browse and open sesions
+# Simple session manager with denite interface
 [[plugins]]
-repo = 'rafi/vim-denite-session'
+repo = 'lambdalisue/session.vim'
 on_source = 'denite.nvim'
 hook_source = '''
-  let g:session_directory = $VIM_CACHE_HOME . '/session'
+  let g:session_dir = $VIM_CACHE_HOME . '/session'
+  let g:session#default_opener = 'edit'
+  let g:session#default_session = 'default'
 '''
 
 #------------------------------------------------------------------------------
@@ -224,6 +226,12 @@ on_map = {n = '<Plug>Splitjoin'}
 #----------------------------------------------------------------------------et-
 # Interfaces
 #-----------------------------------------------------------------------------
+# Which key --- display available keybindings in popup
+[[plugins]]
+repo = 'liuchengxu/vim-which-key'
+on_event = 'VimEnter'
+hook_source = 'call rc#plugin#which_key#hook_source()'
+
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim'

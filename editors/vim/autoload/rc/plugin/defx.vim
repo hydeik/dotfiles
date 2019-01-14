@@ -47,4 +47,3 @@ function! rc#plugin#defx#on_filetype() abort
         \ ':<C-u>wincmd w<CR>' :
         \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
 endfunction
-
