@@ -114,12 +114,7 @@ call s:configure_path('$MANPATH', [
       \])
 " }}}
 
-" Utility functions {{{
-" -----
-
-" }}}
-
-" Set augroup {{{
+" Set autocmd {{{
 " -----
 augroup MyAutoCmd
   autocmd!
