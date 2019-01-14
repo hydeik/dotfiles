@@ -19,11 +19,13 @@ function! rc#plugin#denite#hook_add() abort
   " switch buffers
   nnoremap <silent> [Denite]b  :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
   " find file
-  nnoremap <silent> [Denite]f  :<C-u>Denite file/rec<CR>
+  nnoremap <silent> [Denite]f  :<C-u>Denite file/point file/old
+        \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`
+        \ file file:new<CR> -sorters=sorter/rank
   " Grep
-  nnoremap <silent> [Denite]gg  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
-  nnoremap <silent> [Denite]g*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
-  vnoremap <silent> [Denite]g*  :<C-u>call <SID>get_selection('/')<CR>
+  nnoremap <silent> [Denite]g  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
+  nnoremap <silent> [Denite]*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
+  vnoremap <silent> [Denite]*  :<C-u>call <SID>get_selection('/')<CR>
         \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
   " Help
   nnoremap <silent> [Denite]h  :<C-u>Denite help<CR>
@@ -78,6 +80,8 @@ function! rc#plugin#denite#hook_source() abort
   " jj to move to normal mode
   call denite#custom#map('insert', 'jj',    '<denite:enter_mode:normal>', 'noremap')
 
+  call denite#custom#map('normal', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+  call denite#custom#map('normal', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
   call denite#custom#map('normal', '<C-g>', '<denite:leave_mode>', 'noremap')
   call denite#custom#map('normal', 'r',     '<denite:do_action:quickfix>', 'noremap')
 
