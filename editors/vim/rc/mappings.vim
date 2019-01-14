@@ -82,6 +82,7 @@ nnoremap <silent><Leader>Q  :<C-u>qall!<CR>
 nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
 nnoremap <silent> <Leader>tn  :setlocal nonumber!<CR>
 nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
+nnoremap <silent> <Leader>tc  :setlocal cursorcolumn!<CR>
 nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
 nnoremap <silent> <Leader>th  :nohlsearch<CR>
 

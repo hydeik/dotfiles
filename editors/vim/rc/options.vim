@@ -209,6 +209,8 @@ set noshowcmd           " Don't show command in status line
 set showtabline=2       " Always display the tabs line
 set laststatus=2        " Always display a status line
 set signcolumn=yes      " Draw sign column
+set cursorline          " Highlight current line
+set nocursorcolumn      " Do not highlight current column
 
 set scrolloff=2         " Keep at least 2 lines above/below
 set sidescrolloff=5     " Keep at least 5 lines left/right
