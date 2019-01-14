@@ -178,22 +178,34 @@ hook_add = '''
 repo = 'metakirby5/codi.vim'
 on_cmd = ['Codi']
 
-# Git wrapper
-[[plugins]]
-repo = 'neoclide/vim-easygit'
-on_cmd = ['Gcd', 'Glcd', 'Gblame', 'GcommitCurrent', 'GdiffThis', 'Gcommit',
-          'Gedit', 'Gdiff', 'Gremove', 'Grename', 'Gmove', 'Gcheckout',
-          'Gpush', 'Gpull', 'Gfetch', 'Gadd', 'Gstatus', 'Ggrep', 'Gmerge']
-hook_source = '''
-  let g:easygit_enable_command = 1
-'''
+# # Git wrapper
+# [[plugins]]
+# repo = 'neoclide/vim-easygit'
+# on_cmd = ['Gcd', 'Glcd', 'Gblame', 'GcommitCurrent', 'GdiffThis', 'Gcommit',
+#           'Gedit', 'Gdiff', 'Gremove', 'Grename', 'Gmove', 'Gcheckout',
+#           'Gpush', 'Gpull', 'Gfetch', 'Gadd', 'Gstatus', 'Ggrep', 'Gmerge']
+# hook_source = '''
+#   let g:easygit_enable_command = 1
+# '''
+#
+# # Git operations
+# [[plugins]]
+# repo = 'lambdalisue/gina.vim'
+# on_cmd = 'Gina'
+# hook_add = 'call rc#plugin#gina#hook_add()'
+# hook_post_source = 'call rc#plugin#gina#hook_post_source()'
 
-# Git operations
+# --- Use Tig as a git client on vim
 [[plugins]]
-repo = 'lambdalisue/gina.vim'
-on_cmd = 'Gina'
-hook_add = 'call rc#plugin#gina#hook_add()'
-hook_post_source = 'call rc#plugin#gina#hook_post_source()'
+repo = 'iberianpig/tig-explorer.vim'
+on_cmd = ['TigOpenCurrentFile', 'TigOpenProjectRootDir', 'TigGrep', 'TigGrep',
+          'TigGrepResume', 'TigBlame']
+hook_add = '''
+  let g:tig_explorer_keymap_edit    = '<C-o>'
+  let g:tig_explorer_keymap_tabedit = '<C-t>'
+  let g:tig_explorer_keymap_split   = '<C-s>'
+  let g:tig_explorer_keymap_vsplit  = '<C-v>'
+'''
 
 # --- Smart Align
 [[plugins]]
@@ -226,12 +238,6 @@ on_map = {n = '<Plug>Splitjoin'}
 #----------------------------------------------------------------------------et-
 # Interfaces
 #-----------------------------------------------------------------------------
-# Which key --- display available keybindings in popup
-[[plugins]]
-repo = 'liuchengxu/vim-which-key'
-on_event = 'VimEnter'
-hook_source = 'call rc#plugin#which_key#hook_source()'
-
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim'

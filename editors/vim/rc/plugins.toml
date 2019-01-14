@@ -15,25 +15,26 @@ depends = ['dein.vim']
 #------------------------------------------------------------------------------
 # Utilities
 #------------------------------------------------------------------------------
+# Provides the branch name of the current git repository
+[[plugins]]
+repo = 'itchyny/vim-gitbranch'
+
 # Enable configuration file in each directory
 [[plugins]]
 repo = 'thinca/vim-localrc'
+
+# EditorConfig
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+if = 'executable("editorconfig")'
+hook_add = '''
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+'''
 
 # Faster than the built-in 'matchparen' plugin
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
 #if = 'has("gui_running")'
-
-# [[plugins]]
-# repo     = 'itchyny/vim-cursorword'
-# hook_add = '''
-#   augroup cursorword-filetype
-#     autocmd!
-#     autocmd FileType qf,denite,unite,vimfiler,quickrun,calendar let b:cursorword = 0
-#     autocmd InsertEnter * let b:cursorword = 0
-#     autocmd InsertLeave * let b:cursorword = 1
-#   augroup END
-# '''
 
 # Powerful repeat '.'
 [[plugins]]
@@ -59,14 +60,6 @@ hook_add = '''
       \ ]
 '''
 
-# EditorConfig
-[[plugins]]
-repo = 'editorconfig/editorconfig-vim'
-if = 'executable("editorconfig")'
-hook_add = '''
-  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-'''
-
 # Seemless navitation between Tmux and Vim
 [[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
@@ -78,10 +71,6 @@ hook_add = '''
   nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
   nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
 '''
-
-# Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
 
 # Functions and commands for Neovim GUI
 [[plugins]]
@@ -95,6 +84,21 @@ if = '!has("nvim")'
 
 [[plugins]]
 repo = 'roxma/nvim-yarp'
+
+#------------------------------------------------------------------------------
+# Plugin dependencies (non-lazy loading)
+#------------------------------------------------------------------------------
+# Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+# Operator extension
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+# Textobj extension
+[[plugins]]
+repo = 'kana/vim-textobj-user'
 
 #------------------------------------------------------------------------------
 # Themes
@@ -236,15 +240,3 @@ repo = 'tmux-plugins/vim-tmux'
 # --- nginx configuration (fork official nvim nginx)
 [[plugins]]
 repo = 'othree/nginx-contrib-vim'
-
-#------------------------------------------------------------------------------
-# Textobj/operator extension
-#------------------------------------------------------------------------------
-# Operator extension
-[[plugins]]
-repo = 'kana/vim-operator-user'
-
-# Textobj extension
-[[plugins]]
-repo = 'kana/vim-textobj-user'
-

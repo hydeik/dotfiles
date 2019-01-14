@@ -38,12 +38,50 @@ autocmd MyAutoCmd VimEnter *
       \ endif
 
 " --- Customize status line with lightline
+" let g:lightline = {
+"      \ 'colorscheme': 'one',
+"      \ 'active': {
+"      \   'left': [ ['mode', 'paste'],
+"      \             ['filename', 'modified'],
+"      \             ['gitrepo_branch', 'gitrepo_changed', 'gitrepo_conflicted'] ],
+"      \   'right': [ ['lineinfo'],
+"      \              ['percent'],
+"      \              ['fileformat', 'fileencoding', 'filetype'],
+"      \              ['pyenv'] ],
+"      \ },
+"      \ 'component' : {
+"      \   'lineinfo': "\ue0a1 %3l:%-2v"
+"      \ },
+"      \ 'component_function': {
+"      \   'modified': 'LightlineModified',
+"      \   'readonly': 'LightlineReadonly',
+"      \   'filename': 'LightlineFilename',
+"      \   'fileformat': 'LightlineFileformat',
+"      \   'filetype': 'LightlineFiletype',
+"      \   'fileencoding': 'LightlineFileencoding',
+"      \   'mode': 'LightlineMode',
+"      \   'pyenv': 'LightlinePyenv',
+"      \ },
+"      \ 'component_expand' : {
+"      \   'gitrepo_branch' : 'LightlineGitRepoBranch',
+"      \   'gitrepo_changed' : 'LightlineGitRepoChanged',
+"      \   'gitrepo_conflicted' : 'LightlineGitRepoConflicted',
+"      \   'dummy': 'error'
+"      \ },
+"      \ 'component_type' : {
+"      \   'gitrepo_branch' : 'raw',
+"      \   'gitrepo_changed' : 'warning',
+"      \   'gitrepo_conflicted' : 'error'
+"      \ },
+"      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+"      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+"      \ }
+
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
-      \             ['filename', 'modified'],
-      \             ['gitrepo_branch', 'gitrepo_changed', 'gitrepo_conflicted'] ],
+      \             ['gitbranch', 'readonly', 'filename', 'modified'] ],
       \   'right': [ ['lineinfo'],
       \              ['percent'],
       \              ['fileformat', 'fileencoding', 'filetype'],
@@ -55,23 +93,13 @@ let g:lightline = {
       \ 'component_function': {
       \   'modified': 'LightlineModified',
       \   'readonly': 'LightlineReadonly',
+      \   'gitbranch': 'LightlineGitBranch',
       \   'filename': 'LightlineFilename',
       \   'fileformat': 'LightlineFileformat',
       \   'filetype': 'LightlineFiletype',
       \   'fileencoding': 'LightlineFileencoding',
       \   'mode': 'LightlineMode',
       \   'pyenv': 'LightlinePyenv',
-      \ },
-      \ 'component_expand' : {
-      \   'gitrepo_branch' : 'LightlineGitRepoBranch',
-      \   'gitrepo_changed' : 'LightlineGitRepoChanged',
-      \   'gitrepo_conflicted' : 'LightlineGitRepoConflicted',
-      \   'dummy': 'error'
-      \ },
-      \ 'component_type' : {
-      \   'gitrepo_branch' : 'raw',
-      \   'gitrepo_changed' : 'warning',
-      \   'gitrepo_conflicted' : 'error'
       \ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
@@ -126,54 +154,65 @@ function! LightlineMode()
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-" function! LightlineGitstatus()
+function! LightlineGitBranch()
+  let branch = gitbranch#name()
+  return branch ==# '' ? '' : " \ue725 " . branch
+endfunction
+
+" function! LightlineGitRepoChanged()
 "   let branch = gina#component#repo#branch()
-"   if branch ==# ''
-"     return ''
-"   else
-"     let staged = gina#component#status#staged()
-"     let unstaged = gina#component#status#unstaged()
-"     let conflicted = gina#component#status#conflicted()
-"     let ahead = gina#component#traffic#ahead()
-"     let behind = gina#component#traffic#behind()
-"     return  "\ue725 " . branch .
-"           \ (winwidth(0) < 100 ? '' :
-"           \   (ahead      ? " \uf01b ".ahead      : '') .
-"           \   (behind     ? " \uf01a ".behind     : '') .
-"           \   (staged     ? " \uf055 ".staged     : '') .
-"           \   (unstaged   ? " \uf06a ".unstaged   : '') .
-"           \   (conflicted ? " \uf057 ".conflicted : '') )
-"   end
+"   let staged = gina#component#status#staged()
+"   let unstaged = gina#component#status#unstaged()
+"   return branch ==# '' ? '' :
+"          \ (winwidth(0) < 100 ? '' :
+"          \   (staged   ? "\uf055 ".staged   : '') .
+"          \   (unstaged ? "\uf06a ".unstaged : '') )
 " endfunction
-
-function! LightlineGitRepoBranch()
-  let branch = gina#component#repo#branch()
-  let ahead = gina#component#traffic#ahead()
-  let behind = gina#component#traffic#behind()
-  return branch ==# '' ? '' :
-        \ " \ue725 " . branch .
-        \ (winwidth(0) < 100 ? '' :
-        \ (ahead ? " \uf01b ".ahead : '') . (behind ? " \uf01a ".behind : '') )
-endfunction
-
-function! LightlineGitRepoChanged()
-  let branch = gina#component#repo#branch()
-  let staged = gina#component#status#staged()
-  let unstaged = gina#component#status#unstaged()
-  return branch ==# '' ? '' :
-          \ (winwidth(0) < 100 ? '' :
-          \   (staged   ? "\uf055 ".staged   : '') .
-          \   (unstaged ? "\uf06a ".unstaged : '') )
-endfunction
-
-function! LightlineGitRepoConflicted()
-  let branch = gina#component#repo#branch()
-  let conflicted = gina#component#status#conflicted()
-  return branch ==# '' ? '' : (conflicted ? " \uf057 ".conflicted : '')
-endfunction
+"
+" function! LightlineGitRepoConflicted()
+"   let branch = gina#component#repo#branch()
+"   let conflicted = gina#component#status#conflicted()
+"   return branch ==# '' ? '' : (conflicted ? " \uf057 ".conflicted : '')
+" endfunction
 
 function! LightlinePyenv()
   return &filetype =~? 'python' ? " \ue73c " . pyenv#info#preset('short')[1:] : ''
+endfunction
+
+" https://github.com/Lokaltog/vim-powerline/blob/develop/autoload/Powerline/Functions.vim
+function! LightlineCharCode()
+  if winwidth('.') <= 70
+    return ''
+  endif
+
+  " Get the output of :ascii
+  redir => ascii
+  silent! ascii
+  redir END
+
+  if match(ascii, 'NUL') != -1
+    return 'NUL'
+  endif
+
+  " Zero pad hex values
+  let nrformat = '0x%02x'
+
+  let encoding = (&fenc == '' ? &enc : &fenc)
+
+  if encoding == 'utf-8'
+    " Zero pad with 4 zeroes in unicode files
+    let nrformat = '0x%04x'
+  endif
+
+  " Get the character and the numeric value from the return value of :ascii
+  " This matches the two first pieces of the return value, e.g.
+  " "<F>  70" => char: 'F', nr: '70'
+  let [str, char, nr; rest] = matchlist(ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
+
+  " Format the numeric value
+  let nr = printf(nrformat, nr)
+
+  return "'". char ."' ". nr
 endfunction
 
 "----------------------------------------------------------------------------
