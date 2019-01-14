@@ -5,11 +5,11 @@
 let g:dein#install_max_processes = 16
 let g:dein#install_progress_type = 'echo'
 let g:dein#enable_notification = 0
-let g:dein#install_log_filename = $VIM_DATA_HOME . '/dein/dein.log'
+let g:dein#install_log_filename = $VIM_CACHE_HOME . '/dein/dein.log'
 
 " Get directory path where dein.vim is located
 let s:base = fnamemodify(expand('<sfile>'), ':p:h')
-let s:dein_dir      = $VIM_DATA_HOME . '/dein'
+let s:dein_dir      = $VIM_CACHE_HOME . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 " Install dein.vim from github repository if dein_dir does not exist

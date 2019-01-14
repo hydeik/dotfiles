@@ -73,10 +73,10 @@ vnoremap <expr> cN  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 nnoremap <silent><Leader>w  :write<CR>
 vnoremap <silent><Leader>w  <ESC>:write<CR>
 
-" Buffer delete
-nnoremap <silent><Leader>q  :bdelete<CR>
+" Smart quit
+nnoremap <silent><Leader>q  :<C-u>bdelete<CR>
 vnoremap <silent><Leader>q  <ESC>:bdelete<CR>
-autocmd MyAutoCmd FileType help,man nnoremap <buffer><silent> q :<C-u>quit<CR>
+nnoremap <silent><Leader>Q  :<C-u>qall!<CR>
 
 " Toggle editor visuals
 nnoremap <silent> <Leader>ts  :setlocal spell!<CR>

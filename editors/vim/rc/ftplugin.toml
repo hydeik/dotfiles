@@ -109,4 +109,10 @@ help = '''
   setlocal iskeyword+=:
   setlocal iskeyword+=#
   setlocal iskeyword+=-
+  nnoremap <buffer><silent> q  :<C-u>quit<CR>
+'''
+
+# Man
+man = '''
+  nnoremap <buffer><silent> q  :<C-u>quit<CR>
 '''
