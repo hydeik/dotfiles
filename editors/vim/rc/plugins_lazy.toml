@@ -141,6 +141,8 @@ hook_add = '''
   nnoremap <silent><Leader>f  :<C-u>Defx<CR>
 '''
 hook_source = 'call rc#plugin#defx#hook_source()'
+[plugins.ftplugin]
+defx = 'call rc#plugin#defx#on_filetype()'
 
 # Git status implementation for Defx
 [[plugins]]
@@ -287,22 +289,21 @@ hook_add = '''
 # Smart commenter
 [[plugins]]
 repo = 'tyru/caw.vim'
+depends = ['context_filetype.vim']
 on_map = {nv = '<Plug>'}
 hook_add = '''
   let g:caw_no_default_keymappings = 1
 
-  nmap <Leader>c   <Plug>(caw:prefix)
-  xmap <Leader>c   <Plug>(caw:prefix)
-  nmap <Leader>cc  <Plug>(caw:hatpos:toggle)
-  xmap <Leader>cc  <Plug>(caw:hatpos:toggle)
-  nmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
-  xmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
-  nmap <Leader>cb  <Plug>(caw:box:toggle)
-  xmap <Leader>cb  <Plug>(caw:box:toggle)
-  nmap <Leader>cw  <Plug>(caw:wrap:toggle)
-  xmap <Leader>cw  <Plug>(caw:wrap:toggle)
-  nmap <Leader>co  <Plug>(caw:jump:comment-next)
-  nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
+  nmap gcc  <Plug>(caw:hatpos:toggle)
+  xmap gcc  <Plug>(caw:hatpos:toggle)
+  nmap gca  <Plug>(caw:dollarpos:toggle)
+  xmap gca  <Plug>(caw:dollarpos:toggle)
+  nmap gcb  <Plug>(caw:box:toggle)
+  xmap gcb  <Plug>(caw:box:toggle)
+  nmap gcw  <Plug>(caw:wrap:toggle)
+  xmap gcw  <Plug>(caw:wrap:toggle)
+  nmap gco  <Plug>(caw:jump:comment-next)
+  nmap gcO  <Plug>(caw:jump:comment-prev)
 '''
 
 # Fast folding

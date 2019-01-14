@@ -1,10 +1,9 @@
 function! rc#plugin#ale#hook_add() abort
   " jump errors
-  nmap <silent> <Localleader>aj  <Plug>(ale_previous_wrap)
-  nmap <silent> <Localleader>ak  <Plug>(ale_next_wrap)
-
+  nmap <silent> <Leader>aj  <Plug>(ale_previous_wrap)
+  nmap <silent> <Leader>ak  <Plug>(ale_next_wrap)
   " Fix (auto-format) the buffer
-  nmap <silent> <Localleader>af  <Plug>(ale_fix)
+  nmap <silent> <Leader>af  <Plug>(ale_fix)
 endfunction
 
 function! rc#plugin#ale#hook_source() abort
@@ -17,38 +16,32 @@ function! rc#plugin#ale#hook_source() abort
   " Always show sign gutter
   let g:ale_sign_column_always = 1
 
-  " Run fixer on save (auto format)
-  let g:ale_fix_on_save = 1
+  " Disable linters which conflict with LSP
+  let g:ale_linters = {
+        \ 'c': [],
+        \ 'cpp': [],
+        \ 'go': [],
+        \ 'python': [],
+        \ 'ruby': [],
+        \ 'rust': [],
+        \ 'sh': [],
+        \ 'vim': ['vint'],
+        \ 'css': [],
+        \ 'html': [],
+        \ 'javascript': [],
+        \ 'typescript': [],
+        \ 'json': [],
+        \ 'reason': [],
+        \ 'vue': [],
+        \ }
 
-  " Dictionary to set linters and fixsers
-  let g:ale_linters = {}
-  let g:ale_fixers = {}
-
-  " -- C/C++ options
-  let g:ale_c_clang_options = '-std=c11 -Weverything'
-
-  let g:ale_linters.c = ['clangtidy', 'clang']
-  let g:ale_fixers.c  = ['clang-format']
-
-  let g:ale_cpp_clang_options = '-std=c++14 -Weverything ' .
-        \ '-Wno-c++98-compat-pedantic -Wno-missing-prototypes'
-
-  let g:ale_linters.cpp = ['clangtidy', 'clang']
-  let g:ale_fixers.cpp  = ['clang-format']
+  let g:ale_linters_ignore = {
+        \ 'latex': ['lacheck']
+        \ }
 
   " --- Fortran
   " extra options for warnings
   let g:ale_fortran_gcc_options = '-Wall -Wextra -Wcharacter-truncation -Wconversion-extra'
   " Free format
   let g:ale_fortran_gcc_use_free_form = 1
-
-  " --- Python
-  let g:ale_linters.python = ['pycodestyle', 'mypy']
-  let g:ale_fixers.python  = ['yapf', 'isort']
-
-  " --- Rust
-  let g:ale_rust_rls_toolchain = 'stable'
-
-  let g:ale_linters.rust = ['rls']
-  let g:ale_fixers.rust  = ['rustfmt']
 endfunction
