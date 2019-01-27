@@ -1,4 +1,5 @@
-# Global hook_add, which is executed in dein#end().
+# Global hook_add, which is executed in dein#end(). {{{
+# -----
 hook_add = '''
   " -- C++
   let g:cpp_class_scope_highlight = 1
@@ -48,9 +49,11 @@ hook_add = '''
   " -- XML
   let g:xml_syntax_folding = 1
 '''
+# }}}
 
+# Hooks on filetypes {{{
 [ftplugin]
-# NOTE: '_' key is executed after all ftplugin
+# NOTE: '_' key is executed after all ftplugin {{{
 _ = '''
   " Disable automatically insert comment.
   setlocal formatoptions-=ro | setlocal formatoptions+=mMBl
@@ -58,11 +61,6 @@ _ = '''
   " Disable auto wrap.
   if &l:textwidth != 70 && &filetype !=# 'help'
     setlocal textwidth=0
-  endif
-
-  " Use FoldCCtext().
-  if &filetype !=# 'help'
-    setlocal foldtext=FoldCCtext()
   endif
 
   if !&l:modifiable
@@ -73,11 +71,7 @@ _ = '''
     endif
   endif
 '''
-
-# Python
-# python = '''
-#   setlocal foldmethod=indent
-# '''
+# }}}
 
 # C++
 cpp = '''
@@ -109,13 +103,9 @@ help = '''
   setlocal iskeyword+=:
   setlocal iskeyword+=#
   setlocal iskeyword+=-
-  " Quit help with 'q'
-  nnoremap <buffer><silent> q  :<C-u>quit<CR>
 '''
 
-# Man
-man = '''
-  " Quit man with 'q'
-  nnoremap <buffer><silent>q  :<C-u>quit<CR>
-'''
+# }}}
 
+#-----------------------------------------------------------------------------
+# vim: foldmethod=marker

@@ -73,10 +73,20 @@ nnoremap cN  *``cgN
 " Change selected word in a repeatable manner
 vnoremap <expr> cn  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
 vnoremap <expr> cN  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
+
+" Close windows with q
+nnoremap <silent><expr>q  winnr('$') != 1 ? ':<C-u>close<CR>' : ""
+
 " }}}
 
 " Open/close folding: {{{
 " -----
+" Toggle fold
+nnoremap <CR> za
+" Focus the current fold by closing all others
+nnoremap <S-Return> zMza
+
+" Smart open/close fold
 nnoremap <expr> l  foldclosed('.') != -1 ? 'zo' : 'l'
 xnoremap <expr> l  foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
 
@@ -120,9 +130,9 @@ nnoremap <silent> [Window]\| :<C-u>vsplit<CR>
 " equal size window
 nnoremap <silent> [Window]=   <c-w>=<CR>
 
-" Move windown with TAB
-nnoremap <silent> <Tab>    <C-w>w
-nnoremap <silent> <S-Tab>  <C-w>W
+" " Move windown with TAB
+" nnoremap <silent> <Tab>    <C-w>w
+" nnoremap <silent> <S-Tab>  <C-w>W
 
 " Resize window by Shift+arrow
 nnoremap <S-Left>   <C-w><

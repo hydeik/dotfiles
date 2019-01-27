@@ -1,27 +1,22 @@
 # === Plugins (loaded on startup) ===
 
-#------------------------------------------------------------------------------
-# Plugin manager
-#------------------------------------------------------------------------------
+# Fundamentals {{{
+# -----
 # Dark powered Vim/Neovim plugin manager
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-# Utility commands for dein.vim
-[[plugins]]
-repo = 'haya14busa/dein-command.vim'
-depends = ['dein.vim']
-
-#------------------------------------------------------------------------------
-# Utilities
-#------------------------------------------------------------------------------
-# Provides the branch name of the current git repository
-[[plugins]]
-repo = 'itchyny/vim-gitbranch'
-
 # Enable configuration file in each directory
 [[plugins]]
 repo = 'thinca/vim-localrc'
+
+# Remote Plugin Framework
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+if = '!has("nvim")'
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
 
 # EditorConfig
 [[plugins]]
@@ -30,15 +25,18 @@ if = 'executable("editorconfig")'
 hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 '''
+# }}}
+
+# Interfaces {{{
+# -----
+# Provides the branch name of the current git repository
+[[plugins]]
+repo = 'itchyny/vim-gitbranch'
 
 # Faster than the built-in 'matchparen' plugin
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
 #if = 'has("gui_running")'
-
-# Powerful repeat '.'
-[[plugins]]
-repo = 'tpope/vim-repeat'
 
 # Visually displaying indent levels with thin vertical lines
 [[plugins]]
@@ -71,23 +69,10 @@ hook_add = '''
   nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
   nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
 '''
+# }}}
 
-# Functions and commands for Neovim GUI
-[[plugins]]
-repo = 'equalsraf/neovim-gui-shim'
-if = 'has("nvim")'
-
-# Remote Plugin Framework
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-if = '!has("nvim")'
-
-[[plugins]]
-repo = 'roxma/nvim-yarp'
-
-#------------------------------------------------------------------------------
-# Plugin dependencies (non-lazy loading)
-#------------------------------------------------------------------------------
+# Plugin dependencies (non-lazy loading) {{{
+# -----
 # Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -100,9 +85,24 @@ repo = 'kana/vim-operator-user'
 [[plugins]]
 repo = 'kana/vim-textobj-user'
 
-#------------------------------------------------------------------------------
-# Themes
-#------------------------------------------------------------------------------
+# Powerful repeat '.'
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+# Completion srouces
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+if = 'executable("look")'
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+# }}}
+
+# Themes {{{
+# -----
 # Custom status line
 [[plugins]]
 repo = 'itchyny/lightline.vim'
@@ -136,52 +136,18 @@ repo = 'joshdick/onedark.vim'
 [[plugins]]
 repo = 'rakr/vim-one'
 
-# #  neodark
-# [[plugins]]
-# repo = 'KeitaNakamura/neodark.vim'
+# }}}
 
-# #  PaperColor
-# [[plugins]]
-# repo = 'NLKNguyen/papercolor-theme'
-
-#------------------------------------------------------------------------------
-# Plugins for completion
-#------------------------------------------------------------------------------
-# --- Snippet definitions for neosnippet
+# Syntax, filetype (not necessary for lazy loading) {{{
+# -----
+# A collection of language packs for Vim
 [[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+repo = 'sheerun/vim-polyglot'
+hook_add = '''
+  let g:polyglot_disable = ['json', 'markdown']
+'''
 
-# --- Completion by `look` command for neocomplete/deoplete/ncm
-[[plugins]]
-repo = 'ujihisa/neco-look'
-if = 'executable("look")'
-
-# --- syntax source for neocomplete/deoplete/ncm
-[[plugins]]
-repo = 'Shougo/neco-syntax'
-
-#------------------------------------------------------------------------------
-# Syntax, filetype (not necessary for lazy loading)
-#------------------------------------------------------------------------------
-# --- C++
-[[plugins]]
-repo = 'bfrg/vim-cpp-modern'
-
-# --- Python
-[[plugins]]
-repo = 'vim-python/python-syntax'
-
-[[plugins]]
-repo = 'Vimjas/vim-python-pep8-indent'
-
-[[plugins]]
-# extend % and g% for python
-repo = 'vim-scripts/python_match.vim'
-
-# --- Lua
-[[plugins]]
-repo = 'tbastos/vim-lua'
-
+# Additional filetype/syntax
 # --- diff
 [[plugins]]
 repo = 'thinca/vim-ft-diff_fold'
@@ -190,36 +156,21 @@ repo = 'thinca/vim-ft-diff_fold'
 [[plugins]]
 repo = 'thinca/vim-ft-help_fold'
 
-# --- CSS
 [[plugins]]
-repo = 'hail2u/vim-css3-syntax'
+repo = 'vim-jp/vimdoc-ja'
+
+# --- D language
+[[plugins]]
+repo = 'JesseKPhillips/d.vim'
+
+# --- Python
+[[plugins]]
+# extend % and g% for python
+repo = 'vim-scripts/python_match.vim'
 
 # --- JSON
 [[plugins]]
-repo = 'elzr/vim-json'
-hook_add = '''
-  let g:vim_json_syntax_conceal = 0
-'''
-
-[[plugins]]
 repo = 'neoclide/jsonc.vim'
-
-# --- YAML
-[[plugins]]
-repo = 'stephpy/vim-yaml'
-
-# --- TOML
-[[plugins]]
-repo = 'cespare/vim-toml'
-
-# --- Docker files
-[[plugins]]
-repo = 'ekalinin/Dockerfile.vim'
-
-# --- Fish
-[[plugins]]
-repo = 'dag/vim-fish'
-on_ft = 'fish'
 
 # --- zsh
 [[plugins]]
@@ -228,15 +179,7 @@ repo = 'chrisbra/vim-zsh'
 # --- GNU As
 [[plugins]]
 repo = 'Shirk/vim-gas'
+# }}}
 
-# --- vim
-[[plugins]]
-repo = 'vim-jp/syntax-vim-ex'
-
-# --- tmux
-[[plugins]]
-repo = 'tmux-plugins/vim-tmux'
-
-# --- nginx configuration (fork official nvim nginx)
-[[plugins]]
-repo = 'othree/nginx-contrib-vim'
+#-----------------------------------------------------------------------------
+# vim: foldmethod=marker
