@@ -4,6 +4,7 @@ let s:coc_extension_list = [
       \ 'coc-emmet',
       \ 'coc-emoji',
       \ 'coc-eslint',
+      \ 'coc-highlight',
       \ 'coc-html',
       \ 'coc-json',
       \ 'coc-neosnippet',

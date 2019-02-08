@@ -26,6 +26,20 @@
     "coc.preferences.diagnostic.warningSign": "\uf071",
     "coc.preferences.diagnostic.infoSign": "\uf05a",
     "coc.preferences.diagnostic.hintSign": "\uf27b",
+    // CocList configurations
+    "list.maxHeight": 12,
+    "list.autoResize": false,
+    "list.nextKeymap": "<C-n>",
+    "list.previousKeymap": "<C-p>",
+    "list.insertMappings": {
+        "<M-n>": "prompt:next",
+        "<M-p>": "prompt:previous"
+    },
+    "list.normalMappings": {
+        "<M-n>": "prompt:next",
+        "<M-p>": "prompt:previous",
+        "d": "action:delete"
+    },
     // Language server configurations
     "languageserver": {
         "ccls": {

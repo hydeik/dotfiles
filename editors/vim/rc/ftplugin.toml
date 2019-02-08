@@ -48,6 +48,9 @@ hook_add = '''
 
   " -- XML
   let g:xml_syntax_folding = 1
+
+  " Update filetype
+  autocmd MyAutoCmd BufNewFile,BufReadPost *.json setfiletype=jsonc
 '''
 # }}}
 

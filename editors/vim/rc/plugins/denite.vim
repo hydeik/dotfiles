@@ -113,12 +113,13 @@ call denite#custom#var('file/rec/git', 'command',
 call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 " }}}
 
-" Change default prompt
+" Change default prompt {{{
 call denite#custom#option('default', {
       \ 'auto_accel': v:true,
       \ 'prompt': '>',
       \ 'source_names': 'short',
       \ })
+" }}}
 
 " Edit search results by Qfreplace {{{
 if dein#tap('vim-qfreplace')

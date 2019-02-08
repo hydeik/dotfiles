@@ -142,8 +142,8 @@ hook_source = '''
     nmap     <silent><buffer> <LocalLeader>t  <Plug>(coc-type-definition)
     nmap     <silent><buffer> <LocalLeader>r  <Plug>(coc-reference)
     nmap     <silent><buffer> <LocalLeader>R  <Plug>(coc-rename)
-    nnoremap <silent><buffer> <LocalLeader>h  :<C-u>call <SID>show_documentation()<CR>
-    nmap     <silent><buffer> <LocalLeader>I  :<Plug>(coc-diagnostic-info)
+    nnoremap <silent><buffer> <LocalLeader>h  :<C-u>call CocAction('doHover')<CR>
+    nmap     <silent><buffer> <LocalLeader>I  <Plug>(coc-diagnostic-info)
     vmap     <silent><buffer> <LocalLeader>=  <Plug>(coc-format-selected)
     nmap     <silent><buffer> <LocalLeader>=  <Plug>(coc-format-selected)
     nmap     <silent><buffer> <LocalLeader>F  <Plug>(coc-fix-current)
@@ -557,37 +557,6 @@ hook_source = '''
 '''
 # }}}
 
-# # Indent based folding of anything and everything
-# [[plugins]]
-# repo = 'pseewald/vim-anyfold'
-# on_event = 'BufEnter'
-# hook_source = '''
-#   let g:anyfold_fold_comments = 1
-#   let g:anyfold_fold_size_str = '[%s lines]'
-#
-#   " Activate anyfold by default on every filetype except listed below.
-#   let g:AnyFoldExclude = ['diff', 'help', 'denite', 'defx', 'qf']
-#
-#   augroup anyfold
-#     autocmd!
-#     autocmd Filetype * if index(g:AnyFoldExclude, &ft) < 0 | AnyFoldActivate
-#   augroup END
-#
-#   " Disable anyfold for large files
-#   let g:LargeFile = 1000000 " file is large if size greater than 1MB
-#   autocmd BufReadPre,BufRead * let f=getfsize(expand("<afile>")) |
-#       \ if f > g:LargeFile || f == -2 | call LargeFile() | endif
-#
-#   function LargeFile()
-#     augroup anyfold
-#       autocmd! " remove AnyFoldActivate
-#       " fall back to indent folding
-#       autocmd Filetype * if index(g:AnyFoldExclude, &ft) < 0 |
-#           \ setlocal foldmethod=indent
-#     augroup END
-#   endfunction
-# '''
-
 # Calendar
 [[plugins]]
 repo = 'itchyny/calendar.vim' # {{{
@@ -597,6 +566,12 @@ hook_source = '''
   let g:calendar_google_task = 1
 '''
 # }}}
+
+# Set the buffer filetype based on the code block
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+on_event = 'BufEnter'
 # }}}
 
 # Textobj/Operator extensions {{{
