@@ -18,9 +18,9 @@ hook_add = '''
 
   " --- Key mappings
   " Substitute search commands by Denite line
-  nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
-  nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
-  nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
+  " nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
+  " nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
+  " noremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
 
   nnoremap <silent> L  :<C-u>Denite location_list -buffer-name=list<CR>
   nnoremap <silent> Q  :<C-u>Denite quickfix -buffer-name=list<CR>
@@ -399,6 +399,12 @@ on_event = 'CompleteDone'
 hook_source = 'call echodoc#enable()'
 # }}}
 
+# Set the buffer filetype based on the code block
+[[plugins]]
+repo = 'osyo-manga/vim-precious' # {{{
+on_event = 'BufEnter'
+# }}}
+
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim' # {{{
@@ -418,6 +424,33 @@ hook_add = '''
   xmap I  <Plug>(niceblock-I)
   xmap A  <Plug>(niceblock-A)
 '''
+# }}}
+
+# Incremental search improved {{{
+[[plugins]]
+repo = 'haya14busa/is.vim'
+depends = ['vim-asterisk', 'vim-anzu']
+on_map = {nv = '<Plug>'}
+hook_add = '''
+  " Combine with vim-anzu
+  map n <Plug>(is-nohl)<Plug>(anzu-n-with-echo)
+  map N <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
+  " Combine with vim-asterisk
+  map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
+  map g* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
+  map #  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
+  map g# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
+'''
+
+# *-improved
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = {nv = '<Plug>'}
+
+# *-improved
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+on_map = {nv = '<Plug>'}
 # }}}
 
 # Vim motions on speed!
