@@ -206,7 +206,7 @@ set noruler             " Disable default status ruler
 set list                " Show hidden characters
 set noshowmode          " Don't display mode in cmd window
 set noshowcmd           " Don't show command in status line
-set showtabline=2       " Always display the tabs line
+set showtabline=1       " Always display the tabs line
 set laststatus=2        " Always display a status line
 set signcolumn=yes      " Draw sign column
 set cursorline          " Highlight current line
