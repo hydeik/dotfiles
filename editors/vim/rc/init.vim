@@ -42,7 +42,7 @@ call mkdir(expand('$VIM_DATA_HOME/spell'), 'p')
 " Use 'space' as <Leader> key and ',' as <LocalLeader> key
 "   REMARK: Required before loading plugins!
 let g:mapleader = "\<Space>"
-let g:maplocalleader = ','
+let g:maplocalleader = ';'
 
 " Release some keymappings for use of plugins
 "   Space -> Leader

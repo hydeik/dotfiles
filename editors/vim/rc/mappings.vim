@@ -160,24 +160,57 @@ endfunction
 " }}}
 
 " Leader mappings {{{
+"
 
-" Fast save
-nnoremap <silent><Leader>w  :write<CR>
-vnoremap <silent><Leader>w  <ESC>:write<CR>
+" B-bindings
+nnoremap <silent><Leader>bd :<C-u>bdelete<CR>
+nnoremap <silent><Leader>bD :<C-u>bdelete!<CR>
+nnoremap <silent><Leader>bf :<C-u>bfirst<CR>
+nnoremap <silent><Leader>bl :<C-u>blast<CR>
+nnoremap <silent><Leader>bn :<C-u>bnext<CR>
+nnoremap <silent><Leader>bp :<C-u>bprev<CR>
 
-" Buffer delete
-nnoremap <silent><Leader>q  :bdelete<CR>
-vnoremap <silent><Leader>q  <ESC>:bdelete<CR>
+" D-bindings
+" nnoremap <silent><Leader>d  <C-d>
+
+" F-bindings
+nnoremap <silent><Leader>fs  :<C-u>update<CR>
+nnoremap <silent><Leader>fS  :<C-u>wall<CR>
+
+" Q-bindings
+nnoremap <silent><Leader>q  :<C-u>quit<CR>
+vnoremap <silent><Leader>q  <ESC>:<C-u>quit<CR>
 nnoremap <silent><Leader>Q  :<C-u>qall!<CR>
 vnoremap <silent><Leader>Q  <ESC>:<C-u>qall!<CR>
 
-" Toggle editor visuals
-nnoremap <silent> <Leader>ts  :setlocal spell!<CR>
-nnoremap <silent> <Leader>tn  :setlocal number! relativenumber!<CR>
-nnoremap <silent> <Leader>tc  :setlocal cursorcolumn!<CR>
-nnoremap <silent> <Leader>tl  :setlocal nolist!<CR>
-nnoremap <silent> <Leader>tw  :setlocal wrap! breakindent!<CR>
-nnoremap <silent> <Leader>th  :nohlsearch<CR>
+" T-bindings
+nnoremap <silent><Leader>ts  :setlocal spell!<CR>
+nnoremap <silent><Leader>tn  :setlocal number! relativenumber!<CR>
+nnoremap <silent><Leader>tc  :setlocal cursorcolumn!<CR>
+nnoremap <silent><Leader>tl  :setlocal nolist!<CR>
+nnoremap <silent><Leader>tp  :setlocal paste!<CR>
+nnoremap <silent><Leader>tw  :setlocal wrap! breakindent!<CR>
+
+" U-bindings
+" nnoremap <silent><Leader>u  <C-u>
+
+" W-bindings
+nnoremap <silent><Leader>wd  :<C-u>close<CR>
+nnoremap <silent><Leader>wo  :<C-u>only<CR>
+nnoremap <silent><Leader>ws  :<C-u>split<CR>
+nnoremap <silent><Leader>wv  :<C-u>vsplit<CR>
+nnoremap <silent><Leader>w-  :<C-u>split<CR>
+nnoremap <silent><Leader>w\| :<C-u>vsplit<CR>
+
+nnoremap <silent><Leader>wh  <C-w>h
+nnoremap <silent><Leader>wj  <C-w>j
+nnoremap <silent><Leader>wk  <C-w>k
+nnoremap <silent><Leader>wl  <C-w>l
+nnoremap <silent><Leader>wH  <C-w>5<
+nnoremap <silent><Leader>wJ  <C-w>5-
+nnoremap <silent><Leader>wK  <C-w>5+
+nnoremap <silent><Leader>wL  <C-w>5>
+nnoremap <silent><Leader>w=  <C-w>=
 " }}}
 
 "-----------------------------------------------------------------------------
