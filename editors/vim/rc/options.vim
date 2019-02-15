@@ -112,7 +112,7 @@ set matchpairs+=<:> " Add HTML brackets to pair matching
 " -----
 set timeout
 set ttimeout
-set timeoutlen=500  " Time out for a mapped sequence (ms)
+set timeoutlen=250  " Time out for a mapped sequence (ms)
 set ttimeoutlen=50  " Time out for a key code sequence (ms)
 set updatetime=1000 " Idle time to write swap and trigger CursorHold (ms)
 " }}}

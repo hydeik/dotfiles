@@ -33,11 +33,13 @@
     "list.previousKeymap": "<C-p>",
     "list.insertMappings": {
         "<M-n>": "prompt:next",
-        "<M-p>": "prompt:previous"
+        "<M-p>": "prompt:previous",
+        "<C-g>": "do:cancel"
     },
     "list.normalMappings": {
         "<M-n>": "prompt:next",
         "<M-p>": "prompt:previous",
+        "<C-g>": "do:cancel",
         "d": "action:delete"
     },
     // Language server configurations

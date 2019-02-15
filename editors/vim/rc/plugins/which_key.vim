@@ -95,7 +95,7 @@ let g:which_key_leader_map.S = {
       \ }
 
 let g:which_key_leader_map.t = {
-      \ 't': '+toggle',
+      \ 'name': '+toggle',
       \ 'n': 'line-number',
       \ 'c': 'cursor-column',
       \ 'l': 'listchars',

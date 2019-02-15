@@ -143,8 +143,6 @@ hook_source = '''
     nmap     <silent><buffer> gd <Plug>(coc-definition)
     nmap     <silent><buffer> gq <Plug>(coc-format-selected)
     vmap     <silent><buffer> gq <Plug>(coc-format-selected)
-    nmap     <silent><buffer> =  <Plug>(coc-format-selected)
-    vmap     <silent><buffer> =  <Plug>(coc-format-selected)
     nnoremap <silent><buffer> K  :<C-u>call CocAction('doHover')<CR>
 
     " formatexpr from language server
@@ -211,7 +209,6 @@ repo = 'jsfaint/coc-neoinclude'
 depends = ['neoinclude.vim', 'coc.nvim']
 on_source = 'coc.nvim'
 
-# --- Source for Vim script
 [[plugins]]
 repo = 'Shougo/neco-vim'
 on_ft = 'vim'
