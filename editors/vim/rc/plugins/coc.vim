@@ -17,7 +17,8 @@ let s:coc_extension_list = [
       \ 'coc-tsserver',
       \ 'coc-vetur',
       \ 'coc-word',
-      \ 'coc-yaml'
+      \ 'coc-yaml',
+      \ 'coc-yank'
       \ ]
 
 function! s:coc_install_my_extensions() abort
