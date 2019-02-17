@@ -62,28 +62,28 @@ let g:which_key_leader_map.g = {
 let g:which_key_leader_map['h'] = 'help'
 let g:which_key_leader_map['J'] = 'join-with-chars'
 
-let g:which_key_leader_map.l = {
-      \ 'name': '+lsp',
-      \ 'c': {
-      \   'name': '+code',
-      \   'a': 'code-action',
-      \   'l': 'code-lens',
-      \   },
-      \ 'd': 'diagnostic-info',
-      \ 'h': 'hover',
-      \ 'f': 'formatting',
-      \ 'F': 'fix-current',
-      \ 'o': 'outline',
-      \ 'r': 'reference',
-      \ 'R': 'rename',
-      \ 's': 'workspace-symbol',
-      \ 'g': {
-      \   'name': '+goto',
-      \   'd': 'definition',
-      \   't': 'type-definition',
-      \   'i': 'implementation',
-      \   },
-      \ }
+" let g:which_key_leader_map.l = {
+"      \ 'name': '+lsp',
+"      \ 'c': {
+"      \   'name': '+code',
+"      \   'a': 'code-action',
+"      \   'l': 'code-lens',
+"      \   },
+"      \ 'd': 'diagnostic-info',
+"      \ 'h': 'hover',
+"      \ 'f': 'formatting',
+"      \ 'F': 'fix-current',
+"      \ 'o': 'outline',
+"      \ 'r': 'reference',
+"      \ 'R': 'rename',
+"      \ 's': 'workspace-symbol',
+"      \ 'g': {
+"      \   'name': '+goto',
+"      \   'd': 'definition',
+"      \   't': 'type-definition',
+"      \   'i': 'implementation',
+"      \   },
+"      \ }
 
 let g:which_key_leader_map.S = {
       \ 'name': '+session',

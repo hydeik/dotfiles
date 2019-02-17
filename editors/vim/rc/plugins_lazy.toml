@@ -131,10 +131,9 @@ hook_source = '''
   " Custom complete
   imap <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
 
-
   " --- Key mappings for LSP features
 
-  function! s:my_coc_lsp_settings()
+  function! s:my_coc_lsp_settings() abort
     " Key mappings (buffer local)
     nmap     <silent><buffer> [c <Plug>(coc-diagnostic-prev)
     nmap     <silent><buffer> ]c <Plug>(coc-diagnostic-next)
@@ -143,29 +142,70 @@ hook_source = '''
     nmap     <silent><buffer> gq <Plug>(coc-format-selected)
     vmap     <silent><buffer> gq <Plug>(coc-format-selected)
     nnoremap <silent><buffer> K  :<C-u>call CocAction('doHover')<CR>
+    nnoremap <silent><buffer> Q  :<C-u>CocList --normal --auto-preview diagnostics<CR>
+
+    " LocalLeader mapping
+    nmap     <silent> <LocalLeader>[   <Plug>(coc-diagnostic-prev)
+    nmap     <silent> <LocalLeader>]   <Plug>(coc-diagnostic-next)
+    nmap     <silent> <LocalLeader>a   <Plug>(coc-diagnostic-info)
+    nmap     <silent> <LocalLeader>ca  <Plug>(coc-codeaction)
+    vmap     <silent> <LocalLeader>ca  <Plug>(coc-codeaction-selected)
+    nmap     <silent> <LocalLeader>cl  <Plug>(coc-codelens-action)
+    nmap     <silent> <LocalLeader>d   <Plug>(coc-definition)
+    vmap     <silent> <LocalLeader>f   <Plug>(coc-format-selected)
+    nmap     <silent> <LocalLeader>f   <Plug>(coc-format)
+    nmap     <silent> <LocalLeader>F   <Plug>(coc-fix-current)
+    nmap     <silent> <LocalLeader>i   <Plug>(coc-implementation)
+    nnoremap <silent> <LocalLeader>o   :<C-u>CocList --auto-preview outline<CR>
+    nmap     <silent> <LocalLeader>r   <Plug>(coc-reference)
+    nmap     <silent> <LocalLeader>R   <Plug>(coc-rename)
+    nnoremap <silent> <LocalLeader>s   :<C-u>CocList --interactive symbols<CR>
+    nmap     <silent> <LocalLeader>t   <Plug>(coc-type-definition)
+    nnoremap <silent> <LocalLeader><LocalLeader>  :<C-u>CocList --number-select lists<CR>
 
     " formatexpr from language server
     setlocal formatexpr=CocAction('formatSelected')
   endfunction
 
-  nmap     <silent> <Leader>en   <Plug>(coc-diagnostic-next)
-  nmap     <silent> <Leader>ep   <Plug>(coc-diagnostic-prev)
+  function s:my_coc_lsp_ccls_extra_settings() abort!
+    call s:my_coc_lsp_settings()
+    " --- Navigation to declarations with <C-h>, <C-j>, <C-k>, <C-l>
+    " 'D' => first child declaration
+    nnoremap <silent><buffer> <C-l> :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
+    " 'L' => previous declaration
+    nnoremap <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
+    " 'R' => next declaration
+    nnoremap <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
+    " 'U' => parent declaration
+    nnoremap <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
 
-  nmap     <silent> <Leader>lca  <Plug>(coc-codeaction)
-  vmap     <silent> <Leader>lca  <Plug>(coc-codeaction-selected)
-  nmap     <silent> <Leader>lcl  <Plug>(coc-codelens-action)
-  nmap     <silent> <Leader>ld   <Plug>(coc-diagnostic-info)
-  vmap     <silent> <Leader>lf   <Plug>(coc-format-selected)
-  nmap     <silent> <Leader>lf   <Plug>(coc-format)
-  nmap     <silent> <Leader>lF   <Plug>(coc-fix-current)
-  nmap     <silent> <Leader>lgd  <Plug>(coc-definition)
-  nmap     <silent> <Leader>lgi  <Plug>(coc-implementation)
-  nmap     <silent> <Leader>lgt  <Plug>(coc-type-definition)
-  nnoremap <silent> <Leader>lh   :<C-u>call CocAction('doHover')<CR>
-  nnoremap <silent> <Leader>lo   :<C-u>CocList outline<CR>
-  nmap     <silent> <Leader>lr   <Plug>(coc-reference)
-  nmap     <silent> <Leader>lR   <Plug>(coc-rename)
-  nnoremap <silent> <Leader>ls   :<C-u>CocList -I symbols<CR>
+    " --- Cross reference extensions
+    " bases
+    nnoremap <silent> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance')<cr>
+    " bases of up to 3 levels
+    nnoremap <silent> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<cr>
+    " derived
+    nnoremap <silent> <LocalLeader>xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<cr>
+    " derived of up to 3 levels
+    nnoremap <silent> <LocalLeader>xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<cr>
+
+    " caller
+    nnoremap <silent> <LocalLeader>xc :call CocLocations('ccls','$ccls/call')<cr>
+    " callee
+    nnoremap <silent> <LocalLeader>xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<cr>
+
+    " $ccls/member
+    " member variables / variables in a namespace
+    nnoremap <silent> <LocalLeader>xm :call CocLocations('ccls','$ccls/member')<cr>
+    " member functions / functions in a namespace
+    nnoremap <silent> <LocalLeader>xf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
+    " nested classes / types in a namespace
+    nnoremap <silent> <LocalLeader>xs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
+
+    nmap <silent> xt <Plug>(coc-type-definition)<cr>
+    nnoremap <silent> <LocalLeader>xv :call CocLocations('ccls','$ccls/vars')<cr>
+    nnoremap <silent> <LocalLeader>xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
+  endfunction
 
   " CocList
   nnoremap <silent> <Leader>cn  :<C-u>CocNext<CR>
@@ -173,14 +213,14 @@ hook_source = '''
   nnoremap <silent> <Leader>cr  :<C-u>CocListResume<CR>
 
   nnoremap <silent> <Leader>cc  :<C-u>CocList commands<CR>
-  nnoremap <silent> <Leader>cd  :<C-u>CocList diagnostics<CR>
-  nnoremap <silent> <Leader>ce  :<C-u>CocList extensions<CR>
+  nnoremap <silent> <Leader>cd  :<C-u>CocList --normal --auto-preview diagnostics<CR>
+  nnoremap <silent> <Leader>ce  :<C-u>CocList --normal --number-select extensions<CR>
   nnoremap <silent> <Leader>cj  :<C-u>CocList location<CR>
   nnoremap <silent> <Leader>cl  :<C-u>CocList links<CR>
-  nnoremap <silent> <Leader>co  :<C-u>CocList outline<CR>
+  nnoremap <silent> <Leader>co  :<C-u>CocList --auto-preview outline<CR>
   nnoremap <silent> <Leader>cO  :<C-u>CocList output<CR>
-  nnoremap <silent> <Leader>cs  :<C-u>CocList -I symbols<CR>
-  nnoremap <silent> <Leader>cS  :<C-u>CocList sources<CR>
+  nnoremap <silent> <Leader>cs  :<C-u>CocList --interactive symbols<CR>
+  nnoremap <silent> <Leader>cS  :<C-u>CocList --normal --number-select sources<CR>
 
   " --- Autocmd
   augroup MyAutoCmd
@@ -189,8 +229,9 @@ hook_source = '''
     " Trigger signature help
     autocmd CursorHoldI,CursorMovedI call CocActionAsync('showSignatureHelp')
     autocmd User CocJumpPlaceholder  call CocActionAsync('showSignatureHelp')
-    autocmd FileType typescript,c,cpp,objc,json,python,ruby,rust,sh,vim,yaml
+    autocmd FileType typescript,json,python,ruby,rust,sh,vim,yaml
           \ call s:my_coc_lsp_settings()
+    autocmd FileType c,cpp,objc call s:my_coc_lsp_ccls_extra_settings()
   augroup END
 '''
 hook_post_source = 'source $VIM_CONFIG_HOME/rc/plugins/coc.vim'
