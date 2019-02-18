@@ -18,9 +18,9 @@ hook_add = '''
 
   " --- Key mappings
   " Substitute search commands by Denite line
-  " nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
-  " nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
-  " noremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
+  nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
+  nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
+  nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
 
   nnoremap <silent> L  :<C-u>Denite location_list -buffer-name=list<CR>
   nnoremap <silent> Q  :<C-u>Denite quickfix -buffer-name=list<CR>
@@ -145,29 +145,29 @@ hook_source = '''
     nnoremap <silent><buffer> Q  :<C-u>CocList --normal --auto-preview diagnostics<CR>
 
     " LocalLeader mapping
-    nmap     <silent> <LocalLeader>[   <Plug>(coc-diagnostic-prev)
-    nmap     <silent> <LocalLeader>]   <Plug>(coc-diagnostic-next)
-    nmap     <silent> <LocalLeader>a   <Plug>(coc-diagnostic-info)
-    nmap     <silent> <LocalLeader>ca  <Plug>(coc-codeaction)
-    vmap     <silent> <LocalLeader>ca  <Plug>(coc-codeaction-selected)
-    nmap     <silent> <LocalLeader>cl  <Plug>(coc-codelens-action)
-    nmap     <silent> <LocalLeader>d   <Plug>(coc-definition)
-    vmap     <silent> <LocalLeader>f   <Plug>(coc-format-selected)
-    nmap     <silent> <LocalLeader>f   <Plug>(coc-format)
-    nmap     <silent> <LocalLeader>F   <Plug>(coc-fix-current)
-    nmap     <silent> <LocalLeader>i   <Plug>(coc-implementation)
-    nnoremap <silent> <LocalLeader>o   :<C-u>CocList --auto-preview outline<CR>
-    nmap     <silent> <LocalLeader>r   <Plug>(coc-reference)
-    nmap     <silent> <LocalLeader>R   <Plug>(coc-rename)
-    nnoremap <silent> <LocalLeader>s   :<C-u>CocList --interactive symbols<CR>
-    nmap     <silent> <LocalLeader>t   <Plug>(coc-type-definition)
-    nnoremap <silent> <LocalLeader><LocalLeader>  :<C-u>CocList --number-select lists<CR>
+    nmap     <silent><buffer> <LocalLeader>[   <Plug>(coc-diagnostic-prev)
+    nmap     <silent><buffer> <LocalLeader>]   <Plug>(coc-diagnostic-next)
+    nmap     <silent><buffer> <LocalLeader>a   <Plug>(coc-diagnostic-info)
+    nmap     <silent><buffer> <LocalLeader>ca  <Plug>(coc-codeaction)
+    vmap     <silent><buffer> <LocalLeader>ca  <Plug>(coc-codeaction-selected)
+    nmap     <silent><buffer> <LocalLeader>cl  <Plug>(coc-codelens-action)
+    nmap     <silent><buffer> <LocalLeader>d   <Plug>(coc-definition)
+    vmap     <silent><buffer> <LocalLeader>f   <Plug>(coc-format-selected)
+    nmap     <silent><buffer> <LocalLeader>f   <Plug>(coc-format)
+    nmap     <silent><buffer> <LocalLeader>F   <Plug>(coc-fix-current)
+    nmap     <silent><buffer> <LocalLeader>i   <Plug>(coc-implementation)
+    nnoremap <silent><buffer> <LocalLeader>o   :<C-u>CocList --auto-preview outline<CR>
+    nmap     <silent><buffer> <LocalLeader>r   <Plug>(coc-reference)
+    nmap     <silent><buffer> <LocalLeader>R   <Plug>(coc-rename)
+    nnoremap <silent><buffer> <LocalLeader>s   :<C-u>CocList --interactive symbols<CR>
+    nmap     <silent><buffer> <LocalLeader>t   <Plug>(coc-type-definition)
+    nnoremap <silent><buffer> <LocalLeader><LocalLeader>  :<C-u>CocList --number-select lists<CR>
 
     " formatexpr from language server
     setlocal formatexpr=CocAction('formatSelected')
   endfunction
 
-  function s:my_coc_lsp_ccls_extra_settings() abort!
+  function! s:my_coc_lsp_ccls_extra_settings() abort
     call s:my_coc_lsp_settings()
     " --- Navigation to declarations with <C-h>, <C-j>, <C-k>, <C-l>
     " 'D' => first child declaration
@@ -181,30 +181,30 @@ hook_source = '''
 
     " --- Cross reference extensions
     " bases
-    nnoremap <silent> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance')<cr>
+    nnoremap <silent><buffer> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance')<cr>
     " bases of up to 3 levels
-    nnoremap <silent> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<cr>
+    nnoremap <silent><buffer> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<cr>
     " derived
-    nnoremap <silent> <LocalLeader>xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<cr>
+    nnoremap <silent><buffer> <LocalLeader>xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<cr>
     " derived of up to 3 levels
-    nnoremap <silent> <LocalLeader>xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<cr>
+    nnoremap <silent><buffer> <LocalLeader>xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<cr>
 
     " caller
-    nnoremap <silent> <LocalLeader>xc :call CocLocations('ccls','$ccls/call')<cr>
+    nnoremap <silent><buffer> <LocalLeader>xc :call CocLocations('ccls','$ccls/call')<cr>
     " callee
-    nnoremap <silent> <LocalLeader>xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<cr>
+    nnoremap <silent><buffer> <LocalLeader>xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<cr>
 
     " $ccls/member
     " member variables / variables in a namespace
-    nnoremap <silent> <LocalLeader>xm :call CocLocations('ccls','$ccls/member')<cr>
+    nnoremap <silent><buffer> <LocalLeader>xm :call CocLocations('ccls','$ccls/member')<cr>
     " member functions / functions in a namespace
-    nnoremap <silent> <LocalLeader>xf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
+    nnoremap <silent><buffer> <LocalLeader>xf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
     " nested classes / types in a namespace
-    nnoremap <silent> <LocalLeader>xs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
+    nnoremap <silent><buffer> <LocalLeader>xs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
 
-    nmap <silent> xt <Plug>(coc-type-definition)<cr>
-    nnoremap <silent> <LocalLeader>xv :call CocLocations('ccls','$ccls/vars')<cr>
-    nnoremap <silent> <LocalLeader>xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
+    nmap     <silent><buffer> <LocalLeader>xt <Plug>(coc-type-definition)<cr>
+    nnoremap <silent><buffer> <LocalLeader>xv :call CocLocations('ccls','$ccls/vars')<cr>
+    nnoremap <silent><buffer> <LocalLeader>xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
   endfunction
 
   " CocList
@@ -566,30 +566,25 @@ hook_source = '''
 '''
 
 # Incremental search improved {{{
-[[plugins]]
-repo = 'haya14busa/is.vim'
-depends = ['vim-asterisk', 'vim-anzu']
-on_map = {nv = '<Plug>'}
-hook_add = '''
-  " Combine with vim-anzu
-  map n <Plug>(is-nohl)<Plug>(anzu-n-with-echo)
-  map N <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
-  " Combine with vim-asterisk
-  map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
-  map g* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
-  map #  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
-  map g# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
-'''
+# [[plugins]]
+# repo = 'haya14busa/is.vim'
+# depends = ['vim-asterisk', 'vim-anzu']
+# on_map = {nv = '<Plug>'}
+# hook_add = '''
+#   " Combine with vim-anzu
+#   map n <Plug>(is-nohl)<Plug>(anzu-n-with-echo)
+#   map N <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
+#   " Combine with vim-asterisk
+#   map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
+#   map g* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
+#   map #  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
+#   map g# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
+# '''
 
 # *-improved
-[[plugins]]
-repo = 'haya14busa/vim-asterisk'
-on_map = {nv = '<Plug>'}
-
-# *-improved
-[[plugins]]
-repo = 'osyo-manga/vim-anzu'
-on_map = {nv = '<Plug>'}
+# [[plugins]]
+# repo = 'osyo-manga/vim-anzu'
+# on_map = {nv = '<Plug>'}
 # }}}
 
 # Move to the edge!
