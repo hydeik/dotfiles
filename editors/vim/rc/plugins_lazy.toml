@@ -415,8 +415,8 @@ qf = '''
 repo = 't9md/vim-choosewin' # {{{
 on_map = {n = '<Plug>'}
 hook_add = '''
-  nmap -            <Plug>(choosewin)
-  nmap <Leader>ww   <Plug>(choosewin)
+  nmap -           <Plug>(choosewin)
+  nmap [Window]w   <Plug>(choosewin)
 '''
 # }}}
 

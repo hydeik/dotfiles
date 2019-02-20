@@ -19,22 +19,22 @@ nnoremap M  m
 nnoremap Y y$
 
 " Better x
-nnoremap x "_x
+" nnoremap x "_x
 
 " Emacs-like cursor move in insert/command mode
-inoremap <C-a>    <Home>
-inoremap <C-b>    <Left>
-inoremap <C-d>    <Del>
-inoremap <C-e>    <End>
-inoremap <C-f>    <Right>
+inoremap <C-a>  <Home>
+inoremap <C-b>  <Left>
+inoremap <C-d>  <Del>
+inoremap <C-e>  <End>
+inoremap <C-f>  <Right>
 
-cnoremap <C-a>    <Home>
-cnoremap <C-b>    <Left>
-cnoremap <C-d>    <Del>
-cnoremap <C-e>    <End>
-cnoremap <C-f>    <Right>
-cnoremap <C-n>    <Down>
-cnoremap <C-p>    <Up>
+cnoremap <C-a>  <Home>
+cnoremap <C-b>  <Left>
+cnoremap <C-d>  <Del>
+cnoremap <C-e>  <End>
+cnoremap <C-f>  <Right>
+cnoremap <C-n>  <Down>
+cnoremap <C-p>  <Up>
 
 " Smart scroll with <C-f>, <C-b>.
 noremap <expr> <C-f> max([winheight(0) - 2, 1])
@@ -75,7 +75,7 @@ vnoremap <expr> cn  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
 vnoremap <expr> cN  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 
 " Close windows with q
-nnoremap <silent><expr>q  winnr('$') != 1 ? ':<C-u>close<CR>' : ""
+nnoremap <silent><expr>q  winnr('$') != 1 ? ':<C-u>close<CR>' : ':<C-u>bdelete<CR>'
 
 " }}}
 
@@ -90,8 +90,9 @@ nnoremap <S-Return> zMza
 nnoremap <expr> l  foldclosed('.') != -1 ? 'zo' : 'l'
 xnoremap <expr> l  foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
 
-nnoremap <silent><C-_> :<C-u>call <SID>smart_foldcloser()<CR>
-function! s:smart_foldcloser()
+nnoremap <silent><C-_> :<C-u>call <SID>SmartFoldCloser()<CR>
+
+function! s:SmartFoldCloser() abort
   if foldlevel('.') == 0
     normal! zM
     return
@@ -123,12 +124,17 @@ nnoremap <silent> [Window]t  :<C-u>tabnew<CR>
 nnoremap <silent> [Window]c  :<C-u>close<CR>
 " only current window
 nnoremap <silent> [Window]o  :<C-u>only<CR>
+" empty current buffer
+nnoremap <silent> [Window]x  :<C-u>call <SID>BufferEmpty()<CR>
 " split window horizontally
 nnoremap <silent> [Window]-  :<C-u>split<CR>
 " split window virtically
-nnoremap <silent> [Window]\| :<C-u>vsplit<CR>
+nnoremap <silent> [Window]\  :<C-u>vsplit<CR>
 " equal size window
 nnoremap <silent> [Window]=   <c-w>=<CR>
+" Zoom window temporary
+nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>ToggleWindowZoom()<CR>
+nmap     <silent> [Window]z   <Plug>(my-zoom-window)
 
 " " Move windown with TAB
 " nnoremap <silent> <Tab>    <C-w>w
@@ -140,14 +146,19 @@ nnoremap <S-Right>  <C-w>>
 nnoremap <S-Up>     <C-w>+
 nnoremap <S-Down>   <C-w>-
 
-" Zoom window temporary
-nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>toggle_window_zoom()<CR>
-nmap     <silent> [Window]z   <Plug>(my-zoom-window)
+" Empty buffer contents
+function! s:BufferEmpty()
+  let l:current = bufnr('%')
+  if ! getbufvar(l:current, '&modified')
+    enew
+    silent! execute 'bdelete '.l:current
+  endif
+endfunction
 
 " Toggle window zoom
 "  <C-w>z      : maximize current window
 "  <C-w>z again: restore the previous windows
-function! s:toggle_window_zoom() abort
+function! s:ToggleWindowZoom() abort
   if exists('t:zoom_winrestcmd')
     execute t:zoom_winrestcmd
     unlet t:zoom_winrestcmd
@@ -157,60 +168,53 @@ function! s:toggle_window_zoom() abort
     vertical resize
   endif
 endfunction
+
 " }}}
 
 " Leader mappings {{{
 "
+" terminal
 
-" B-bindings
-nnoremap <silent><Leader>bd :<C-u>bdelete<CR>
-nnoremap <silent><Leader>bD :<C-u>bdelete!<CR>
-nnoremap <silent><Leader>bf :<C-u>bfirst<CR>
-nnoremap <silent><Leader>bl :<C-u>blast<CR>
-nnoremap <silent><Leader>bn :<C-u>bnext<CR>
-nnoremap <silent><Leader>bp :<C-u>bprev<CR>
+" buffer {{{
+nnoremap <silent><Leader>bd  :bdelete<CR>
+nnoremap <silent><Leader>bD  :bdelete!<CR>
+nnoremap <silent><Leader>bf  :bfirst<CR>
+nnoremap <silent><Leader>bk  :bwipeout<CR>
+nnoremap <silent><Leader>bl  :blast<CR>
+nnoremap <silent><Leader>bn  :bnext<CR>
+nnoremap <silent><Leader>bp  :bprev<CR>
+" }}}
 
-" D-bindings
-" nnoremap <silent><Leader>d  <C-d>
+" quit {{{
+nnoremap <silent><Leader>q  :quit<CR>
+vnoremap <silent><Leader>q  <ESC>:quit<CR>
+nnoremap <silent><Leader>Q  :qall!<CR>
+vnoremap <silent><Leader>Q  <ESC>:qall!<CR>
+" }}}
 
-" F-bindings
-nnoremap <silent><Leader>fs  :<C-u>update<CR>
-nnoremap <silent><Leader>fS  :<C-u>wall<CR>
-
-" Q-bindings
-nnoremap <silent><Leader>q  :<C-u>quit<CR>
-vnoremap <silent><Leader>q  <ESC>:<C-u>quit<CR>
-nnoremap <silent><Leader>Q  :<C-u>qall!<CR>
-vnoremap <silent><Leader>Q  <ESC>:<C-u>qall!<CR>
-
-" T-bindings
+" toggle editor UI {{{
 nnoremap <silent><Leader>ts  :setlocal spell!<CR>
 nnoremap <silent><Leader>tn  :setlocal number! relativenumber!<CR>
 nnoremap <silent><Leader>tc  :setlocal cursorcolumn!<CR>
 nnoremap <silent><Leader>tl  :setlocal nolist!<CR>
 nnoremap <silent><Leader>tp  :setlocal paste!<CR>
 nnoremap <silent><Leader>tw  :setlocal wrap! breakindent!<CR>
+" }}}
 
-" U-bindings
-" nnoremap <silent><Leader>u  <C-u>
+" Fast saving {{{
+nnoremap <silent><Leader>w  :update<CR>
+vnoremap <silent><Leader>w  <ESC>:update<CR>
+nnoremap <silent><Leader>W  :wall!<CR>
+vnoremap <silent><Leader>W  <ESC>:wall!<CR>
+" }}}
 
-" W-bindings
-nnoremap <silent><Leader>wd  :<C-u>close<CR>
-nnoremap <silent><Leader>wo  :<C-u>only<CR>
-nnoremap <silent><Leader>ws  :<C-u>split<CR>
-nnoremap <silent><Leader>wv  :<C-u>vsplit<CR>
-nnoremap <silent><Leader>w-  :<C-u>split<CR>
-nnoremap <silent><Leader>w\| :<C-u>vsplit<CR>
-
-nnoremap <silent><Leader>wh  <C-w>h
-nnoremap <silent><Leader>wj  <C-w>j
-nnoremap <silent><Leader>wk  <C-w>k
-nnoremap <silent><Leader>wl  <C-w>l
-nnoremap <silent><Leader>wH  <C-w>5<
-nnoremap <silent><Leader>wJ  <C-w>5-
-nnoremap <silent><Leader>wK  <C-w>5+
-nnoremap <silent><Leader>wL  <C-w>5>
-nnoremap <silent><Leader>w=  <C-w>=
+" open terminal/shell {{{
+if has('nvim') || has('terminal')
+  map <Leader>'  :<C-u>terminal<CR>
+else
+  map <Leader>'  :<C-u>shell<CR>
+endif
+" }}}
 " }}}
 
 "-----------------------------------------------------------------------------

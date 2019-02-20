@@ -2,6 +2,7 @@ let g:which_key_leader_map = {}
 
 let g:which_key_leader_map['*'] = 'grep-current-word'
 let g:which_key_leader_map['/'] = 'grep'
+let g:which_key_leader_map["'"] = 'open-terminal'
 
 let g:which_key_leader_map.b = {
       \ 'name': '+buffer',
@@ -104,26 +105,28 @@ let g:which_key_leader_map.t = {
       \ 'w': 'wrap-text',
       \ }
 
-let g:which_key_leader_map.w = {
-      \ 'name': '+windows',
-      \ 'w': 'other-window',
-      \ 'd': 'delete-window',
-      \ 'o': 'only-current-window',
-      \ 'h': 'window-left',
-      \ 'j': 'window-below',
-      \ 'k': 'window-up',
-      \ 'l': 'window-right',
-      \ 'H': 'expand-window-left',
-      \ 'J': 'expand-window-below',
-      \ 'K': 'expand-window-up',
-      \ 'L': 'expand-window-right',
-      \ '=': 'balance-window',
-      \ '-': 'split-window-below',
-      \ '|': 'split-window-right',
-      \ 's': 'split-window-below',
-      \ 'v': 'split-window-right',
-      \ }
+" let g:which_key_leader_map.w = {
+"      \ 'name': '+windows',
+"      \ 'w': 'other-window',
+"      \ 'd': 'delete-window',
+"      \ 'o': 'only-current-window',
+"      \ 'h': 'window-left',
+"      \ 'j': 'window-below',
+"      \ 'k': 'window-up',
+"      \ 'l': 'window-right',
+"      \ 'H': 'expand-window-left',
+"      \ 'J': 'expand-window-below',
+"      \ 'K': 'expand-window-up',
+"      \ 'L': 'expand-window-right',
+"      \ '=': 'balance-window',
+"      \ '-': 'split-window-below',
+"      \ '|': 'split-window-right',
+"      \ 's': 'split-window-below',
+"      \ 'v': 'split-window-right',
+"      \ }
 
+let g:which_key_leader_map['w'] = 'save'
+let g:which_key_leader_map['W'] = 'save-all-buffers'
 let g:which_key_leader_map['q'] = 'quit'
 let g:which_key_leader_map['Q'] = 'quit-without-saving'
 

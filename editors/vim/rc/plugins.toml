@@ -71,6 +71,12 @@ hook_add = '''
   nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
   nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
   nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
+  if has('nvim') || has('terminal')
+    tnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
+    tnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
+    tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
+    tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
+  endif
 '''
 # }}}
 
