@@ -172,27 +172,25 @@ endfunction
 " }}}
 
 " Leader mappings {{{
-"
-" terminal
 
-" buffer {{{
-nnoremap <silent><Leader>bd  :bdelete<CR>
-nnoremap <silent><Leader>bD  :bdelete!<CR>
-nnoremap <silent><Leader>bf  :bfirst<CR>
-nnoremap <silent><Leader>bk  :bwipeout<CR>
-nnoremap <silent><Leader>bl  :blast<CR>
-nnoremap <silent><Leader>bn  :bnext<CR>
-nnoremap <silent><Leader>bp  :bprev<CR>
+" Buffer {{{
+" nnoremap <silent><Leader>bd  :bdelete<CR>
+" nnoremap <silent><Leader>bD  :bdelete!<CR>
+" nnoremap <silent><Leader>bf  :bfirst<CR>
+" nnoremap <silent><Leader>bk  :bwipeout<CR>
+" nnoremap <silent><Leader>bl  :blast<CR>
+" nnoremap <silent><Leader>bn  :bnext<CR>
+" nnoremap <silent><Leader>bp  :bprev<CR>
 " }}}
 
-" quit {{{
+" Quit {{{
 nnoremap <silent><Leader>q  :quit<CR>
 vnoremap <silent><Leader>q  <ESC>:quit<CR>
 nnoremap <silent><Leader>Q  :qall!<CR>
 vnoremap <silent><Leader>Q  <ESC>:qall!<CR>
 " }}}
 
-" toggle editor UI {{{
+" Toggle editor UI {{{
 nnoremap <silent><Leader>ts  :setlocal spell!<CR>
 nnoremap <silent><Leader>tn  :setlocal number! relativenumber!<CR>
 nnoremap <silent><Leader>tc  :setlocal cursorcolumn!<CR>
@@ -208,7 +206,7 @@ nnoremap <silent><Leader>W  :wall!<CR>
 vnoremap <silent><Leader>W  <ESC>:wall!<CR>
 " }}}
 
-" open terminal/shell {{{
+" Open terminal/shell {{{
 if has('nvim') || has('terminal')
   map <Leader>'  :<C-u>terminal<CR>
 else

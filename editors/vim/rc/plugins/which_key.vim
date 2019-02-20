@@ -1,20 +1,6 @@
 let g:which_key_leader_map = {}
 
-let g:which_key_leader_map['*'] = 'grep-current-word'
-let g:which_key_leader_map['/'] = 'grep'
-let g:which_key_leader_map["'"] = 'open-terminal'
-
-let g:which_key_leader_map.b = {
-      \ 'name': '+buffer',
-      \ 'd': 'delete-buffer',
-      \ 'D': 'delete-buffer-force',
-      \ 'f': 'first-buffer',
-      \ 'l': 'last-buffer',
-      \ 'n': 'next-buffer',
-      \ 'p': 'previous-buffer',
-      \ 'b': 'Denite-buffer',
-      \ '?': 'Denite-buffer',
-      \ }
+let g:which_key_leader_map['b'] = 'buffer-list'
 
 let g:which_key_leader_map.c = {
       \ 'name': '+coc',
@@ -32,20 +18,7 @@ let g:which_key_leader_map.c = {
       \ 'r': 'coc-resume',
       \ }
 
-let g:which_key_leader_map.e = {
-      \ 'name': '+error',
-      \ 'n': 'next-error',
-      \ 'p': 'previous-error',
-      \ }
-
-let g:which_key_leader_map.f = {
-      \ 'name': '+file',
-      \ 'f': 'Denite-file',
-      \ 'r': 'recent-file',
-      \ 's': 'save-file',
-      \ 'S': 'save-all-files',
-      \ 't': 'Denite-filetype',
-      \ }
+let g:which_key_leader_map['e'] = 'file-explorer'
 
 let g:which_key_leader_map.g = {
       \ 'name': '+git',
@@ -105,6 +78,26 @@ let g:which_key_leader_map.t = {
       \ 'w': 'wrap-text',
       \ }
 
+let g:which_key_leader_map['p'] = 'quick-open'
+let g:which_key_leader_map['q'] = 'quit'
+let g:which_key_leader_map['Q'] = 'quit-without-saving'
+let g:which_key_leader_map['w'] = 'save'
+let g:which_key_leader_map['W'] = 'save-all-buffers'
+
+let g:which_key_leader_map.x = {
+      \ 'name': '+text',
+      \ 'a': 'easy-align',
+      \ 'd': 'delete-trailing-whitespace',
+      \ }
+
+let g:which_key_leader_map['y'] = 'yank-list'
+
+let g:which_key_leader_map['*'] = 'grep-current-word'
+let g:which_key_leader_map['/'] = 'grep'
+let g:which_key_leader_map["'"] = 'open-terminal'
+let g:which_key_leader_map[']'] = 'denite-tag'
+let g:which_key_leader_map['['] = 'denite-jump'
+
 " let g:which_key_leader_map.w = {
 "      \ 'name': '+windows',
 "      \ 'w': 'other-window',
@@ -125,18 +118,6 @@ let g:which_key_leader_map.t = {
 "      \ 'v': 'split-window-right',
 "      \ }
 
-let g:which_key_leader_map['w'] = 'save'
-let g:which_key_leader_map['W'] = 'save-all-buffers'
-let g:which_key_leader_map['q'] = 'quit'
-let g:which_key_leader_map['Q'] = 'quit-without-saving'
-
-let g:which_key_leader_map.x = {
-      \ 'name': '+text',
-      \ 'a': 'easy-align',
-      \ 'd': 'delete-trailing-whitespace',
-      \ }
-
-let g:which_key_leader_map['y'] = 'yank-list'
 
 call which_key#register('<Space>', 'g:which_key_leader_map')
 autocmd MyAutoCmd FileType which_key set laststatus=0
