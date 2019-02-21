@@ -114,27 +114,27 @@ endfunction
 " Window/Tabs operation {{{
 " -----
 " Use 's' key as the prefix to control window/tab
-" The prefix key.
-nnoremap [Window]  <Nop>
-nmap     s         [Window]
+
+" nnoremap [Window]  <Nop>
+" nmap     s         [Window]
 
 " new tab
-nnoremap <silent> [Window]t  :<C-u>tabnew<CR>
+nnoremap <silent> st  :<C-u>tabnew<CR>
 " close window
-nnoremap <silent> [Window]c  :<C-u>close<CR>
+nnoremap <silent> sc  :<C-u>close<CR>
 " only current window
-nnoremap <silent> [Window]o  :<C-u>only<CR>
+nnoremap <silent> so  :<C-u>only<CR>
 " empty current buffer
-nnoremap <silent> [Window]x  :<C-u>call <SID>BufferEmpty()<CR>
+nnoremap <silent> sx  :<C-u>call <SID>BufferEmpty()<CR>
 " split window horizontally
-nnoremap <silent> [Window]-  :<C-u>split<CR>
+nnoremap <silent> s-  :<C-u>split<CR>
 " split window virtically
-nnoremap <silent> [Window]\  :<C-u>vsplit<CR>
+nnoremap <silent> s\| :<C-u>vsplit<CR>
 " equal size window
-nnoremap <silent> [Window]=   <c-w>=<CR>
+nnoremap <silent> s=   <c-w>=<CR>
 " Zoom window temporary
 nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>ToggleWindowZoom()<CR>
-nmap     <silent> [Window]z   <Plug>(my-zoom-window)
+nmap     <silent> sz   <Plug>(my-zoom-window)
 
 " " Move windown with TAB
 " nnoremap <silent> <Tab>    <C-w>w

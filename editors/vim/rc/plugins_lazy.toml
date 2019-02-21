@@ -120,6 +120,7 @@ hook_source = '''
       call CocAction('doHover')
     endif
   endfunction
+
   " --- Insert mode key mapping for auto completion
   " Use <TAB> for trigger completion with characters ahead and navigate.
   inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
@@ -314,7 +315,7 @@ hook_add = '''
   let g:gutentags_exclude_filetype    = []
   let g:gutentags_ctags_exclude_wildignore = 1
   let g:gutentags_ctags_exclude = [
-        \ '*/wp-admin', '*/wp-content', '*/wp-includes',
+        \ '*/build', '*/wp-admin', '*/wp-content', '*/wp-includes',
         \ '*/application/vendor', '*/vendor/ckeditor', '*/media/vendor'
         \ ]
 '''
@@ -479,6 +480,8 @@ hook_add = '''
   vnoremap <silent><Leader>      :<C-u>WhichKeyVisual '<Space>'<CR>
   nnoremap <silent><LocalLeader> :<C-u>WhichKey ';'<CR>
   vnoremap <silent><LocalLeader> :<C-u>WhichKeyVisual ';'<CR>
+  nnoremap <silent>s             :<C-u>WhichKey 's'<CR>
+  vnoremap <silent>s             :<C-u>WhichKeyVisual 's'<CR>
 '''
 hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
 # }}}
@@ -540,9 +543,21 @@ hook_add = '''
 repo = 'easymotion/vim-easymotion' # {{{
 on_map = {n = '<Plug>'}
 hook_add = '''
+  " Search and jump
+  nmap sf <Plug>(easymotion-overwin-f)
   nmap ss <Plug>(easymotion-overwin-f2)
   vmap ss <Plug>(easymotion-s2)
   omap ss <Plug>(easymotion-s2)
+
+  map  sh <Plug>(easymotion-linebackward)
+  map  sj <Plug>(easymotion-j)
+  map  sk <Plug>(easymotion-k)
+  map  sl <Plug>(easymotion-lineforward)
+
+  map  s/ <Plug>(easymotion-sn)
+  omap s/ <Plug>(easymotion-tn)
+  map  sn <Plug>(easymotion-next)
+  map  sp <Plug>(easymotion-prev)
 
   " smart f & F (visual mode and operator mode)
   omap f <Plug>(easymotion-bd-fl)
@@ -553,12 +568,6 @@ hook_add = '''
   xmap t <Plug>(easymotion-tl)
   omap T <Plug>(easymotion-Tl)
   xmap T <Plug>(easymotion-Tl)
-
-  " Search and jump
-  map  s/ <Plug>(easymotion-sn)
-  omap s/ <Plug>(easymotion-tn)
-  map  sn <Plug>(easymotion-next)
-  map  sp <Plug>(easymotion-prev)
 '''
 hook_source = '''
   " Disable default mappings

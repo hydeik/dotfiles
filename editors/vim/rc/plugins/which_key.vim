@@ -1,3 +1,4 @@
+" Leader mappings {{{
 let g:which_key_leader_map = {}
 
 let g:which_key_leader_map['b'] = 'buffer-list'
@@ -118,7 +119,44 @@ let g:which_key_leader_map['['] = 'denite-jump'
 "      \ 'v': 'split-window-right',
 "      \ }
 
-
 call which_key#register('<Space>', 'g:which_key_leader_map')
+" }}}
+
+" s mappings {{{
+
+let g:which_key_s_map = {}
+
+" windows
+let g:which_key_s_map['-'] = 'window-split-below'
+let g:which_key_s_map['|'] = 'window-split-right'
+let g:which_key_s_map['='] = 'window-balance'
+let g:which_key_s_map['c'] = 'window-close'
+let g:which_key_s_map['o'] = 'windown-only'
+let g:which_key_s_map['t'] = 'window-tabnew'
+let g:which_key_s_map['x'] = 'window-empty-buffer'
+let g:which_key_s_map['z'] = 'window-toggle-zoom'
+
+" EasyMotion
+let g:which_key_s_map['f'] = 'easymotion-overwin-{char}'
+let g:which_key_s_map['s'] = 'easymotion-overwin-{char}{char}'
+let g:which_key_s_map['h'] = 'easymotion-linebackward'
+let g:which_key_s_map['j'] = 'easymotion-j'
+let g:which_key_s_map['k'] = 'easymotion-k'
+let g:which_key_s_map['l'] = 'easymotion-lineforward'
+let g:which_key_s_map['n'] = 'easymotion-move-next'
+let g:which_key_s_map['p'] = 'easymotion-move-prev'
+let g:which_key_s_map['/'] = 'easymotion-search'
+
+" vim-sandwich
+let g:which_key_s_map['a']  = 'sandwich-add'
+let g:which_key_s_map['d']  = 'sandwich-delete'
+let g:which_key_s_map['db'] = 'sandwich-delete-between'
+let g:which_key_s_map['r']  = 'sandwich-replace'
+let g:which_key_s_map['rb'] = 'sandwich-replace-between'
+
+" Register dictionary
+call which_key#register('s', 'g:which_key_s_map')
+" }}}
+
 autocmd MyAutoCmd FileType which_key set laststatus=0
       \| autocmd MyAutoCmd BufLeave <buffer> set laststatus=2

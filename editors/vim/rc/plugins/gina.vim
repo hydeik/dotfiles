@@ -69,11 +69,11 @@ call gina#custom#action#alias(
 " }}}
 
 " Custom key mappings {{{
-call gina#custom#mapping#nmap(
-      \ '/\%(status\|branch\|blame\|changes\|commit\|log\|reflog\|tag\)', 'q',
-      \ ':<C-u>close<CR>',
-      \ {'noremap': 1, 'silent': 1}
-      \ )
+" call gina#custom#mapping#nmap(
+"      \ '/\%(status\|branch\|blame\|changes\|commit\|log\|reflog\|tag\)', 'q',
+"      \ ':<C-u>close<CR>',
+"      \ {'noremap': 1, 'silent': 1}
+"      \ )
 
 call gina#custom#mapping#nmap(
       \ 'branch', 'g<CR>',
