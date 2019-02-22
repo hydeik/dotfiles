@@ -1,0 +1,21 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "clean": [
+            "~/.config/efm-langserver"
+        ]
+    },
+    {
+        "link": {
+            "~/.config/efm-langserver/config.yaml": "development/efm-langserver/config.yaml"
+        }
+    }
+]
