@@ -28,7 +28,7 @@ hook_add = '''
   " Buffer
   nnoremap <silent> <Leader>b :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
   " File
-  nnoremap <silent> <Leader>p :<C-u>Denite file/point file/old file/rec file file:new -sorters=sorter/rank<CR>
+  nnoremap <silent> <Leader>f :<C-u>Denite file/point file/old file/rec file file:new -sorters=sorter/rank<CR>
 
   " nnoremap <silent> <Leader>o  :<C-u>Denite outline<CR>
   nnoremap <silent> <Leader>/  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
@@ -39,8 +39,8 @@ hook_add = '''
   nnoremap <silent> <Leader>h  :<C-u>Denite help<CR>
   nnoremap <silent> <Leader>j  :<C-u>Denite jump change file/point<CR>
   nnoremap <silent> <Leader>r  :<C-u>Denite resume<CR>
-  nnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
-  xnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
+  nnoremap <silent> <Leader>v  :<C-u>Denite register neoyank -buffer-name=register<CR>
+  xnoremap <silent> <Leader>v  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
   nnoremap <silent> <Leader><Leader>  :<C-u>Denite command command_history<CR>
 
   nnoremap <silent><expr> <Leader>[  &filetype == 'help' ? ":\<C-u>pop\<CR>" :
@@ -113,7 +113,7 @@ hook_source = '''
     return !col || getline('.')[col - 1]  =~ '\s'
   endfunction
 
-  function! s:show_documentation()
+  function! s:ShowDocumentation()
     if &filetype == 'vim'
       execute 'h '.expand('<cword>')
     else
@@ -136,81 +136,6 @@ hook_source = '''
   " Custom complete
   imap <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
 
-  " --- Key mappings for LSP features
-  function! s:my_coc_lsp_settings() abort
-    " Key mappings (buffer local)
-    nmap     <silent><buffer> [c <Plug>(coc-diagnostic-prev)
-    nmap     <silent><buffer> ]c <Plug>(coc-diagnostic-next)
-
-    nmap     <silent><buffer> gd <Plug>(coc-definition)
-    nmap     <silent><buffer> gq <Plug>(coc-format-selected)
-    vmap     <silent><buffer> gq <Plug>(coc-format-selected)
-    nnoremap <silent><buffer> K  :call <SID>show_documentation()<CR>
-    nnoremap <silent><buffer> Q  :<C-u>CocList --normal --auto-preview diagnostics<CR>
-
-    " LocalLeader mapping
-    nmap     <silent><buffer> <LocalLeader>[   <Plug>(coc-diagnostic-prev)
-    nmap     <silent><buffer> <LocalLeader>]   <Plug>(coc-diagnostic-next)
-    nmap     <silent><buffer> <LocalLeader>ca  <Plug>(coc-codeaction)
-    vmap     <silent><buffer> <LocalLeader>ca  <Plug>(coc-codeaction-selected)
-    nmap     <silent><buffer> <LocalLeader>cl  <Plug>(coc-codelens-action)
-    nmap     <silent><buffer> <LocalLeader>d   <Plug>(coc-definition)
-    vmap     <silent><buffer> <LocalLeader>f   <Plug>(coc-format-selected)
-    nmap     <silent><buffer> <LocalLeader>f   <Plug>(coc-format)
-    nmap     <silent><buffer> <LocalLeader>F   <Plug>(coc-fix-current)
-    nmap     <silent><buffer> <LocalLeader>i   <Plug>(coc-implementation)
-    nmap     <silent><buffer> <LocalLeader>I   <Plug>(coc-diagnostic-info)
-    nnoremap <silent><buffer> <LocalLeader>o   :<C-u>CocList --auto-preview outline<CR>
-    nmap     <silent><buffer> <LocalLeader>r   <Plug>(coc-reference)
-    nmap     <silent><buffer> <LocalLeader>R   <Plug>(coc-rename)
-    nnoremap <silent><buffer> <LocalLeader>s   :<C-u>CocList --interactive symbols<CR>
-    nmap     <silent><buffer> <LocalLeader>t   <Plug>(coc-type-definition)
-    nnoremap <silent><buffer> <LocalLeader><LocalLeader>  :<C-u>CocList --number-select lists<CR>
-
-    " formatexpr from language server
-    setlocal formatexpr=CocAction('formatSelected')
-  endfunction
-
-  function! s:my_coc_lsp_ccls_extra_settings() abort
-    call s:my_coc_lsp_settings()
-    " --- Navigation to declarations with <C-h>, <C-j>, <C-k>, <C-l>
-    " 'D' => first child declaration
-    nnoremap <silent><buffer> <C-l> :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
-    " 'L' => previous declaration
-    nnoremap <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
-    " 'R' => next declaration
-    nnoremap <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
-    " 'U' => parent declaration
-    nnoremap <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
-
-    " --- Cross reference extensions
-    " bases
-    nnoremap <silent><buffer> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance')<cr>
-    " bases of up to 3 levels
-    nnoremap <silent><buffer> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<cr>
-    " derived
-    nnoremap <silent><buffer> <LocalLeader>xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<cr>
-    " derived of up to 3 levels
-    nnoremap <silent><buffer> <LocalLeader>xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<cr>
-
-    " caller
-    nnoremap <silent><buffer> <LocalLeader>xc :call CocLocations('ccls','$ccls/call')<cr>
-    " callee
-    nnoremap <silent><buffer> <LocalLeader>xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<cr>
-
-    " $ccls/member
-    " member variables / variables in a namespace
-    nnoremap <silent><buffer> <LocalLeader>xm :call CocLocations('ccls','$ccls/member')<cr>
-    " member functions / functions in a namespace
-    nnoremap <silent><buffer> <LocalLeader>xf :call CocLocations('ccls','$ccls/member',{'kind':3})<cr>
-    " nested classes / types in a namespace
-    nnoremap <silent><buffer> <LocalLeader>xs :call CocLocations('ccls','$ccls/member',{'kind':2})<cr>
-
-    nmap     <silent><buffer> <LocalLeader>xt <Plug>(coc-type-definition)<cr>
-    nnoremap <silent><buffer> <LocalLeader>xv :call CocLocations('ccls','$ccls/vars')<cr>
-    nnoremap <silent><buffer> <LocalLeader>xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<cr>
-  endfunction
-
   " CocList
   nnoremap <silent> <Leader>cn  :<C-u>CocNext<CR>
   nnoremap <silent> <Leader>cp  :<C-u>CocPrev<CR>
@@ -220,11 +145,105 @@ hook_source = '''
   nnoremap <silent> <Leader>cd  :<C-u>CocList --normal --auto-preview diagnostics<CR>
   nnoremap <silent> <Leader>ce  :<C-u>CocList --normal --number-select extensions<CR>
   nnoremap <silent> <Leader>cj  :<C-u>CocList location<CR>
+  nnoremap <silent> <Leader>cl  :<C-u>CocList --normal --number-select lists<CR>
   nnoremap <silent> <Leader>cL  :<C-u>CocList links<CR>
   nnoremap <silent> <Leader>co  :<C-u>CocList --auto-preview outline<CR>
   nnoremap <silent> <Leader>cO  :<C-u>CocList output<CR>
   nnoremap <silent> <Leader>cs  :<C-u>CocList --interactive symbols<CR>
   nnoremap <silent> <Leader>cS  :<C-u>CocList --normal --number-select sources<CR>
+
+  " --- Key mappings for LSP features
+  " show list of diagnostic info
+  nmap     <silent><LocalLeader>a   :<C-u>CocList diagnostics<CR>
+  " codeaction
+  nmap     <silent><LocalLeader>ca  <Plug>(coc-codeaction)
+  vmap     <silent><LocalLeader>ca  <Plug>(coc-codeaction-selected)
+  " codelens
+  nmap     <silent><LocalLeader>cl  <Plug>(coc-codelens-action)
+  " go to definition
+  nmap     <silent><LocalLeader>d   <Plug>(coc-definition)
+  " go to declaration
+  nmap     <silent><LocalLeader>D   <Plug>(coc-declaration)
+  " format selected region
+  vmap     <silent><LocalLeader>f   <Plug>(coc-format-selected)
+  " format buffer
+  nmap     <silent><LocalLeader>f   <Plug>(coc-format)
+  " fix current line
+  nmap     <silent><LocalLeader>F   <Plug>(coc-fix-current)
+  " document hover
+  nmap     <silent><LocalLeader>h   :<C-u>call <SID>ShowDocumentation()<CR>
+  " go to implementation
+  nmap     <silent><LocalLeader>i   <Plug>(coc-implementation)
+  " show diagnostic info
+  nmap     <silent><LocalLeader>I   <Plug>(coc-diagnostic-info)
+  " jump to next diagnostic position
+  nmap     <silent><LocalLeader>n   <Plug>(coc-diagnostic-next)
+  " show symbols in the current file
+  nnoremap <silent><LocalLeader>o   :<C-u>CocList --auto-preview outline<CR>
+  " jump to previous diagnostic position
+  nmap     <silent><LocalLeader>p   <Plug>(coc-diagnostic-prev)
+  " go to reference
+  nmap     <silent><LocalLeader>r   <Plug>(coc-reference)
+  " rename the symbol
+  nmap     <silent><LocalLeader>R   <Plug>(coc-rename)
+  " show workspace symbols
+  nnoremap <silent><LocalLeader>s   :<C-u>CocList --interactive symbols<CR>
+  " go to type-definition
+  nmap     <silent><LocalLeader>t   <Plug>(coc-type-definition)
+
+  function! s:CocLspSettings() abort
+    " Key mappings (buffer local)
+    nmap     <silent><buffer> <C-p> <Plug>(coc-diagnostic-prev)
+    nmap     <silent><buffer> <C-n> <Plug>(coc-diagnostic-next)
+
+    nmap     <silent><buffer> gd <Plug>(coc-definition)
+    nmap     <silent><buffer> gq <Plug>(coc-format-selected)
+    vmap     <silent><buffer> gq <Plug>(coc-format-selected)
+    nnoremap <silent><buffer> K  :<C-u>call <SID>ShowDocumentation()<CR>
+
+    " formatexpr from language server
+    setlocal formatexpr=CocAction('formatSelected')
+  endfunction
+
+  function! s:CocLspCclsSettings() abort
+    call s:CocLspSettings()
+    " --- Navigation to declarations with <C-h>, <C-j>, <C-k>, <C-l>
+    " 'D' => first child declaration
+    nnoremap <silent><buffer> <C-l> :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<CR>
+    " 'L' => previous declaration
+    nnoremap <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<CR>
+    " 'R' => next declaration
+    nnoremap <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<CR>
+    " 'U' => parent declaration
+    nnoremap <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<CR>
+
+    " --- Cross reference extensions
+    " bases
+    nnoremap <silent><buffer> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance')<CR>
+    " bases of up to 3 levels
+    nnoremap <silent><buffer> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<CR>
+    " derived
+    nnoremap <silent><buffer> <LocalLeader>xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<CR>
+    " derived of up to 3 levels
+    nnoremap <silent><buffer> <LocalLeader>xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<CR>
+
+    " caller
+    nnoremap <silent><buffer> <LocalLeader>xc :call CocLocations('ccls','$ccls/call')<CR>
+    " callee
+    nnoremap <silent><buffer> <LocalLeader>xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<CR>
+
+    " $ccls/member
+    " member variables / variables in a namespace
+    nnoremap <silent><buffer> <LocalLeader>xm :call CocLocations('ccls','$ccls/member')<CR>
+    " member functions / functions in a namespace
+    nnoremap <silent><buffer> <LocalLeader>xf :call CocLocations('ccls','$ccls/member',{'kind':3})<CR>
+    " nested classes / types in a namespace
+    nnoremap <silent><buffer> <LocalLeader>xs :call CocLocations('ccls','$ccls/member',{'kind':2})<CR>
+
+    nmap     <silent><buffer> <LocalLeader>xt <Plug>(coc-type-definition)<CR>
+    nnoremap <silent><buffer> <LocalLeader>xv :call CocLocations('ccls','$ccls/vars')<CR>
+    nnoremap <silent><buffer> <LocalLeader>xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<CR>
+  endfunction
 
   " --- Autocmd
   augroup MyAutoCmd
@@ -234,8 +253,8 @@ hook_source = '''
     autocmd CursorHoldI,CursorMovedI call CocActionAsync('showSignatureHelp')
     autocmd User CocJumpPlaceholder  call CocActionAsync('showSignatureHelp')
     autocmd FileType typescript,json,python,ruby,rust,sh,vim,yaml
-          \ call s:my_coc_lsp_settings()
-    autocmd FileType c,cpp,objc call s:my_coc_lsp_ccls_extra_settings()
+          \ call s:CocLspSettings()
+    autocmd FileType c,cpp,objc,objcpp call s:CocLspCclsSettings()
   augroup END
 '''
 hook_post_source = 'source $VIM_CONFIG_HOME/rc/plugins/coc.vim'

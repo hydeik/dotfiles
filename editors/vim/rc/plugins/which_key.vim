@@ -1,4 +1,4 @@
-" Leader mappings {{{
+"] Leader mappings {{{
 let g:which_key_leader_map = {}
 
 let g:which_key_leader_map['b'] = 'buffer-list'
@@ -9,7 +9,8 @@ let g:which_key_leader_map.c = {
       \ 'd': 'diagnostics',
       \ 'e': 'extensions',
       \ 'j': 'jump-locations',
-      \ 'l': 'links',
+      \ 'l': 'lists',
+      \ 'L': 'links',
       \ 'o': 'outline',
       \ 'O': 'output-channels',
       \ 's': 'symbols',
@@ -20,6 +21,7 @@ let g:which_key_leader_map.c = {
       \ }
 
 let g:which_key_leader_map['e'] = 'file-explorer'
+let g:which_key_leader_map['f'] = 'files'
 
 let g:which_key_leader_map.g = {
       \ 'name': '+git',
@@ -71,17 +73,24 @@ let g:which_key_leader_map.S = {
 
 let g:which_key_leader_map.t = {
       \ 'name': '+toggle',
-      \ 'n': 'line-number',
-      \ 'c': 'cursor-column',
-      \ 'l': 'listchars',
-      \ 'p': 'paste-mode',
-      \ 's': 'spell-check',
-      \ 'w': 'wrap-text',
+      \ 'c': {
+      \   'name': '+cursor',
+      \   'c': 'cursor-column',
+      \   'l': 'cursor-line',
+      \ },
+      \ 'n':  'line-number',
+      \ 'l':  'listchars',
+      \ 'p':  'paste-mode',
+      \ 'r':  'relative-number',
+      \ 's':  'spell-check',
+      \ 'w':  'wrap-text',
       \ }
 
-let g:which_key_leader_map['p'] = 'quick-open'
 let g:which_key_leader_map['q'] = 'quit'
 let g:which_key_leader_map['Q'] = 'quit-without-saving'
+
+let g:which_key_leader_map['v'] = 'yank-list'
+
 let g:which_key_leader_map['w'] = 'save'
 let g:which_key_leader_map['W'] = 'save-all-buffers'
 
@@ -91,33 +100,11 @@ let g:which_key_leader_map.x = {
       \ 'd': 'delete-trailing-whitespace',
       \ }
 
-let g:which_key_leader_map['y'] = 'yank-list'
-
 let g:which_key_leader_map['*'] = 'grep-current-word'
 let g:which_key_leader_map['/'] = 'grep'
 let g:which_key_leader_map["'"] = 'open-terminal'
 let g:which_key_leader_map[']'] = 'denite-tag'
 let g:which_key_leader_map['['] = 'denite-jump'
-
-" let g:which_key_leader_map.w = {
-"      \ 'name': '+windows',
-"      \ 'w': 'other-window',
-"      \ 'd': 'delete-window',
-"      \ 'o': 'only-current-window',
-"      \ 'h': 'window-left',
-"      \ 'j': 'window-below',
-"      \ 'k': 'window-up',
-"      \ 'l': 'window-right',
-"      \ 'H': 'expand-window-left',
-"      \ 'J': 'expand-window-below',
-"      \ 'K': 'expand-window-up',
-"      \ 'L': 'expand-window-right',
-"      \ '=': 'balance-window',
-"      \ '-': 'split-window-below',
-"      \ '|': 'split-window-right',
-"      \ 's': 'split-window-below',
-"      \ 'v': 'split-window-right',
-"      \ }
 
 call which_key#register('<Space>', 'g:which_key_leader_map')
 " }}}
@@ -156,6 +143,36 @@ let g:which_key_s_map['rb'] = 'sandwich-replace-between'
 
 " Register dictionary
 call which_key#register('s', 'g:which_key_s_map')
+" }}}
+
+" lsp mappings {{{
+let g:which_key_localleader_map = {}
+
+let g:which_key_localleader_map = {
+      \ 'a' : 'diagnostics',
+      \ 'c': {
+      \   'name': '+code',
+      \   'a': 'code-action',
+      \   'l': 'code-lens',
+      \   },
+      \ 'd': 'goto-definition',
+      \ 'D': 'goto-declaration',
+      \ 'h': 'document-hover',
+      \ 'i': 'goto-implementation',
+      \ 'I': 'diagnostic-info',
+      \ 'f': 'formatting',
+      \ 'F': 'fix-current',
+      \ 'n': 'next-diagnostic',
+      \ 'o': 'outline',
+      \ 'p': 'previous-diagnostic',
+      \ 'r': 'references',
+      \ 'R': 'rename-symbol',
+      \ 's': 'workspace-symbol',
+      \ 't': 'goto-type-definition',
+      \ }
+
+" Register dictionary
+call which_key#register(';', 'g:which_key_localleader_map')
 " }}}
 
 autocmd MyAutoCmd FileType which_key set laststatus=0

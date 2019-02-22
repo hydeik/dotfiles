@@ -168,7 +168,6 @@ function! s:ToggleWindowZoom() abort
     vertical resize
   endif
 endfunction
-
 " }}}
 
 " Leader mappings {{{
@@ -192,8 +191,10 @@ vnoremap <silent><Leader>Q  <ESC>:qall!<CR>
 
 " Toggle editor UI {{{
 nnoremap <silent><Leader>ts  :setlocal spell!<CR>
-nnoremap <silent><Leader>tn  :setlocal number! relativenumber!<CR>
-nnoremap <silent><Leader>tc  :setlocal cursorcolumn!<CR>
+nnoremap <silent><Leader>tn  :setlocal number!<CR>
+nnoremap <silent><Leader>tr  :setlocal relativenumber!<CR>
+nnoremap <silent><Leader>tcc :setlocal cursorcolumn!<CR>
+nnoremap <silent><Leader>tcl :setlocal cursorline!<CR>
 nnoremap <silent><Leader>tl  :setlocal nolist!<CR>
 nnoremap <silent><Leader>tp  :setlocal paste!<CR>
 nnoremap <silent><Leader>tw  :setlocal wrap! breakindent!<CR>
