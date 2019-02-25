@@ -321,6 +321,12 @@ jupyter_path=(
 )
 
 ##
+## RubyGems
+##
+export GEM_HOME=${XDG_DATA_HOME}/gem
+export GEM_SPEC_CACHE=${XDG_CACHE_HOME}/gem
+
+##
 ## Rust
 ##
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
@@ -367,6 +373,11 @@ case ${OSTYPE} in
         ;;
     *)  ;;
 esac
+
+##
+## Tig
+##
+export TIGRC_USER=${XDG_CONFIG_HOME}/tig/tigrc
 
 ##============================================================================
 ## Computational programs

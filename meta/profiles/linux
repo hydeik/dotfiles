@@ -1,6 +1,7 @@
 editorconfig
 efm-langserver
 git
+tig
 ipython
 latexmk
 uncrustify
