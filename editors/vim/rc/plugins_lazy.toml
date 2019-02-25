@@ -36,7 +36,7 @@ hook_add = '''
   vnoremap <silent> <Leader>*  :<C-u>call <SID>get_selection('/')<CR>
         \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
 
-  nnoremap <silent> <Leader>h  :<C-u>Denite help<CR>
+  nnoremap <silent> <Leader>?  :<C-u>Denite help<CR>
   nnoremap <silent> <Leader>j  :<C-u>Denite jump change file/point<CR>
   nnoremap <silent> <Leader>r  :<C-u>Denite resume<CR>
   nnoremap <silent> <Leader>v  :<C-u>Denite register neoyank -buffer-name=register<CR>
@@ -933,9 +933,14 @@ repo = 'airblade/vim-gitgutter'
 if = 'has("signs")'
 on_path = '.*'
 hook_add = '''
-  " remap keys to jump between hunk
-  nmap ]h  <Plug>GitGutterNextHunk
-  nmap [h  <Plug>GitGutterPrevHunk
+  let g:gitgutter_map_keys = 0
+  nmap ]h          <Plug>GitGutterNextHunk
+  nmap [h          <Plug>GitGutterPrevHunk
+  nmap <Leader>hn  <Plug>GitGutterNextHunk
+  nmap <Leader>hp  <Plug>GitGutterPrevHunk
+  nmap <Leader>hs  <Plug>GigGutterStageHunk
+  nmap <Leader>hu  <Plug>GigGutterUndoHunk
+  nmap <Leader>hv  <Plug>GigGutterPreview
 '''
 
 # More pleasant editing on commit messages

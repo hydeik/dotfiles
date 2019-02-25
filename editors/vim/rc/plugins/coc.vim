@@ -1,35 +1,3 @@
-" List of coc-extensions to be instalBufEnterled
-let s:coc_extension_list = [
-      \ 'coc-css',
-      \ 'coc-emmet',
-      \ 'coc-emoji',
-      \ 'coc-eslint',
-      \ 'coc-highlight',
-      \ 'coc-html',
-      \ 'coc-json',
-      \ 'coc-lists',
-      \ 'coc-neosnippet',
-      \ 'coc-omni',
-      \ 'coc-prettier',
-      \ 'coc-pyls',
-      \ 'coc-rls',
-      \ 'coc-tag',
-      \ 'coc-tsserver',
-      \ 'coc-vetur',
-      \ 'coc-word',
-      \ 'coc-yaml',
-      \ 'coc-yank'
-      \ ]
-
-function! s:coc_install_my_extensions() abort
-  " Get list of installed extensions
-  let list = map(CocAction('extensionStats'), 'v:val["id"]')
-  let missing = filter(s:coc_extension_list, 'index(list, v:val) < 0')
-  if !empty(missing)
-    call coc#util#install_extension(join(missing))
-  endif
-endfunction
-
 function! s:coc_config() abort
   " Completion
   call coc#config('suggest', {

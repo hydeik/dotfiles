@@ -36,7 +36,15 @@ let g:which_key_leader_map.g = {
       \ 't': 'gina-tag',
       \ }
 
-let g:which_key_leader_map['h'] = 'help'
+let g:which_key_leader_map.h = {
+      \ 'name': '+hunk',
+      \ 'n': 'next-hunk',
+      \ 'p': 'previous-hunk',
+      \ 's': 'stage-hunk',
+      \ 'u': 'undo-hunk',
+      \ 'v': 'preview-hunk',
+      \ }
+
 let g:which_key_leader_map['J'] = 'join-with-chars'
 
 " let g:which_key_leader_map.l = {
@@ -100,6 +108,7 @@ let g:which_key_leader_map.x = {
       \ 'd': 'delete-trailing-whitespace',
       \ }
 
+let g:which_key_leader_map['?'] = 'help'
 let g:which_key_leader_map['*'] = 'grep-current-word'
 let g:which_key_leader_map['/'] = 'grep'
 let g:which_key_leader_map["'"] = 'open-terminal'
