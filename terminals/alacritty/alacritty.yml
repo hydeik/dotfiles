@@ -164,7 +164,7 @@ colors:
   # Default colors
   primary:
     background: '0x161821'
-    foreground: '0xc6c8d1'
+    foreground: '0xd2d4de'
 
     # Bright and dim foreground colors
     #
@@ -174,15 +174,11 @@ colors:
     # dim_foreground: '0x9a9a9a'
     # bright_foreground: '0xffffff'
 
-  # Cursor colors
-  cursor:
-    'cursor': '0xc6c8d1'
-    'text':   '0x161821'
   # Normal colors
   normal:
     # NOTE: Use '0x131613' for the `black` color if you'd like to see
     # black text on the background.
-    black:   '0x1e2132'
+    black:   '0x161821'
     red:     '0xe27878'
     green:   '0xb4be82'
     yellow:  '0xe2a478'
