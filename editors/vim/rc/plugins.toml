@@ -124,26 +124,35 @@ repo = 'guns/xterm-color-table.vim'
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
-#  Dracula
+# Dracula
 [[plugins]]
 repo = 'dracula/vim'
 name = 'dracula'
 
-# #  gruvbox
-# [[plugins]]
-# repo = 'morhetz/gruvbox'
+# gruvbox
+[[plugins]]
+repo = 'morhetz/gruvbox'
 
-# #  Oceanic-Next
-# [[plugins]]
-# repo = 'mhartington/oceanic-next'
+# iceberg
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
 
-#  onedark
+# Nord
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'
+
+# Oceanic-Next
+[[plugins]]
+repo = 'mhartington/oceanic-next'
+
+# onedark
 [[plugins]]
 repo = 'joshdick/onedark.vim'
 
-#  one
+# one
 [[plugins]]
 repo = 'rakr/vim-one'
+
 
 # }}}
 
