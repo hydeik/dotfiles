@@ -6,17 +6,17 @@ function! s:coc_config() abort
         \ 'timeout': 1000,
         \ 'noselect': v:true,
         \ 'formatOnType': v:false,
-        \ 'snippetIndicator': '\uf0d0',
+        \ 'snippetIndicator': "\uf0d0",
         \ 'enablePreview': v:true,
         \ })
   " Diagnostics
   call coc#config('diagnostic', {
         \ 'enable': v:true,
         \ 'signOffset': 1000,
-        \ 'errorSign': '\uf00d',
-        \ 'warningSign': '\uf071',
-        \ 'infoSign': '\uf05a',
-        \ 'hintSign': '\uf27b',
+        \ 'errorSign': "\uf00d",
+        \ 'warningSign': "\uf071",
+        \ 'infoSign': "\uf05a",
+        \ 'hintSign': "\uf27b",
         \ })
   " CocList
   call coc#config('list', {
