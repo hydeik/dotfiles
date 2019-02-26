@@ -16,6 +16,10 @@ if ! command -v yarn > /dev/null; then
 fi
 
 # Install extensions
+if [ -d ~/.config/coc/extensions ]; then
+    # Remove old version
+    /bin/rm -rf ~/.config/coc/extensions
+fi
 mkdir -p ~/.config/coc/extensions
 cd ~/.config/coc/extensions
 if [ ! -f package.json ]
