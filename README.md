@@ -1,9 +1,8 @@
 # Dotfiles
 
-Dotfiles managed by [Dotbot](https://github.com/anishathalye/dotbot). 
+Dotfiles managed by [Dotbot](https://github.com/anishathalye/dotbot).
 We refer [More adavanced setup](https://github.com/anishathalye/dotbot/wiki/Tips-and-Tricks)
 section in Dotbot Wiki pages for the detailed setup.
-
 
 ## Installation
 
@@ -28,5 +27,4 @@ $ ./install-standalone <configs...>
 $ # for example:
 $ ./install-profile zsh vim tmux
 ```
-
 
