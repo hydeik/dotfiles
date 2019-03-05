@@ -98,9 +98,9 @@ function! s:coc_config() abort
   endif
 
   " Extensions
-  " call coc#config('pyls', {
-  "      \ 'commandPath': $PYENV_ROOT.'/versions/neovim3/bin/pyls'
-  "      \ })
+  call coc#config('pyls', {
+       \ 'commandPath': $PYENV_ROOT.'/versions/neovim3/bin/pyls'
+       \ })
 endfunction
 
 " configure Coc.nvim
