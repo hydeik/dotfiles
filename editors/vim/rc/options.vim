@@ -294,10 +294,18 @@ endfunction
 
 " Wildmenu: enhanced command line completion {{{
 " -----
-set nowildmenu
-" Completion style in wildmenu mode
-set wildmode=list:longest,full
-set wildoptions=tagfile
+if has('nvim')
+  " Display candidates by popup menu
+  set wildmenu
+  set wildmode=full
+  set wildoptions=pum,tagfile
+else
+  " Display candidates by list
+  set nowildmenu
+  set wildmode=list:longest,full
+  set wildoptions=tagfile
+endif
+
 " Ignore compiled files
 set wildignore&
 set wildignore=.git,.hg,.svn

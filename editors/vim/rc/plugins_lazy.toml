@@ -350,9 +350,9 @@ depends = ['dein.vim']
 on_cmd = ['Dein']
 # }}}
 
-# Defx --- Dark ppowered file explorer implementation {{{
+# Defx --- Dark ppowered file explorer implementation
 [[plugins]]
-repo = 'Shougo/defx.nvim'
+repo = 'Shougo/defx.nvim' # {{{
 on_cmd = ['Defx']
 hook_add = '''
   nnoremap <silent><Leader>e  :<C-u>Defx<CR>
@@ -397,6 +397,7 @@ defx = '''
   nnoremap <silent><buffer><expr> \    defx#do_action('cd', getcwd())
   nnoremap <silent><buffer><expr> q    defx#do_action('quit')
   nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
+  vnoremap <silent><buffer><expr> <Enter> defx#do_action('toggle_select_visual')
   nnoremap <silent><buffer><expr> *    defx#do_action('toggle_select_all')
   nnoremap <silent><buffer><expr> j    line('.') == line('$') ? 'gg' : 'j'
   nnoremap <silent><buffer><expr> k    line('.') == 1 ? 'G' : 'k'
@@ -471,8 +472,6 @@ on_cmd = ['Codi']
 repo = 'junegunn/vim-easy-align' # {{{
 on_cmd = ['EasyAlign', 'LiveEasyAlign']
 hook_add = '''
-  vnoremap <Enter> :EasyAlign<CR>
-
   nmap <silent><Leader>xa  <Plug>(EasyAlign)
   vmap <silent><Leader>xa  <Plug>(EasyAlign)
 '''
