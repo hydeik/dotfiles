@@ -48,11 +48,6 @@ function! s:coc_config() abort
           \                    '.vim', '.git', '.hg'],
           \   'initializationOptions': {
           \     'cacheDirectory': $XDG_CACHE_HOME.'/ccls',
-          \     'diagnostics': {
-          \       'onOpen': v:true,
-          \       'onChange': v:false,
-          \       'onSave': v:true
-          \     },
           \     'completion': {
           \       'filterAndSort': v:false
           \     },
@@ -111,5 +106,3 @@ call s:coc_config()
 command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold   :call CocAction('fold', <f-args>)
-" Install extensions not installed yet
-command! -nargs=0 CocInstallMyExtensions :call s:coc_install_my_extensions()
