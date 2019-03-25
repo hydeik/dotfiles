@@ -57,6 +57,9 @@ nnoremap ;  <Nop>
 xnoremap ;  <Nop>
 nmap     s  <Nop>
 xmap     s  <Nop>
+" Disable Ex-mode
+nnoremap Q  <Nop>
+
 " }}}
 
 " Disable pre-bundled plugins and package system {{{

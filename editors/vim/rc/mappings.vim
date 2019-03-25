@@ -9,9 +9,6 @@
 nnoremap ZZ  <Nop>
 nnoremap ZQ  <Nop>
 
-" Disable Ex-mode
-nnoremap Q  <Nop>
-
 " Useless command. M - to middle line of window
 nnoremap M  m
 

@@ -154,7 +154,7 @@ hook_source = '''
   nnoremap <silent> <Leader>cL  :<C-u>CocList links<CR>
   nnoremap <silent> <Leader>co  :<C-u>CocList --auto-preview outline<CR>
   nnoremap <silent> <Leader>cO  :<C-u>CocList output<CR>
-  nnoremap <silent> <Leader>cs  :<C-u>CocList --interactive symbols<CR>
+  nnoremap <silent> <Leader>cs  :<C-u>CocList snippets<CR>
   nnoremap <silent> <Leader>cS  :<C-u>CocList --normal --number-select sources<CR>
 
   " --- Key mappings for LSP features
