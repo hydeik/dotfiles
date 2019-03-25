@@ -100,7 +100,7 @@ repo = 'tpope/vim-repeat'
 
 # Completion srouces
 [[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+repo = 'honza/vim-snippets'
 
 [[plugins]]
 repo = 'ujihisa/neco-look'

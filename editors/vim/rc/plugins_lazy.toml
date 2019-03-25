@@ -109,7 +109,7 @@ on_event = 'VimEnter'
 build = 'yarn install'
 hook_source = '''
   " Utility funcitons for key mapping
-  function! s:check_back_space() abort
+  function! s:CheckBackspace() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
   endfunction
@@ -125,7 +125,7 @@ hook_source = '''
   " --- Insert mode key mapping for auto completion
   " Use <TAB> for trigger completion with characters ahead and navigate.
   inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" : coc#refresh()
+        \ <SID>CheckBackspace() ? "\<TAB>" : coc#refresh()
   " Use <S-TAB> for completion back
   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
   " Use <CR> for confirm completion.
@@ -136,6 +136,10 @@ hook_source = '''
   inoremap <silent><expr> <C-Space> coc#refresh()
   " Custom complete
   imap <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
+
+  " Use <C-s> to expand snippets
+  imap <silent> <C-s>  <Plug>(coc-snippets-expand-jump)
+  xmap <silent> <C-s>  <Plug>(coc-snippets-select)
 
   " CocList
   nnoremap <silent> <Leader>cn  :<C-u>CocNext<CR>
@@ -305,26 +309,7 @@ hook_post_source = '''
 # }}}
 
 [[plugins]]
-repo = 'Shougo/neosnippet' # {{{
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertCharPre'
-on_ft = 'snippet'
-hook_source = '''
-  imap <silent><C-s>  <Plug>(neosnippet_expand_or_jump)
-  smap <silent><C-s>  <Plug>(neosnippet_expand_or_jump)
-  xmap <silent><C-s>  <Plug>(neosnippet_expand_target)
-
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#enable_completed_snippet = 1
-  let g:neosnippet#expand_word_boundary = 1
-  let g:neosnippet#snippets_directory = $VIM_CONFIG_HOME . '/snippets'
-
-  autocmd MyAutoCmd CompleteDone * call neosnippet#complete_done()
-'''
-# }}}
-
-[[plugins]]
-repo = 'ludovicchabant/vim-gutentags'
+repo = 'ludovicchabant/vim-gutentags' # {{{
 if = "executable('ctags')"
 on_path = '.*'
 hook_add = '''
@@ -339,6 +324,7 @@ hook_add = '''
         \ '*/application/vendor', '*/vendor/ckeditor', '*/media/vendor'
         \ ]
 '''
+# }}}
 # }}}
 
 # Commands {{{
