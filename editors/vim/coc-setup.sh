@@ -28,6 +28,6 @@ then
 fi
 # Change arguments to extensions you need
 yarn add coc-css coc-emmet coc-emoji coc-eslint coc-highlight coc-html \
-         coc-json coc-lists coc-neosnippet coc-omni coc-prettier \
-         coc-pyls coc-rls coc-tag coc-tsserver coc-vetur coc-vimtex \
-         coc-word coc-yaml coc-yank
+         coc-json coc-lists coc-omni coc-prettier coc-python \
+         coc-rls coc-snippets coc-syntax coc-solargraph coc-tag coc-tsserver \
+         coc-vetur coc-vimtex coc-word coc-yaml coc-yank

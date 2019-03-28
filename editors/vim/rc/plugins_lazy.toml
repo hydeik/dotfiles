@@ -106,7 +106,6 @@ on_source = ['denite.nvim']
 repo = 'neoclide/coc.nvim' # {{{
 depends = ['denite.nvim']
 on_event = 'VimEnter'
-build = 'yarn install'
 hook_source = '''
   " Utility funcitons for key mapping
   function! s:CheckBackspace() abort
@@ -263,7 +262,7 @@ hook_source = '''
   augroup END
 '''
 hook_post_source = 'source $VIM_CONFIG_HOME/rc/plugins/coc.vim'
-# hook_post_update = 'call coc#util#install()'
+hook_post_update = 'call coc#util#build()'
 # }}}
 
 # Auto completion sources {{{
