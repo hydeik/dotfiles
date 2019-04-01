@@ -54,9 +54,9 @@ function! s:coc_config() abort
           \ }
   endif
 
-  if executable('bingo')
+  if executable('gopls')
     let s:languageservers['golang'] = {
-          \   'command': 'bingo',
+          \   'command': 'gopls',
           \   'filetypes': ['go'],
           \   'rootPatterns': ['go.mod', '.vim', '.git', '.hg'],
           \ }
