@@ -9,7 +9,7 @@ repo = 'Shougo/denite.nvim' # {{{
 depends = ['vim-qfreplace']
 on_cmd = 'Denite'
 hook_add = '''
-  function! s:get_selection(cmdtype) abort
+  function! s:GetSelection(cmdtype) abort
     let l:temp = @s
     normal! gv"sy
     let @/ = substitute(escape(@s, '\'.a:cmdtype), '\n', '\\n', 'g')
@@ -30,27 +30,23 @@ hook_add = '''
   " File
   nnoremap <silent> <Leader>f :<C-u>Denite file/point file/old file/rec file file:new -sorters=sorter/rank<CR>
 
-  " nnoremap <silent> <Leader>o  :<C-u>Denite outline<CR>
+  " Grep
   nnoremap <silent> <Leader>/  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
   nnoremap <silent> <Leader>*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
-  vnoremap <silent> <Leader>*  :<C-u>call <SID>get_selection('/')<CR>
+  vnoremap <silent> <Leader>*  :<C-u>call <SID>GetSelection('/')<CR>
         \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
 
   nnoremap <silent> <Leader>?  :<C-u>Denite help<CR>
   nnoremap <silent> <Leader>j  :<C-u>Denite jump change file/point<CR>
   nnoremap <silent> <Leader>r  :<C-u>Denite resume<CR>
-  nnoremap <silent> <Leader>v  :<C-u>Denite register neoyank -buffer-name=register<CR>
-  xnoremap <silent> <Leader>v  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
+  nnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
+  xnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
   nnoremap <silent> <Leader><Leader>  :<C-u>Denite command command_history<CR>
 
   nnoremap <silent><expr> <Leader>[  &filetype == 'help' ? ":\<C-u>pop\<CR>" :
         \ ":\<C-u>Denite -mode=normal jump\<CR>"
   nnoremap <silent><expr> <Leader>]  &filetype == 'help' ? "g\<C-]>" :
         \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
-  " " Plugins managed by 'Dein'
-  " nnoremap <silent> [Denite]N  :<C-u>Denite dein<CR>
-  " " Repositories managed by 'ghq'
-  " nnoremap <silent> [Denite]P  :<C-u>Denite ghq<CR>
 '''
 hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/denite.vim'
 # }}}
@@ -104,7 +100,7 @@ on_source = ['denite.nvim']
 #
 [[plugins]]
 repo = 'neoclide/coc.nvim' # {{{
-depends = ['denite.nvim']
+merge = 0
 on_event = 'VimEnter'
 hook_source = '''
   " Utility funcitons for key mapping
@@ -141,10 +137,6 @@ hook_source = '''
   xmap <silent> <C-s>  <Plug>(coc-snippets-select)
 
   " CocList
-  nnoremap <silent> <Leader>cn  :<C-u>CocNext<CR>
-  nnoremap <silent> <Leader>cp  :<C-u>CocPrev<CR>
-  nnoremap <silent> <Leader>cr  :<C-u>CocListResume<CR>
-
   nnoremap <silent> <Leader>cc  :<C-u>CocList commands<CR>
   nnoremap <silent> <Leader>cd  :<C-u>CocList --normal --auto-preview diagnostics<CR>
   nnoremap <silent> <Leader>ce  :<C-u>CocList --normal --number-select extensions<CR>
@@ -197,8 +189,8 @@ hook_source = '''
 
   function! s:CocLspSettings() abort
     " Key mappings (buffer local)
-    nmap     <silent><buffer> <C-p> <Plug>(coc-diagnostic-prev)
-    nmap     <silent><buffer> <C-n> <Plug>(coc-diagnostic-next)
+    nmap     <silent><buffer> [c <Plug>(coc-diagnostic-prev)
+    nmap     <silent><buffer> ]c <Plug>(coc-diagnostic-next)
 
     nmap     <silent><buffer> gd <Plug>(coc-definition)
     nmap     <silent><buffer> gq <Plug>(coc-format-selected)
@@ -266,7 +258,7 @@ hook_post_update = 'call coc#util#build()'
 # }}}
 
 # Auto completion sources {{{
-[[plugins]]
+[[pListResumeListResumeListResumelugins]]
 repo = 'neoclide/coc-neco'
 depends = ['neco-vim', 'coc.nvim']
 on_source = 'coc.nvim'
@@ -442,8 +434,7 @@ qf = '''
 repo = 't9md/vim-choosewin' # {{{
 on_map = {n = '<Plug>'}
 hook_add = '''
-  nmap -           <Plug>(choosewin)
-  nmap [Window]w   <Plug>(choosewin)
+  nmap -  <Plug>(choosewin)
 '''
 # }}}
 

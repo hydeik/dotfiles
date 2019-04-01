@@ -21,17 +21,16 @@ function! s:coc_config() abort
   " CocList
   call coc#config('list', {
         \ 'maxHeight': 15,
-        \ 'autoResize': v:false,
         \ 'nextKeymap': '<C-n>',
         \ 'previousKeymap': '<C-p>',
         \ 'insertMappings': {
-        \   '<M-n>': 'prompt:next',
-        \   '<M-p>': 'prompt:previous',
+        \   '<A-n>': 'prompt:next',
+        \   '<A-p>': 'prompt:previous',
         \   '<C-g>': 'do:cancel',
         \   },
         \ 'normalMappings': {
-        \   '<M-n>': 'prompt:next',
-        \   '<M-p>': 'prompt:previous',
+        \   '<A-n>': 'prompt:next',
+        \   '<A-p>': 'prompt:previous',
         \   '<C-g>': 'do:cancel',
         \   'd':     'action:delete',
         \   },
@@ -92,17 +91,29 @@ function! s:coc_config() abort
     call coc#config('languageserver', s:languageservers)
   endif
 
-  " Extensions
-  call coc#config('pyls', {
-       \ 'commandPath': $PYENV_ROOT.'/versions/neovim3/bin/pyls'
-       \ })
+  " " Extensions
+  " call coc#config('python', {
+  "      \ 'formatting' : {
+  "      \   'provider': 'yapf',
+  "      \   'yapfPath': $PYENV_ROOT.'/versions/neovim3/bin/yapf',
+  "      \   'yapfArgs': []
+  "      \ }
+  "      \ })
 endfunction
 
 " configure Coc.nvim
 call s:coc_config()
 
 " --- Custom commands
-" Use `:Format` for format current buffer
+" Format: format current buffer
 command! -nargs=0 Format :call CocAction('format')
-" Use `:Fold` for fold current buffer
+" Fold: fold current buffer
 command! -nargs=? Fold   :call CocAction('fold', <f-args>)
+" Rg: grep (requires coc-lists extension)
+command! -nargs=+ -complete=custom,s:GrepArgs Rg exe 'CocList grep '.<q-args>
+
+function! s:GrepArgs(...)
+  let list = ['-S', '-smartcase', '-i', '-ignorecase', '-w', '-word',
+        \ '-e', '-regex', '-u', '-skip-vcs-ignores', '-t', '-extension']
+  return join(list, "\n")
+endfunction

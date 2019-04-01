@@ -97,8 +97,6 @@ let g:which_key_leader_map.t = {
 let g:which_key_leader_map['q'] = 'quit'
 let g:which_key_leader_map['Q'] = 'quit-without-saving'
 
-let g:which_key_leader_map['v'] = 'yank-list'
-
 let g:which_key_leader_map['w'] = 'save'
 let g:which_key_leader_map['W'] = 'save-all-buffers'
 
@@ -107,6 +105,8 @@ let g:which_key_leader_map.x = {
       \ 'a': 'easy-align',
       \ 'd': 'delete-trailing-whitespace',
       \ }
+
+let g:which_key_leader_map['y'] = 'yank-list'
 
 let g:which_key_leader_map['?'] = 'help'
 let g:which_key_leader_map['*'] = 'grep-current-word'
