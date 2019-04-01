@@ -295,7 +295,7 @@ endfunction
 " Wildmenu: enhanced command line completion {{{
 " -----
 if has('nvim')
-  " Display candidates by popup menu
+  " Display candidates by popup menu (requires NeoVim 0.4.x or later)
   set wildmenu
   set wildmode=full
   set wildoptions=pum,tagfile
