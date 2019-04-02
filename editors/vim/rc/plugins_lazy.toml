@@ -1,98 +1,5 @@
 # === Plugins (lazy loading) ===
 
-# Denite {{{
-# -----
-# Dark powered asynchronous unite all interfaces for Neovim/Vim8
-#
-[[plugins]]
-repo = 'Shougo/denite.nvim' # {{{
-depends = ['vim-qfreplace']
-on_cmd = 'Denite'
-hook_add = '''
-  function! s:GetSelection(cmdtype) abort
-    let l:temp = @s
-    normal! gv"sy
-    let @/ = substitute(escape(@s, '\'.a:cmdtype), '\n', '\\n', 'g')
-    let @s = l:temp
-  endfunction
-
-  " --- Key mappings
-  " Substitute search commands by Denite line
-  nnoremap <silent> / :<C-u>Denite line -buffer-name=search -auto-highlight<CR>
-  nnoremap <silent> * :<C-u>DeniteCursorWord line -buffer-name=search -auto-highlight -mode=normal<CR>
-  nnoremap <silent> n :<C-u>Denite -resume -buffer-name=search -auto-highlight -mode=normal -refresh<CR>
-
-  nnoremap <silent> L  :<C-u>Denite location_list -buffer-name=list<CR>
-  nnoremap <silent> Q  :<C-u>Denite quickfix -buffer-name=list<CR>
-
-  " Buffer
-  nnoremap <silent> <Leader>b :<C-u>Denite buffer file/old -default-action=switch -mode=normal<CR>
-  " File
-  nnoremap <silent> <Leader>f :<C-u>Denite file/point file/old file/rec file file:new -sorters=sorter/rank<CR>
-
-  " Grep
-  nnoremap <silent> <Leader>/  :<C-u>Denite grep -no-empty -buffer-name=search -mode=normal<CR>
-  nnoremap <silent> <Leader>*  :<C-u>DeniteCursorWord grep -no-empty -buffer-name=search -mode=normal<CR>
-  vnoremap <silent> <Leader>*  :<C-u>call <SID>GetSelection('/')<CR>
-        \ :execute 'Denite grep:::'.@/.' -no-empty -buffer-name=search -mode=normal'<CR><CR>
-
-  nnoremap <silent> <Leader>?  :<C-u>Denite help<CR>
-  nnoremap <silent> <Leader>j  :<C-u>Denite jump change file/point<CR>
-  nnoremap <silent> <Leader>r  :<C-u>Denite resume<CR>
-  nnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register<CR>
-  xnoremap <silent> <Leader>y  :<C-u>Denite register neoyank -buffer-name=register -default-action=replace<CR>
-  nnoremap <silent> <Leader><Leader>  :<C-u>Denite command command_history<CR>
-
-  nnoremap <silent><expr> <Leader>[  &filetype == 'help' ? ":\<C-u>pop\<CR>" :
-        \ ":\<C-u>Denite -mode=normal jump\<CR>"
-  nnoremap <silent><expr> <Leader>]  &filetype == 'help' ? "g\<C-]>" :
-        \ ":\<C-u>DeniteCursorWord -buffer-name=tag tag:include\<CR>"
-'''
-hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/denite.vim'
-# }}}
-
-# Freaky fast fuzzy Denite/CrtlP matcher for vim/neovim
-[[plugins]]
-repo = 'raghur/fruzzy' # {{{
-on_source = ['denite.nvim']
-hook_source = '''
-  let g:fruzzy#usenative = 1
-  let g:fruzzy#sortonempty = 0
-'''
-hook_post_update = 'call fruzzy#install()'
-# }}}
-
-# Denite plugin for temporary files
-[[plugins]]
-repo = 'Shougo/junkfile.vim' # {{{
-on_source = ['denite.nvim']
-hook_source = '''
-  let g:junkfile#directory = $VIM_CACHE_HOME . '/junkfile'
-'''
-# }}}
-
-# Denite plugin for MRU
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-on_source = ['denite.nvim']
-
-# Denite plugin for yank history
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_event = 'TextYankPost'
-on_source = ['denite.nvim']
-
-# Denite location andd quickfix lists
-[[plugins]]
-repo = 'chemzqm/unite-location'
-on_source = ['denite.nvim']
-
-# Denite source for ghq list
-[[plugins]]
-repo = 'Jagua/vim-denite-ghq'
-on_source = ['denite.nvim']
-# }}}
-
 # Coc.nvim {{{
 # -----
 # Complete engine and Language Server support for neovim & vim,
@@ -117,6 +24,21 @@ hook_source = '''
     endif
   endfunction
 
+  function! s:GrepFromSelected(type)
+    let saved_unnamed_register = @@
+    if a:type ==# 'v'
+      normal! `<v`>y
+    elseif a:type ==# 'char'
+      normal! `[v`]y
+    else
+      return
+    endif
+    let word = substitute(@@, '\n$', '', 'g')
+    let word = escape(word, '| ')
+    let @@ = saved_unnamed_register
+    execute 'CocList grep '.word
+  endfunction
+
   " --- Insert mode key mapping for auto completion
   " Use <TAB> for trigger completion with characters ahead and navigate.
   inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
@@ -136,17 +58,46 @@ hook_source = '''
   imap <silent> <C-s>  <Plug>(coc-snippets-expand-jump)
   xmap <silent> <C-s>  <Plug>(coc-snippets-select)
 
+  " Localtionlist
+  nnoremap <silent> L  :<C-u>CocList --normal locationlist<CR>
+  " Quickfix
+  nnoremap <silent> Q  :<C-u>CocList --normal quickfix<CR>
+  " Buffer
+  nnoremap <silent> <Leader>b :<C-u>CocList --normal buffers<CR>
+  " File
+  nnoremap <silent> <Leader>ff :<C-u>CocList -N files<CR>
+  nnoremap <silent> <Leader>fr :<C-u>CocList -N mru<CR>
+  " Snippets
+  nnoremap <silent> <Leader>s  :<C-u>CocList snippets<CR>
+  " Resume
+  nnoremap <silent> <Leader>r  :<C-u>CocListResume<CR>
+  " Yank, register
+  nnoremap <silent> <Leader>y  :<C-u>CocList -A --normal yank<CR>
+  " incsearch, grep
+  nnoremap <silent> / :<C-u>CocList -A -I words<CR>
+  nnoremap <silent> * :execute 'CocList -A -I --normal --input='.expand('<cword>').' words'<CR>
+  nnoremap <silent> n :<C-u>CocNext<CR>
+  nnoremap <silent> N :<C-u>CocPrev<CR>
+  nnoremap <silent> <Leader>/  :<C-u>Rg<Space>
+  vnoremap <silent> <Leader>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+  nnoremap <silent> <Leader>*  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+
+  " " tag jump
+  " nnoremap <silent><expr> <Leader>[  &filetype == 'help' ? ":\<C-u>pop\<CR>" :
+  "      \ ":\<C-u>CocList --normal location\<CR>"
+  " nnoremap <silent><expr> <Leader>]  &filetype == 'help' ? "g\<C-]>" :
+  "      \ ":\<C-u>CocList ta tag:include\<CR>"
   " CocList
   nnoremap <silent> <Leader>cc  :<C-u>CocList commands<CR>
-  nnoremap <silent> <Leader>cd  :<C-u>CocList --normal --auto-preview diagnostics<CR>
-  nnoremap <silent> <Leader>ce  :<C-u>CocList --normal --number-select extensions<CR>
+  nnoremap <silent> <Leader>cd  :<C-u>CocList -A --normal diagnostics<CR>
+  nnoremap <silent> <Leader>ce  :<C-u>CocList -N --normal extensions<CR>
   nnoremap <silent> <Leader>cj  :<C-u>CocList location<CR>
-  nnoremap <silent> <Leader>cl  :<C-u>CocList --normal --number-select lists<CR>
+  nnoremap <silent> <Leader>cl  :<C-u>CocList -N --normal lists<CR>
   nnoremap <silent> <Leader>cL  :<C-u>CocList links<CR>
-  nnoremap <silent> <Leader>co  :<C-u>CocList --auto-preview outline<CR>
+  nnoremap <silent> <Leader>co  :<C-u>CocList -A outline<CR>
   nnoremap <silent> <Leader>cO  :<C-u>CocList output<CR>
   nnoremap <silent> <Leader>cs  :<C-u>CocList snippets<CR>
-  nnoremap <silent> <Leader>cS  :<C-u>CocList --normal --number-select sources<CR>
+  nnoremap <silent> <Leader>cS  :<C-u>CocList -N --normal sources<CR>
 
   " --- Key mappings for LSP features
   " show list of diagnostic info
@@ -280,7 +231,7 @@ repo = 'Shougo/neoinclude.vim'
 on_if = 1
 
 # --- Auto close parentheses
-[[plugins]]
+[[pNextNextNextlugins]]
 repo = 'cohama/lexima.vim' # {{{
 on_event = 'InsertCharPre'
 hook_source = '''

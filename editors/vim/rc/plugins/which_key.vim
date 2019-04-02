@@ -21,7 +21,13 @@ let g:which_key_leader_map.c = {
       \ }
 
 let g:which_key_leader_map['e'] = 'file-explorer'
-let g:which_key_leader_map['f'] = 'files'
+
+" let g:which_key_leader_map['f'] = 'files'
+let g:which_key_leader_map.f = {
+      \ 'name': '+file',
+      \ 'f': 'file-list',
+      \ 'r': 'mru-list',
+      \ }
 
 let g:which_key_leader_map.g = {
       \ 'name': '+git',
@@ -70,6 +76,8 @@ let g:which_key_leader_map['J'] = 'join-with-chars'
 "      \   },
 "      \ }
 
+let g:which_key_leader_map['s'] = 'snippet-list'
+
 let g:which_key_leader_map.S = {
       \ 'name': '+session',
       \ 'a': 'last-session',
@@ -112,8 +120,8 @@ let g:which_key_leader_map['?'] = 'help'
 let g:which_key_leader_map['*'] = 'grep-current-word'
 let g:which_key_leader_map['/'] = 'grep'
 let g:which_key_leader_map["'"] = 'open-terminal'
-let g:which_key_leader_map[']'] = 'denite-tag'
-let g:which_key_leader_map['['] = 'denite-jump'
+" let g:which_key_leader_map[']'] = 'denite-tag'
+" let g:which_key_leader_map['['] = 'denite-jump'
 
 call which_key#register('<Space>', 'g:which_key_leader_map')
 " }}}
