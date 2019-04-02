@@ -9,7 +9,23 @@
 repo = 'neoclide/coc.nvim' # {{{
 merge = 0
 on_event = 'VimEnter'
+build = 'yarn install --frozen-lockfile'
 hook_source = '''
+  " List of extensions
+  let g:coc_global_extensions = [
+        \ 'coc-lists', 'coc-snippets', 'coc-yank',
+        \ 'coc-emoji', 'coc-syntax', 'coc-tag', 'coc-word',
+        \ 'coc-highlight',
+        \ 'coc-css', 'coc-emmet', 'coc-html', 'coc-svg',
+        \ 'coc-eslint', 'coc-jest', 'coc-prettier', 'coc-tsserver', 'coc-vetur',
+        \ 'coc-json',
+        \ 'coc-python',
+        \ 'coc-rls',
+        \ 'coc-solargraph',
+        \ 'coc-vimtex',
+        \ 'coc-yaml',
+        \ ]
+
   " Utility funcitons for key mapping
   function! s:CheckBackspace() abort
     let col = col('.') - 1
@@ -205,11 +221,10 @@ hook_source = '''
   augroup END
 '''
 hook_post_source = 'source $VIM_CONFIG_HOME/rc/plugins/coc.vim'
-hook_post_update = 'call coc#util#build()'
 # }}}
 
 # Auto completion sources {{{
-[[pListResumeListResumeListResumelugins]]
+[[plugins]]
 repo = 'neoclide/coc-neco'
 depends = ['neco-vim', 'coc.nvim']
 on_source = 'coc.nvim'
