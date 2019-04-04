@@ -1,5 +1,8 @@
-" --- Configure Coc.nvim {{{
-" Completion
+"==============================
+" Configuration of coc.nvim
+"==============================
+
+" --- Suggest / completion {{{
 call coc#config('suggest', {
       \ 'autoTrigger': 'always',
       \ 'triggerAfterInsertEnter': v:true,
@@ -9,7 +12,37 @@ call coc#config('suggest', {
       \ 'snippetIndicator': "\uf0d0",
       \ 'enablePreview': v:true,
       \ })
-" Diagnostics
+
+call coc#config('suggest.completionItemKindLabels': {
+      \ 'function': "\uf794",
+      \ 'method': "\uf6a6",
+      \ 'variable': "\uf71b",
+      \ 'constant': "\uf8ff",
+      \ 'struct': "\ufb44",
+      \ 'class': "\uf0e8",
+      \ 'interface': "\ufa52",
+      \ 'text': "\ue612",
+      \ 'enum': "\uf435",
+      \ 'enumMember': "\uf02b",
+      \ 'module': "\uf668",
+      \ 'color': "\ue22b",
+      \ 'property': "\ufab6",
+      \ 'field': "\uf93d",
+      \ 'unit': "\uf475",
+      \ 'file': "\uf471",
+      \ 'value': "\uf8a3",
+      \ 'event': "\ufacd",
+      \ 'folder': "\uf115",
+      \ 'keyword': "\uf893",
+      \ 'snippet': "\uf64d",
+      \ 'operator': "\uf915",
+      \ 'reference': "\uf87a",
+      \ 'typeParameter': "\uf278",
+      \ 'default': "\uf29c"
+      \ })
+" }}}
+
+" --- Diagnostics {{{
 call coc#config('diagnostic', {
       \ 'enable': v:true,
       \ 'signOffset': 1000,
@@ -18,7 +51,9 @@ call coc#config('diagnostic', {
       \ 'infoSign': "\uf05a",
       \ 'hintSign': "\uf27b",
       \ })
-" CocList
+" }}}
+
+" --- CocList {{{
 call coc#config('list', {
       \ 'maxHeight': 15,
       \ 'nextKeymap': '<C-n>',
@@ -35,8 +70,9 @@ call coc#config('list', {
       \   'd':     'action:delete',
       \   },
       \ })
+" }}}
 
-" Language servers
+" --- Language servers {{{
 let s:languageservers = {}
 
 if executable('ccls')
@@ -69,6 +105,13 @@ if executable('reason-language-server')
         \ }
 endif
 
+if executable('fortls')
+  let s:languageservers['fortran'] = {
+        \   'command': 'fortls',
+        \   'filetypes': ['fortran']
+        \ }
+endif
+
 if executable('bash-language-server')
   let s:languageservers['bash'] = {
         \   'command': 'bash-language-server',
@@ -90,6 +133,7 @@ endif
 if !empty(s:languageservers)
   call coc#config('languageserver', s:languageservers)
 endif
+" }}}
 
 " --- Custom commands {{{
 " Format: format current buffer
