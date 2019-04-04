@@ -11,35 +11,35 @@ call coc#config('suggest', {
       \ 'formatOnType': v:false,
       \ 'snippetIndicator': "\uf0d0",
       \ 'enablePreview': v:true,
+      \ 'completionItemKindLabels' : {
+      \   'function': "\uf794",
+      \   'method': "\uf6a6",
+      \   'variable': "\uf71b",
+      \   'constant': "\uf8ff",
+      \   'struct': "\ufb44",
+      \   'class': "\uf0e8",
+      \   'interface': "\ufa52",
+      \   'text': "\ue612",
+      \   'enum': "\uf435",
+      \   'enumMember': "\uf02b",
+      \   'module': "\uf668",
+      \   'color': "\ue22b",
+      \   'property': "\ufab6",
+      \   'field': "\uf93d",
+      \   'unit': "\uf475",
+      \   'file': "\uf471",
+      \   'value': "\uf8a3",
+      \   'event': "\ufacd",
+      \   'folder': "\uf115",
+      \   'keyword': "\uf893",
+      \   'snippet': "\uf64d",
+      \   'operator': "\uf915",
+      \   'reference': "\uf87a",
+      \   'typeParameter': "\uf278",
+      \   'default': "\uf29c"
+      \ },
       \ })
 
-call coc#config('suggest.completionItemKindLabels': {
-      \ 'function': "\uf794",
-      \ 'method': "\uf6a6",
-      \ 'variable': "\uf71b",
-      \ 'constant': "\uf8ff",
-      \ 'struct': "\ufb44",
-      \ 'class': "\uf0e8",
-      \ 'interface': "\ufa52",
-      \ 'text': "\ue612",
-      \ 'enum': "\uf435",
-      \ 'enumMember': "\uf02b",
-      \ 'module': "\uf668",
-      \ 'color': "\ue22b",
-      \ 'property': "\ufab6",
-      \ 'field': "\uf93d",
-      \ 'unit': "\uf475",
-      \ 'file': "\uf471",
-      \ 'value': "\uf8a3",
-      \ 'event': "\ufacd",
-      \ 'folder': "\uf115",
-      \ 'keyword': "\uf893",
-      \ 'snippet': "\uf64d",
-      \ 'operator': "\uf915",
-      \ 'reference': "\uf87a",
-      \ 'typeParameter': "\uf278",
-      \ 'default': "\uf29c"
-      \ })
 " }}}
 
 " --- Diagnostics {{{
@@ -50,23 +50,32 @@ call coc#config('diagnostic', {
       \ 'warningSign': "\uf071",
       \ 'infoSign': "\uf05a",
       \ 'hintSign': "\uf27b",
+      \ 'maxWindowHeight': 15
+      \ })
+" }}}
+
+" --- Signature {{{
+call coc#config('signature', {
+      \ 'enable': v:true,
+      \ 'maxWindowHeight': 15
       \ })
 " }}}
 
 " --- CocList {{{
 call coc#config('list', {
       \ 'maxHeight': 15,
+      \ 'maxPreviewHeight': 20,
       \ 'nextKeymap': '<C-n>',
       \ 'previousKeymap': '<C-p>',
       \ 'insertMappings': {
       \   '<A-n>': 'prompt:next',
       \   '<A-p>': 'prompt:previous',
-      \   '<C-g>': 'do:cancel',
+      \   '<C-g>': 'do:exit',
       \   },
       \ 'normalMappings': {
       \   '<A-n>': 'prompt:next',
       \   '<A-p>': 'prompt:previous',
-      \   '<C-g>': 'do:cancel',
+      \   '<C-g>': 'do:exit',
       \   'd':     'action:delete',
       \   },
       \ })
@@ -133,6 +142,24 @@ endif
 if !empty(s:languageservers)
   call coc#config('languageserver', s:languageservers)
 endif
+" }}}
+
+" --- Extensions {{{
+call coc#config('python', {
+     \ 'formatting': {
+     \   'blackPath': $PYENV_ROOT.'/versions/neovim3/bin/black',
+     \   'provider': 'black',
+     \ },
+     \ 'linting': {
+     \   'mypyPath': $PYENV_ROOT.'/versions/neovim3/bin/mypy',
+     \   'pylintPath': $PYENV_ROOT.'/versions/neovim3/bin/pylint',
+     \ },
+     \ 'sortImports': {
+     \   'path': $PYENV_ROOT.'/versions/neovim3/bin/isort',
+     \ },
+     \ 'venvPath': $PYENV_ROOT.'/versions',
+     \ })
+
 " }}}
 
 " --- Custom commands {{{

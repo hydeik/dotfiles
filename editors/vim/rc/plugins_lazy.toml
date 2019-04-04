@@ -215,6 +215,7 @@ hook_source = '''
     " Trigger signature help
     autocmd CursorHoldI,CursorMovedI call CocActionAsync('showSignatureHelp')
     autocmd User CocJumpPlaceholder  call CocActionAsync('showSignatureHelp')
+    autocmd User CocQuickfixChange   :CocList --normal quickfix
     autocmd FileType typescript,json,python,ruby,rust,sh,vim,yaml
           \ call s:CocLspSettings()
     autocmd FileType c,cpp,objc,objcpp call s:CocLspCclsSettings()
