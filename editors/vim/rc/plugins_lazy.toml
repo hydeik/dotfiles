@@ -247,7 +247,7 @@ repo = 'Shougo/neoinclude.vim'
 on_if = 1
 
 # --- Auto close parentheses
-[[pNextNextNextlugins]]
+[[plugins]]
 repo = 'cohama/lexima.vim' # {{{
 on_event = 'InsertCharPre'
 hook_source = '''
