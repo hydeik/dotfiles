@@ -11,12 +11,14 @@ let g:ale_sign_column_always = 1
 let g:ale_linters = {
       \ 'c': [],
       \ 'cpp': [],
+      \ 'objcpp': [],
+      \ 'fortran': [],
       \ 'go': [],
       \ 'python': [],
       \ 'ruby': [],
       \ 'rust': [],
       \ 'sh': [],
-      \ 'vim': ['vint'],
+      \ 'vim': [],
       \ 'css': [],
       \ 'html': [],
       \ 'javascript': [],
@@ -30,8 +32,8 @@ let g:ale_linters_ignore = {
       \ 'latex': ['lacheck']
       \ }
 
-" --- Fortran
-" extra options for warnings
-let g:ale_fortran_gcc_options = '-Wall -Wextra -Wcharacter-truncation -Wconversion-extra'
-" Free format
-let g:ale_fortran_gcc_use_free_form = 1
+" " --- Fortran
+" " extra options for warnings
+" let g:ale_fortran_gcc_options = '-Wall -Wextra -Wcharacter-truncation -Wconversion-extra'
+" " Free format
+" let g:ale_fortran_gcc_use_free_form = 1
