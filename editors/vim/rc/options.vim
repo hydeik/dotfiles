@@ -124,6 +124,19 @@ set smartcase       " Override 'ignorecase' if pattern contains upper cases.
 set infercase       " Adjust case in insert completion mode
 set hlsearch        " Highlight match results
 set wrapscan        " Searches wrap around the end of the file
+
+" Set external commands for grep
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-heading\ -HS\ --line-number
+  set grepformat=%f:%l:%c:%m
+elseif executable('ag')
+  set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ -C0
+  set grepformat=%f:%l:%c:%m
+elseif executable('pt')
+  set grepprg=pt\ /nogroup\ /nocolor\ /smart-case\ /follow
+  set grepformat=%f:%l:%m
+endif
+command! -nargs=* Grep grep <args>
 " }}}
 
 " Behavior {{{
