@@ -1,6 +1,6 @@
 # === Plugins (lazy loading) ===
 
-# Coc.nvim {{{
+# Intellisense {{{
 # -----
 # Complete engine and Language Server support for neovim & vim,
 # featured as VSCode
@@ -60,15 +60,15 @@ hook_source = '''
   inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
         \ <SID>CheckBackspace() ? "\<TAB>" : coc#refresh()
   " Use <S-TAB> for completion back
-  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
   " Use <CR> for confirm completion.
   "   `<C-g>u` means break undo chain at current position.
   "    Coc only does snippet and additional edit on confirm.
-  inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
   " Use <c-space> for trigger completion.
   inoremap <silent><expr> <C-Space> coc#refresh()
   " Custom complete
-  imap <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
+  imap     <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
 
   " Use <C-s> to expand snippets
   imap <silent> <C-s>  <Plug>(coc-snippets-expand-jump)
@@ -235,18 +235,22 @@ repo = 'jsfaint/coc-neoinclude'
 depends = ['neoinclude.vim', 'coc.nvim']
 on_source = 'coc.nvim'
 
-[[plugins]]
-repo = 'Shougo/neco-vim'
-on_ft = 'vim'
 # }}}
 # }}}
 
 # Auto completion {{{
+# -----
+# Tag/include sources for neocomlete/deoplete/ncm2
 [[plugins]]
 repo = 'Shougo/neoinclude.vim'
 on_if = 1
 
-# --- Auto close parentheses
+# Vim source for neocomplete/deoplete
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_ft = 'vim'
+
+# Auto close parentheses
 [[plugins]]
 repo = 'cohama/lexima.vim' # {{{
 on_event = 'InsertCharPre'
@@ -266,6 +270,7 @@ hook_post_source = '''
 '''
 # }}}
 
+# Auto create TAG files
 [[plugins]]
 repo = 'ludovicchabant/vim-gutentags' # {{{
 if = "executable('ctags')"
