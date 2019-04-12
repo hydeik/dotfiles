@@ -13,11 +13,32 @@ let g:which_key_leader_map.c = {
       \ 'L': 'links',
       \ 'o': 'outline',
       \ 'O': 'output-channels',
-      \ 's': 'symbols',
+      \ 's': 'workspace-symbols',
       \ 'S': 'sources',
       \ 'n': 'coc-next',
       \ 'p': 'coc-previous',
       \ 'r': 'coc-resume',
+      \ }
+let g:which_key_coc_map = {
+      \ 'c': 'commands',
+      \ 'd': 'diagnostics',
+      \ 'e': 'extensions',
+      \ 'j': 'next-item',
+      \ 'k': 'previous-item',
+      \ 'o': 'outline',
+      \ 'r': 'resume-list',
+      \ 's': 'workspace-symbols',
+      \ 'S': 'completion-sources',
+      \ ';': 'menu',
+      \ 'b': 'buffer-list',
+      \ 'f': 'open-file',
+      \ 'g': 'grep',
+      \ 'm': 'mru',
+      \ 'y': 'yank',
+      \ 'l': 'locationlist',
+      \ 'q': 'quickfix',
+      \ 'u': 'snippets',
+      \ '/': 'words',
       \ }
 
 let g:which_key_leader_map['e'] = 'file-explorer'
@@ -52,29 +73,6 @@ let g:which_key_leader_map.h = {
       \ }
 
 let g:which_key_leader_map['J'] = 'join-with-chars'
-
-" let g:which_key_leader_map.l = {
-"      \ 'name': '+lsp',
-"      \ 'c': {
-"      \   'name': '+code',
-"      \   'a': 'code-action',
-"      \   'l': 'code-lens',
-"      \   },
-"      \ 'd': 'diagnostic-info',
-"      \ 'h': 'hover',
-"      \ 'f': 'formatting',
-"      \ 'F': 'fix-current',
-"      \ 'o': 'outline',
-"      \ 'r': 'reference',
-"      \ 'R': 'rename',
-"      \ 's': 'workspace-symbol',
-"      \ 'g': {
-"      \   'name': '+goto',
-"      \   'd': 'definition',
-"      \   't': 'type-definition',
-"      \   'i': 'implementation',
-"      \   },
-"      \ }
 
 let g:which_key_leader_map['s'] = 'snippet-list'
 
@@ -126,6 +124,61 @@ let g:which_key_leader_map["'"] = 'open-terminal'
 call which_key#register('<Space>', 'g:which_key_leader_map')
 " }}}
 
+" CocList mappings {{{
+let g:which_key_coc_map = {
+      \ 'c': 'commands',
+      \ 'd': 'diagnostics',
+      \ 'e': 'extensions',
+      \ 'j': 'next-item',
+      \ 'k': 'previous-item',
+      \ 'o': 'outline',
+      \ 'r': 'resume-list',
+      \ 's': 'workspace-symbols',
+      \ 'S': 'completion-sources',
+      \ ';': 'menu',
+      \ 'b': 'buffer-list',
+      \ 'f': 'open-file',
+      \ 'g': 'grep',
+      \ 'm': 'mru',
+      \ 'y': 'yank',
+      \ 'l': 'locationlist',
+      \ 'q': 'quickfix',
+      \ 'u': 'snippets',
+      \ '/': 'words',
+      \ }
+
+" }}}
+
+" lsp mappings {{{
+let g:which_key_localleader_map = {}
+
+let g:which_key_localleader_map = {
+      \ 'a' : 'diagnostics',
+      \ 'c': {
+      \   'name': '+code',
+      \   'a': 'code-action',
+      \   'l': 'code-lens',
+      \   },
+      \ 'd': 'goto-definition',
+      \ 'D': 'goto-declaration',
+      \ 'h': 'document-hover',
+      \ 'i': 'goto-implementation',
+      \ 'I': 'diagnostic-info',
+      \ 'f': 'formatting',
+      \ 'F': 'fix-current',
+      \ 'n': 'next-diagnostic',
+      \ 'o': 'outline',
+      \ 'p': 'previous-diagnostic',
+      \ 'r': 'references',
+      \ 'R': 'rename-symbol',
+      \ 's': 'workspace-symbol',
+      \ 't': 'goto-type-definition',
+      \ }
+
+" Register dictionary
+call which_key#register(';', 'g:which_key_localleader_map')
+" }}}
+
 " s mappings {{{
 
 let g:which_key_s_map = {}
@@ -160,36 +213,6 @@ let g:which_key_s_map['rb'] = 'sandwich-replace-between'
 
 " Register dictionary
 call which_key#register('s', 'g:which_key_s_map')
-" }}}
-
-" lsp mappings {{{
-let g:which_key_localleader_map = {}
-
-let g:which_key_localleader_map = {
-      \ 'a' : 'diagnostics',
-      \ 'c': {
-      \   'name': '+code',
-      \   'a': 'code-action',
-      \   'l': 'code-lens',
-      \   },
-      \ 'd': 'goto-definition',
-      \ 'D': 'goto-declaration',
-      \ 'h': 'document-hover',
-      \ 'i': 'goto-implementation',
-      \ 'I': 'diagnostic-info',
-      \ 'f': 'formatting',
-      \ 'F': 'fix-current',
-      \ 'n': 'next-diagnostic',
-      \ 'o': 'outline',
-      \ 'p': 'previous-diagnostic',
-      \ 'r': 'references',
-      \ 'R': 'rename-symbol',
-      \ 's': 'workspace-symbol',
-      \ 't': 'goto-type-definition',
-      \ }
-
-" Register dictionary
-call which_key#register(';', 'g:which_key_localleader_map')
 " }}}
 
 autocmd MyAutoCmd FileType which_key set laststatus=0

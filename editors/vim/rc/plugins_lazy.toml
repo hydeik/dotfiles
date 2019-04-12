@@ -34,7 +34,7 @@ hook_source = '''
 
   function! s:ShowDocumentation()
     if &filetype == 'vim'
-      execute 'h '.expand('<cword>')
+      execute 'help '.expand('<cword>')
     else
       call CocAction('doHover')
     endif
@@ -156,14 +156,14 @@ hook_source = '''
 
   function! s:CocLspSettings() abort
     " Key mappings (buffer local)
-    nmap     <silent><buffer> [c <Plug>(coc-diagnostic-prev)
-    nmap     <silent><buffer> ]c <Plug>(coc-diagnostic-next)
+    nmap     <silent><buffer> [e <Plug>(coc-diagnostic-prev)
+    nmap     <silent><buffer> ]e <Plug>(coc-diagnostic-next)
 
     nmap     <silent><buffer> gd <Plug>(coc-definition)
-    nmap     <silent><buffer> gq <Plug>(coc-format-selected)
-    vmap     <silent><buffer> gq <Plug>(coc-format-selected)
-    nnoremap <silent><buffer> K  :<C-u>call <SID>ShowDocumentation()<CR>
+    " nnoremap <silent><buffer> K  :<C-u>call <SID>ShowDocumentation()<CR>
 
+    " Document hover
+    setlocal keywordprg=call\ <SID>ShowDocumentation()
     " formatexpr from language server
     setlocal formatexpr=CocAction('formatSelected')
   endfunction
