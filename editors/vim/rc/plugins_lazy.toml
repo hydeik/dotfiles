@@ -32,7 +32,7 @@ hook_source = '''
     return !col || getline('.')[col - 1]  =~ '\s'
   endfunction
 
-  function! s:ShowDocumentation()
+  function! ShowDocumentation() abort
     if &filetype == 'vim'
       execute 'help '.expand('<cword>')
     else
@@ -163,7 +163,7 @@ hook_source = '''
     " nnoremap <silent><buffer> K  :<C-u>call <SID>ShowDocumentation()<CR>
 
     " Document hover
-    setlocal keywordprg=call\ <SID>ShowDocumentation()
+    setlocal keywordprg=:call\ ShowDocumentation()
     " formatexpr from language server
     setlocal formatexpr=CocAction('formatSelected')
   endfunction
