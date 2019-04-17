@@ -98,11 +98,12 @@ hook_source = '''
   vnoremap <silent> <Leader>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
   nnoremap <silent> <Leader>*  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
 
-  " " tag jump
-  " nnoremap <silent><expr> <Leader>[  &filetype == 'help' ? ":\<C-u>pop\<CR>" :
-  "      \ ":\<C-u>CocList --normal location\<CR>"
-  " nnoremap <silent><expr> <Leader>]  &filetype == 'help' ? "g\<C-]>" :
-  "      \ ":\<C-u>CocList ta tag:include\<CR>"
+  " tag jump
+  nnoremap <silent><expr> <Leader>[  &filetype == 'help' ? ":\<C-u>pop\<CR>" :
+        \ ":\<C-u>CocList --normal location\<CR>"
+  nnoremap <silent><expr> <Leader>]  &filetype == 'help' ? "g\<C-]>" :
+        \ "\<Plug>(coc-definition)"
+
   " CocList
   nnoremap <silent> <Leader>cc  :<C-u>CocList commands<CR>
   nnoremap <silent> <Leader>cd  :<C-u>CocList -A --normal diagnostics<CR>
