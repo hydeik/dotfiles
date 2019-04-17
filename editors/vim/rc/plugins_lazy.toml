@@ -224,18 +224,18 @@ hook_source = '''
 hook_post_source = 'source $VIM_CONFIG_HOME/rc/plugins/coc.vim'
 # }}}
 
-# Auto completion sources {{{
 [[plugins]]
-repo = 'neoclide/coc-neco'
+repo = 'neoclide/coc-neco'  # {{{
 depends = ['neco-vim', 'coc.nvim']
 on_source = 'coc.nvim'
+# }}}
 
 [[plugins]]
-repo = 'jsfaint/coc-neoinclude'
+repo = 'jsfaint/coc-neoinclude' # {{{
 depends = ['neoinclude.vim', 'coc.nvim']
 on_source = 'coc.nvim'
-
 # }}}
+
 # }}}
 
 # Auto completion {{{
@@ -425,11 +425,6 @@ hook_add = '''
 '''
 # }}}
 
-# --- Diffs on blocks of code
-[[plugins]]
-repo = 'AndrewRadev/linediff.vim'
-on_cmd = ['Linediff', 'LinediffAdd', 'LinediffReset', 'LinediffShow']
-
 # --- Switch between single-line and multiline forms of code
 [[plugins]]
 # use default mapping
@@ -456,13 +451,6 @@ hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
 
 # Interfaces {{{
 # -----
-# Print document on echo area
-[[plugins]]
-repo = 'Shougo/echodoc.vim' # {{{
-on_event = 'CompleteDone'
-hook_source = 'call echodoc#enable()'
-# }}}
-
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim' # {{{
