@@ -39,26 +39,24 @@ call mkdir(expand('$VIM_DATA_HOME/spell'), 'p')
 
 " Global mappings {{{
 " -----
-" Use 'space' as <Leader> key and ',' as <LocalLeader> key
+" Use ';' as <Leader> key and ',' as <LocalLeader> key
 "   REMARK: Required before loading plugins!
-let g:mapleader = "\<Space>"
-let g:maplocalleader = ';'
+let g:mapleader = ";"
+let g:maplocalleader = ','
 
 " Release some keymappings for use of plugins
-"   Space -> Leader
+"   Space ->
 "   ,     -> LocalLeader
-"   ;     -> prefix for Denite commands
-"   s     -> prefix for window, tab, easymotion
+"   ;     -> prefix for fuzzy finder, LSP
+"   s     -> prefix for window, tab, easymotion, sandwich
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
-nnoremap ,  <Nop>
-xnoremap ,  <Nop>
 nnoremap ;  <Nop>
 xnoremap ;  <Nop>
+nnoremap ,  <Nop>
+xnoremap ,  <Nop>
 nmap     s  <Nop>
 xmap     s  <Nop>
-" Disable Ex-mode
-nnoremap Q  <Nop>
 
 " }}}
 

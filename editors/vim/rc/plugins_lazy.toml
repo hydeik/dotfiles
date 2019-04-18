@@ -74,98 +74,52 @@ hook_source = '''
   imap <silent> <C-s>  <Plug>(coc-snippets-expand-jump)
   xmap <silent> <C-s>  <Plug>(coc-snippets-select)
 
-  " Localtionlist
-  nnoremap <silent> L  :<C-u>CocList --normal locationlist<CR>
-  " Quickfix
-  nnoremap <silent> Q  :<C-u>CocList --normal quickfix<CR>
-  " Buffer
-  nnoremap <silent> <Leader>b :<C-u>CocList --normal buffers<CR>
-  " File
-  nnoremap <silent> <Leader>ff :<C-u>CocList -N files<CR>
-  nnoremap <silent> <Leader>fr :<C-u>CocList -N mru<CR>
-  " Snippets
-  nnoremap <silent> <Leader>s  :<C-u>CocList snippets<CR>
-  " Resume
-  nnoremap <silent> <Leader>r  :<C-u>CocListResume<CR>
-  " Yank, register
-  nnoremap <silent> <Leader>y  :<C-u>CocList -A --normal yank<CR>
-  " incsearch, grep
-  nnoremap <silent> / :<C-u>CocList -A -I words<CR>
+  " CocList mappings
+  "   options:
+  "    -A, --auto-preview
+  "    -I, --interactive
+  "    -N, --number-select
+  nnoremap <silent> <Space>a  :<C-u>CocList --normal diagnostics<CR>
+  nnoremap <silent> <Space>c  :<C-u>CocList -N commands<CR>
+  nnoremap <silent> <Space>b  :<C-u>CocList --normal buffers<CR>
+  nnoremap <silent> <Space>e  :<C-u>CocList -N extensions<CR>
+  nnoremap <silent> <Space>f  :<C-u>CocList -N files<CR>
+  nnoremap <silent> <Space>j  :<C-u>CocNext<CR>
+  nnoremap <silent> <Space>k  :<C-u>CocPrev<CR>
+  nnoremap <silent> <Space>m  :<C-u>CocList -N mru<CR>
+  nnoremap <silent> <Space>l  :<C-u>CocList --normal locationlist<CR>
+  nnoremap <silent> <Space>L  :<C-u>CocList -N lists<CR>
+  nnoremap <silent> <Space>o  :<C-u>CocList -A outline<CR>
+  nnoremap <silent> <Space>O  :<C-u>CocList -I symbols<CR>
+  nnoremap <silent> <Space>q  :<C-u>CocList --normal quickfix<CR>
+  nnoremap <silent> <Space>r  :<C-u>CocListResume<CR>
+  nnoremap <silent> <Space>s  :<C-u>CocList snippets<CR>
+  nnoremap <silent> <Space>y  :<C-u>CocList -A --normal yank<CR>
+
   nnoremap <silent> * :execute 'CocList -A -I --normal --input='.expand('<cword>').' words'<CR>
-  nnoremap <silent> n :<C-u>CocNext<CR>
-  nnoremap <silent> N :<C-u>CocPrev<CR>
-  nnoremap <silent> <Leader>/  :<C-u>Rg<Space>
-  vnoremap <silent> <Leader>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
-  nnoremap <silent> <Leader>*  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
-
-  " tag jump
-  nnoremap <silent><expr> <Leader>[  &filetype == 'help' ? ":\<C-u>pop\<CR>" :
-        \ ":\<C-u>CocList --normal location\<CR>"
-  nnoremap <silent><expr> <Leader>]  &filetype == 'help' ? "g\<C-]>" :
-        \ "\<Plug>(coc-definition)"
-
-  " CocList
-  nnoremap <silent> <Leader>cc  :<C-u>CocList commands<CR>
-  nnoremap <silent> <Leader>cd  :<C-u>CocList -A --normal diagnostics<CR>
-  nnoremap <silent> <Leader>ce  :<C-u>CocList -N --normal extensions<CR>
-  nnoremap <silent> <Leader>cj  :<C-u>CocList location<CR>
-  nnoremap <silent> <Leader>cl  :<C-u>CocList -N --normal lists<CR>
-  nnoremap <silent> <Leader>cL  :<C-u>CocList links<CR>
-  nnoremap <silent> <Leader>co  :<C-u>CocList -A outline<CR>
-  nnoremap <silent> <Leader>cO  :<C-u>CocList output<CR>
-  nnoremap <silent> <Leader>cs  :<C-u>CocList snippets<CR>
-  nnoremap <silent> <Leader>cS  :<C-u>CocList -N --normal sources<CR>
+  nnoremap <silent> <Space>/  :<C-u>Rg<Space>
+  vnoremap <silent> <Space>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+  nnoremap <silent> <Space>*  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
 
   " --- Key mappings for LSP features
-  " show list of diagnostic info
-  nmap     <silent><LocalLeader>a   :<C-u>CocList diagnostics<CR>
-  " codeaction
-  nmap     <silent><LocalLeader>ca  <Plug>(coc-codeaction)
-  vmap     <silent><LocalLeader>ca  <Plug>(coc-codeaction-selected)
-  " codelens
-  nmap     <silent><LocalLeader>cl  <Plug>(coc-codelens-action)
-  " go to definition
-  nmap     <silent><LocalLeader>d   <Plug>(coc-definition)
-  " go to declaration
-  nmap     <silent><LocalLeader>D   <Plug>(coc-declaration)
-  " format selected region
-  vmap     <silent><LocalLeader>f   <Plug>(coc-format-selected)
-  " format buffer
-  nmap     <silent><LocalLeader>f   <Plug>(coc-format)
-  " fix current line
-  nmap     <silent><LocalLeader>F   <Plug>(coc-fix-current)
-  " document hover
-  nmap     <silent><LocalLeader>h   :<C-u>call <SID>ShowDocumentation()<CR>
-  " go to implementation
-  nmap     <silent><LocalLeader>i   <Plug>(coc-implementation)
-  " show diagnostic info
-  nmap     <silent><LocalLeader>I   <Plug>(coc-diagnostic-info)
-  " jump to next diagnostic position
-  nmap     <silent><LocalLeader>n   <Plug>(coc-diagnostic-next)
-  " show symbols in the current file
-  nnoremap <silent><LocalLeader>o   :<C-u>CocList --auto-preview outline<CR>
-  " jump to previous diagnostic position
-  nmap     <silent><LocalLeader>p   <Plug>(coc-diagnostic-prev)
-  " go to reference
-  nmap     <silent><LocalLeader>r   <Plug>(coc-reference)
-  " rename the symbol
-  nmap     <silent><LocalLeader>R   <Plug>(coc-rename)
-  " show workspace symbols
-  nnoremap <silent><LocalLeader>s   :<C-u>CocList --interactive symbols<CR>
-  " go to type-definition
-  nmap     <silent><LocalLeader>t   <Plug>(coc-type-definition)
-
   function! s:CocLspSettings() abort
     " Key mappings (buffer local)
     nmap     <silent><buffer> [e <Plug>(coc-diagnostic-prev)
     nmap     <silent><buffer> ]e <Plug>(coc-diagnostic-next)
-
+    nmap     <silent><buffer> ga <Plug>(coc-codeaction-selected)
+    vmap     <silent><buffer> ga <Plug>(coc-codeaction-selected)
+    nmap     <silent><buffer> gA <Plug>(coc-codeaction)
     nmap     <silent><buffer> gd <Plug>(coc-definition)
-    " nnoremap <silent><buffer> K  :<C-u>call <SID>ShowDocumentation()<CR>
+    nmap     <silent><buffer> gD <Plug>(coc-declaration)
+    nmap     <silent><buffer> gI <Plug>(coc-implementation)
+    nmap     <silent><buffer> gQ <Plug>(coc-format)
+    nmap     <silent><buffer> gr <Plug>(coc-reference)
+    nmap     <silent><buffer> gR <Plug>(coc-rename)
+    nmap     <silent><buffer> gt <Plug>(coc-type-definition)
 
-    " Document hover
+    " Document hover (invoked by 'K')
     setlocal keywordprg=:call\ ShowDocumentation()
-    " formatexpr from language server
+    " formatexpr from language server (gq{motion})
     setlocal formatexpr=CocAction('formatSelected')
   endfunction
 
@@ -183,30 +137,33 @@ hook_source = '''
 
     " --- Cross reference extensions
     " bases
-    nnoremap <silent><buffer> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance')<CR>
+    nnoremap <silent><buffer> xb :call CocLocations('ccls','$ccls/inheritance')<CR>
     " bases of up to 3 levels
-    nnoremap <silent><buffer> <LocalLeader>xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<CR>
+    nnoremap <silent><buffer> xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<CR>
     " derived
-    nnoremap <silent><buffer> <LocalLeader>xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<CR>
+    nnoremap <silent><buffer> xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<CR>
     " derived of up to 3 levels
-    nnoremap <silent><buffer> <LocalLeader>xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<CR>
+    nnoremap <silent><buffer> xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<CR>
 
     " caller
-    nnoremap <silent><buffer> <LocalLeader>xc :call CocLocations('ccls','$ccls/call')<CR>
+    nnoremap <silent><buffer> xc :call CocLocations('ccls','$ccls/call')<CR>
     " callee
-    nnoremap <silent><buffer> <LocalLeader>xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<CR>
+    nnoremap <silent><buffer> xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<CR>
 
     " $ccls/member
     " member variables / variables in a namespace
-    nnoremap <silent><buffer> <LocalLeader>xm :call CocLocations('ccls','$ccls/member')<CR>
+    nnoremap <silent><buffer> xm :call CocLocations('ccls','$ccls/member')<CR>
     " member functions / functions in a namespace
-    nnoremap <silent><buffer> <LocalLeader>xf :call CocLocations('ccls','$ccls/member',{'kind':3})<CR>
+    nnoremap <silent><buffer> xf :call CocLocations('ccls','$ccls/member',{'kind':3})<CR>
     " nested classes / types in a namespace
-    nnoremap <silent><buffer> <LocalLeader>xs :call CocLocations('ccls','$ccls/member',{'kind':2})<CR>
+    nnoremap <silent><buffer> xs :call CocLocations('ccls','$ccls/member',{'kind':2})<CR>
 
-    nmap     <silent><buffer> <LocalLeader>xt <Plug>(coc-type-definition)<CR>
-    nnoremap <silent><buffer> <LocalLeader>xv :call CocLocations('ccls','$ccls/vars')<CR>
-    nnoremap <silent><buffer> <LocalLeader>xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<CR>
+    nmap     <silent><buffer> xt <Plug>(coc-type-definition)<CR>
+    nnoremap <silent><buffer> xv :call CocLocations('ccls','$ccls/vars')<CR>
+    nnoremap <silent><buffer> xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<CR>
+
+    " Remap xx to x
+    nnoremap <silent><buffer> xx x
   endfunction
 
   " --- Autocmd
@@ -305,7 +262,7 @@ on_cmd = ['Dein']
 repo = 'Shougo/defx.nvim' # {{{
 on_cmd = ['Defx']
 hook_add = '''
-  nnoremap <silent><Leader>e  :<C-u>Defx<CR>
+  nnoremap <silent><Space>d  :<C-u>Defx<CR>
 '''
 hook_source = '''
   call defx#custom#option('_', {
@@ -370,26 +327,26 @@ repo = 'kristijanhusak/defx-icons'
 on_source = 'defx.nvim'
 # }}}
 
-# Simple session manager with denite interface
-[[plugins]]
-repo = 'lambdalisue/session.vim' # {{{
-on_cmd = ['SessionList', 'SessionOpen', 'SessionRemove', 'SessionSave']
-hook_source = '''
-  let g:session_dir = $VIM_CACHE_HOME . '/session'
-  let g:session#default_opener = 'edit'
-  let g:session#default_session = 'default'
-
-  nnoremap <silent> <Leader>Sa  :<C-u>SessionOpen last<CR>
-  nnoremap <silent> <Leader>Sl  :<C-u>SessionList<CR>
-  nnoremap <silent> <Leader>So  :<C-u>SessionOpen<CR>
-  nnoremap <silent> <Leader>Sr  :<C-u>SessionRemove<CR>
-  nnoremap <silent> <Leader>Ss  :<C-u>SessionSave
-'''
-hook_post_source = '''
-  if exists('g:loaded_session')
-    call session#last#enable()
-  endif
-'''
+# # Simple session manager with denite interface
+# [[plugins]]
+# repo = 'lambdalisue/session.vim' # {{{
+# on_cmd = ['SessionList', 'SessionOpen', 'SessionRemove', 'SessionSave']
+# hook_source = '''
+#   let g:session_dir = $VIM_CACHE_HOME . '/session'
+#   let g:session#default_opener = 'edit'
+#   let g:session#default_session = 'default'
+#
+#   nnoremap <silent> <Leader>Sa  :<C-u>SessionOpen last<CR>
+#   nnoremap <silent> <Leader>Sl  :<C-u>SessionList<CR>
+#   nnoremap <silent> <Leader>So  :<C-u>SessionOpen<CR>
+#   nnoremap <silent> <Leader>Sr  :<C-u>SessionRemove<CR>
+#   nnoremap <silent> <Leader>Ss  :<C-u>SessionSave
+# '''
+# hook_post_source = '''
+#   if exists('g:loaded_session')
+#     call session#last#enable()
+#   endif
+# '''
 # }}}
 
 # Perform the replacement in |quickfix|
@@ -439,12 +396,14 @@ on_map = {n = '<Plug>Splitjoin'}
 repo = 'liuchengxu/vim-which-key' # {{{
 on_cmd = ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']
 hook_add = '''
-  nnoremap <silent><Leader>      :<C-u>WhichKey '<Space>'<CR>
-  vnoremap <silent><Leader>      :<C-u>WhichKeyVisual '<Space>'<CR>
-  nnoremap <silent><LocalLeader> :<C-u>WhichKey ';'<CR>
-  vnoremap <silent><LocalLeader> :<C-u>WhichKeyVisual ';'<CR>
-  nnoremap <silent>s             :<C-u>WhichKey 's'<CR>
-  vnoremap <silent>s             :<C-u>WhichKeyVisual 's'<CR>
+  nnoremap <silent> <Space>  :<C-u>WhichKey '<Space>'<CR>
+  vnoremap <silent> <Space>  :<C-u>WhichKeyVisual '<Space>'<CR>
+  nnoremap <silent> ;        :<C-u>WhichKey ';'<CR>
+  vnoremap <silent> ;        :<C-u>WhichKeyVisual ';'<CR>
+  nnoremap <silent> ,        :<C-u>WhichKey ','<CR>
+  vnoremap <silent> ,        :<C-u>WhichKeyVisual ','<CR>
+  nnoremap <silent> s        :<C-u>WhichKey 's'<CR>
+  vnoremap <silent> s        :<C-u>WhichKeyVisual 's'<CR>
 '''
 hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
 # }}}
@@ -816,11 +775,6 @@ hook_add = '''
 repo = 'w0rp/ale' # {{{
 on_path = '.*'
 hook_add = '''
-  " jump errors
-  nmap <silent> <Leader>aj  <Plug>(ale_previous_wrap)
-  nmap <silent> <Leader>ak  <Plug>(ale_next_wrap)
-  " Fix (auto-format) the buffer
-  nmap <silent> <Leader>af  <Plug>(ale_fix)
 '''
 hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/ale.vim'
 # }}}

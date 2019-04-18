@@ -17,6 +17,9 @@
 
 " Basic mappings {{{
 " -----
+" Disable Ex-mode, remap to register macros
+nnoremap Q  q
+
 " Disable dangerous/annoying default mappings
 "   ZZ - Save current file and quit
 "   ZQ - Quit without checking changes (:q!)
@@ -182,25 +185,16 @@ endfunction
 " }}}
 
 " Leader mappings {{{
+" ;; to :
+nnoremap <silent><Leader>;  :
 
-" Buffer {{{
-" nnoremap <silent><Leader>bd  :bdelete<CR>
-" nnoremap <silent><Leader>bD  :bdelete!<CR>
-" nnoremap <silent><Leader>bf  :bfirst<CR>
-" nnoremap <silent><Leader>bk  :bwipeout<CR>
-" nnoremap <silent><Leader>bl  :blast<CR>
-" nnoremap <silent><Leader>bn  :bnext<CR>
-" nnoremap <silent><Leader>bp  :bprev<CR>
-" }}}
-
-" Quit {{{
+" Quit
 nnoremap <silent><Leader>q  :quit<CR>
 vnoremap <silent><Leader>q  <ESC>:quit<CR>
 nnoremap <silent><Leader>Q  :qall!<CR>
 vnoremap <silent><Leader>Q  <ESC>:qall!<CR>
-" }}}
 
-" Toggle editor UI {{{
+" Toggle editor UI
 nnoremap <silent><Leader>ts  :setlocal spell!<CR>
 nnoremap <silent><Leader>tn  :setlocal number!<CR>
 nnoremap <silent><Leader>tr  :setlocal relativenumber!<CR>
@@ -209,22 +203,13 @@ nnoremap <silent><Leader>tcl :setlocal cursorline!<CR>
 nnoremap <silent><Leader>tl  :setlocal nolist!<CR>
 nnoremap <silent><Leader>tp  :setlocal paste!<CR>
 nnoremap <silent><Leader>tw  :setlocal wrap! breakindent!<CR>
-" }}}
 
-" Fast saving {{{
+" Fast saving
 nnoremap <silent><Leader>w  :update<CR>
 vnoremap <silent><Leader>w  <ESC>:update<CR>
 nnoremap <silent><Leader>W  :wall!<CR>
 vnoremap <silent><Leader>W  <ESC>:wall!<CR>
-" }}}
 
-" Open terminal/shell {{{
-if has('nvim') || has('terminal')
-  map <Leader>'  :<C-u>terminal<CR>
-else
-  map <Leader>'  :<C-u>shell<CR>
-endif
-" }}}
 " }}}
 
 "-----------------------------------------------------------------------------
