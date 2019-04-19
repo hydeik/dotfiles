@@ -104,18 +104,18 @@ hook_source = '''
   " --- Key mappings for LSP features
   function! s:CocLspSettings() abort
     " Key mappings (buffer local)
-    nmap     <silent><buffer> [e <Plug>(coc-diagnostic-prev)
-    nmap     <silent><buffer> ]e <Plug>(coc-diagnostic-next)
-    nmap     <silent><buffer> ga <Plug>(coc-codeaction-selected)
-    vmap     <silent><buffer> ga <Plug>(coc-codeaction-selected)
-    nmap     <silent><buffer> gA <Plug>(coc-codeaction)
-    nmap     <silent><buffer> gd <Plug>(coc-definition)
-    nmap     <silent><buffer> gD <Plug>(coc-declaration)
-    nmap     <silent><buffer> gI <Plug>(coc-implementation)
-    nmap     <silent><buffer> gQ <Plug>(coc-format)
-    nmap     <silent><buffer> gr <Plug>(coc-reference)
-    nmap     <silent><buffer> gR <Plug>(coc-rename)
-    nmap     <silent><buffer> gt <Plug>(coc-type-definition)
+    nmap <silent><buffer> [e <Plug>(coc-diagnostic-prev)
+    nmap <silent><buffer> ]e <Plug>(coc-diagnostic-next)
+    nmap <silent><buffer> ga <Plug>(coc-codeaction-selected)
+    vmap <silent><buffer> ga <Plug>(coc-codeaction-selected)
+    nmap <silent><buffer> gA <Plug>(coc-codeaction)
+    nmap <silent><buffer> gd <Plug>(coc-definition)
+    nmap <silent><buffer> gD <Plug>(coc-declaration)
+    nmap <silent><buffer> gI <Plug>(coc-implementation)
+    nmap <silent><buffer> gQ <Plug>(coc-format)
+    nmap <silent><buffer> gr <Plug>(coc-reference)
+    nmap <silent><buffer> gR <Plug>(coc-rename)
+    nmap <silent><buffer> gt <Plug>(coc-type-definition)
 
     " Document hover (invoked by 'K')
     setlocal keywordprg=:call\ ShowDocumentation()
@@ -173,7 +173,6 @@ hook_source = '''
     " Trigger signature help
     autocmd CursorHoldI,CursorMovedI call CocActionAsync('showSignatureHelp')
     autocmd User CocJumpPlaceholder  call CocActionAsync('showSignatureHelp')
-    autocmd User CocQuickfixChange   :CocList --normal quickfix
     autocmd FileType typescript,json,python,ruby,rust,sh,vim,yaml
           \ call s:CocLspSettings()
     autocmd FileType c,cpp,objc,objcpp call s:CocLspCclsSettings()

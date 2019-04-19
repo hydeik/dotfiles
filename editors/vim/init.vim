@@ -118,7 +118,7 @@ call s:configure_path('$MANPATH', [
 " -----
 augroup MyAutoCmd
   autocmd!
-  autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?  call s:on_filetype()
+  " autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?  call s:on_filetype()
   " Re-detect filetype on save
   autocmd BufWritePost *
         \ if &filetype ==# '' && exists('b:ftdetect') |

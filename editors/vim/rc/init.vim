@@ -45,9 +45,9 @@ let g:mapleader = ";"
 let g:maplocalleader = ','
 
 " Release some keymappings for use of plugins
-"   Space ->
-"   ,     -> LocalLeader
-"   ;     -> prefix for fuzzy finder, LSP
+"   Space -> prefix for fuzzy finder
+"   ;     -> <Leader> key
+"   ,     -> <LocalLeader> key
 "   s     -> prefix for window, tab, easymotion, sandwich
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
