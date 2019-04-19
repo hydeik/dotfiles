@@ -406,6 +406,16 @@ hook_add = '''
 '''
 hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
 # }}}
+# [[plugins]]
+# repo = 'paroxayte/vkmap.vim'
+# depends = ['vwm.vim']
+# on_event = 'VimEnter'
+# hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/vkmap.vim'
+#
+# [[plugins]]
+# repo = 'paroxayte/vwm.vim'
+# on_source = 'vkmap.vim'
+
 # }}}
 
 # Interfaces {{{
