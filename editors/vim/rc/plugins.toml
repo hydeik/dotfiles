@@ -1,7 +1,7 @@
 # === Plugins (loaded on startup) ===
 
-# Fundamentals {{{
-# -----
+# --- Fundamentals {{{
+
 # Dark powered Vim/Neovim plugin manager
 [[plugins]]
 repo = 'Shougo/dein.vim'
@@ -22,13 +22,15 @@ repo = 'roxma/nvim-yarp'
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 if = 'executable("editorconfig")'
-hook_add = '''
+hook_add = ''' " {{{
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-'''
+" }}} '''
+
+# ---
 # }}}
 
-# Interfaces {{{
-# -----
+# --- Interfaces {{{
+
 # Provides the branch name of the current git repository
 [[plugins]]
 repo = 'itchyny/vim-gitbranch'
@@ -49,7 +51,7 @@ hook_add = '''
 # Better whitespace highlighting for Vim
 [[plugins]]
 repo = 'ntpeters/vim-better-whitespace'
-hook_add = '''
+hook_add = ''' " {{{
   let g:better_whitespace_enabled = 1
   let g:strip_whitespace_on_save  = 1
   let g:show_spaces_that_precede_tabs = 1
@@ -59,12 +61,12 @@ hook_add = '''
       \ ]
 
   nnoremap <silent><Leader>xd  :<C-u>StripWhitespace<CR>
-'''
+" }}} '''
 
 # Seemless navitation between Tmux and Vim
 [[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
-hook_add = '''
+hook_add = ''' " {{{
   let g:tmux_navigator_no_mappings = 1
   nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
   nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
@@ -77,11 +79,12 @@ hook_add = '''
     tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
     tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
   endif
-'''
-# }}}
+" }}} '''
 
-# Plugin dependencies (non-lazy loading) {{{
-# -----
+# --- }}}
+
+# --- Plugin dependencies (non-lazy loading) {{{
+
 # Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -108,10 +111,11 @@ if = 'executable("look")'
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
-# }}}
 
-# Themes {{{
-# -----
+# --- }}}
+
+# --- Appearance {{{
+
 # Custom status line
 [[plugins]]
 repo = 'itchyny/lightline.vim'
@@ -153,11 +157,10 @@ repo = 'joshdick/onedark.vim'
 [[plugins]]
 repo = 'rakr/vim-one'
 
+# --- }}}
 
-# }}}
+# --- Syntax, filetype (not necessary for lazy loading) {{{
 
-# Syntax, filetype (not necessary for lazy loading) {{{
-# -----
 # A collection of language packs for Vim
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
@@ -165,39 +168,39 @@ hook_add = '''
   let g:polyglot_disable = ['json', 'markdown']
 '''
 
-# Additional filetype/syntax
-# --- diff
+# diff
 [[plugins]]
 repo = 'thinca/vim-ft-diff_fold'
 
-# --- help
+# help
 [[plugins]]
 repo = 'thinca/vim-ft-help_fold'
 
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
 
-# --- D language
+# D language
 [[plugins]]
 repo = 'JesseKPhillips/d.vim'
 
-# --- Python
+# Python
 [[plugins]]
 # extend % and g% for python
 repo = 'vim-scripts/python_match.vim'
 
-# --- JSON
+# JSON
 [[plugins]]
 repo = 'neoclide/jsonc.vim'
 
-# --- zsh
+# zsh
 [[plugins]]
 repo = 'chrisbra/vim-zsh'
 
-# --- GNU As
+# GNU As
 [[plugins]]
 repo = 'Shirk/vim-gas'
-# }}}
+
+# --- }}}
 
 #-----------------------------------------------------------------------------
 # vim: foldmethod=marker
