@@ -268,7 +268,7 @@ set belloff=all
 set fillchars=""
 
 " For conceal
-set conceallevel=2 concealcursor=niv
+set conceallevel=2 concealcursor=nc
 
 " Enable folding
 set foldenable
