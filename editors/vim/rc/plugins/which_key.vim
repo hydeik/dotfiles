@@ -7,17 +7,20 @@ let g:which_key_space_map = {
       \ 'd':  'Defx',
       \ 'e':  'CocList extensions',
       \ 'f':  'CocList files',
-      \ 'j':  'CocNext',
-      \ 'k':  'CocPrev',
       \ 'm':  'CocList mru',
       \ 'l':  'CocList locationlist',
       \ 'L':  'CocList lists',
       \ 'o':  'CocList outline',
       \ 'O':  'CocList symbols',
       \ 'q':  'CocList quickfix',
-      \ 'r':  'CocListResume',
       \ 's':  'CocList snippets',
       \ 'y':  'CocList yank',
+      \ 'w':  'CocList workds <cwords>',
+      \ '/':  'CocList grep',
+      \ '*':  'CocList grep <cwords>',
+      \ 'p':  'CocListResume',
+      \ ']':  'CocNext',
+      \ '[':  'CocPrev',
       \ }
 
 call which_key#register('<Space>', 'g:which_key_space_map')
@@ -116,7 +119,7 @@ let g:which_key_s_map = {
       \ 'c':  'window-close',
       \ 'o':  'windown-only',
       \ 't':  'window-tabnew',
-      \ 'x':  'window-empty-buffer',
+      \ 'x':  'window-clear-buffer',
       \ 'z':  'window-toggle-zoom',
       \ }
 

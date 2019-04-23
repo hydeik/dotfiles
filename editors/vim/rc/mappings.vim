@@ -139,7 +139,7 @@ nnoremap <silent> sc  :<C-u>close<CR>
 " only current window
 nnoremap <silent> so  :<C-u>only<CR>
 " empty current buffer
-nnoremap <silent> sx  :<C-u>call <SID>BufferEmpty()<CR>
+" nnoremap <silent> sx  :<C-u>call <SID>BufferEmpty()<CR>
 " split window horizontally
 nnoremap <silent> s-  :<C-u>split<CR>
 " split window virtically
@@ -160,14 +160,14 @@ nnoremap <S-Right>  <C-w>>
 nnoremap <S-Up>     <C-w>+
 nnoremap <S-Down>   <C-w>-
 
-" Empty buffer contents
-function! s:BufferEmpty()
-  let l:current = bufnr('%')
-  if ! getbufvar(l:current, '&modified')
-    enew
-    silent! execute 'bdelete '.l:current
-  endif
-endfunction
+" " Empty buffer contents
+" function! s:BufferEmpty()
+"   let l:current = bufnr('%')
+"   if ! getbufvar(l:current, '&modified')
+"     enew
+"     silent! execute 'bdelete '.l:current
+"   endif
+" endfunction
 
 " Toggle window zoom
 "  <C-w>z      : maximize current window

@@ -84,19 +84,19 @@ hook_source = ''' "{{{
   nnoremap <silent> <Space>b  :<C-u>CocList --normal buffers<CR>
   nnoremap <silent> <Space>e  :<C-u>CocList -N extensions<CR>
   nnoremap <silent> <Space>f  :<C-u>CocList -N files<CR>
-  nnoremap <silent> <Space>j  :<C-u>CocNext<CR>
-  nnoremap <silent> <Space>k  :<C-u>CocPrev<CR>
   nnoremap <silent> <Space>m  :<C-u>CocList -N mru<CR>
   nnoremap <silent> <Space>l  :<C-u>CocList --normal locationlist<CR>
   nnoremap <silent> <Space>L  :<C-u>CocList -N lists<CR>
   nnoremap <silent> <Space>o  :<C-u>CocList -A outline<CR>
   nnoremap <silent> <Space>O  :<C-u>CocList -I symbols<CR>
+  nnoremap <silent> <Space>p  :<C-u>CocListResume<CR>
   nnoremap <silent> <Space>q  :<C-u>CocList --normal quickfix<CR>
-  nnoremap <silent> <Space>r  :<C-u>CocListResume<CR>
   nnoremap <silent> <Space>s  :<C-u>CocList snippets<CR>
+  nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
   nnoremap <silent> <Space>y  :<C-u>CocList -A --normal yank<CR>
+  nnoremap <silent> <Space>]  :<C-u>CocNext<CR>
+  nnoremap <silent> <Space>[  :<C-u>CocPrev<CR>
 
-  nnoremap <silent> * :execute 'CocList -A -I --normal --input='.expand('<cword>').' words'<CR>
   nnoremap <silent> <Space>/  :<C-u>Rg<Space>
   vnoremap <silent> <Space>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
   nnoremap <silent> <Space>*  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
@@ -406,6 +406,15 @@ hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
 # repo = 'paroxayte/vwm.vim'
 # on_source = 'vkmap.vim'
 
+# Delete buffer without closing window (tig-explorer dependency)
+[[plugins]]
+repo = 'rbgrouleff/bclose.vim'
+on_cmd = ['Bclose']
+hook_add = '''
+  let g:bclose_no_plugins_maps = 1
+  nnoremap <silent> sx  :<C-u>Bclose<CR>
+'''
+
 # --- }}}
 
 # --- Interfaces {{{
@@ -471,7 +480,7 @@ hook_add = ''' "{{{
   map  sp <Plug>(easymotion-prev)
 
   " smart f & F (visual mode and operator mode)
-  nmap f <Plug>(easymotion-s)
+  nmap f <Plug>(easymotion-sl)
   omap f <Plug>(easymotion-bd-fl)
   xmap f <Plug>(easymotion-bd-fl)
   omap F <Plug>(easymotion-Fl)
@@ -765,6 +774,7 @@ hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/ale.vim'
 # Use Tig as a git client on vim
 [[plugins]]
 repo = 'iberianpig/tig-explorer.vim'
+depends = ['bclose.vim']
 on_cmd = ['TigOpenCurrentFile', 'TigOpenProjectRootDir', 'TigGrep', 'TigGrep',
           'TigGrepResume', 'TigBlame']
 hook_add = ''' "{{{
@@ -772,6 +782,9 @@ hook_add = ''' "{{{
   let g:tig_explorer_keymap_tabedit = '<C-t>'
   let g:tig_explorer_keymap_split   = '<C-s>'
   let g:tig_explorer_keymap_vsplit  = '<C-v>'
+
+  nnoremap <Space>tt  :<C-u>TigOpenCurrentFile<CR>
+  nnoremap <Space>tp  :<C-u>TigOpenProjectRootDir<CR>
 "}}} '''
 
 # Asynchronously control git repositories in Neovim/Vim 8
