@@ -267,8 +267,8 @@ set belloff=all
 " Characters to fill the statuslines and vertical separators
 set fillchars=""
 
-" For conceal
-set conceallevel=2 concealcursor=nc
+" For conceal -- some plugins overwrite conceal settings
+" set conceallevel=2 concealcursor=nvc
 
 " Enable folding
 set foldenable

@@ -137,4 +137,5 @@ call gina#custom#execute(
       \ '/\%(status\|branch\|ls\|log\|reflog\|grep\)',
       \ 'setlocal cursorline',
       \)
+
 " }}}

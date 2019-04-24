@@ -16,12 +16,28 @@ let g:which_key_space_map = {
       \ 's':  'CocList snippets',
       \ 'y':  'CocList yank',
       \ 'w':  'CocList workds <cwords>',
-      \ '/':  'CocList grep',
-      \ '*':  'CocList grep <cwords>',
       \ 'p':  'CocListResume',
       \ ']':  'CocNext',
       \ '[':  'CocPrev',
       \ }
+
+" Git
+let g:which_key_space_map.g = {
+     \ 'name': '+git',
+     \ 'a': 'changes-HEAD',
+     \ 'A': 'changes-origin/HEAD',
+     \ 'b': 'branch',
+     \ 'B': 'blame',
+     \ 'c': 'commit',
+     \ 'd': 'diff',
+     \ 'f': 'ls',
+     \ 'l': 'log',
+     \ 'L': 'log-current-file',
+     \ 'q': 'qrep',
+     \ 's': 'status',
+     \ 't': 'tag',
+     \ '/': 'grep',
+     \ }
 
 call which_key#register('<Space>', 'g:which_key_space_map')
 " }}}
@@ -30,18 +46,7 @@ call which_key#register('<Space>', 'g:which_key_space_map')
 " -----
 let g:which_key_leader_map = {}
 
-let g:which_key_leader_map.g = {
-     \ 'name': '+git',
-     \ 'b': 'gina-branch',
-     \ 'c': 'gina-commit',
-     \ 'C': 'gina-commit-amend',
-     \ 'A': 'gina-changes-origin',
-     \ 'd': 'gina-changes-origin',
-     \ 'l': 'gina-log',
-     \ 'f': 'gina-ls',
-     \ 's': 'gina-status',
-     \ 't': 'gina-tag',
-     \ }
+let g:which_key_leader_map.g = 'grep'
 
 let g:which_key_leader_map.h = {
      \ 'name': '+hunk',
@@ -90,6 +95,8 @@ let g:which_key_leader_map.x = {
      \ }
 
 let g:which_key_leader_map[';'] = ':{command}'
+let g:which_key_leader_map['/'] = 'swoop-buffer'
+let g:which_key_leader_map['*'] = 'grep <cword>'
 
 " Register dictionary
 call which_key#register(';', 'g:which_key_leader_map')

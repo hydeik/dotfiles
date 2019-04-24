@@ -43,10 +43,12 @@ repo = 'itchyny/vim-parenmatch'
 # Visually displaying indent levels with thin vertical lines
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-hook_add = '''
+hook_add = ''' " {{{
   let g:indentLine_enable = 1
   let g:indentLine_char = '¦'
-'''
+  " Keep my conceal setting
+  let g:indentLine_setConceal = 0
+" }}} '''
 
 # Better whitespace highlighting for Vim
 [[plugins]]

@@ -97,9 +97,11 @@ hook_source = ''' "{{{
   nnoremap <silent> <Space>]  :<C-u>CocNext<CR>
   nnoremap <silent> <Space>[  :<C-u>CocPrev<CR>
 
-  nnoremap <silent> <Space>/  :<C-u>Rg<Space>
-  vnoremap <silent> <Space>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
-  nnoremap <silent> <Space>*  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+  " Grep
+  nnoremap <silent> <Leader>g  :<C-u>Rg<Space>
+  nnoremap <silent> <Leader>/  :<C-u>CocList -I words<CR>
+  vnoremap <silent> <Leader>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+  nnoremap <silent> <Leader>*  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
 
   " --- Key mappings for LSP features
   function! s:CocLspSettings() abort
@@ -782,9 +784,6 @@ hook_add = ''' "{{{
   let g:tig_explorer_keymap_tabedit = '<C-t>'
   let g:tig_explorer_keymap_split   = '<C-s>'
   let g:tig_explorer_keymap_vsplit  = '<C-v>'
-
-  nnoremap <Space>tt  :<C-u>TigOpenCurrentFile<CR>
-  nnoremap <Space>tp  :<C-u>TigOpenProjectRootDir<CR>
 "}}} '''
 
 # Asynchronously control git repositories in Neovim/Vim 8
@@ -792,20 +791,19 @@ hook_add = ''' "{{{
 repo = 'lambdalisue/gina.vim'
 on_cmd = ['Gina', 'Gina!', 'Gina!!']
 hook_add = ''' "{{{
-  nnoremap <silent> <Leader>gs :<C-u>Gina status<CR>
-  nnoremap <silent> <Leader>gc :<C-u>Gina commit<CR>
-  nnoremap <silent> <Leader>gC :<C-u>Gina commit --amend<CR>
-  nnoremap <silent> <Leader>gb :<C-u>Gina branch -av<CR>
-  nnoremap <silent> <Leader>gt :<C-u>Gina tag<CR>
-  nnoremap <silent> <Leader>g/ :<C-u>Gina grep<CR>
-  nnoremap <silent> <Leader>gq :<C-u>Gina qrep<CR>
-  nnoremap <silent> <Leader>gA :<C-u>Gina changes HEAD<CR>
-  nnoremap <silent> <Leader>gd :<C-u>Gina changes origin/HEAD...<CR>
-  nnoremap <silent> <Leader>gl :<C-u>Gina log<CR>
-  nnoremap <silent> <Leader>gL :<C-u>Gina log :%<CR>
-  nnoremap <silent> <Leader>gf :<C-u>Gina ls<CR>
-  nnoremap <silent> <Leader>grs :<C-u>Gina show <C-r><C-w><CR>
-  nnoremap <silent> <Leader>grc :<C-u>Gina changes <C-r><C-w><CR>
+  nnoremap <silent> <Space>ga :<C-u>Gina changes HEAD<CR>
+  nnoremap <silent> <Space>gA :<C-u>Gina changes origin/HEAD...<CR>
+  nnoremap <silent> <Space>gb :<C-u>Gina branch -av<CR>
+  nnoremap <silent> <Space>gB :<C-u>Gina blame<CR>
+  nnoremap <silent> <Space>gc :<C-u>Gina commit<CR>
+  nnoremap <silent> <Space>gd :<C-u>Gina diff<CR>
+  nnoremap <silent> <Space>gl :<C-u>Gina log<CR>
+  nnoremap <silent> <Space>gL :<C-u>Gina log :%<CR>
+  nnoremap <silent> <Space>gf :<C-u>Gina ls<CR>
+  nnoremap <silent> <Space>gq :<C-u>Gina qrep<CR>
+  nnoremap <silent> <Space>gs :<C-u>Gina status<CR>
+  nnoremap <silent> <Space>gt :<C-u>Gina tag<CR>
+  nnoremap <silent> <Space>g/ :<C-u>Gina grep<CR>
 "}}} '''
 hook_post_source = 'source $VIM_CONFIG_HOME/rc/plugins/gina.vim'
 
