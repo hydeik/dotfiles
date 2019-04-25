@@ -91,6 +91,9 @@ vnoremap <expr> cN  "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 " Close windows with q
 nnoremap <silent><expr>q  winnr('$') != 1 ? ':<C-u>close<CR>' : ':<C-u>bdelete<CR>'
 
+" Turn off search highlight
+nnoremap <silent><Esc><Esc>  :silent! nohlsearch<CR>
+
 " }}}
 
 " Open/close folding: {{{
@@ -184,6 +187,20 @@ function! s:ToggleWindowZoom() abort
 endfunction
 " }}}
 
+" Space mappings {{{
+
+" Toggle editor visuals
+nnoremap <silent><Space>tcc :setlocal cursorcolumn!<CR>
+nnoremap <silent><Space>tcl :setlocal cursorline!<CR>
+nnoremap <silent><Space>tn  :setlocal number!<CR>
+nnoremap <silent><Space>tr  :setlocal relativenumber!<CR>
+nnoremap <silent><Space>tl  :setlocal nolist!<CR>
+nnoremap <silent><Space>tp  :setlocal paste!<CR>
+nnoremap <silent><Space>ts  :setlocal spell!<CR>
+nnoremap <silent><Space>tw  :setlocal wrap! breakindent!<CR>
+
+" }}}
+
 " Leader mappings {{{
 " ;; to :
 nnoremap <silent><Leader>;  :
@@ -193,16 +210,6 @@ nnoremap <silent><Leader>q  :quit<CR>
 vnoremap <silent><Leader>q  <ESC>:quit<CR>
 nnoremap <silent><Leader>Q  :qall!<CR>
 vnoremap <silent><Leader>Q  <ESC>:qall!<CR>
-
-" Toggle editor UI
-nnoremap <silent><Leader>ts  :setlocal spell!<CR>
-nnoremap <silent><Leader>tn  :setlocal number!<CR>
-nnoremap <silent><Leader>tr  :setlocal relativenumber!<CR>
-nnoremap <silent><Leader>tcc :setlocal cursorcolumn!<CR>
-nnoremap <silent><Leader>tcl :setlocal cursorline!<CR>
-nnoremap <silent><Leader>tl  :setlocal nolist!<CR>
-nnoremap <silent><Leader>tp  :setlocal paste!<CR>
-nnoremap <silent><Leader>tw  :setlocal wrap! breakindent!<CR>
 
 " Fast saving
 nnoremap <silent><Leader>w  :update<CR>

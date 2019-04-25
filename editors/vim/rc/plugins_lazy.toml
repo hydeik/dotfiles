@@ -517,26 +517,31 @@ hook_source = ''' "{{{
   let g:EasyMotion_prompt = 'Search for {n} chars> '
 "}}} '''
 
-# Incremental search improved
-# [[plugins]]
-# repo = 'haya14busa/is.vim'
-# depends = ['vim-asterisk', 'vim-anzu']
-# on_map = {nv = '<Plug>'}
-# hook_add = '''
-#   " Combine with vim-anzu
-#   map n <Plug>(is-nohl)<Plug>(anzu-n-with-echo)
-#   map N <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
-#   " Combine with vim-asterisk
-#   map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
-#   map g* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
-#   map #  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
-#   map g# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
-# '''
+# []# Incremental search improved
+[[plugins]]
+repo = 'haya14busa/is.vim'
+depends = ['vim-asterisk', 'vim-anzu']
+on_map = {nv = '<Plug>'}
+hook_add = '''
+  " Combine with vim-anzu
+  map n <Plug>(is-nohl)<Plug>(anzu-n-with-echo)
+  map N <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
+  " Combine with vim-asterisk
+  map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
+  map g* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
+  map #  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
+  map g# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
+'''
 
 # *-improved
-# [[plugins]]
-# repo = 'osyo-manga/vim-anzu'
-# on_map = {nv = '<Plug>'}
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = {nv = '<Plug>'}
+
+# Display position info of incsearch
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+on_map = {nv = '<Plug>'}
 
 # Move to the edge!
 [[plugins]]
@@ -814,13 +819,8 @@ if = 'has("signs")'
 on_path = '.*'
 hook_add = ''' "{{{
   let g:gitgutter_map_keys = 0
-  nmap ]h          <Plug>GitGutterNextHunk
-  nmap [h          <Plug>GitGutterPrevHunk
-  nmap <Leader>hn  <Plug>GitGutterNextHunk
-  nmap <Leader>hp  <Plug>GitGutterPrevHunk
-  nmap <Leader>hs  <Plug>GigGutterStageHunk
-  nmap <Leader>hu  <Plug>GigGutterUndoHunk
-  nmap <Leader>hv  <Plug>GigGutterPreview
+  nmap ]h  <Plug>GitGutterNextHunk
+  nmap [h  <Plug>GitGutterPrevHunk
 "}}} '''
 
 # More pleasant editing on commit messages

@@ -39,38 +39,7 @@ let g:which_key_space_map.g = {
      \ '/': 'grep',
      \ }
 
-call which_key#register('<Space>', 'g:which_key_space_map')
-" }}}
-
-" leader mappings {{{
-" -----
-let g:which_key_leader_map = {}
-
-let g:which_key_leader_map.g = 'grep'
-
-let g:which_key_leader_map.h = {
-     \ 'name': '+hunk',
-     \ 'n': 'next-hunk',
-     \ 'p': 'previous-hunk',
-     \ 's': 'stage-hunk',
-     \ 'u': 'undo-hunk',
-     \ 'v': 'preview-hunk',
-     \ }
-
-let g:which_key_leader_map['J'] = 'join-with-chars'
-let g:which_key_leader_map['q'] = 'quit'
-let g:which_key_leader_map['Q'] = 'quit-without-saving'
-
-" let g:which_key_leader_map.S = {
-"      \ 'name': '+session',
-"      \ 'a': 'last-session',
-"      \ 'l': 'list-session',
-"      \ 'o': 'open-session',
-"      \ 'r': 'remove-session',
-"      \ 's': 'save-session',
-"      \ }
-"
-let g:which_key_leader_map.t = {
+let g:which_key_space_map.t = {
      \ 'name': '+toggle',
      \ 'c': {
      \   'name': '+cursor',
@@ -85,6 +54,28 @@ let g:which_key_leader_map.t = {
      \ 'w':  'wrap-text',
      \ }
 
+call which_key#register('<Space>', 'g:which_key_space_map')
+" }}}
+
+" leader mappings {{{
+" -----
+let g:which_key_leader_map = {}
+
+let g:which_key_leader_map.g = 'grep'
+
+let g:which_key_leader_map['J'] = 'join-with-chars'
+let g:which_key_leader_map['q'] = 'quit'
+let g:which_key_leader_map['Q'] = 'quit-without-saving'
+
+" let g:which_key_leader_map.S = {
+"      \ 'name': '+session',
+"      \ 'a': 'last-session',
+"      \ 'l': 'list-session',
+"      \ 'o': 'open-session',
+"      \ 'r': 'remove-session',
+"      \ 's': 'save-session',
+"      \ }
+"
 let g:which_key_leader_map['w'] = 'save'
 let g:which_key_leader_map['W'] = 'save-all-buffers'
 

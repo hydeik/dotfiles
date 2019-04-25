@@ -10,10 +10,6 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'thinca/vim-localrc'
 
-# Remote Plugin Framework
-[[plugins]]
-repo = 'roxma/nvim-yarp'
-
 # EditorConfig
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
