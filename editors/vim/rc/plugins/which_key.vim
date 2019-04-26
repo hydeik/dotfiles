@@ -12,13 +12,12 @@ let g:which_key_space_map = {
       \ 'L':  'CocList lists',
       \ 'o':  'CocList outline',
       \ 'O':  'CocList symbols',
+      \ 'p':  'CocListResume',
       \ 'q':  'CocList quickfix',
       \ 's':  'CocList snippets',
       \ 'y':  'CocList yank',
-      \ 'w':  'CocList workds <cwords>',
-      \ 'p':  'CocListResume',
-      \ ']':  'CocNext',
-      \ '[':  'CocPrev',
+      \ '/':  'CocList grep',
+      \ '*':  'CocList grep <cword>',
       \ }
 
 " Git

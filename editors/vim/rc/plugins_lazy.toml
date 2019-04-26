@@ -92,16 +92,18 @@ hook_source = ''' "{{{
   nnoremap <silent> <Space>p  :<C-u>CocListResume<CR>
   nnoremap <silent> <Space>q  :<C-u>CocList --normal quickfix<CR>
   nnoremap <silent> <Space>s  :<C-u>CocList snippets<CR>
-  nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
   nnoremap <silent> <Space>y  :<C-u>CocList -A --normal yank<CR>
   nnoremap <silent> <Space>]  :<C-u>CocNext<CR>
   nnoremap <silent> <Space>[  :<C-u>CocPrev<CR>
 
-  " Grep
-  nnoremap <silent> <Leader>g  :<C-u>Rg<Space>
-  nnoremap <silent> <Leader>/  :<C-u>CocList -I words<CR>
-  vnoremap <silent> <Leader>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
-  nnoremap <silent> <Leader>*  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+  " Search / Grep
+  nnoremap <silent> /  :<C-u>CocList -I -A words<CR>
+  nnoremap <silent> *  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+  nnoremap <silent> n  :<C-u>CocNext<CR>
+  nnoremap <silent> N  :<C-u>CocPrev<CR>
+  nnoremap <silent> <Leader>/  :<C-u>Rg<Space>
+  vnoremap <silent> <Leader>g  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+  nnoremap <silent> <Leader>g  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
 
   " --- Key mappings for LSP features
   function! s:CocLspSettings() abort
@@ -516,32 +518,6 @@ hook_source = ''' "{{{
   " Prompt
   let g:EasyMotion_prompt = 'Search for {n} chars> '
 "}}} '''
-
-# []# Incremental search improved
-[[plugins]]
-repo = 'haya14busa/is.vim'
-depends = ['vim-asterisk', 'vim-anzu']
-on_map = {nv = '<Plug>'}
-hook_add = '''
-  " Combine with vim-anzu
-  map n <Plug>(is-nohl)<Plug>(anzu-n-with-echo)
-  map N <Plug>(is-nohl)<Plug>(anzu-N-with-echo)
-  " Combine with vim-asterisk
-  map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
-  map g* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
-  map #  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
-  map g# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
-'''
-
-# *-improved
-[[plugins]]
-repo = 'haya14busa/vim-asterisk'
-on_map = {nv = '<Plug>'}
-
-# Display position info of incsearch
-[[plugins]]
-repo = 'osyo-manga/vim-anzu'
-on_map = {nv = '<Plug>'}
 
 # Move to the edge!
 [[plugins]]
