@@ -6,10 +6,10 @@ let g:which_key_space_map = {
       \ 'c':  'CocList commands',
       \ 'd':  'Defx',
       \ 'e':  'CocList extensions',
+      \ 'h':  'CocList helptags',
       \ 'f':  'CocList files',
       \ 'm':  'CocList mru',
       \ 'l':  'CocList locationlist',
-      \ 'L':  'CocList lists',
       \ 'o':  'CocList outline',
       \ 'O':  'CocList symbols',
       \ 'p':  'CocListResume',
@@ -18,24 +18,17 @@ let g:which_key_space_map = {
       \ 'y':  'CocList yank',
       \ '/':  'CocList grep',
       \ '*':  'CocList grep <cword>',
+      \ ' ':  'CocList',
       \ }
 
 " Git
 let g:which_key_space_map.g = {
      \ 'name': '+git',
-     \ 'a': 'changes-HEAD',
-     \ 'A': 'changes-origin/HEAD',
      \ 'b': 'branch',
-     \ 'B': 'blame',
-     \ 'c': 'commit',
-     \ 'd': 'diff',
-     \ 'f': 'ls',
-     \ 'l': 'log',
-     \ 'L': 'log-current-file',
-     \ 'q': 'qrep',
+     \ 'c': 'commit-current-file',
+     \ 'C': 'commit-project',
+     \ 'f': 'ls-files',
      \ 's': 'status',
-     \ 't': 'tag',
-     \ '/': 'grep',
      \ }
 
 let g:which_key_space_map.t = {
@@ -60,8 +53,7 @@ call which_key#register('<Space>', 'g:which_key_space_map')
 " -----
 let g:which_key_leader_map = {}
 
-let g:which_key_leader_map.g = 'grep'
-
+let g:which_key_leader_map['g'] = 'grep-from-selected-{motion}'
 let g:which_key_leader_map['J'] = 'join-with-chars'
 let g:which_key_leader_map['q'] = 'quit'
 let g:which_key_leader_map['Q'] = 'quit-without-saving'
@@ -85,7 +77,7 @@ let g:which_key_leader_map.x = {
      \ }
 
 let g:which_key_leader_map[';'] = ':{command}'
-let g:which_key_leader_map['/'] = 'swoop-buffer'
+let g:which_key_leader_map['/'] = 'grep'
 let g:which_key_leader_map['*'] = 'grep <cword>'
 
 " Register dictionary
