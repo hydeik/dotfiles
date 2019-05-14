@@ -1,0 +1,4 @@
+install_env https://github.com/rbenv/rbenv.git
+install_plugin ruby-build https://github.com/rbenv/ruby-build.git
+install_plugin rbenv-vars https://github.com/rbenv/rbenv-vars.git
+install_plugin rbenv-default-gems https://github.com/rbenv/rbenv-default-gems.git

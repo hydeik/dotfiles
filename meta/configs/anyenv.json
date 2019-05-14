@@ -1,0 +1,25 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "clean": [
+            "~/.config/anyenv",
+            "~/.config/anyenv/anyenv-install"
+        ]
+    },
+    {
+        "link": {
+            "~/.config/anyenv/anyenv-install": {
+                "path": "development/anyenv/anyenv-install/*env",
+                "glob": true
+           }
+        }
+    }
+]

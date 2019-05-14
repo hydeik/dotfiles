@@ -1,0 +1,9 @@
+install_env https://github.com/pyenv/pyenv.git
+install_plugin pyenv-virtualenv https://github.com/pyenv/pyenv-virtualenv.git
+install_plugin pyenv-virtualenvwrapper https://github.com/pyenv/pyenv-virtualenvwrapper.git
+install_plugin pyenv-pip-rehash https://github.com/pyenv/pyenv-pip-rehash.git
+install_plugin pyenv-pip-migrate https://github.com/pyenv/pyenv-pip-migrate.git
+install_plugin pyenv-doctor https://github.com/pyenv/pyenv-doctor.git
+install_plugin pyenv-which-ext https://github.com/pyenv/pyenv-which-ext.git
+install_plugin pyenv-default-packages https://github.com/jawshooah/pyenv-default-packages.git
+install_plugin pyenv-pip-update https://github.com/massongit/pyenv-pip-update.git
