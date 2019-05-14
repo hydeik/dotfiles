@@ -52,7 +52,7 @@ checkout "${GITHUB}/momo-lab/anyenv-plugin.git" "${ANYENV_ROOT}/plugins/anyenv-p
 
 PATH="${ANYENV_ROOT}/bin:${PATH}"
 eval "$(anyenv init -)"
-if [ -d ${ANYENV_DEFINITION_ROOT} ]; then
+if [ ! -d ${ANYENV_DEFINITION_ROOT} ]; then
   # Checkout anyenv installation manifests
   anyenv install --init
 fi
