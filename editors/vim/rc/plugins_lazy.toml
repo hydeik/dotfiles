@@ -15,6 +15,7 @@ hook_source = ''' "{{{
   let g:coc_global_extensions = [
         \ 'coc-lists', 'coc-snippets', 'coc-yank',
         \ 'coc-emoji', 'coc-syntax', 'coc-tag', 'coc-word',
+        \ 'coc-git',
         \ 'coc-highlight',
         \ 'coc-css', 'coc-emmet', 'coc-html', 'coc-svg',
         \ 'coc-eslint', 'coc-jest', 'coc-prettier', 'coc-tsserver', 'coc-vetur',
@@ -25,6 +26,72 @@ hook_source = ''' "{{{
         \ 'coc-vimtex',
         \ 'coc-yaml',
         \ ]
+
+
+  " --- Insert mode key mapping for auto completion
+  " Use <TAB> for trigger completion with characters ahead and navigate.
+  inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
+        \ <SID>CheckBackspace() ? "\<TAB>" : coc#refresh()
+  " Use <S-TAB> for completion back
+  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+  " Use <CR> for confirm completion.
+  "   `<C-g>u` means break undo chain at current position.
+  "    Coc only does snippet and additional edit on confirm.
+  inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  " Use <c-space> for trigger completion.
+  inoremap <silent><expr> <C-Space> coc#refresh()
+  " Custom complete
+  imap     <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
+
+  " Use <C-s> to expand snippets
+  imap <silent> <C-s>  <Plug>(coc-snippets-expand-jump)
+  xmap <silent> <C-s>  <Plug>(coc-snippets-select)
+
+  " CocList mappings
+  "   options:
+  "    -A, --auto-preview
+  "    -I, --interactive
+  "    -N, --number-select
+
+  nnoremap <silent> <Space>a  :<C-u>CocList --normal diagnostics<CR>
+  nnoremap <silent> <Space>c  :<C-u>CocList -N commands<CR>
+  nnoremap <silent> <Space>b  :<C-u>CocList --normal buffers<CR>
+  nnoremap <silent> <Space>e  :<C-u>CocList -N extensions<CR>
+  nnoremap <silent> <Space>f  :<C-u>CocList -N files<CR>
+  nnoremap <silent> <Space>gb :<C-u>CocList --normal branch<CR>
+  " commit current file
+  nnoremap <silent> <Space>gc :<C-u>CocList bcommits<CR>
+  " commit project
+  nnoremap <silent> <Space>gC :<C-u>CocList commits<CR>
+  nnoremap <silent> <Space>gf :<C-u>CocList files<CR>
+  nnoremap <silent> <Space>gs :<C-u>CocList --normal gstatus<CR>
+  nnoremap <silent> <Space>h  :<C-u>CocList helptags<CR>
+  nnoremap <silent> <Space>j  :<C-u>CocNext<CR>
+  nnoremap <silent> <Space>k  :<C-u>CocPrev<CR>
+  nnoremap <silent> <Space>m  :<C-u>CocList -N mru<CR>
+  nnoremap <silent> <Space>l  :<C-u>CocList --normal locationlist<CR>
+  nnoremap <silent> <Space>o  :<C-u>CocList -A outline<CR>
+  nnoremap <silent> <Space>s  :<C-u>CocList -I symbols<CR>
+  nnoremap <silent> <Space>q  :<C-u>CocList --normal quickfix<CR>
+  nnoremap <silent> <Space>r  :<C-u>CocListResume<CR>
+  nnoremap <silent> <Space>u  :<C-u>CocList snippets<CR>
+  nnoremap <silent> <Space>y  :<C-u>CocList --normal yank<CR>
+  nnoremap <silent> <Space><Space> :<C-u>CocList<CR>
+
+  " Search / Grep
+  nnoremap <silent> /  :<C-u>CocList -I -A --ignore-case words<CR>
+  nnoremap <silent> *  :exe 'CocList -I --normal --input='.expand('<cword>').' words -w'<CR>
+  nnoremap <silent> n  :<C-u>CocNext<CR>
+  nnoremap <silent> N  :<C-u>CocPrev<CR>
+  nnoremap <silent> <Leader>/  :<C-u>Rg<Space>
+  nnoremap <silent> <Leader>*  :exe 'CocList -I --normal --input='.expand('<cword>').' grep -w'<CR>
+  vnoremap <silent> <leader>g  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+  nnoremap <silent> <leader>g  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+
+  " Git chunks
+  nmap [g <Plug>(coc-git-prevchunk)
+  nmap ]g <Plug>(coc-git-nextchunk)
+  nmap gs <Plug>(coc-git-chunkinfo)
 
   " Utility funcitons for key mapping
   function! s:CheckBackspace() abort
@@ -54,56 +121,6 @@ hook_source = ''' "{{{
     let @@ = saved_unnamed_register
     execute 'CocList grep '.word
   endfunction
-
-  " --- Insert mode key mapping for auto completion
-  " Use <TAB> for trigger completion with characters ahead and navigate.
-  inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
-        \ <SID>CheckBackspace() ? "\<TAB>" : coc#refresh()
-  " Use <S-TAB> for completion back
-  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-  " Use <CR> for confirm completion.
-  "   `<C-g>u` means break undo chain at current position.
-  "    Coc only does snippet and additional edit on confirm.
-  inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-  " Use <c-space> for trigger completion.
-  inoremap <silent><expr> <C-Space> coc#refresh()
-  " Custom complete
-  imap     <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
-
-  " Use <C-s> to expand snippets
-  imap <silent> <C-s>  <Plug>(coc-snippets-expand-jump)
-  xmap <silent> <C-s>  <Plug>(coc-snippets-select)
-
-  " CocList mappings
-  "   options:
-  "    -A, --auto-preview
-  "    -I, --interactive
-  "    -N, --number-select
-  nnoremap <silent> <Space>a  :<C-u>CocList --normal diagnostics<CR>
-  nnoremap <silent> <Space>c  :<C-u>CocList -N commands<CR>
-  nnoremap <silent> <Space>b  :<C-u>CocList --normal buffers<CR>
-  nnoremap <silent> <Space>e  :<C-u>CocList -N extensions<CR>
-  nnoremap <silent> <Space>f  :<C-u>CocList -N files<CR>
-  nnoremap <silent> <Space>m  :<C-u>CocList -N mru<CR>
-  nnoremap <silent> <Space>l  :<C-u>CocList --normal locationlist<CR>
-  nnoremap <silent> <Space>L  :<C-u>CocList -N lists<CR>
-  nnoremap <silent> <Space>o  :<C-u>CocList -A outline<CR>
-  nnoremap <silent> <Space>O  :<C-u>CocList -I symbols<CR>
-  nnoremap <silent> <Space>p  :<C-u>CocListResume<CR>
-  nnoremap <silent> <Space>q  :<C-u>CocList --normal quickfix<CR>
-  nnoremap <silent> <Space>s  :<C-u>CocList snippets<CR>
-  nnoremap <silent> <Space>y  :<C-u>CocList -A --normal yank<CR>
-  nnoremap <silent> <Space>]  :<C-u>CocNext<CR>
-  nnoremap <silent> <Space>[  :<C-u>CocPrev<CR>
-
-  " Search / Grep
-  nnoremap <silent> /  :<C-u>CocList -I -A words<CR>
-  nnoremap <silent> *  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
-  nnoremap <silent> n  :<C-u>CocNext<CR>
-  nnoremap <silent> N  :<C-u>CocPrev<CR>
-  nnoremap <silent> <Leader>/  :<C-u>Rg<Space>
-  vnoremap <silent> <Leader>g  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
-  nnoremap <silent> <Leader>g  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
 
   " --- Key mappings for LSP features
   function! s:CocLspSettings() abort
@@ -400,6 +417,7 @@ hook_add = ''' "{{{
   vnoremap <silent> s        :<C-u>WhichKeyVisual 's'<CR>
  "}}} '''
 hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
+
 # [[plugins]]
 # repo = 'paroxayte/vkmap.vim'
 # depends = ['vwm.vim']
@@ -754,50 +772,27 @@ hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/ale.vim'
 
 # --- VCS (Git) {{{
 
-# Use Tig as a git client on vim
+# Git wrapper
 [[plugins]]
-repo = 'iberianpig/tig-explorer.vim'
-depends = ['bclose.vim']
-on_cmd = ['TigOpenCurrentFile', 'TigOpenProjectRootDir', 'TigGrep', 'TigGrep',
-          'TigGrepResume', 'TigBlame']
-hook_add = ''' "{{{
-  let g:tig_explorer_keymap_edit    = '<C-o>'
-  let g:tig_explorer_keymap_tabedit = '<C-t>'
-  let g:tig_explorer_keymap_split   = '<C-s>'
-  let g:tig_explorer_keymap_vsplit  = '<C-v>'
-"}}} '''
+repo = 'tpope/vim-fugitive'
+on_cmd = ['Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull',
+          'Grebase', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog', 'Gllog',
+          'Gedit', 'Gsplit', 'Gvsplit', 'Gpedit', 'Gtabedit', 'Gpedit',
+          'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff', 'Gmove',
+          'Grename', 'Gblame', 'Gbrowse']
 
-# Asynchronously control git repositories in Neovim/Vim 8
-[[plugins]]
-repo = 'lambdalisue/gina.vim'
-on_cmd = ['Gina', 'Gina!', 'Gina!!']
-hook_add = ''' "{{{
-  nnoremap <silent> <Space>ga :<C-u>Gina changes HEAD<CR>
-  nnoremap <silent> <Space>gA :<C-u>Gina changes origin/HEAD...<CR>
-  nnoremap <silent> <Space>gb :<C-u>Gina branch -av<CR>
-  nnoremap <silent> <Space>gB :<C-u>Gina blame<CR>
-  nnoremap <silent> <Space>gc :<C-u>Gina commit<CR>
-  nnoremap <silent> <Space>gd :<C-u>Gina diff<CR>
-  nnoremap <silent> <Space>gl :<C-u>Gina log<CR>
-  nnoremap <silent> <Space>gL :<C-u>Gina log :%<CR>
-  nnoremap <silent> <Space>gf :<C-u>Gina ls<CR>
-  nnoremap <silent> <Space>gq :<C-u>Gina qrep<CR>
-  nnoremap <silent> <Space>gs :<C-u>Gina status<CR>
-  nnoremap <silent> <Space>gt :<C-u>Gina tag<CR>
-  nnoremap <silent> <Space>g/ :<C-u>Gina grep<CR>
-"}}} '''
-hook_post_source = 'source $VIM_CONFIG_HOME/rc/plugins/gina.vim'
-
-# Show a git diff in the gutter and stages/undoes hunks
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-if = 'has("signs")'
-on_path = '.*'
-hook_add = ''' "{{{
-  let g:gitgutter_map_keys = 0
-  nmap ]h  <Plug>GitGutterNextHunk
-  nmap [h  <Plug>GitGutterPrevHunk
-"}}} '''
+# # Use Tig as a git client on vim
+# [[plugins]]
+# repo = 'iberianpig/tig-explorer.vim'
+# depends = ['bclose.vim']
+# on_cmd = ['TigOpenCurrentFile', 'TigOpenProjectRootDir', 'TigGrep', 'TigGrep',
+#           'TigGrepResume', 'TigBlame']
+# hook_add = ''' "{{{
+#   let g:tig_explorer_keymap_edit    = '<C-o>'
+#   let g:tig_explorer_keymap_tabedit = '<C-t>'
+#   let g:tig_explorer_keymap_split   = '<C-s>'
+#   let g:tig_explorer_keymap_vsplit  = '<C-v>'
+# "}}} '''
 
 # More pleasant editing on commit messages
 [[plugins]]
