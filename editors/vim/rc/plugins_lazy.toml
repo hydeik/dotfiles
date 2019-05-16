@@ -778,17 +778,6 @@ hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/vimtex.vim'
 
 # Python
 [[plugins]]
-repo = 'lambdalisue/vim-pyenv'
-on_ft = 'python'
-
-[[plugins]]
-repo = 'plytophogy/vim-virtualenv'
-on_ft = 'python'
-on_source = '''
-  let g:virtualenv_directory = $PYENV_ROOT . '/versions'
-'''
-
-[[plugins]]
 repo = 'tmhedberg/SimpylFold'
 on_ft = 'python'
 
