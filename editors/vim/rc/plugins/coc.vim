@@ -65,16 +65,10 @@ call coc#config('signature', {
 call coc#config('list', {
       \ 'maxHeight': 15,
       \ 'maxPreviewHeight': 20,
-      \ 'nextKeymap': '<C-n>',
-      \ 'previousKeymap': '<C-p>',
       \ 'insertMappings': {
-      \   '<A-n>': 'prompt:next',
-      \   '<A-p>': 'prompt:previous',
       \   '<C-g>': 'do:exit',
       \   },
       \ 'normalMappings': {
-      \   '<A-n>': 'prompt:next',
-      \   '<A-p>': 'prompt:previous',
       \   '<C-g>': 'do:exit',
       \   'd':     'action:delete',
       \   },
@@ -99,11 +93,29 @@ if executable('ccls')
         \ }
 endif
 
+if executable('clangd')
+  let s:languageservers['clangd'] = {
+        \   'command': 'clangd',
+        \   'filetypes': ['c', 'cpp', 'objc', 'objcpp'],
+        \   'rootPatterns': ['compile_flags.txt', 'compile_commands.json',
+        \                    '.vim', '.git', '.hg'],
+        \   }
+        \ }
+endif
+
 if executable('gopls')
   let s:languageservers['golang'] = {
         \   'command': 'gopls',
         \   'filetypes': ['go'],
         \   'rootPatterns': ['go.mod', '.vim', '.git', '.hg'],
+        \ }
+endif
+
+if executable('docker-langserver')
+  let s:languageservers['dockerfile'] = {
+        \   'command': 'docker-langserver',
+        \   'args': ['--stdio'],
+        \   'filetypes': ['dockerfile'],
         \ }
 endif
 
@@ -145,6 +157,14 @@ endif
 " }}}
 
 " --- Extensions {{{
+call coc#config('git', {
+      \ 'chagendSign':       { 'text': '~', 'hlGroup': 'AquaSign'   },
+      \ 'addedSign':         { 'text': '+', 'hlGroup': 'GreenSign'  },
+      \ 'removeSign':        { 'text': '_', 'hlGroup': 'RedSign'    },
+      \ 'topRemovedSign':    { 'text': '‾', 'hlGroup': 'RedSign'    },
+      \ 'changeRemovedSign': { 'text': '=', 'hlGroup': 'PurpleSign' },
+      \ })
+
 call coc#config('python', {
      \ 'formatting': {
      \   'blackPath': $PYENV_ROOT.'/versions/neovim3/bin/black',

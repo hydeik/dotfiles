@@ -5,6 +5,7 @@
 # Complete engine and Language Server support for neovim & vim,
 # featured as VSCode
 #
+
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 merge = 0
@@ -15,9 +16,9 @@ hook_source = ''' "{{{
   let g:coc_global_extensions = [
         \ 'coc-lists', 'coc-snippets', 'coc-yank',
         \ 'coc-emoji', 'coc-syntax', 'coc-tag', 'coc-word',
-        \ 'coc-git',
         \ 'coc-highlight',
         \ 'coc-css', 'coc-emmet', 'coc-html', 'coc-svg',
+        \ 'coc-git',
         \ 'coc-eslint', 'coc-jest', 'coc-prettier', 'coc-tsserver', 'coc-vetur',
         \ 'coc-json',
         \ 'coc-python',
@@ -26,7 +27,6 @@ hook_source = ''' "{{{
         \ 'coc-vimtex',
         \ 'coc-yaml',
         \ ]
-
 
   " --- Insert mode key mapping for auto completion
   " Use <TAB> for trigger completion with characters ahead and navigate.
@@ -37,7 +37,8 @@ hook_source = ''' "{{{
   " Use <CR> for confirm completion.
   "   `<C-g>u` means break undo chain at current position.
   "    Coc only does snippet and additional edit on confirm.
-  inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() :
+        \ "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
   " Use <c-space> for trigger completion.
   inoremap <silent><expr> <C-Space> coc#refresh()
   " Custom complete
@@ -233,15 +234,9 @@ hook_source = '''
   let g:lexima_ctrlh_as_backspace = 1
 '''
 hook_post_source = ''' "{{{
-  call lexima#add_rule(
-        \ {'char': '$', 'input_after': '$', 'filetype': 'latex'}
-        \ )
-  call lexima#add_rule(
-        \ {'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'}
-        \ )
-  call lexima#add_rule(
-        \ {'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'}
-        \ )
+  call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
+  call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
+  call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
 "}}} '''
 
 # Auto create TAG files
@@ -341,27 +336,6 @@ on_source = 'defx.nvim'
 repo = 'kristijanhusak/defx-icons'
 on_source = 'defx.nvim'
 
-# # Simple session manager with denite interface
-# [[plugins]]
-# repo = 'lambdalisue/session.vim'
-# on_cmd = ['SessionList', 'SessionOpen', 'SessionRemove', 'SessionSave']
-# hook_source = '''
-#   let g:session_dir = $VIM_CACHE_HOME . '/session'
-#   let g:session#default_opener = 'edit'
-#   let g:session#default_session = 'default'
-#
-#   nnoremap <silent> <Leader>Sa  :<C-u>SessionOpen last<CR>
-#   nnoremap <silent> <Leader>Sl  :<C-u>SessionList<CR>
-#   nnoremap <silent> <Leader>So  :<C-u>SessionOpen<CR>
-#   nnoremap <silent> <Leader>Sr  :<C-u>SessionRemove<CR>
-#   nnoremap <silent> <Leader>Ss  :<C-u>SessionSave
-# '''
-# hook_post_source = '''
-#   if exists('g:loaded_session')
-#     call session#last#enable()
-#   endif
-# '''
-
 # Perform the replacement in |quickfix|
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
@@ -415,7 +389,7 @@ hook_add = ''' "{{{
   vnoremap <silent> ,        :<C-u>WhichKeyVisual ','<CR>
   nnoremap <silent> s        :<C-u>WhichKey 's'<CR>
   vnoremap <silent> s        :<C-u>WhichKeyVisual 's'<CR>
- "}}} '''
+"}}} '''
 hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
 
 # [[plugins]]
@@ -757,16 +731,6 @@ hook_add = ''' "{{{
   xmap v  <Plug>(expand_region_expand)
   xmap V  <Plug>(expand_region_shrink)
 "}}} '''
-
-# --- }}}
-
-# --- Linter {{{
-
-# Asynchronous Lint Engine (ALE)
-[[plugins]]
-repo = 'w0rp/ale'
-on_path = '.*'
-hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/ale.vim'
 
 # --- }}}
 
