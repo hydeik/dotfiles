@@ -8,7 +8,6 @@ let g:dein#enable_notification = 0
 let g:dein#install_log_filename = $VIM_CACHE_HOME . '/dein/dein.log'
 
 " Get directory path where dein.vim is located
-let s:base = fnamemodify(expand('<sfile>'), ':p:h')
 let s:dein_dir      = $VIM_CACHE_HOME . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
@@ -20,6 +19,7 @@ if &runtimepath !~# '/dein.vim'
   execute 'set runtimepath^=' . s:dein_repo_dir
 endif
 
+let s:base           = fnamemodify(expand('<sfile>'), ':p:h')
 let s:dein_toml      = s:base . '/plugins.toml'
 let s:dein_toml_lazy = s:base . '/plugins_lazy.toml'
 let s:dein_toml_ft   = s:base . '/ftplugin.toml'

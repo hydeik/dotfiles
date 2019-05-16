@@ -14,9 +14,9 @@ repo = 'thinca/vim-localrc'
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 if = 'executable("editorconfig")'
-hook_add = ''' " {{{
+hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-" }}} '''
+'''
 
 # ---
 # }}}
