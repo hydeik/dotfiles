@@ -2,9 +2,11 @@
 
 " Vim files & directories {{{
 " -----
-set nobackup        " Don't create backup file
-set undofile        " Create undo file
-set swapfile        " Use swap file
+" Don't create backup file
+set nobackup
+set nowritebackup
+set undofile
+set swapfile
 
 " directory to store backup files
 set backupdir=$VIM_CACHE_HOME/backup,~/tmp,/tmp

@@ -39,7 +39,6 @@ call coc#config('suggest', {
       \   'default': "\uf29c"
       \ },
       \ })
-
 " }}}
 
 " --- Diagnostics {{{
@@ -78,6 +77,11 @@ call coc#config('list', {
 " --- Language servers {{{
 let s:languageservers = {}
 
+" Python -> use coc-python
+" Ruby   -> use coc-solargraph
+" Rust   -> use coc-rls
+
+" C/C++/Obj-C/Obj-C++
 if executable('ccls')
   let s:languageservers['ccls'] = {
         \   'command': 'ccls',
@@ -103,6 +107,15 @@ if executable('clangd')
         \ }
 endif
 
+" Fortran
+if executable('fortls')
+  let s:languageservers['fortran'] = {
+        \   'command': 'fortls',
+        \   'filetypes': ['fortran']
+        \ }
+endif
+
+" Go language
 if executable('gopls')
   let s:languageservers['golang'] = {
         \   'command': 'gopls',
@@ -111,6 +124,7 @@ if executable('gopls')
         \ }
 endif
 
+" Docker
 if executable('docker-langserver')
   let s:languageservers['dockerfile'] = {
         \   'command': 'docker-langserver',
@@ -119,6 +133,7 @@ if executable('docker-langserver')
         \ }
 endif
 
+" Reason
 if executable('reason-language-server')
   let s:languageservers['reason'] = {
         \   'command': 'reason-language-server',
@@ -126,13 +141,7 @@ if executable('reason-language-server')
         \ }
 endif
 
-if executable('fortls')
-  let s:languageservers['fortran'] = {
-        \   'command': 'fortls',
-        \   'filetypes': ['fortran']
-        \ }
-endif
-
+" Bash
 if executable('bash-language-server')
   let s:languageservers['bash'] = {
         \   'command': 'bash-language-server',
@@ -142,6 +151,7 @@ if executable('bash-language-server')
         \ }
 endif
 
+" Vim/erb/Markdown
 if executable('efm-langserver')
   let s:languageservers['efm'] = {
         \   'command': 'efm-langserver',
@@ -151,6 +161,7 @@ if executable('efm-langserver')
         \ }
 endif
 
+" Register language server configurations
 if !empty(s:languageservers)
   call coc#config('languageserver', s:languageservers)
 endif
