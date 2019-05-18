@@ -177,7 +177,7 @@ endif
 call s:source_rc('encoding.vim')
 call s:source_rc('options.vim')
 call s:source_rc('mappings.vim')
-call s:source_rc('lightline.vim')
+call s:source_rc('statusline.vim')
 " }}}
 
 " Do not allow run some commands from vimrc or exrc when they are not owned by
