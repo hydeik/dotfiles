@@ -750,6 +750,14 @@ hook_add = ''' "{{{
   let g:tig_explorer_keymap_tabedit = '<C-t>'
   let g:tig_explorer_keymap_split   = '<C-s>'
   let g:tig_explorer_keymap_vsplit  = '<C-v>'
+
+  nnoremap <silent> <Space>tb  :TigBlame<CR>
+  nnoremap <silent> <Space>tt  :TigOpenCurrentFile<CR>
+  nnoremap <silent> <Space>tp  :TigOpenProjectRootDir<CR>
+  nnoremap <silent> <Space>t/  :TigGrep<CR>
+  nnoremap <silent> <Space>t*  :<C-u>:TigGrep<Space><C-R><C-W><CR>
+  vnoremap <silent> <Space>t*  y:TigGrep<Space><C-R>"<CR>
+  nnoremap <silent> <Space>tr  :TigGrepResume<CR>
 "}}} '''
 
 # More pleasant editing on commit messages
