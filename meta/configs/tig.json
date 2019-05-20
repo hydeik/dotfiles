@@ -15,7 +15,7 @@
     },
     {
         "link": {
-            "~/.config/tig/tigrc": "development/tig/tigrc"
+            "~/.config/tig/config": "development/tig/config"
         }
     }
 ]
