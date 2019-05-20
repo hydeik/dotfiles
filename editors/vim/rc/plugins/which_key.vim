@@ -6,30 +6,33 @@ let g:which_key_space_map = {
       \ 'c':  'CocList commands',
       \ 'd':  'Defx',
       \ 'e':  'CocList extensions',
+      \ 'g':  'CocList gstatus',
       \ 'h':  'CocList helptags',
       \ 'f':  'CocList files',
       \ 'm':  'CocList mru',
       \ 'l':  'CocList locationlist',
       \ 'o':  'CocList outline',
-      \ 'O':  'CocList symbols',
-      \ 'p':  'CocListResume',
       \ 'q':  'CocList quickfix',
-      \ 's':  'CocList snippets',
+      \ 's':  'CocList symbols',
+      \ 'u':  'CocList snippets',
       \ 'y':  'CocList yank',
       \ '/':  'CocList grep',
       \ '*':  'CocList grep <cword>',
       \ ' ':  'CocList',
+      \ 'r':  'CocListResume',
+      \ '[':  'CocPrev',
+      \ ']':  'CocNext',
       \ }
 
-" Git
-let g:which_key_space_map.g = {
-     \ 'name': '+git',
-     \ 'b': 'branch',
-     \ 'c': 'commit-current-file',
-     \ 'C': 'commit-project',
-     \ 'f': 'ls-files',
-     \ 's': 'status',
-     \ }
+" " Git
+" let g:which_key_space_map.g = {
+"     \ 'name': '+git',
+"     \ 'b': 'branch',
+"     \ 'c': 'commit-current-file',
+"     \ 'C': 'commit-project',
+"     \ 'f': 'ls-files',
+"     \ 's': 'status',
+"     \ }
 
 let g:which_key_space_map.t = {
      \ 'name': '+toggle',
