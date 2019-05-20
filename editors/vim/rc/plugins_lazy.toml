@@ -267,6 +267,28 @@ repo = 'haya14busa/dein-command.vim'
 depends = ['dein.vim']
 on_cmd = ['Dein']
 
+# View and search LSP symbols and tags in Vim/NeoVim
+[[plugins]]
+repo = 'liuchengxu/vista.vim'
+depends = ['coc.nvim', 'lightline.vim']
+on_cmd = ['Vista', 'Vista!', 'Vista!!']
+hook_add = '''
+  nnoremap <silent> <Space>v  :<C-u>Vista!!<CR>
+
+  let g:vista_default_executive = 'ctags'
+  let g:vista_executive_for = {
+       \ 'c':          'coc',
+       \ 'cpp':        'coc',
+       \ 'fortran':    'coc',
+       \ 'javascript': 'coc',
+       \ 'json':       'coc',
+       \ 'python':     'coc',
+       \ 'ruby':       'coc',
+       \ 'rust':       'coc',
+       \ }
+'''
+
+
 # Defx --- Dark ppowered file explorer implementation
 [[plugins]]
 repo = 'Shougo/defx.nvim'
