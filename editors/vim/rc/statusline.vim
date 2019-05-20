@@ -39,70 +39,52 @@ autocmd MyAutoCmd VimEnter *
       \ endif
 
 " --- Customize status line with lightline
-" let g:lightline = {
-"      \ 'colorscheme': 'one',
-"      \ 'active': {
-"      \   'left': [ ['mode', 'paste'],
-"      \             ['filename', 'modified'],
-"      \             ['gitrepo_branch', 'gitrepo_changed', 'gitrepo_conflicted'] ],
-"      \   'right': [ ['lineinfo'],
-"      \              ['percent'],
-"      \              ['fileformat', 'fileencoding', 'filetype'],
-"      \              ['pyenv'] ],
-"      \ },
-"      \ 'component' : {
-"      \   'lineinfo': "\ue0a1 %3l:%-2v"
-"      \ },
-"      \ 'component_function': {
-"      \   'modified': 'LightlineModified',
-"      \   'readonly': 'LightlineReadonly',
-"      \   'filename': 'LightlineFilename',
-"      \   'fileformat': 'LightlineFileformat',
-"      \   'filetype': 'LightlineFiletype',
-"      \   'fileencoding': 'LightlineFileencoding',
-"      \   'mode': 'LightlineMode',
-"      \   'pyenv': 'LightlinePyenv',
-"      \ },
-"      \ 'component_expand' : {
-"      \   'gitrepo_branch' : 'LightlineGitRepoBranch',
-"      \   'gitrepo_changed' : 'LightlineGitRepoChanged',
-"      \   'gitrepo_conflicted' : 'LightlineGitRepoConflicted',
-"      \   'dummy': 'error'
-"      \ },
-"      \ 'component_type' : {
-"      \   'gitrepo_branch' : 'raw',
-"      \   'gitrepo_changed' : 'warning',
-"      \   'gitrepo_conflicted' : 'error'
-"      \ },
-"      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-"      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
-"      \ }
-
 let g:lightline = {
       \ 'colorscheme': 'iceberg',
       \ 'active': {
-      \   'left': [ ['mode', 'paste'],
-      \             ['gitbranch', 'readonly', 'filename', 'modified'] ],
-      \   'right': [ ['lineinfo'],
-      \              ['percent'],
-      \              ['fileformat', 'fileencoding', 'filetype'],
-      \              ['pyenv'] ],
+      \   'left': [
+      \     ['mode', 'paste'],
+      \     ['gitbranch', 'readonly', 'filename', 'modified'],
+      \     ['coc_error', 'coc_warning', 'coc_info', 'coc_hint']
+      \   ],
+      \   'right': [
+      \      ['lineinfo'],
+      \      ['percent'],
+      \      ['fileformat', 'fileencoding', 'filetype'],
+      \      ['pyenv']
+      \   ],
+      \ },
+      \ 'inactive': {
+      \   'left':  [ ['filepath', 'filename_inactive'] ],
+      \   'right': [ ['lineinfo'], ['filetype'], ['fileinfo'] ]
       \ },
       \ 'component' : {
       \   'lineinfo': "\ue0a1 %3l:%-2v"
       \ },
       \ 'component_function': {
-      \   'modified': 'LightlineModified',
-      \   'readonly': 'LightlineReadonly',
-      \   'gitbranch': 'LightlineGitBranch',
-      \   'filename': 'LightlineFilename',
-      \   'fileformat': 'LightlineFileformat',
-      \   'filetype': 'LightlineFiletype',
+      \   'modified':     'LightlineModified',
+      \   'readonly':     'LightlineReadonly',
+      \   'gitbranch':    'LightlineGitBranch',
+      \   'filename':     'LightlineFilename',
+      \   'fileformat':   'LightlineFileformat',
+      \   'filetype':     'LightlineFiletype',
       \   'fileencoding': 'LightlineFileencoding',
-      \   'mode': 'LightlineMode',
-      \   'pyenv': 'LightlinePyenv',
+      \   'mode':         'LightlineMode',
       \ },
-      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'component_expand' : {
+      \   'coc_error':   'LightlineCocError',
+      \   'coc_warning': 'LightlineCocWarning',
+      \   'coc_info':    'LightlineCocInfo',
+      \   'coc_hint':    'LightlineCocHint',
+      \   'coc_fix':     'LightlineCocFix',
+      \ },
+      \ 'component_type' : {
+      \   'coc_error':   'error',
+      \   'coc_warning': 'warning',
+      \   'coc_info':    'tabsel',
+      \   'coc_hint':    'middle',
+      \ },
+      \ 'separator':    { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
       \ }
 
@@ -156,8 +138,9 @@ function! LightlineMode()
 endfunction
 
 function! LightlineGitBranch()
-  let branch = gitbranch#name()
-  return branch ==# '' ? '' : " \ue725 " . branch
+  " let branch = gitbranch#name()
+  " return branch ==# '' ? '' : " \ue725 " . branch
+  return trim(get(g:, 'coc_git_status', ''))
 endfunction
 
 " function! LightlineGitRepoChanged()
@@ -175,10 +158,6 @@ endfunction
 "   let conflicted = gina#component#status#conflicted()
 "   return branch ==# '' ? '' : (conflicted ? " \uf057 ".conflicted : '')
 " endfunction
-
-function! LightlinePyenv()
-  return &filetype =~? 'python' ? " \ue73c " . pyenv#info#preset('short')[1:] : ''
-endfunction
 
 " https://github.com/Lokaltog/vim-powerline/blob/develop/autoload/Powerline/Functions.vim
 function! LightlineCharCode()
@@ -215,6 +194,32 @@ function! LightlineCharCode()
 
   return "'". char ."' ". nr
 endfunction
+
+function s:lightline_coc_diagnostic(kind) abort
+  let info = get(b:, 'coc_diagnostic_info', 0)
+  if empty(info)
+    return 0
+  endif
+  return info[a:kind]
+endfunction
+
+function LightlineCocError() abort
+  return printf('%s %d', "\uf00d", s:lightline_coc_diagnostic('error'))
+endfunction
+
+function LightlineCocWarning() abort
+  return printf('%s %d', "\uf071", s:lightline_coc_diagnostic('warning'))
+endfunction
+
+function LightlineCocInfo() abort
+  return printf('%s %d', "\uf05a", s:lightline_coc_diagnostic('info'))
+endfunction
+
+function LightlineCocHint() abort
+  return printf('%s %d', "\uf27b", s:lightline_coc_diagnostic('hint'))
+endfunction
+
+autocmd MyAutoCmd User CocDiagnosticChange call lightline#update()
 
 "----------------------------------------------------------------------------
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
