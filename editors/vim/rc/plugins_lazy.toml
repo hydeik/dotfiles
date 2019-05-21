@@ -809,11 +809,6 @@ on_ft = 'python'
 repo = 'raimon49/requirements.txt.vim'
 on_ft = 'requirements'
 
-# HTML/CSS/Javascript
-[[plugins]]
-repo = 'mattn/emmet-vim'
-on_ft = ['html', 'css', 'jsx', 'javascript', 'javascript.jsx']
-
 # CSV
 [[plugins]]
 repo = 'chrisbra/csv.vim'
