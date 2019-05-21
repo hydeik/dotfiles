@@ -59,40 +59,34 @@ hook_source = ''' "{{{
   nnoremap <silent> <Space>b  :<C-u>CocList --normal buffers<CR>
   nnoremap <silent> <Space>e  :<C-u>CocList -N extensions<CR>
   nnoremap <silent> <Space>f  :<C-u>CocList -N files<CR>
-  nnoremap <silent> <Space>gb :<C-u>CocList --normal branch<CR>
-  " commit current file
-  nnoremap <silent> <Space>gc :<C-u>CocList bcommits<CR>
-  " commit project
-  nnoremap <silent> <Space>gC :<C-u>CocList commits<CR>
-  nnoremap <silent> <Space>gf :<C-u>CocList files<CR>
-  nnoremap <silent> <Space>gs :<C-u>CocList --normal gstatus<CR>
+  nnoremap <silent> <Space>g  :<C-u>CocList --normal gstatus<CR>
   nnoremap <silent> <Space>h  :<C-u>CocList helptags<CR>
-  nnoremap <silent> <Space>j  :<C-u>CocNext<CR>
-  nnoremap <silent> <Space>k  :<C-u>CocPrev<CR>
   nnoremap <silent> <Space>m  :<C-u>CocList -N mru<CR>
   nnoremap <silent> <Space>l  :<C-u>CocList --normal locationlist<CR>
   nnoremap <silent> <Space>o  :<C-u>CocList -A outline<CR>
   nnoremap <silent> <Space>s  :<C-u>CocList -I symbols<CR>
   nnoremap <silent> <Space>q  :<C-u>CocList --normal quickfix<CR>
-  nnoremap <silent> <Space>r  :<C-u>CocListResume<CR>
   nnoremap <silent> <Space>u  :<C-u>CocList snippets<CR>
   nnoremap <silent> <Space>y  :<C-u>CocList --normal yank<CR>
   nnoremap <silent> <Space><Space> :<C-u>CocList<CR>
+
+  nnoremap <silent> <Space>r  :<C-u>CocListResume<CR>
+  nnoremap <silent> <Space>]  :<C-u>CocNext<CR>
+  nnoremap <silent> <Space>[  :<C-u>CocPrev<CR>
 
   " Search / Grep
   nnoremap <silent> /  :<C-u>CocList -I -A --ignore-case words<CR>
   nnoremap <silent> *  :exe 'CocList -I --normal --input='.expand('<cword>').' words -w'<CR>
   nnoremap <silent> n  :<C-u>CocNext<CR>
   nnoremap <silent> N  :<C-u>CocPrev<CR>
-  nnoremap <silent> <Leader>/  :<C-u>Rg<Space>
-  nnoremap <silent> <Leader>*  :exe 'CocList -I --normal --input='.expand('<cword>').' grep -w'<CR>
-  vnoremap <silent> <leader>g  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
-  nnoremap <silent> <leader>g  :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+  nnoremap <silent> <Space>/  :<C-u>Rg<Space>
+  nnoremap <silent> <Space>*  :exe 'CocList -I --normal --input='.expand('<cword>').' grep -w'<CR>
 
   " Git chunks
   nmap [g <Plug>(coc-git-prevchunk)
   nmap ]g <Plug>(coc-git-nextchunk)
   nmap gs <Plug>(coc-git-chunkinfo)
+  nmap gb <Plug>(coc-git-commit)
 
   " Utility funcitons for key mapping
   function! s:CheckBackspace() abort
@@ -767,18 +761,26 @@ on_cmd = ['Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull',
           'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff', 'Gmove',
           'Grename', 'Gblame', 'Gbrowse']
 
-# # Use Tig as a git client on vim
-# [[plugins]]
-# repo = 'iberianpig/tig-explorer.vim'
-# depends = ['bclose.vim']
-# on_cmd = ['TigOpenCurrentFile', 'TigOpenProjectRootDir', 'TigGrep', 'TigGrep',
-#           'TigGrepResume', 'TigBlame']
-# hook_add = ''' "{{{
-#   let g:tig_explorer_keymap_edit    = '<C-o>'
-#   let g:tig_explorer_keymap_tabedit = '<C-t>'
-#   let g:tig_explorer_keymap_split   = '<C-s>'
-#   let g:tig_explorer_keymap_vsplit  = '<C-v>'
-# "}}} '''
+# Use Tig as a git client on vim
+[[plugins]]
+repo = 'iberianpig/tig-explorer.vim'
+depends = ['bclose.vim']
+on_cmd = ['TigOpenCurrentFile', 'TigOpenProjectRootDir', 'TigGrep', 'TigGrep',
+          'TigGrepResume', 'TigBlame']
+hook_add = ''' "{{{
+  let g:tig_explorer_keymap_edit    = '<C-o>'
+  let g:tig_explorer_keymap_tabedit = '<C-t>'
+  let g:tig_explorer_keymap_split   = '<C-s>'
+  let g:tig_explorer_keymap_vsplit  = '<C-v>'
+
+  nnoremap <silent> <Space>tb  :TigBlame<CR>
+  nnoremap <silent> <Space>tt  :TigOpenCurrentFile<CR>
+  nnoremap <silent> <Space>tp  :TigOpenProjectRootDir<CR>
+  nnoremap <silent> <Space>t/  :TigGrep<CR>
+  nnoremap <silent> <Space>t*  :<C-u>:TigGrep<Space><C-R><C-W><CR>
+  vnoremap <silent> <Space>t*  y:TigGrep<Space><C-R>"<CR>
+  nnoremap <silent> <Space>tr  :TigGrepResume<CR>
+"}}} '''
 
 # More pleasant editing on commit messages
 [[plugins]]

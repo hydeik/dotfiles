@@ -187,20 +187,6 @@ function! s:ToggleWindowZoom() abort
 endfunction
 " }}}
 
-" Space mappings {{{
-
-" Toggle editor visuals
-nnoremap <silent><Space>tcc :setlocal cursorcolumn!<CR>
-nnoremap <silent><Space>tcl :setlocal cursorline!<CR>
-nnoremap <silent><Space>tn  :setlocal number!<CR>
-nnoremap <silent><Space>tr  :setlocal relativenumber!<CR>
-nnoremap <silent><Space>tl  :setlocal nolist!<CR>
-nnoremap <silent><Space>tp  :setlocal paste!<CR>
-nnoremap <silent><Space>ts  :setlocal spell!<CR>
-nnoremap <silent><Space>tw  :setlocal wrap! breakindent!<CR>
-
-" }}}
-
 " Leader mappings {{{
 " ;; to :
 nnoremap <silent><Leader>;  :
@@ -216,6 +202,17 @@ nnoremap <silent><Leader>w  :update<CR>
 vnoremap <silent><Leader>w  <ESC>:update<CR>
 nnoremap <silent><Leader>W  :wall!<CR>
 vnoremap <silent><Leader>W  <ESC>:wall!<CR>
+
+" Toggle editor visuals
+nnoremap <silent><Leader>tcc :setlocal cursorcolumn!<CR>
+nnoremap <silent><Leader>tcl :setlocal cursorline!<CR>
+nnoremap <silent><Leader>tn  :setlocal number!<CR>
+nnoremap <silent><Leader>tr  :setlocal relativenumber!<CR>
+nnoremap <silent><Leader>tl  :setlocal nolist!<CR>
+nnoremap <silent><Leader>tp  :setlocal paste!<CR>
+nnoremap <silent><Leader>ts  :setlocal spell!<CR>
+nnoremap <silent><Leader>tw  :setlocal wrap! breakindent!<CR>
+
 
 " }}}
 

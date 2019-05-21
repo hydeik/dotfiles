@@ -6,44 +6,42 @@ let g:which_key_space_map = {
       \ 'c':  'CocList commands',
       \ 'd':  'Defx',
       \ 'e':  'CocList extensions',
+      \ 'g':  'CocList gstatus',
       \ 'h':  'CocList helptags',
       \ 'f':  'CocList files',
       \ 'm':  'CocList mru',
       \ 'l':  'CocList locationlist',
       \ 'o':  'CocList outline',
-      \ 'O':  'CocList symbols',
-      \ 'p':  'CocListResume',
       \ 'q':  'CocList quickfix',
-      \ 's':  'CocList snippets',
+      \ 's':  'CocList symbols',
+      \ 'u':  'CocList snippets',
       \ 'y':  'CocList yank',
       \ '/':  'CocList grep',
       \ '*':  'CocList grep <cword>',
       \ ' ':  'CocList',
+      \ 'r':  'CocListResume',
+      \ '[':  'CocPrev',
+      \ ']':  'CocNext',
       \ }
 
-" Git
-let g:which_key_space_map.g = {
-     \ 'name': '+git',
-     \ 'b': 'branch',
-     \ 'c': 'commit-current-file',
-     \ 'C': 'commit-project',
-     \ 'f': 'ls-files',
-     \ 's': 'status',
-     \ }
+" " Git
+" let g:which_key_space_map.g = {
+"     \ 'name': '+git',
+"     \ 'b': 'branch',
+"     \ 'c': 'commit-current-file',
+"     \ 'C': 'commit-project',
+"     \ 'f': 'ls-files',
+"     \ 's': 'status',
+"     \ }
 
 let g:which_key_space_map.t = {
-     \ 'name': '+toggle',
-     \ 'c': {
-     \   'name': '+cursor',
-     \   'c': 'cursor-column',
-     \   'l': 'cursor-line',
-     \ },
-     \ 'n':  'line-number',
-     \ 'l':  'listchars',
-     \ 'p':  'paste-mode',
-     \ 'r':  'relative-number',
-     \ 's':  'spell-check',
-     \ 'w':  'wrap-text',
+     \ 'name': '+tig',
+     \ 'b': 'tig blame',
+     \ 't': 'tig (current file)',
+     \ 'p': 'tig (project)',
+     \ 'r': 'tig grep resume',
+     \ '/': 'tig grep',
+     \ '*': 'tig grep <cword>',
      \ }
 
 call which_key#register('<Space>', 'g:which_key_space_map')
@@ -67,6 +65,21 @@ let g:which_key_leader_map['Q'] = 'quit-without-saving'
 "      \ 's': 'save-session',
 "      \ }
 "
+let g:which_key_leader_map.t = {
+     \ 'name': '+toggle',
+     \ 'c': {
+     \   'name': '+cursor',
+     \   'c': 'cursor-column',
+     \   'l': 'cursor-line',
+     \ },
+     \ 'n':  'line-number',
+     \ 'l':  'listchars',
+     \ 'p':  'paste-mode',
+     \ 'r':  'relative-number',
+     \ 's':  'spell-check',
+     \ 'w':  'wrap-text',
+     \ }
+
 let g:which_key_leader_map['w'] = 'save'
 let g:which_key_leader_map['W'] = 'save-all-buffers'
 
