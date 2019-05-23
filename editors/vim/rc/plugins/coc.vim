@@ -168,6 +168,23 @@ endif
 " }}}
 
 " --- Extensions {{{
+" coc-lists
+if executable('fd')
+  call coc#config('list', {
+        \ 'source': {
+        \   'files': {
+        \     'command' : 'fd',
+        \     'args': [
+        \       '--type=f', '--hidden', '--follow', '--color=never',
+        \       '--exclude=.git', '--exclude=.venv', '--exclude=.svn',
+        \       '--exclude=node_modules'
+        \       ]
+        \     }
+        \   }
+        \ })
+endif
+
+" coc-git
 call coc#config('git', {
       \ 'chagendSign':       { 'text': '~', 'hlGroup': 'AquaSign'   },
       \ 'addedSign':         { 'text': '+', 'hlGroup': 'GreenSign'  },
@@ -176,6 +193,7 @@ call coc#config('git', {
       \ 'changeRemovedSign': { 'text': '=', 'hlGroup': 'PurpleSign' },
       \ })
 
+" coc-python
 call coc#config('python', {
      \ 'formatting': {
      \   'blackPath': $PYENV_ROOT.'/versions/neovim3/bin/black',
