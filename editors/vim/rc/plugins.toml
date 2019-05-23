@@ -51,10 +51,10 @@ hook_add = ''' " {{{
   let g:show_spaces_that_precede_tabs = 1
   let g:better_whitespace_filetypes_blacklist = [
       \ 'diff', 'gitcommit', 'defx', 'denite', 'qf', 'help',
-      \ 'markdown', 'which_key'
+      \ 'markdown', 'vkmap', 'which_key'
       \ ]
 
-  nnoremap <silent><Leader>xd  :<C-u>StripWhitespace<CR>
+  nnoremap <silent><Leader>x  :<C-u>StripWhitespace<CR>
 " }}} '''
 
 # Seemless navitation between Tmux and Vim

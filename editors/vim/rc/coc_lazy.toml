@@ -54,7 +54,7 @@ hook_add = '''
   nnoremap <silent> mo  :<C-u>CocList outline<CR>
   nnoremap <silent> ms  :<C-u>CocList symbols<CR>
 
-  nnoremap <silent> mh  :<C-u>CocAction('doHover')<CR>
+  nnoremap <silent> mh  :<C-u>call CocAction('doHover')<CR>
   nnoremap <silent> K   :<C-u>call <SID>ShowDocumentation()<CR>
 
   " --- Git extension
@@ -80,24 +80,20 @@ hook_add = '''
   nnoremap <silent> <Space>g       :<C-u>CocList --normal gstatus<CR>
   nnoremap <silent> <Space>h       :<C-u>CocList helptags<CR>
   nnoremap <silent> <Space>k       :<C-u>CocList maps<CR>
-  nnoremap <silent> <Space>l       :<C-u>CocList --normal locationlist<CR>
-  nnoremap <silent> <Space>q       :<C-u>CocList --normal quickfix<CR>
+  nnoremap <silent> <Space>l       :<C-u>CocList locationlist<CR>
+  nnoremap <silent> <Space>q       :<C-u>CocList quickfix<CR>
   nnoremap <silent> <Space>r       :<C-u>CocList mru<CR>
   nnoremap <silent> <Space>s       :<C-u>CocList snippets<CR>
+  nnoremap <silent> <Space>w       :exe 'CocList -A -I --normal --input='.expand('<cword>').' words -w'<CR>
   nnoremap <silent> <Space>y       :<C-u>CocList --normal yank<CR>
+  nnoremap <silent> <Space>/       :<C-u>Rg<Space>
+  nnoremap <silent> <Space>*       :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+  vnoremap <silent> <Space>*       :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 
   nnoremap <silent> <Space>p       :<C-u>CocListResume<CR>
   nnoremap <silent> <Space>]       :<C-u>CocNext<CR>
   nnoremap <silent> <Space>[       :<C-u>CocPrev<CR>
 
-  " Search / Grep
-  nnoremap <silent> /  :<C-u>CocList -A -I --ignore-case words<CR>
-  nnoremap <silent> *  :exe 'CocList -A -I --normal --input='.expand('<cword>').' words -w'<CR>
-  nnoremap <silent> n  :<C-u>CocNext<CR>
-  nnoremap <silent> N  :<C-u>CocPrev<CR>
-  nnoremap <silent> <Space>/  :<C-u>Rg<Space>
-  nnoremap <silent> <Space>*  :exe 'CocList -I --normal --input='.expand('<cword>').' grep'<CR>
-  vnoremap <silent> <Space>*  :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 
   " Utility funcitons for key mapping
   function! s:CheckBackspace() abort
@@ -154,11 +150,10 @@ hook_source = '''
 
   " --- Autocmd
   augroup MyAutoCmd
-    " Highlight symbols under cursor.
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-    " Trigger signature help
-    autocmd CursorHoldI,CursorMovedI call CocActionAsync('showSignatureHelp')
+    autocmd CursorHold * silent! call CocActionAsync('highlight')
+    autocmd InsertEnter *            call CocActionAsync('showSignatureHelp')
     autocmd User CocJumpPlaceholder  call CocActionAsync('showSignatureHelp')
+    autocmd User CocQuickfixChange   :CocList --normal quickfix
     autocmd FileType c,cpp,objc,objcpp,go,typescript,json,python,ruby,rust,sh,vim,yaml
           \ call s:CocLspSettings()
   augroup END

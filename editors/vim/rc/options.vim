@@ -239,7 +239,7 @@ set cmdheight=2         " Height of the command line
 set cmdwinheight=5      " Command-line lines
 
 set noequalalways       " Don't resize windows on split or close
-set colorcolumn=80      " Highlight the 80th character limit
+set colorcolumn=+1      " Highlight 'textwidth+1'-th column
 set display=lastline    " Don't omit line in @
 " set report=0            " always report changes
 
