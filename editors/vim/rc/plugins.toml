@@ -162,14 +162,6 @@ hook_add = '''
   let g:polyglot_disable = ['json', 'markdown']
 '''
 
-# diff
-[[plugins]]
-repo = 'thinca/vim-ft-diff_fold'
-
-# help
-[[plugins]]
-repo = 'thinca/vim-ft-help_fold'
-
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
 

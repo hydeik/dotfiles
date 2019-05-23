@@ -204,15 +204,14 @@ nnoremap <silent><Leader>W  :wall!<CR>
 vnoremap <silent><Leader>W  <ESC>:wall!<CR>
 
 " Toggle editor visuals
-nnoremap <silent><Leader>tcc :setlocal cursorcolumn!<CR>
-nnoremap <silent><Leader>tcl :setlocal cursorline!<CR>
-nnoremap <silent><Leader>tn  :setlocal number!<CR>
-nnoremap <silent><Leader>tr  :setlocal relativenumber!<CR>
-nnoremap <silent><Leader>tl  :setlocal nolist!<CR>
-nnoremap <silent><Leader>tp  :setlocal paste!<CR>
-nnoremap <silent><Leader>ts  :setlocal spell!<CR>
-nnoremap <silent><Leader>tw  :setlocal wrap! breakindent!<CR>
-
+nnoremap <silent><Leader>Tcc :setlocal cursorcolumn!<CR>
+nnoremap <silent><Leader>Tcl :setlocal cursorline!<CR>
+nnoremap <silent><Leader>Tn  :setlocal number!<CR>
+nnoremap <silent><Leader>Tr  :setlocal relativenumber!<CR>
+nnoremap <silent><Leader>Tl  :setlocal nolist!<CR>
+nnoremap <silent><Leader>Tp  :setlocal paste!<CR>
+nnoremap <silent><Leader>Ts  :setlocal spell!<CR>
+nnoremap <silent><Leader>Tw  :setlocal wrap! breakindent!<CR>
 
 " }}}
 

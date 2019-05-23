@@ -36,7 +36,8 @@ hook_add = '''
     \ 'sh',
     \ 'sass',
     \ 'xml',
-    \ 'vim'
+    \ 'vim',
+    \ 'help'
     \ ]
 
   " -- LaTeX

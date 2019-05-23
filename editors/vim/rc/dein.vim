@@ -21,6 +21,7 @@ endif
 
 let s:base           = fnamemodify(expand('<sfile>'), ':p:h')
 let s:dein_toml      = s:base . '/plugins.toml'
+let s:dein_toml_coc  = s:base . '/coc_lazy.toml'
 let s:dein_toml_lazy = s:base . '/plugins_lazy.toml'
 let s:dein_toml_ft   = s:base . '/ftplugin.toml'
 
@@ -34,6 +35,7 @@ endif
 " Now initialize dein.vim and start plugin configuration block.
 call dein#begin(s:dein_dir, expand('<sfile>'))
 call dein#load_toml(s:dein_toml,      {'lazy': 0})
+call dein#load_toml(s:dein_toml_coc,  {'lazy': 1})
 call dein#load_toml(s:dein_toml_lazy, {'lazy': 1})
 call dein#load_toml(s:dein_toml_ft)
 

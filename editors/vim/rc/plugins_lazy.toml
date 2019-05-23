@@ -1,213 +1,5 @@
 # === Plugins (lazy loading) ===
 
-# --- Intellisense {{{
-#
-# Complete engine and Language Server support for neovim & vim,
-# featured as VSCode
-#
-
-[[plugins]]
-repo = 'neoclide/coc.nvim'
-merge = 0
-on_event = 'VimEnter'
-build = 'yarn install --frozen-lockfile'
-hook_source = ''' "{{{
-  " List of extensions
-  let g:coc_global_extensions = [
-        \ 'coc-lists', 'coc-snippets', 'coc-yank',
-        \ 'coc-emoji', 'coc-syntax', 'coc-tag', 'coc-word',
-        \ 'coc-highlight',
-        \ 'coc-css', 'coc-emmet', 'coc-html', 'coc-svg',
-        \ 'coc-git',
-        \ 'coc-eslint', 'coc-jest', 'coc-prettier', 'coc-tsserver', 'coc-vetur',
-        \ 'coc-json',
-        \ 'coc-python',
-        \ 'coc-rls',
-        \ 'coc-solargraph',
-        \ 'coc-vimtex',
-        \ 'coc-yaml',
-        \ ]
-
-  " --- Insert mode key mapping for auto completion
-  " Use <TAB> for trigger completion with characters ahead and navigate.
-  inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
-        \ <SID>CheckBackspace() ? "\<TAB>" : coc#refresh()
-  " Use <S-TAB> for completion back
-  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-  " Use <CR> for confirm completion.
-  "   `<C-g>u` means break undo chain at current position.
-  "    Coc only does snippet and additional edit on confirm.
-  inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() :
-        \ "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
-  " Use <c-space> for trigger completion.
-  inoremap <silent><expr> <C-Space> coc#refresh()
-  " Custom complete
-  imap     <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
-
-  " Use <C-s> to expand snippets
-  imap <silent> <C-s>  <Plug>(coc-snippets-expand-jump)
-  xmap <silent> <C-s>  <Plug>(coc-snippets-select)
-
-  " CocList mappings
-  "   options:
-  "    -A, --auto-preview
-  "    -I, --interactive
-  "    -N, --number-select
-
-  nnoremap <silent> <Space>a  :<C-u>CocList --normal diagnostics<CR>
-  nnoremap <silent> <Space>c  :<C-u>CocList -N commands<CR>
-  nnoremap <silent> <Space>b  :<C-u>CocList --normal buffers<CR>
-  nnoremap <silent> <Space>e  :<C-u>CocList -N extensions<CR>
-  nnoremap <silent> <Space>f  :<C-u>CocList -N files<CR>
-  nnoremap <silent> <Space>g  :<C-u>CocList --normal gstatus<CR>
-  nnoremap <silent> <Space>h  :<C-u>CocList helptags<CR>
-  nnoremap <silent> <Space>m  :<C-u>CocList -N mru<CR>
-  nnoremap <silent> <Space>l  :<C-u>CocList --normal locationlist<CR>
-  nnoremap <silent> <Space>o  :<C-u>CocList -A outline<CR>
-  nnoremap <silent> <Space>s  :<C-u>CocList -I symbols<CR>
-  nnoremap <silent> <Space>q  :<C-u>CocList --normal quickfix<CR>
-  nnoremap <silent> <Space>u  :<C-u>CocList snippets<CR>
-  nnoremap <silent> <Space>y  :<C-u>CocList --normal yank<CR>
-  nnoremap <silent> <Space><Space> :<C-u>CocList<CR>
-
-  nnoremap <silent> <Space>r  :<C-u>CocListResume<CR>
-  nnoremap <silent> <Space>]  :<C-u>CocNext<CR>
-  nnoremap <silent> <Space>[  :<C-u>CocPrev<CR>
-
-  " Search / Grep
-  nnoremap <silent> /  :<C-u>CocList -I -A --ignore-case words<CR>
-  nnoremap <silent> *  :exe 'CocList -I --normal --input='.expand('<cword>').' words -w'<CR>
-  nnoremap <silent> n  :<C-u>CocNext<CR>
-  nnoremap <silent> N  :<C-u>CocPrev<CR>
-  nnoremap <silent> <Space>/  :<C-u>Rg<Space>
-  nnoremap <silent> <Space>*  :exe 'CocList -I --normal --input='.expand('<cword>').' grep -w'<CR>
-
-  " Git chunks
-  nmap [g <Plug>(coc-git-prevchunk)
-  nmap ]g <Plug>(coc-git-nextchunk)
-  nmap gs <Plug>(coc-git-chunkinfo)
-  nmap gb <Plug>(coc-git-commit)
-
-  " Utility funcitons for key mapping
-  function! s:CheckBackspace() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
-
-  function! ShowDocumentation() abort
-    if &filetype == 'vim'
-      execute 'help '.expand('<cword>')
-    else
-      call CocAction('doHover')
-    endif
-  endfunction
-
-  function! s:GrepFromSelected(type)
-    let saved_unnamed_register = @@
-    if a:type ==# 'v'
-      normal! `<v`>y
-    elseif a:type ==# 'char'
-      normal! `[v`]y
-    else
-      return
-    endif
-    let word = substitute(@@, '\n$', '', 'g')
-    let word = escape(word, '| ')
-    let @@ = saved_unnamed_register
-    execute 'CocList grep '.word
-  endfunction
-
-  " --- Key mappings for LSP features
-  function! s:CocLspSettings() abort
-    " Key mappings (buffer local)
-    nmap <silent><buffer> [e <Plug>(coc-diagnostic-prev)
-    nmap <silent><buffer> ]e <Plug>(coc-diagnostic-next)
-    nmap <silent><buffer> ga <Plug>(coc-codeaction-selected)
-    vmap <silent><buffer> ga <Plug>(coc-codeaction-selected)
-    nmap <silent><buffer> gA <Plug>(coc-codeaction)
-    nmap <silent><buffer> gd <Plug>(coc-definition)
-    nmap <silent><buffer> gD <Plug>(coc-declaration)
-    nmap <silent><buffer> gI <Plug>(coc-implementation)
-    nmap <silent><buffer> gQ <Plug>(coc-format)
-    nmap <silent><buffer> gr <Plug>(coc-reference)
-    nmap <silent><buffer> gR <Plug>(coc-rename)
-    nmap <silent><buffer> gt <Plug>(coc-type-definition)
-
-    " Document hover (invoked by 'K')
-    setlocal keywordprg=:call\ ShowDocumentation()
-    " formatexpr from language server (gq{motion})
-    setlocal formatexpr=CocAction('formatSelected')
-  endfunction
-
-  function! s:CocLspCclsSettings() abort
-    call s:CocLspSettings()
-    " --- Navigation to declarations with <C-h>, <C-j>, <C-k>, <C-l>
-    " 'D' => first child declaration
-    nnoremap <silent><buffer> <C-l> :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<CR>
-    " 'L' => previous declaration
-    nnoremap <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<CR>
-    " 'R' => next declaration
-    nnoremap <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<CR>
-    " 'U' => parent declaration
-    nnoremap <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<CR>
-
-    " --- Cross reference extensions
-    " bases
-    nnoremap <silent><buffer> xb :call CocLocations('ccls','$ccls/inheritance')<CR>
-    " bases of up to 3 levels
-    nnoremap <silent><buffer> xb :call CocLocations('ccls','$ccls/inheritance',{'levels':3})<CR>
-    " derived
-    nnoremap <silent><buffer> xd :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true})<CR>
-    " derived of up to 3 levels
-    nnoremap <silent><buffer> xD :call CocLocations('ccls','$ccls/inheritance',{'derived':v:true,'levels':3})<CR>
-
-    " caller
-    nnoremap <silent><buffer> xc :call CocLocations('ccls','$ccls/call')<CR>
-    " callee
-    nnoremap <silent><buffer> xC :call CocLocations('ccls','$ccls/call',{'callee':v:true})<CR>
-
-    " $ccls/member
-    " member variables / variables in a namespace
-    nnoremap <silent><buffer> xm :call CocLocations('ccls','$ccls/member')<CR>
-    " member functions / functions in a namespace
-    nnoremap <silent><buffer> xf :call CocLocations('ccls','$ccls/member',{'kind':3})<CR>
-    " nested classes / types in a namespace
-    nnoremap <silent><buffer> xs :call CocLocations('ccls','$ccls/member',{'kind':2})<CR>
-
-    nmap     <silent><buffer> xt <Plug>(coc-type-definition)<CR>
-    nnoremap <silent><buffer> xv :call CocLocations('ccls','$ccls/vars')<CR>
-    nnoremap <silent><buffer> xV :call CocLocations('ccls','$ccls/vars',{'kind':1})<CR>
-
-    " Remap xx to x
-    nnoremap <silent><buffer> xx x
-  endfunction
-
-  " --- Autocmd
-  augroup MyAutoCmd
-    " Highlight symbols under cursor.
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-    " Trigger signature help
-    autocmd CursorHoldI,CursorMovedI call CocActionAsync('showSignatureHelp')
-    autocmd User CocJumpPlaceholder  call CocActionAsync('showSignatureHelp')
-    autocmd FileType typescript,json,python,ruby,rust,sh,vim,yaml
-          \ call s:CocLspSettings()
-    autocmd FileType c,cpp,objc,objcpp call s:CocLspCclsSettings()
-  augroup END
-"}}} '''
-hook_post_source = 'source $VIM_CONFIG_HOME/rc/plugins/coc.vim'
-
-[[plugins]]
-repo = 'neoclide/coc-neco'
-depends = ['neco-vim', 'coc.nvim']
-on_source = 'coc.nvim'
-
-[[plugins]]
-repo = 'jsfaint/coc-neoinclude'
-depends = ['neoinclude.vim', 'coc.nvim']
-on_source = 'coc.nvim'
-
-# --- }}}
-
 # --- Auto completion {{{
 
 # Tag/include sources for neocomlete/deoplete/ncm2
@@ -267,18 +59,22 @@ repo = 'liuchengxu/vista.vim'
 depends = ['coc.nvim', 'lightline.vim']
 on_cmd = ['Vista', 'Vista!', 'Vista!!']
 hook_add = '''
-  nnoremap <silent> <Space>v  :<C-u>Vista!!<CR>
+  " toggle vista view window
+  nnoremap <silent> <Space>t  :<C-u>Vista!!<CR>
 
   let g:vista_default_executive = 'ctags'
   let g:vista_executive_for = {
        \ 'c':          'coc',
        \ 'cpp':        'coc',
        \ 'fortran':    'coc',
+       \ 'go':         'coc',
+       \ 'java':       'coc',
        \ 'javascript': 'coc',
        \ 'json':       'coc',
        \ 'python':     'coc',
        \ 'ruby':       'coc',
        \ 'rust':       'coc',
+       \ 'yaml':       'coc',
        \ }
 '''
 
@@ -393,20 +189,20 @@ repo = 'AndrewRadev/splitjoin.vim'
 on_map = {n = '<Plug>Splitjoin'}
 
 # --- Displays available keybindingss in pupup
-[[plugins]]
-repo = 'liuchengxu/vim-which-key'
-on_cmd = ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']
-hook_add = ''' "{{{
-  nnoremap <silent> <Space>  :<C-u>WhichKey '<Space>'<CR>
-  vnoremap <silent> <Space>  :<C-u>WhichKeyVisual '<Space>'<CR>
-  nnoremap <silent> ;        :<C-u>WhichKey ';'<CR>
-  vnoremap <silent> ;        :<C-u>WhichKeyVisual ';'<CR>
-  nnoremap <silent> ,        :<C-u>WhichKey ','<CR>
-  vnoremap <silent> ,        :<C-u>WhichKeyVisual ','<CR>
-  nnoremap <silent> s        :<C-u>WhichKey 's'<CR>
-  vnoremap <silent> s        :<C-u>WhichKeyVisual 's'<CR>
-"}}} '''
-hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
+# [[plugins]]
+# repo = 'liuchengxu/vim-which-key'
+# on_cmd = ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']
+# hook_add = ''' "{{{
+#   nnoremap <silent> <Space>  :<C-u>WhichKey '<Space>'<CR>
+#   vnoremap <silent> <Space>  :<C-u>WhichKeyVisual '<Space>'<CR>
+#   nnoremap <silent> ;        :<C-u>WhichKey ';'<CR>
+#   vnoremap <silent> ;        :<C-u>WhichKeyVisual ';'<CR>
+#   nnoremap <silent> ,        :<C-u>WhichKey ','<CR>
+#   vnoremap <silent> ,        :<C-u>WhichKeyVisual ','<CR>
+#   nnoremap <silent> s        :<C-u>WhichKey 's'<CR>
+#   vnoremap <silent> s        :<C-u>WhichKeyVisual 's'<CR>
+# "}}} '''
+# hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
 
 # [[plugins]]
 # repo = 'paroxayte/vkmap.vim'
@@ -449,16 +245,16 @@ on_map = {nv = '<Plug>'}
 hook_add = ''' "{{{
   let g:caw_no_default_keymappings = 1
 
-  nmap gcc  <Plug>(caw:hatpos:toggle)
-  xmap gcc  <Plug>(caw:hatpos:toggle)
-  nmap gca  <Plug>(caw:dollarpos:toggle)
-  xmap gca  <Plug>(caw:dollarpos:toggle)
-  nmap gcb  <Plug>(caw:box:toggle)
-  xmap gcb  <Plug>(caw:box:toggle)
-  nmap gcw  <Plug>(caw:wrap:toggle)
-  xmap gcw  <Plug>(caw:wrap:toggle)
-  nmap gco  <Plug>(caw:jump:comment-next)
-  nmap gcO  <Plug>(caw:jump:comment-prev)
+  nmap <Leader>cc  <Plug>(caw:hatpos:toggle)
+  xmap <Leader>cc  <Plug>(caw:hatpos:toggle)
+  nmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
+  xmap <Leader>ca  <Plug>(caw:dollarpos:toggle)
+  nmap <Leader>cb  <Plug>(caw:box:toggle)
+  xmap <Leader>cb  <Plug>(caw:box:toggle)
+  nmap <Leader>cw  <Plug>(caw:wrap:toggle)
+  xmap <Leader>cw  <Plug>(caw:wrap:toggle)
+  nmap <Leader>co  <Plug>(caw:jump:comment-next)
+  nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
 "}}} '''
 
 # Make blockwise visual mode more useful

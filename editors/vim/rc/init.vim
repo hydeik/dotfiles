@@ -37,7 +37,7 @@ call mkdir(expand('$VIM_CACHE_HOME/session'), 'p')
 call mkdir(expand('$VIM_DATA_HOME/spell'), 'p')
 " }}}
 
-" Global mappings {{{
+" Prefix keys {{{
 " -----
 " Use ';' as <Leader> key and ',' as <LocalLeader> key
 "   REMARK: Required before loading plugins!
@@ -49,6 +49,7 @@ let g:maplocalleader = ','
 "   ;     -> <Leader> key
 "   ,     -> <LocalLeader> key
 "   s     -> prefix for window, tab, easymotion, sandwich
+"   m     -> prefix for LSP features
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
 nnoremap ;  <Nop>
@@ -57,6 +58,8 @@ nnoremap ,  <Nop>
 xnoremap ,  <Nop>
 nmap     s  <Nop>
 xmap     s  <Nop>
+nmap     m  <Nop>
+xmap     m  <Nop>
 
 " }}}
 
