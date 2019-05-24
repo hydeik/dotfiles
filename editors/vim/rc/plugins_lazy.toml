@@ -307,6 +307,8 @@ hook_add = ''' "{{{
   xmap t <Plug>(easymotion-tl)
   omap T <Plug>(easymotion-Tl)
   xmap T <Plug>(easymotion-Tl)
+  omap w <Plug>(easymotion-lineanywhere)
+  xmap w <Plug>(easymotion-lineanywhere)
 "}}} '''
 hook_source = ''' "{{{
   " Disable default mappings
