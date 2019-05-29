@@ -189,40 +189,39 @@ repo = 'AndrewRadev/splitjoin.vim'
 on_map = {n = '<Plug>Splitjoin'}
 
 # --- Displays available keybindingss in pupup
+[[plugins]]
+repo = 'liuchengxu/vim-which-key'
+on_cmd = ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']
+hook_add = ''' "{{{
+  nnoremap <silent> <Space>  :<C-u>WhichKey       '<Space>'<CR>
+  vnoremap <silent> <Space>  :<C-u>WhichKeyVisual '<Space>'<CR>
+  nnoremap <silent> ;        :<C-u>WhichKey       ';'<CR>
+  vnoremap <silent> ;        :<C-u>WhichKeyVisual ';'<CR>
+  nnoremap <silent> ,        :<C-u>WhichKey       ','<CR>
+  vnoremap <silent> ,        :<C-u>WhichKeyVisual ','<CR>
+  nnoremap <silent> s        :<c-u>whichkey       's'<cr>
+  vnoremap <silent> s        :<c-u>whichkeyvisual 's'<cr>
+  nnoremap <silent> m        :<C-u>WhichKey       'm'<CR>
+  vnoremap <silent> m        :<C-u>WhichKeyVisual 'm'<CR>
+"}}} '''
+hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
+
 # [[plugins]]
-# repo = 'liuchengxu/vim-which-key'
-# on_cmd = ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']
-# hook_add = ''' "{{{
-#   nnoremap <silent> <Space>  :<C-u>WhichKey       '<Space>'<CR>
-#   vnoremap <silent> <Space>  :<C-u>WhichKeyVisual '<Space>'<CR>
-#   nnoremap <silent> ;        :<C-u>WhichKey       ';'<CR>
-#   vnoremap <silent> ;        :<C-u>WhichKeyVisual ';'<CR>
-#   nnoremap <silent> ,        :<C-u>WhichKey       ','<CR>
-#   vnoremap <silent> ,        :<C-u>WhichKeyVisual ','<CR>
-#   nnoremap <silent> s        :<c-u>whichkey       's'<cr>
-#   vnoremap <silent> s        :<c-u>whichkeyvisual 's'<cr>
-#   nnoremap <silent> m        :<C-u>WhichKey       'm'<CR>
-#   vnoremap <silent> m        :<C-u>WhichKeyVisual 'm'<CR>
-# "}}} '''
-# hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
+# repo = 'paroxayte/vkmap.vim'
+# depends = ['vwm.vim']
+# on_event = 'VimEnter'
+# hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/vkmap.vim'
 #
-[[plugins]]
-repo = 'paroxayte/vkmap.vim'
-depends = ['vwm.vim']
-on_event = 'VimEnter'
-hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/vkmap.vim'
-
-[plugins.ftplugin]
-vkmap = '''
-  setlocal nolist
-  setlocal listchars=
-  setlocal colorcolumn=""
-'''
-
-
-[[plugins]]
-repo = 'paroxayte/vwm.vim'
-on_source = 'vkmap.vim'
+# [plugins.ftplugin]
+# vkmap = '''
+#   setlocal nolist
+#   setlocal listchars=
+#   setlocal colorcolumn=""
+# '''
+#
+# [[plugins]]
+# repo = 'paroxayte/vwm.vim'
+# on_source = 'vkmap.vim'
 
 # Delete buffer without closing window (tig-explorer dependency)
 [[plugins]]
