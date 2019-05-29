@@ -1,39 +1,32 @@
 " Space mappings {{{
 " -----
 let g:which_key_space_map = {
-      \ 'a':  'CocList diagnostics',
-      \ 'b':  'CocList buffers',
-      \ 'c':  'CocList commands',
+      \ ' ':  ['CocList', 'available lists'],
+      \ '[':  'previous item in list',
+      \ ']':  'next item in list',
+      \ ';':  'vim commands',
+      \ ':':  'command history',
+      \ '/':  'grep',
+      \ '*':  'grep-from-selected',
+      \ 'F':  'workspace folders',
+      \ 'b':  'buffers',
+      \ 'c':  'coc-commands',
       \ 'd':  'Defx',
-      \ 'e':  'CocList extensions',
-      \ 'g':  'CocList gstatus',
-      \ 'h':  'CocList helptags',
-      \ 'f':  'CocList files',
-      \ 'm':  'CocList mru',
-      \ 'l':  'CocList locationlist',
-      \ 'o':  'CocList outline',
-      \ 'q':  'CocList quickfix',
-      \ 's':  'CocList symbols',
-      \ 'u':  'CocList snippets',
-      \ 'y':  'CocList yank',
-      \ '/':  'CocList grep',
-      \ '*':  'CocList grep <cword>',
-      \ ' ':  'CocList',
-      \ 'r':  'CocListResume',
-      \ '[':  'CocPrev',
-      \ ']':  'CocNext',
+      \ 'e':  'coc-extensions',
+      \ 'f':  'files',
+      \ 'g':  'git-status',
+      \ 'h':  'help',
+      \ 'k':  'key-mappings',
+      \ 'l':  'locationlist',
+      \ 'p':  'resume list',
+      \ 'q':  'quickfix',
+      \ 'r':  'mru',
+      \ 's':  'snippets',
+      \ 'v':  'Vista',
+      \ 'y':  'yank list',
       \ }
 
-" " Git
-" let g:which_key_space_map.g = {
-"     \ 'name': '+git',
-"     \ 'b': 'branch',
-"     \ 'c': 'commit-current-file',
-"     \ 'C': 'commit-project',
-"     \ 'f': 'ls-files',
-"     \ 's': 'status',
-"     \ }
-
+" tig
 let g:which_key_space_map.t = {
      \ 'name': '+tig',
      \ 'b': 'tig blame',
@@ -47,51 +40,68 @@ let g:which_key_space_map.t = {
 call which_key#register('<Space>', 'g:which_key_space_map')
 " }}}
 
+" 'm' mappings {{{
+" -----
+" Key mapping for LSP features
+let g:which_key_m_map = {
+      \ '?': 'diagnostic-info',
+      \ '[': 'diagnostic-prev',
+      \ ']': 'diagnostic-next',
+      \ 'A': 'codeaction',
+      \ 'D': 'declaration',
+      \ 'F': 'fix-current',
+      \ 'R': 'rename',
+      \ 'a': 'codeaction-selected',
+      \ 'd': 'definition',
+      \ 'f': 'format',
+      \ 'h': 'document-hover',
+      \ 'i': 'implementation',
+      \ 'j': 'list-location',
+      \ 'L': 'codelens',
+      \ 'o': 'document-symbols',
+      \ 'q': 'list-diagnostics',
+      \ 'r': 'reference',
+      \ 's': 'workspace-symbols',
+      \ 't': 'type-definition',
+      \ }
+
+call which_key#register('m', 'g:which_key_m_map')
+" }}}
+
 " leader mappings {{{
 " -----
-let g:which_key_leader_map = {}
+let g:which_key_leader_map = {
+      \ 'J': 'join-with-chars',
+      \ 'Q': 'quit-without-saving',
+      \ 'W': 'save-all-buffers',
+      \ 'a': 'easy-align',
+      \ 'q': 'quit',
+      \ 'w': 'save',
+      \ 'x': 'strip-whitespace',
+      \ ';': ':{command}',
+      \ }
 
-let g:which_key_leader_map['g'] = 'grep-from-selected-{motion}'
-let g:which_key_leader_map['J'] = 'join-with-chars'
-let g:which_key_leader_map['q'] = 'quit'
-let g:which_key_leader_map['Q'] = 'quit-without-saving'
+let g:which_key_leader_map.c = {
+      \ 'name': '+comment',
+      \ 'a': 'caw:dollarpos:toggle',
+      \ 'b': 'caw:box:toggle',
+      \ 'c': 'caw:hatpos:toggle',
+      \ 'w': 'caw:wrap:toggle',
+      \ '[': 'caw:jump:comment-prev',
+      \ ']': 'caw:jump:comment-next',
+      \ }
 
-" let g:which_key_leader_map.S = {
-"      \ 'name': '+session',
-"      \ 'a': 'last-session',
-"      \ 'l': 'list-session',
-"      \ 'o': 'open-session',
-"      \ 'r': 'remove-session',
-"      \ 's': 'save-session',
-"      \ }
-"
 let g:which_key_leader_map.t = {
      \ 'name': '+toggle',
-     \ 'c': {
-     \   'name': '+cursor',
-     \   'c': 'cursor-column',
-     \   'l': 'cursor-line',
-     \ },
+     \ 'c':  'cursor-columns',
+     \ 'h':  'listchars',
+     \ 'l':  'cursor-line',
      \ 'n':  'line-number',
-     \ 'l':  'listchars',
      \ 'p':  'paste-mode',
      \ 'r':  'relative-number',
      \ 's':  'spell-check',
      \ 'w':  'wrap-text',
      \ }
-
-let g:which_key_leader_map['w'] = 'save'
-let g:which_key_leader_map['W'] = 'save-all-buffers'
-
-let g:which_key_leader_map.x = {
-     \ 'name': '+text',
-     \ 'a': 'easy-align',
-     \ 'd': 'delete-trailing-whiteleader',
-     \ }
-
-let g:which_key_leader_map[';'] = ':{command}'
-let g:which_key_leader_map['/'] = 'grep'
-let g:which_key_leader_map['*'] = 'grep <cword>'
 
 " Register dictionary
 call which_key#register(';', 'g:which_key_leader_map')
