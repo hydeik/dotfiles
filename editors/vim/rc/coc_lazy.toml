@@ -271,7 +271,7 @@ hook_post_source = '''
   " Fortran
   if executable('fortls')
     let s:languageservers['fortran'] = {
-          \   'command': 'fortls',
+          \   'command': $PYENV_ROOT . '/versions/neovim3/bin/fortls',
           \   'filetypes': ['fortran']
           \ }
   endif

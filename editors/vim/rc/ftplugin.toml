@@ -4,6 +4,23 @@ hook_add = '''
   " -- C++
   let g:cpp_class_scope_highlight = 1
 
+  " -- Fortran
+  function s:FortranSetVars() abort
+    let s:ext = expand("%:e")
+    if s:ext ==? "f" || s:ext ==? "for"
+      let b:fortran_free_source  = 0
+      let b:fortran_fixed_source = 1
+    else
+      let b:fortran_free_source  = 1
+      let b:fortran_fixed_source = 0
+    endif
+
+    let b:fortran_fold = 1
+    let b:fortran_fold_conditionals = 1
+    let b:fortran_do_enddo = 1
+  endfunction
+  autocmd MyAutoCmd FileType fortran call s:FortranSetVars()
+
   " -- Python
   let g:python_highlight_all = 1
 
@@ -50,7 +67,7 @@ hook_add = '''
   " -- XML
   let g:xml_syntax_folding = 1
 
-  " Update filetype
+  " -- Json
   autocmd MyAutoCmd BufNewFile,BufReadPost *.json setfiletype=jsonc
 '''
 # }}}
