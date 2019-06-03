@@ -222,6 +222,8 @@ hook_post_source = '''
   call coc#config('list', {
         \ 'maxHeight': 15,
         \ 'maxPreviewHeight': 20,
+        \ 'nextKeymap': "<C-j>",
+        \ 'perviousKeymap': "<C-k>",
         \ 'insertMappings': {
         \   '<C-g>': 'do:exit',
         \   },
@@ -347,19 +349,24 @@ hook_post_source = '''
 
   " coc-python
   call coc#config('python', {
-      \ 'formatting': {
-      \   'blackPath': $PYENV_ROOT.'/versions/neovim3/bin/black',
-      \   'provider': 'black',
-      \ },
-      \ 'linting': {
-      \   'mypyPath': $PYENV_ROOT.'/versions/neovim3/bin/mypy',
-      \   'pylintPath': $PYENV_ROOT.'/versions/neovim3/bin/pylint',
-      \ },
-      \ 'sortImports': {
-      \   'path': $PYENV_ROOT.'/versions/neovim3/bin/isort',
-      \ },
-      \ 'venvPath': $PYENV_ROOT.'/versions',
-      \ })
+        \ 'formatting': {
+        \   'provider': 'black',
+        \   'autopep8Path': $PYENV_ROOT.'/versions/neovim3/bin/autopep8',
+        \   'blackPath': $PYENV_ROOT.'/versions/neovim3/bin/black',
+        \   'yapfPath': $PYENV_ROOT.'/versions/neovim3/bin/yapf',
+        \ },
+        \ 'linting': {
+        \   'mypynEnabled': v:true,
+        \   'mypyPath': $PYENV_ROOT.'/versions/neovim3/bin/mypy',
+        \   'pylintPath': $PYENV_ROOT.'/versions/neovim3/bin/pylint',
+        \ },
+        \ 'sortImports': {
+        \   'path': $PYENV_ROOT.'/versions/neovim3/bin/isort',
+        \ },
+        \ 'venvPath': $PYENV_ROOT.'/versions',
+        \ 'jediEnabled': v:false,
+        \ 'jediPath': $PYENV_ROOT.'/versions/neovim3/bin/jedi',
+        \ })
 
   " coc-vimlsp
   call coc#config('vimlsp', {
