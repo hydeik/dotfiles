@@ -383,6 +383,12 @@ hook_post_source = '''
       \ },
       \ })
 
+  " coc-git
+  call coc#config('git', {
+      \ 'addGlameToVirtualText': v:true,
+      \ 'addGlameToBufferVar': v:true,
+      \ })
+
   " }}}
 
   " --- Custom commands {{{

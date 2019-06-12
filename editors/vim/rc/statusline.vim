@@ -70,6 +70,7 @@ let g:lightline = {
       \   'filetype':     'LightlineFiletype',
       \   'fileencoding': 'LightlineFileencoding',
       \   'mode':         'LightlineMode',
+      \   'blame':        'LightlineGitBlame',
       \ },
       \ 'component_expand' : {
       \   'coc_error':   'LightlineCocError',
@@ -143,21 +144,10 @@ function! LightlineGitBranch()
   return trim(get(g:, 'coc_git_status', ''))
 endfunction
 
-" function! LightlineGitRepoChanged()
-"   let branch = gina#component#repo#branch()
-"   let staged = gina#component#status#staged()
-"   let unstaged = gina#component#status#unstaged()
-"   return branch ==# '' ? '' :
-"          \ (winwidth(0) < 100 ? '' :
-"          \   (staged   ? "\uf055 ".staged   : '') .
-"          \   (unstaged ? "\uf06a ".unstaged : '') )
-" endfunction
-"
-" function! LightlineGitRepoConflicted()
-"   let branch = gina#component#repo#branch()
-"   let conflicted = gina#component#status#conflicted()
-"   return branch ==# '' ? '' : (conflicted ? " \uf057 ".conflicted : '')
-" endfunction
+function! LightlineGitBlame()
+  let blame = get(b:, 'coc_git_blame', '')
+  return winwidth(0) > 120 ? blame : ''
+endfunction
 
 " https://github.com/Lokaltog/vim-powerline/blob/develop/autoload/Powerline/Functions.vim
 function! LightlineCharCode()
