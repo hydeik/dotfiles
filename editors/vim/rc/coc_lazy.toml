@@ -350,7 +350,7 @@ hook_post_source = '''
   " coc-python
   call coc#config('python', {
         \ 'formatting': {
-        \   'provider': 'black',
+        \   'provider': 'yapf',
         \   'autopep8Path': $PYENV_ROOT.'/versions/neovim3/bin/autopep8',
         \   'blackPath': $PYENV_ROOT.'/versions/neovim3/bin/black',
         \   'yapfPath': $PYENV_ROOT.'/versions/neovim3/bin/yapf',
@@ -384,10 +384,10 @@ hook_post_source = '''
       \ })
 
   " coc-git
-  call coc#config('git', {
-      \ 'addGlameToVirtualText': v:true,
-      \ 'addGlameToBufferVar': v:true,
-      \ })
+  " call coc#config('git', {
+  "     \ 'addGlameToVirtualText': v:true,
+  "     \ 'addGlameToBufferVar': v:true,
+  "     \ })
 
   " }}}
 
