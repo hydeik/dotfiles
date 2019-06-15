@@ -23,6 +23,7 @@ let g:which_key_space_map = {
       \ 'r':  'mru',
       \ 's':  'snippets',
       \ 'v':  'Vista',
+      \ 'w':  'words-in-buffer',
       \ 'y':  'yank list',
       \ }
 

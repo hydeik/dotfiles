@@ -94,6 +94,8 @@ hook_add = '''
   nnoremap <silent> <Space>]       :<C-u>CocNext<CR>
   nnoremap <silent> <Space>[       :<C-u>CocPrev<CR>
 
+  autocmd MyAutoCmd FileType python
+        \ nnoremap <silent><buffer> m'  :<C-u>CocCommand python.execInTerminal<CR>
 
   " Utility funcitons for key mapping
   function! s:CheckBackspace() abort
