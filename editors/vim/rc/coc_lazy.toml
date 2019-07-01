@@ -135,10 +135,12 @@ hook_source = '''
         \ 'coc-highlight',
         \ 'coc-css', 'coc-emmet', 'coc-html', 'coc-svg',
         \ 'coc-git',
+        \ 'coc-go',
         \ 'coc-eslint', 'coc-jest', 'coc-prettier', 'coc-tsserver', 'coc-vetur',
         \ 'coc-json',
         \ 'coc-python',
         \ 'coc-rls',
+        \ 'coc-sh',
         \ 'coc-solargraph',
         \ 'coc-vimlsp',
         \ 'coc-vimtex',
@@ -280,15 +282,6 @@ hook_post_source = '''
           \ }
   endif
 
-  " Go language
-  if executable('gopls')
-    let s:languageservers['golang'] = {
-          \   'command': 'gopls',
-          \   'filetypes': ['go'],
-          \   'rootPatterns': ['go.mod', '.vim', '.git', '.hg'],
-          \ }
-  endif
-
   " Docker
   if executable('docker-langserver')
     let s:languageservers['dockerfile'] = {
@@ -303,16 +296,6 @@ hook_post_source = '''
     let s:languageservers['reason'] = {
           \   'command': 'reason-language-server',
           \   'filetypes': ['reason']
-          \ }
-  endif
-
-  " Bash
-  if executable('bash-language-server')
-    let s:languageservers['bash'] = {
-          \   'command': 'bash-language-server',
-          \   'args': ['start'],
-          \   'filetypes': ['sh'],
-          \   'ignoredRootPaths': ['~']
           \ }
   endif
 
