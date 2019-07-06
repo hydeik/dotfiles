@@ -129,6 +129,7 @@ hook_add = '''
 
 hook_source = '''
   " List of extensions
+  " TODO: add coc-sh when bash-language-server is available for Node.js 12
   let g:coc_global_extensions = [
         \ 'coc-lists', 'coc-snippets', 'coc-yank',
         \ 'coc-emoji', 'coc-syntax', 'coc-tag', 'coc-word',
@@ -140,7 +141,6 @@ hook_source = '''
         \ 'coc-json',
         \ 'coc-python',
         \ 'coc-rls',
-        \ 'coc-sh',
         \ 'coc-solargraph',
         \ 'coc-vimlsp',
         \ 'coc-vimtex',
