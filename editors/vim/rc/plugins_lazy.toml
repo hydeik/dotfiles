@@ -66,14 +66,18 @@ hook_add = '''
   let g:vista_executive_for = {
        \ 'c':          'coc',
        \ 'cpp':        'coc',
+       \ 'css':        'coc',
        \ 'fortran':    'coc',
        \ 'go':         'coc',
+       \ 'html':       'coc',
        \ 'java':       'coc',
        \ 'javascript': 'coc',
        \ 'json':       'coc',
        \ 'python':     'coc',
        \ 'ruby':       'coc',
        \ 'rust':       'coc',
+       \ 'tex':        'coc',
+       \ 'vim':        'coc',
        \ 'yaml':       'coc',
        \ }
 '''
