@@ -637,23 +637,11 @@ hook_add = ''' "{{{
 repo = 'rhysd/vim-gfm-syntax'
 on_ft = 'markdown'
 
-# Generate table of contents for Markdown file
-[[plugins]]
-repo = 'mzlogin/vim-markdown-toc'
-on_cmd = ['GenTocGFM', 'GenTocRedcarpet', 'GenTocGitLab', 'UpdateToc']
-hook_source = '''
-  let g:vmt_auto_update_on_save = 0
-'''
-
 # Markdown live preview
 [[plugins]]
-repo = 'iamcco/mathjax-support-for-mkdp'
-on_ft = 'markdown'
-depends = ['markdown-preview.vim']
-
-[[plugins]]
 repo = 'iamcco/markdown-preview.vim'
-on_ft = 'markdown'
+build = 'cd app && yarn install'
+on_ft = ['markdown', 'pandoc.markdown', 'rmd']
 hook_source = '''
   let g:mkdp_refresh_slow = 1
 '''
