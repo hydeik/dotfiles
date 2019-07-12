@@ -8,7 +8,8 @@
 repo = 'neoclide/coc.nvim'
 merge = 0
 on_event = 'VimEnter'
-build = 'yarn install --frozen-lockfile'
+rev = 'release'
+#build = 'yarn install --frozen-lockfile'
 
 hook_add = '''
   " --- Insert mode key mapping for auto completion
