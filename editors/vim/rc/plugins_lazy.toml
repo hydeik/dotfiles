@@ -203,8 +203,8 @@ hook_add = ''' "{{{
   vnoremap <silent> ;        :<C-u>WhichKeyVisual ';'<CR>
   nnoremap <silent> ,        :<C-u>WhichKey       ','<CR>
   vnoremap <silent> ,        :<C-u>WhichKeyVisual ','<CR>
-  nnoremap <silent> s        :<c-u>whichkey       's'<cr>
-  vnoremap <silent> s        :<c-u>whichkeyvisual 's'<cr>
+  nnoremap <silent> s        :<c-u>WhichKey       's'<cr>
+  vnoremap <silent> s        :<c-u>WhichKeyvisual 's'<cr>
   nnoremap <silent> m        :<C-u>WhichKey       'm'<CR>
   vnoremap <silent> m        :<C-u>WhichKeyVisual 'm'<CR>
 "}}} '''
