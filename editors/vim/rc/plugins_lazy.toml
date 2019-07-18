@@ -603,6 +603,19 @@ hook_source = '''
 
 # --- Filetypes, Syntax {{{
 
+# [DO]cument [GE]nerator
+[[plugins]]
+repo = 'kkoomen/vim-doge'
+on_map = { nis = '<Plug>' }
+hook_add = '''
+  " 'reST', 'numpy', or 'google'
+  let g:doge_doc_standard_python = 'numpy'
+  " Key mappings
+  let g:doge_mapping = '<Leader>d'
+  let g:doge_comment_jump_forward = '<C-n>'
+  let g:doge_comment_jump_backward = '<C-P>'
+'''
+
 # LaTeX
 [[plugins]]
 repo = 'lervag/vimtex'
