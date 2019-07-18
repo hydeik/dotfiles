@@ -28,9 +28,15 @@ hook_add = '''
   " Custom complete
   imap     <silent> <C-x><C-u>  <Plug>(coc-complete-custom)
 
-  " Use <C-s> to expand snippets
-  imap <silent> <C-s>  <Plug>(coc-snippets-expand-jump)
-  xmap <silent> <C-s>  <Plug>(coc-snippets-select)
+  " Range
+  nmap <silent> <C-s>   <Plug>(coc-range-select)
+  xmap <silent> <C-s>   <Plug>(coc-range-select)
+  xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+  xmap <silent> <TAB>   <Plug>(coc-repl-sendtext)
+
+  " Use <C-l> to expand snippets
+  imap <silent> <C-l>  <Plug>(coc-snippets-expand-jump)
+  xmap <silent> <C-l>  <Plug>(coc-snippets-select)
 
   " --- Key mappings for LSP features: use 'm' as the prefix key
   nmap <silent> m?  <Plug>(coc-diagnostic-info)
@@ -49,6 +55,7 @@ hook_add = '''
   nmap <silent> mf  <Plug>(coc-format)
   xmap <silent> mf  <Plug>(coc-format-selected)
   nmap <silent> mF  <Plug>(coc-fix-current)
+  nmap <silent> me  <Plug>(coc-refactor)
 
   nnoremap <silent> mj  :<C-u>CocList location<CR>
   nnoremap <silent> mq  :<C-u>CocList diagnostics<CR>
