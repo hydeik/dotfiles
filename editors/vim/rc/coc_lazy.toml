@@ -150,6 +150,7 @@ hook_source = '''
         \ 'coc-python',
         \ 'coc-rls',
         \ 'coc-solargraph',
+        \ 'coc-tabnine',
         \ 'coc-vimlsp',
         \ 'coc-vimtex',
         \ 'coc-yaml',
