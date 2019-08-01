@@ -402,6 +402,9 @@ fi
 # available $INTERACTIVE_FILTER
 export INTERACTIVE_FILTER="fzf:fzf-tmux:peco:percol:gof:pick"
 
+## Quantum ESPRESSO
+export ESPRESSO_PSEUDO=${HOME}/.local/share/quantum_espresso/SSSP_efficiency_pseudos
+
 ##============================================================================
 ## Machine local enviriments if provided
 ##============================================================================
