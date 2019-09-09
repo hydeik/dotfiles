@@ -143,6 +143,7 @@ hook_source = '''
         \ 'coc-emoji', 'coc-syntax', 'coc-tag', 'coc-word',
         \ 'coc-highlight',
         \ 'coc-css', 'coc-emmet', 'coc-html', 'coc-svg',
+        \ 'coc-docker',
         \ 'coc-git',
         \ 'coc-go',
         \ 'coc-eslint', 'coc-jest', 'coc-prettier', 'coc-tsserver', 'coc-vetur',
