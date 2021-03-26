@@ -23,8 +23,6 @@ function M.load_plugins(use, _)
   -- [[ UI ]]
   -- Colorschemes
   use { "sainnhe/edge", opt = true }
-  use { "sainnhe/forest-night", opt = true }
-  use { "sainnhe/gruvbox-material", opt = true }
   use { "sainnhe/sonokai", opt = true }
 
   -- A snazzy bufferline for Neovim
@@ -151,19 +149,22 @@ function M.load_plugins(use, _)
   -- Enhanced increment/decrement plugin for Neovim.
   use {
     "monaqa/dial.nvim",
-    keys = {
-      { "n", "<Plug>(dial-" },
-      { "v", "<Plug>(dial-" },
-    },
+    keys = { { "n", "<Plug>(dial-" }, { "v", "<Plug>(dial-" } },
     setup = function()
       vim.api.nvim_set_keymap("n", "<C-a>", "<Plug>(dial-increment)", {})
       vim.api.nvim_set_keymap("n", "<C-x>", "<Plug>(dial-decrement)", {})
       vim.api.nvim_set_keymap("v", "<C-a>", "<Plug>(dial-increment)", {})
       vim.api.nvim_set_keymap("v", "<C-x>", "<Plug>(dial-decrement)", {})
-      vim.api.nvim_set_keymap("v", "g<C-a>", "<Plug>(dial-increment-additional)", {})
-      vim.api.nvim_set_keymap("v", "g<C-x>", "<Plug>(dial-decrement-additional)", {})
-    end
+      vim.api.nvim_set_keymap(
+        "v", "g<C-a>", "<Plug>(dial-increment-additional)", {}
+      )
+      vim.api.nvim_set_keymap(
+        "v", "g<C-x>", "<Plug>(dial-decrement-additional)", {}
+      )
+    end,
   }
+
+  -- A more adventurous wildmenu
 
   -- Show keybindings in popup
   -- use {
