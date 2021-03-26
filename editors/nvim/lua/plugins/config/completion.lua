@@ -11,6 +11,7 @@ function M.config()
       path = true,
       buffer = true,
       calc = true,
+      emoji = true,
       vsnip = true,
       nvim_lsp = true,
       nvim_lua = true,
@@ -62,26 +63,6 @@ function M.config()
   vim.api.nvim_set_keymap("s", "<Tab>", [[v:lua.tab_complete()]], opts)
   vim.api.nvim_set_keymap("i", "<S-Tab>", [[v:lua.s_tab_complete()]], opts)
   vim.api.nvim_set_keymap("s", "<S-Tab>", [[v:lua.s_tab_complete()]], opts)
-
-  -- We have to register sources manually, because packadd doesn't source
-  -- files from "after" directory inside "opt" directory.
-  -- See https://github.com/vim/vim/issues/1994
-  for _, src in ipairs {
-    "buffer",
-    "calc",
-    "nvim_lua",
-    "path",
-    "snippets_nvim",
-    "spell",
-    "tags",
-    "treesitter",
-    "vsnip",
-  } do
-    vim.g["loaded_compe_" .. src] = true
-    compe.register_source(src, require("compe_" .. src))
-  end
-  vim.g.loaded_compe_nvim_lsp = true
-  require("compe_nvim_lsp").attach()
 end
 
 return M
