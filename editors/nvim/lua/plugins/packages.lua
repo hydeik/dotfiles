@@ -321,6 +321,7 @@ function M.load_plugins(use, _)
       -- nvim-treesitter plugins
       { "nvim-treesitter/nvim-treesitter-refactor", opt = true },
       { "nvim-treesitter/nvim-treesitter-textobjects", opt = true },
+      { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
     },
     config = require("plugins.config.treesitter").config,
   }
