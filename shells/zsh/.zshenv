@@ -352,23 +352,11 @@ export GOPATH=${HOME}
 # path=( ${GOPATH}/bin(N-/) $path[@] )
 
 ##
-## Intel C/C++, Intel Fortran, and MKL
+## Intel OneAPI -- source on request
 ##
-case ${OSTYPE} in
-    linux*)
-        case "${MACHTYPE}" in
-            x86_64*)   INTEL_ARCH="intel64";;
-            i*86*)     INTEL_ARCH="ia32";;
-                *)     INTEL_ARCH= ;;
-        esac
-        INTEL_COMPILER_DIR=/opt/intel/compilers_and_libraries
-        if [[ -f ${INTEL_COMPILER_DIR}/linux/bin/compilervars.sh ]]; then
-            . ${INTEL_COMPILER_DIR}/linux/bin/compilervars.sh ${INTEL_ARCH}
-        fi
-        unset INTEL_COMPILER_DIR INTEL_ARCH
-        ;;
-    *)  ;;
-esac
+# if [[ -f /opt/intel/oneapi/setvars.sh ]]; then
+#     source /opt/intel/oneapi/setvars.sh
+# fi
 
 ##
 ## Tig
