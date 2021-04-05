@@ -14,10 +14,10 @@ function M.load_plugins(use, _)
     config = [[vim.g.cursorhold_updatetime = 100]],
   }
 
-  -- Seemless navigation between Tmux and (Neo)Vim
+  -- Smoothly navigate between splits and panes
   use {
-    "christoomey/vim-tmux-navigator",
-    setup = require("plugins.config.vim-tmux-navigator").setup,
+    "numToStr/Navigator.nvim",
+    config = require("plugins.config.navigator").config,
   }
 
   -- [[ UI ]]
