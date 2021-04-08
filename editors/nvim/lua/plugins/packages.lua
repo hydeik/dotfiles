@@ -29,6 +29,7 @@ function M.load_plugins(use, _)
   use {
     "akinsho/nvim-bufferline.lua",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    event = "VimEnter",
     config = function()
       require("bufferline").setup {
         options = { mappings = true, always_show_bufferline = true },
