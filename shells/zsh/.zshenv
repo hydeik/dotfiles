@@ -159,8 +159,8 @@ path=(
     # *nix local, Homebrew
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
-    # MacPorts
-    /opt/local/bin(N-/)
+    # Cuda
+    /usr/local/cuda/bin(N-/)
     # System
     /usr/bin(N-/)
     /usr/sbin(N-/)
@@ -186,8 +186,7 @@ manpath=(
     /usr/local/opt/gnu-sed/libexec/gnuman(N-/)
     /usr/local/opt/gnu-tar/libexec/gnuman(N-/)
     /usr/local/opt/grep/libexec/gnuman(N-/)
-    /sw/share/man(N-/)
-    /opt/local/share/man(N-/)
+    /usr/local/cuda/doc/man(N-/)
     /usr/local/share/jman(N-/)
     /usr/local/share/man/ja(N-/)
     /usr/local/share/man(N-/)
@@ -231,11 +230,9 @@ ld_library_path=(
     ${HOME}/lib(N-/)
     ${HOME}/opt/lib(N-/)
     ${XDG_LIB_HOME}(N-/)
-    /opt/gotoblas(N-/)
     /usr/local/lib(N-/)
     /usr/local/lib32(N-/)
-    /usr/local/calc/openmpi/lib(N-/)
-    /usr/local/calc/lam/lib(N-/)
+    /usr/local/cuda/lib64(N-)
     $ld_library_path[@]
 )
 
