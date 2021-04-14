@@ -69,7 +69,6 @@ function M.file_browser()
   require("telescope.builtin").file_browser {
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",
-    prompt_position = "top",
   }
 end
 
@@ -153,7 +152,7 @@ function M.config()
 
   telescope.setup {
     defaults = {
-      prompt_position = "top",
+      prompt_position = "bottom",
       prompt_prefix = " >",
       layout_strategy = "flex",
       layout_default = {
