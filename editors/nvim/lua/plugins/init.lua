@@ -21,9 +21,7 @@ function Packer:init_ensure_plugins()
   local packer_repo = "https://github.com/wbthomason/packer.nvim"
   local state = vim.loop.fs_stat(packer_dir)
   if not state then
-    local out = vim.fn.system(
-      string.format('git clone %s %s', packer_repo, packer_dir)
-    )
+    local out = vim.fn.system({ "git", "clone", packer_repo, packer_dir })
     print(out)
     self:load_packer()
     packer.install()
