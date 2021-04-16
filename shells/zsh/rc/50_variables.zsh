@@ -103,6 +103,9 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 if (( ${+commands[fzf]} )); then
     # Default options passed to `fzf`
     export FZF_DEFAULT_OPTS='--height=50% --border'
+    # fzf on Tmux split pane
+    export FZF_TMUX=1
+    export FZF_TMUX_OPTS='-p'
 
     # Trigger sequence for fuzzy completion [default: '**']
     export FZF_COMPLETION_TRIGGER=','
