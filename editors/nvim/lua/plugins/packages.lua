@@ -106,6 +106,38 @@ function M.load_plugins(use, _)
     setup = require("plugins.config.vim-eft").setup,
   }
 
+  -- Neovim motions on speed!
+  use {
+    "phaazon/hop.nvim",
+    opt = false,
+    keys = {
+      { "n", "sl" },
+      { "x", "sl" },
+      { "o", "sl" },
+      { "n", "ss" },
+      { "x", "ss" },
+      { "o", "ss" },
+      { "n", "s/" },
+      { "x", "s/" },
+      { "o", "s/" },
+    },
+    setup = function()
+      local map = vim.api.nvim_set_keymap
+      -- local opts = { noremap = true, silent = true }
+      map("n", "ss", "<cmd>lua require'hop'.hint_char2()<CR>", {})
+      map("x", "ss", "<cmd>lua require'hop'.hint_char2()<CR>", {})
+      map("o", "ss", "<cmd>lua require'hop'.hint_char2()<CR>", {})
+
+      map("n", "sl", "<cmd>lua require'hop'.hint_lines()<CR>", {})
+      map("x", "sl", "<cmd>lua require'hop'.hint_lines()<CR>", {})
+      map("o", "sl", "<cmd>lua require'hop'.hint_lines()<CR>", {})
+
+      map("n", "s/", "<cmd>lua require'hop'.hint_patterns()<CR>", {})
+      map("x", "s/", "<cmd>lua require'hop'.hint_patterns()<CR>", {})
+      map("o", "s/", "<cmd>lua require'hop'.hint_patterns()<CR>", {})
+    end,
+  }
+
   -- Make blockwise visual mode more useful
   use {
     "kana/vim-niceblock",
