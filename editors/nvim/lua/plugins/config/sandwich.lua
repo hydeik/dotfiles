@@ -6,43 +6,45 @@ function M.setup()
   vim.g.textobj_sandwich_no_default_key_mappings = 1
 
   -- Key mappings
-  local opts = { silent = true }
+  local nmap = vim.keymap.nmap
+  local xmap = vim.keymap.xmap
+  local omap = vim.keymap.omap
 
-  vim.api.nvim_set_keymap(
-    "n", "sd",
+  nmap {
+    "sd",
     "<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)",
-    opts
-  )
-  vim.api.nvim_set_keymap(
-    "n", "sr",
+    silent = true,
+  }
+  nmap {
+    "sr",
     "<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)",
-    opts
-  )
-  vim.api.nvim_set_keymap(
-    "n", "sd",
+    silent = true,
+  }
+  nmap {
+    "sd",
     "<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)",
-    opts
-  )
-  vim.api.nvim_set_keymap(
-    "n", "sr",
+    silent = true,
+  }
+  nmap {
+    "sr",
     "<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)",
-    opts
-  )
+    silent = true,
+  }
 
-  vim.api.nvim_set_keymap("n", "sa", "<Plug>(operator-sandwich-add)", {})
-  vim.api.nvim_set_keymap("x", "sa", "<Plug>(operator-sandwich-add)", {})
-  vim.api.nvim_set_keymap("o", "sa", "<Plug>(operator-sandwich-g@)", {})
-  vim.api.nvim_set_keymap("x", "sd", "<Plug>(operator-sandwich-delete)", {})
-  vim.api.nvim_set_keymap("x", "sr", "<Plug>(operator-sandwich-replace)", {})
+  nmap { "sa", "<Plug>(operator-sandwich-add)" }
+  xmap { "sa", "<Plug>(operator-sandwich-add)" }
+  omap { "sa", "<Plug>(operator-sandwich-g@)" }
+  xmap { "sd", "<Plug>(operator-sandwich-delete)" }
+  xmap { "sr", "<Plug>(operator-sandwich-replace)" }
 
-  vim.api.nvim_set_keymap("o", "ab", "<Plug>(textobj-sandwich-auto-a)", {})
-  vim.api.nvim_set_keymap("o", "ib", "<Plug>(textobj-sandwich-auto-i)", {})
-  vim.api.nvim_set_keymap("x", "ab", "<Plug>(textobj-sandwich-auto-a)", {})
-  vim.api.nvim_set_keymap("x", "ib", "<Plug>(textobj-sandwich-auto-i)", {})
-  vim.api.nvim_set_keymap("o", "as", "<Plug>(textobj-sandwich-query-a)", {})
-  vim.api.nvim_set_keymap("o", "is", "<Plug>(textobj-sandwich-query-i)", {})
-  vim.api.nvim_set_keymap("x", "as", "<Plug>(textobj-sandwich-query-a)", {})
-  vim.api.nvim_set_keymap("x", "is", "<Plug>(textobj-sandwich-query-i)", {})
+  omap { "ab", "<Plug>(textobj-sandwich-auto-a)" }
+  omap { "ib", "<Plug>(textobj-sandwich-auto-i)" }
+  xmap { "ab", "<Plug>(textobj-sandwich-auto-a)" }
+  xmap { "ib", "<Plug>(textobj-sandwich-auto-i)" }
+  omap { "as", "<Plug>(textobj-sandwich-query-a)" }
+  omap { "is", "<Plug>(textobj-sandwich-query-i)" }
+  xmap { "as", "<Plug>(textobj-sandwich-query-a)" }
+  xmap { "is", "<Plug>(textobj-sandwich-query-i)" }
 end
 
 function M.config()

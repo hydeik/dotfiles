@@ -2,10 +2,19 @@ local M = {}
 
 function M.load_plugins(use, _)
   -- [[ Fundamental plugins ]]
-  -- Packer can manage itself as an optional plugin
+  -- A use-package inspired plugin manager for Neovim.
+  -- (Packer can manage itself as an optional plugin)
   use { "wbthomason/packer.nvim", opt = true }
 
+  -- plenary: full; complete; entire; absolute; unqualified.
   use { "nvim-lua/plenary.nvim" }
+
+  -- You now feel at home traveling to the moon.
+  -- It provides:
+  --   1. Lua Keymap DSL (https://github.com/neovim/neovim/pull/13823)
+  --   2. Lua ftplugin (https://github.com/neovim/neovim/issues/12670)
+  --   3. Lua plugins (automatically run files [lua/plugin/*.lua] on startup)
+  use { "tjdevries/astronauta.nvim" }
 
   -- Fix CursorHold performance
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
@@ -66,29 +75,22 @@ function M.load_plugins(use, _)
   use {
     "kevinhwang91/nvim-hlslens",
     config = function()
-      local opts = { silent = true, noremap = true }
-      vim.api.nvim_set_keymap(
-        "n", "n",
+      local nnoremap = vim.keymap.nnoremap
+
+      nnoremap {
+        "n",
         "<cmd>execute('normal! ' . v:count1 . 'n')<CR><cmd>lua require'hlslens'.start()<CR>",
-        opts
-      )
-      vim.api.nvim_set_keymap(
-        "n", "N",
+        silent = true,
+      }
+      nnoremap {
+        "N",
         "<cmd>execute('normal! ' . v:count1 . 'N')<CR><cmd>lua require'hlslens'.start()<CR>",
-        opts
-      )
-      vim.api.nvim_set_keymap(
-        "n", "*", "*<cmd>lua require'hlslens'.start()<CR>", opts
-      )
-      vim.api.nvim_set_keymap(
-        "n", "#", "#<cmd>lua require'hlslens'.start()<CR>", opts
-      )
-      vim.api.nvim_set_keymap(
-        "n", "g*", "g*<cmd>lua require'hlslens'.start()<CR>", opts
-      )
-      vim.api.nvim_set_keymap(
-        "n", "g#", "g#<cmd>lua require'hlslens'.start()<CR>", opts
-      )
+        silent = true,
+      }
+      nnoremap { "*", "*<cmd>lua require'hlslens'.start()<CR>", silent = true }
+      nnoremap { "#", "#<cmd>lua require'hlslens'.start()<CR>", silent = true }
+      nnoremap { "g*", "g*<cmd>lua require'hlslens'.start()<CR>", silent = true }
+      nnoremap { "g#", "g#<cmd>lua require'hlslens'.start()<CR>", silent = true }
     end,
   }
 
@@ -103,7 +105,20 @@ function M.load_plugins(use, _)
       { "o", "<Plug>(eft-" },
       { "x", "<Plug>(eft-" },
     },
-    setup = require("plugins.config.vim-eft").setup,
+    setup = function()
+      vim.keymap.nmap { "f", "<Plug>(eft-f-repeatable)" }
+      vim.keymap.xmap { "f", "<Plug>(eft-f-repeatable)" }
+      vim.keymap.omap { "f", "<Plug>(eft-f-repeatable)" }
+      vim.keymap.nmap { "F", "<Plug>(eft-F-repeatable)" }
+      vim.keymap.xmap { "F", "<Plug>(eft-F-repeatable)" }
+      vim.keymap.omap { "F", "<Plug>(eft-F-repeatable)" }
+      vim.keymap.nmap { "t", "<Plug>(eft-t-repeatable)" }
+      vim.keymap.xmap { "t", "<Plug>(eft-t-repeatable)" }
+      vim.keymap.omap { "t", "<Plug>(eft-t-repeatable)" }
+      vim.keymap.nmap { "T", "<Plug>(eft-T-repeatable)" }
+      vim.keymap.xmap { "T", "<Plug>(eft-T-repeatable)" }
+      vim.keymap.omap { "T", "<Plug>(eft-T-repeatable)" }
+    end,
   }
 
   -- Neovim motions on speed!
@@ -122,19 +137,17 @@ function M.load_plugins(use, _)
       { "o", "s/" },
     },
     setup = function()
-      local map = vim.api.nvim_set_keymap
-      -- local opts = { noremap = true, silent = true }
-      map("n", "ss", "<cmd>lua require'hop'.hint_char2()<CR>", {})
-      map("x", "ss", "<cmd>lua require'hop'.hint_char2()<CR>", {})
-      map("o", "ss", "<cmd>lua require'hop'.hint_char2()<CR>", {})
+      vim.keymap.nnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
+      vim.keymap.xnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
+      vim.keymap.onoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
 
-      map("n", "sl", "<cmd>lua require'hop'.hint_lines()<CR>", {})
-      map("x", "sl", "<cmd>lua require'hop'.hint_lines()<CR>", {})
-      map("o", "sl", "<cmd>lua require'hop'.hint_lines()<CR>", {})
+      vim.keymap.nnoremap { "sl", "<cmd>lua require'hop'.hint_lines()<CR>" }
+      vim.keymap.xnoremap { "sl", "<cmd>lua require'hop'.hint_lines()<CR>" }
+      vim.keymap.onoremap { "sl", "<cmd>lua require'hop'.hint_lines()<CR>" }
 
-      map("n", "s/", "<cmd>lua require'hop'.hint_patterns()<CR>", {})
-      map("x", "s/", "<cmd>lua require'hop'.hint_patterns()<CR>", {})
-      map("o", "s/", "<cmd>lua require'hop'.hint_patterns()<CR>", {})
+      vim.keymap.nnoremap { "s/", "<cmd>lua require'hop'.hint_patterns()<CR>" }
+      vim.keymap.xnoremap { "s/", "<cmd>lua require'hop'.hint_patterns()<CR>" }
+      vim.keymap.onoremap { "s/", "<cmd>lua require'hop'.hint_patterns()<CR>" }
     end,
   }
 
@@ -144,9 +157,9 @@ function M.load_plugins(use, _)
     keys = { { "v", "<Plug>(niceblock-" } },
     setup = function()
       vim.g.niceblock_no_default_key_mappings = 1
-      vim.api.nvim_set_keymap("v", "I", "<Plug>(niceblock-I)", {})
-      vim.api.nvim_set_keymap("v", "gI", "<Plug>(niceblock-gI)", {})
-      vim.api.nvim_set_keymap("v", "A", "<Plug>(niceblock-A)", {})
+      vim.keymap.vmap { "I", "<Plug>(niceblock-I)" }
+      vim.keymap.vmap { "gI", "<Plug>(niceblock-gI)" }
+      vim.keymap.vmap { "A", "<Plug>(niceblock-A)" }
     end,
   }
 
@@ -160,10 +173,10 @@ function M.load_plugins(use, _)
       { "v", "<Plug>(jplus-input)" },
     },
     setup = function()
-      vim.api.nvim_set_keymap("n", "J", "<Plug>(jplus)", {})
-      vim.api.nvim_set_keymap("v", "J", "<Plug>(jplus)", {})
-      vim.api.nvim_set_keymap("n", "<Leader>J", "<Plug>(jplus-input)", {})
-      vim.api.nvim_set_keymap("v", "<Leader>J", "<Plug>(jplus-input)", {})
+      vim.keymap.nmap { "J", "<Plug>(jplus)" }
+      vim.keymap.vmap { "J", "<Plug>(jplus)" }
+      vim.keymap.nmap { "<Leader>J", "<Plug>(jplus-input)" }
+      vim.keymap.vmap { "<Leader>J", "<Plug>(jplus-input)" }
     end,
   }
 
@@ -174,8 +187,8 @@ function M.load_plugins(use, _)
     keys = { { "n", "<Plug>(miniyank-" } },
     setup = function()
       vim.g.miniyank_maxitems = 100
-      vim.api.nvim_set_keymap("n", "p", "<Plug>(miniyank-autoput)", {})
-      vim.api.nvim_set_keymap("n", "P", "<Plug>(miniyank-autoPut)", {})
+      vim.keymap.nmap { "p", "<Plug>(miniyank-autoput)" }
+      vim.keymap.nmap { "P", "<Plug>(miniyank-autoPut)" }
     end,
   }
 
@@ -184,16 +197,12 @@ function M.load_plugins(use, _)
     "monaqa/dial.nvim",
     keys = { { "n", "<Plug>(dial-" }, { "v", "<Plug>(dial-" } },
     setup = function()
-      vim.api.nvim_set_keymap("n", "<C-a>", "<Plug>(dial-increment)", {})
-      vim.api.nvim_set_keymap("n", "<C-x>", "<Plug>(dial-decrement)", {})
-      vim.api.nvim_set_keymap("v", "<C-a>", "<Plug>(dial-increment)", {})
-      vim.api.nvim_set_keymap("v", "<C-x>", "<Plug>(dial-decrement)", {})
-      vim.api.nvim_set_keymap(
-        "v", "g<C-a>", "<Plug>(dial-increment-additional)", {}
-      )
-      vim.api.nvim_set_keymap(
-        "v", "g<C-x>", "<Plug>(dial-decrement-additional)", {}
-      )
+      vim.keymap.nmap { "<C-a>", "<Plug>(dial-increment)" }
+      vim.keymap.nmap { "<C-x>", "<Plug>(dial-decrement)" }
+      vim.keymap.vmap { "<C-a>", "<Plug>(dial-increment)" }
+      vim.keymap.vmap { "<C-x>", "<Plug>(dial-decrement)" }
+      vim.keymap.vmap { "g<C-a>", "<Plug>(dial-increment-additional)" }
+      vim.keymap.vmap { "g<C-x>", "<Plug>(dial-decrement-additional)" }
     end,
   }
 
@@ -233,8 +242,8 @@ function M.load_plugins(use, _)
       { "x", "<Plug>(operator-replace)" },
     },
     setup = function()
-      vim.api.nvim_set_keymap("n", "_", "<Plug>(operator-replace)", {})
-      vim.api.nvim_set_keymap("x", "_", "<Plug>(operator-replace)", {})
+      vim.keymap.nmap { "_", "<Plug>(operator-replace)" }
+      vim.keymap.xmap { "_", "<Plug>(operator-replace)" }
     end,
   }
   use {
@@ -303,9 +312,7 @@ function M.load_plugins(use, _)
       vim.g.lazygit_floating_window_corner_chars =
         { '╭', '╮', '╰', '╯' }
       vim.g.lazygit_use_neovim_remote = 0
-      vim.api.nvim_set_keymap(
-        "n", "<Space>gl", "<cmd>LazyGit<CR>", { noremap = true, silent = true }
-      )
+      vim.keymap.nnoremap { "<Space>gl", "<cmd>LazyGit<CR>", silent = true }
     end,
   }
 
@@ -324,9 +331,7 @@ function M.load_plugins(use, _)
     keys = { "n", "<Plug>(git-messenger" },
     setup = function()
       vim.g.git_messenger_no_default_mappings = true
-      vim.api.nvim_set_keymap(
-        "n", "<Space>gm", "<Plug>(git-messenger)", { silent = true }
-      )
+      vim.keymap.nmap { "<Space>gm", "<Plug>(git-messenger)", silent = true }
     end,
   }
 

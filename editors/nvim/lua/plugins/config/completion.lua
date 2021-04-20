@@ -55,14 +55,28 @@ function M.config()
     end
   end
 
-  local opts = { silent = true, expr = true }
-  vim.api.nvim_set_keymap("i", "<C-Space>", [[compe#complete()]], opts)
-  vim.api.nvim_set_keymap("i", "<C-e>", [[compe#close('<C-e>')]], opts)
-  vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm('<CR>')]], opts)
-  vim.api.nvim_set_keymap("i", "<Tab>", [[v:lua.tab_complete()]], opts)
-  vim.api.nvim_set_keymap("s", "<Tab>", [[v:lua.tab_complete()]], opts)
-  vim.api.nvim_set_keymap("i", "<S-Tab>", [[v:lua.s_tab_complete()]], opts)
-  vim.api.nvim_set_keymap("s", "<S-Tab>", [[v:lua.s_tab_complete()]], opts)
+  vim.keymap.inoremap {
+    "<C-Space>",
+    [[compe#complete()]],
+    expr = true,
+    silent = true,
+  }
+  vim.keymap.inoremap {
+    "<C-e>",
+    [[compe#close('<C-e>')]],
+    expr = true,
+    silent = true,
+  }
+  vim.keymap.inoremap {
+    "<CR>",
+    [[compe#confirm('<CR>')]],
+    expr = true,
+    silent = true,
+  }
+  vim.keymap.imap { "<Tab>", [[v:lua.tab_complete()]], expr = true }
+  vim.keymap.smap { "<Tab>", [[v:lua.tab_complete()]], expr = true }
+  vim.keymap.imap { "<S-Tab>", [[v:lua.s_tab_complete()]], expr = true }
+  vim.keymap.smap { "<S-Tab>", [[v:lua.s_tab_complete()]], expr = true }
 end
 
 return M

@@ -2,14 +2,18 @@ local M = {}
 
 function M.config()
   require("Navigator").setup()
-  local map = vim.api.nvim_set_keymap
-  local opts = { noremap = true, silent = true }
+  local nnoremap = vim.keymap.nnoremap
 
-  map("n", "<M-h>", "<cmd>lua require('Navigator').left()<CR>", opts)
-  map("n", "<M-j>", "<cmd>lua require('Navigator').down()<CR>", opts)
-  map("n", "<M-k>", "<cmd>lua require('Navigator').up()<CR>", opts)
-  map("n", "<M-l>", "<cmd>lua require('Navigator').right()<CR>", opts)
-  map("n", "<M-\\>", "<cmd>lua require('Navigator').previous()<CR>", opts)
+  nnoremap { "<M-h>", "<cmd>lua require('Navigator').left()<CR>", silent = true }
+  nnoremap { "<M-j>", "<cmd>lua require('Navigator').down()<CR>", silent = true }
+  nnoremap { "<M-k>", "<cmd>lua require('Navigator').up()<CR>", silent = true }
+  nnoremap { "<M-l>", "<cmd>lua require('Navigator').right()<CR>",
+             silent = true }
+  nnoremap {
+    "<M-\\>",
+    "<cmd>lua require('Navigator').previous()<CR>",
+    silent = true,
+  }
 end
 
 return M

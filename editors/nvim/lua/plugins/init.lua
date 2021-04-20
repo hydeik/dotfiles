@@ -17,6 +17,7 @@ function Packer:load_packer()
 end
 
 function Packer:init_ensure_plugins()
+  -- Install packer.nvim automatically if necessary.
   local packer_dir = site_packages .. "/pack/packer/opt/packer.nvim"
   local packer_repo = "https://github.com/wbthomason/packer.nvim"
   local state = vim.loop.fs_stat(packer_dir)
@@ -27,6 +28,18 @@ function Packer:init_ensure_plugins()
     packer.install()
     packer.compile()
   end
+
+  -- Install astronauta.nvim automatically if necessary.
+  local astronauta_dir = site_packages .. "/pack/packer/start/astronauta.nvim"
+  local astronauta_repo = "https://github.com/tjdevries/packer.nvim"
+  state = vim.loop.fs_stat(astronauta_dir)
+  if not state then
+    local out = vim.fn.system(
+      { "git", "clone", astronauta_repo, astronauta_dir }
+    )
+    print(out)
+  end
+  vim.cmd [[runtime plugin/astronauta.vim]]
 end
 
 local plugins = setmetatable(

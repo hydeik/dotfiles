@@ -1,10 +1,7 @@
 local M = {}
 
 function M.setup()
-  vim.api.nvim_set_keymap(
-    "n", "<Space>t", "<cmd>NvimTreeToggle<CR>",
-    { noremap = true, silent = true }
-  )
+  vim.keymap.nnoremap { "<Space>t", "<cmd>NvimTreeToggle<CR>", silent = true }
 end
 
 function M.config()

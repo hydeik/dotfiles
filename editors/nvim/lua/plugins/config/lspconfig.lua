@@ -75,40 +75,104 @@ lspsaga.init_lsp_saga()
 
 local custom_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  local buf_set_keymap =
-    function(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local opts = { noremap = true, silent = true }
-  local opts_nowait = { noremap = true, silent = true, nowait = true }
+
+  local nnoremap = vim.keymap.nnoremap
+  local vnoremap = vim.keymap.vnoremap
+  local xnoremap = vim.keymap.xnoremap
 
   if client.config.flags then client.config.flags.allow_incremental_sync = true end
   -- key mappings
-  buf_set_keymap(
-    "n", "<C-f>",
+  nnoremap {
+    "<C-f>",
     "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>",
-    opts_nowait
-  )
-  buf_set_keymap(
-    "n", "<C-b>",
+    buffer = true,
+    silent = true,
+    nowait = true,
+  }
+  nnoremap {
+    "<C-b>",
     "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>",
-    opts_nowait
-  )
-  buf_set_keymap("n", "ma", "<cmd>Lspsaga code_action<CR>", opts)
-  buf_set_keymap("v", "ma", ":<C-u>Lspsaga range_code_action<CR>", opts)
-  buf_set_keymap("n", "md", "<cmd>Lspsaga preview_definition<CR>", opts)
-  buf_set_keymap("n", "mf", "<cmd>Lspsaga lsp_finder<CR>", opts)
-  buf_set_keymap("n", "mh", "<cmd>Lspsaga hover_doc<CR>", opts)
-  buf_set_keymap("n", "m?", "<cmd>Lspsaga signature_help<CR>", opts)
-  buf_set_keymap("n", "mR", "<cmd>Lspsaga rename<CR>", opts)
-  buf_set_keymap("n", "m]", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts)
-  buf_set_keymap("n", "m[", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts)
-  buf_set_keymap("n", "me", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
+    buffer = true,
+    silent = true,
+    nowait = true,
+  }
+  nnoremap { "ma", "<cmd>Lspsaga code_action<CR>", buffer = true, silent = true }
+  vnoremap {
+    "ma",
+    ":<C-u>Lspsaga range_code_action<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "md",
+    "<cmd>Lspsaga preview_definition<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap { "mf", "<cmd>Lspsaga lsp_finder<CR>", buffer = true, silent = true }
+  nnoremap { "mh", "<cmd>Lspsaga hover_doc<CR>", buffer = true, silent = true }
+  nnoremap {
+    "m?",
+    "<cmd>Lspsaga signature_help<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap { "n", "mR", "<cmd>Lspsaga rename<CR>", buffer = true, silent = true }
+  nnoremap {
+    "m]",
+    "<cmd>Lspsaga diagnostic_jump_next<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "m[",
+    "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "me",
+    "<cmd>Lspsaga show_line_diagnostics<CR>",
+    buffer = true,
+    silent = true,
+  }
 
-  buf_set_keymap("n", "mD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  buf_set_keymap("n", "mF", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  buf_set_keymap("n", "mi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_set_keymap("n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  buf_set_keymap("n", "mr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  buf_set_keymap("n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<cr>", opts)
+  nnoremap {
+    "mD",
+    "<cmd>lua vim.lsp.buf.declaration()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mF",
+    "<cmd>lua vim.lsp.buf.formatting()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mi",
+    "<cmd>lua vim.lsp.buf.implementation()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mt",
+    "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mr",
+    "<cmd>lua vim.lsp.buf.references()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mo",
+    "<cmd>lua vim.lsp.buf.document_symbol()<cr>",
+    buffer = true,
+    silent = true,
+  }
 
   vim.cmd [[augroup user_plugin_lspconfig]]
   vim.cmd [[autocmd! * <buffer>]]
@@ -140,16 +204,27 @@ local custom_attach = function(client, bufnr)
   end
 
   if client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap(
-      "n", "m=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts
-    )
-    buf_set_keymap(
-      "x", "m=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts
-    )
+    nnoremap {
+      "m=",
+      "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+      buffer = true,
+      silent = true,
+    }
+    xnoremap {
+      "m=",
+      "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+      buffer = true,
+      silent = true,
+    }
   end
 
   if client.resolved_capabilities.goto_definition then
-    buf_set_keymap("n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    nnoremap {
+      "<C-]>",
+      "<cmd>lua vim.lsp.buf.definition()<CR>",
+      buffer = true,
+      silent = true,
+    }
   end
 
   if client.resolved_capabilities.document_highlight then
