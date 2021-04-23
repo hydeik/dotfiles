@@ -75,7 +75,10 @@ end
 function M.buffers()
   require("telescope.builtin").buffers {
     shorten_path = false,
-    initial_mode = "normal",
+    -- TODO: uncomment next line when
+    -- https://github.com/nvim-telescope/telescope.nvim/issues/750
+    -- is fixed
+    -- initial_mode = "normal",
   }
 end
 
