@@ -449,6 +449,25 @@ function M.load_plugins(use, _)
     setup = require("plugins.config.vista").setup,
   }
 
+  -- A tree like view for symbols in Neovim using the Language Server Protocol.
+  use {
+    "simrat39/symbols-outline.nvim",
+    config = function()
+      require("symbols-outline").setup {
+        -- whether to highlight the currently hovered symbol disable if your
+        -- cpu usage is higher than you want it or you just hate the highlight
+        -- default: true
+        highlight_hovered_item = true,
+
+        -- whether to show outline guides
+        -- default: true
+        show_guides = true,
+      }
+
+      vim.keymap.nnoremap { "ms", "<cmd>SymbolsOutline<CR>", silent = true }
+    end,
+  }
+
   -- (DO)cument (GE)nerator
   use {
     "kkoomen/vim-doge",
