@@ -442,13 +442,6 @@ function M.load_plugins(use, _)
     end,
   }
 
-  -- View and search LSP symbols, tags in Vim/Neovim
-  use {
-    "liuchengxu/vista.vim",
-    cmd = { "Vista" },
-    setup = require("plugins.config.vista").setup,
-  }
-
   -- A tree like view for symbols in Neovim using the Language Server Protocol.
   use {
     "simrat39/symbols-outline.nvim",
