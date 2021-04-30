@@ -3,6 +3,7 @@ local M = {}
 function M.config()
   vim.cmd [[packadd nvim-treesitter-refactor]]
   vim.cmd [[packadd nvim-treesitter-textobjects]]
+  vim.cmd [[packadd nvim-ts-rainbow]]
   vim.cmd [[packadd nvim-ts-context-commentstring]]
 
   require'nvim-treesitter.configs'.setup {
@@ -77,6 +78,8 @@ function M.config()
         swap_previous = { ["<Leader>S"] = "@parameter.inner" },
       },
     },
+    -- [[ Rainbow ]]
+    rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
     -- [[ Context commentstring ]]
     context_commentstring = { enable = true },
   }
