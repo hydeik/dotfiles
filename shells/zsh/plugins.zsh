@@ -45,6 +45,12 @@ zinit lucid depth=1 light-mode for \
     romkatv/powerlevel10k
 
 ##
+## Completions
+##
+zinit lucid light-mode for \
+    as"completoin" pick"bin/completion/zsh/*" tldr-pages/tldr-node-client
+
+##
 ## Commands
 ##
 #zinit wait'[[ -n ${ZLAST_COMMANDS[xpanes*]} ]]' lucid light-mode for \
