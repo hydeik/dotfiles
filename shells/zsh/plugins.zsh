@@ -23,8 +23,17 @@ autoload -Uz _zinit
 zinit wait lucid light-mode for \
     atload"_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
+
+zinit wait lucid light-mode for \
+    atinit"zicompinit; zicdreplay" \
     blockf atpull'zinit creinstall -q .' \
     zsh-users/zsh-completions
+
+zinit wait lucid light-mode for \
+    atinit"zicompinit; zicdreplay" \
+    blockf atpull'zinit creinstall -q .' \
+    as"completion" pick"bin/completion/zsh/*" \
+    tldr-pages/tldr-node-client
 
 zinit wait lucid light-mode for \
     atinit"zicompinit; zicdreplay" \
@@ -43,12 +52,6 @@ zinit lucid light-mode for \
 zinit lucid depth=1 light-mode for \
     atload"source ${ZDOTDIR:-$HOME/.config/zsh}/.p10k.zsh" \
     romkatv/powerlevel10k
-
-##
-## Completions
-##
-zinit lucid light-mode for \
-    as"completoin" pick"bin/completion/zsh/*" tldr-pages/tldr-node-client
 
 ##
 ## Commands
