@@ -94,8 +94,8 @@ function M.load_plugins(use, _)
     end,
   }
 
-  -- Preview the contents of register
-  use { "tversteeg/registers.nvim" }
+  -- -- Preview the contents of register
+  -- use { "tversteeg/registers.nvim" }
 
   -- Enhanced f/t
   use {
@@ -209,12 +209,10 @@ function M.load_plugins(use, _)
   -- A more adventurous wildmenu
 
   -- Show keybindings in popup
-  -- use {
-  --   "liuchengxu/vim-which-key",
-  --   cmd = { "WhichKey", "WhichKeyVisual" },
-  --   setup = require("plugins.config.vim-which-key").setup,
-  --   config = require("plugins.config.vim-which-key").config,
-  -- }
+  use {
+    "folke/which-key.nvim",
+    config = require("plugins.config.which-key").config,
+  }
 
   -- A high-performance color highlighter for NeoVim
   use {
@@ -436,9 +434,9 @@ function M.load_plugins(use, _)
         -- Should key mappings be created
         create_mappings = true,
         -- Normal mode mapping left hand side
-        line_mapping = "<Leader>cc",
+        line_mapping = "gcc",
         -- Visual/Operator mapping left hand side
-        operator_mapping = "<Leader>c",
+        operator_mapping = "gc",
       }
     end,
   }
