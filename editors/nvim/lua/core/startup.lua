@@ -67,7 +67,7 @@ end
 local function set_prefix_keys()
   --[[ Leader/Localleader keys ]]
   vim.g.mapleader = ";"
-  vim.g.maplocalleader = "m"
+  vim.g.maplocalleader = "\\"
   -- release keymappings for plugins
   vim.api.nvim_set_keymap("n", "<Space>", "<Nop>", { noremap = true })
   vim.api.nvim_set_keymap("x", "<Space>", "<Nop>", { noremap = true })
