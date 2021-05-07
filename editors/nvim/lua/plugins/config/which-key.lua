@@ -27,6 +27,7 @@ function M.config()
     window = { border = "shadow" },
   }
 
+  -- <Space> mappings
   wk.register(
     {
       ["<Space>d"] = {
@@ -60,7 +61,9 @@ function M.config()
         b = { "Git Branch" },
         c = { "Git BCommit" },
         C = { "Git Commit" },
+        f = { "Git files" },
         l = { "LazyGit" },
+        m = { "Git messenger" },
         s = { "Git Status" },
       },
       ["<Space>l"] = {
@@ -70,7 +73,56 @@ function M.config()
         s = { "Document Symbols" },
         S = { "Workspace Symbols" },
       },
+      ["<Space>t"] = {
+        name = "+toggle UI",
+        c = { "toggle hilight of the current column" },
+        l = { "toggle hilight of the current line" },
+        n = { "toggle line numbers" },
+        h = { "toggle control characters" },
+        p = { "toggle paste mode" },
+        s = { "toggle spell checking" },
+        w = { "toggle wrap" },
+      },
     }
+  )
+  -- <Leader> mapping
+  wk.register(
+    {
+      ["<Leader>"] = {
+        ["1"] = { "go to buffer 1" },
+        ["2"] = { "go to buffer 2" },
+        ["3"] = { "go to buffer 3" },
+        ["4"] = { "go to buffer 4" },
+        ["5"] = { "go to buffer 5" },
+        ["6"] = { "go to buffer 6" },
+        ["7"] = { "go to buffer 7" },
+        ["8"] = { "go to buffer 8" },
+        ["9"] = { "go to buffer 9" },
+        a = { "EasyAlign" },
+        d = { "Generate document (vim-doge)" },
+        J = { "JPlus" },
+        q = { "quit" },
+        Q = { "quit all (:qall)" },
+        s = { "Swap arguments (next)" },
+        S = { "Swap arguments (previous)" },
+        x = { "Delete trailing whitespace" },
+        w = { "write" },
+        W = { "write all (:wall)" },
+      },
+    }
+  )
+  wk.register(
+    {
+      ["<Leader>"] = {
+        a = { "EasyAlign" },
+        J = { "JPlus" },
+        q = { "quit" },
+        Q = { "quit all (:qall)" },
+        x = { "Delete trailing whitespace" },
+        w = { "write" },
+        W = { "write all (:wall)" },
+      },
+    }, { mode = "v" }
   )
 
   -- LSP
@@ -90,8 +142,60 @@ function M.config()
         ["]"] = { "Next Diagnostic" },
         ["["] = { "Previous Diagnostic" },
       },
-      { buffer = 0 },
+    }, { buffer = 0 }
+  )
+
+  -- s-mappings [Window manager / sandwich / search]
+  wk.register(
+    {
+      s = {
+        -- window manager
+        t = { "Open new tab" },
+        c = { "Close current window (:close)" },
+        o = { "Close other window (:only)" },
+        ["-"] = { "split" },
+        ["|"] = { "vsplit" },
+        ["="] = { "equal size window" },
+        -- vim-sandwich
+        a = { "sandwich add" },
+        d = { "sandwich delete" },
+        r = { "sandwich replace" },
+        -- hop.nvim
+        s = { "jump to a suite of two characters (hop.nvim)" },
+        l = { "jump to a line with avy (hop.nvim)" },
+        ["/"] = { "jump to a mathced pattern (hop.nvim)" },
+      },
     }
+  )
+
+  wk.register(
+    {
+      s = {
+        -- vim-sandwich
+        a = { "sandwich add" },
+        d = { "sandwich delete" },
+        r = { "sandwich replace" },
+        -- hop.nvim
+        s = { "jump to a suite of two characters (hop.nvim)" },
+        l = { "jump to a line with avy (hop.nvim)" },
+        ["/"] = { "jump to a mathced pattern (hop.nvim)" },
+      },
+    }, { mode = "o" }
+  )
+
+  wk.register(
+    {
+      s = {
+        -- vim-sandwich
+        a = { "sandwich add" },
+        d = { "sandwich delete" },
+        r = { "sandwich replace" },
+        -- hop.nvim
+        s = { "jump to a suite of two characters (hop.nvim)" },
+        l = { "jump to a line with avy (hop.nvim)" },
+        ["/"] = { "jump to a mathced pattern (hop.nvim)" },
+      },
+    }, { mode = "x" }
   )
 
   -- Text objects

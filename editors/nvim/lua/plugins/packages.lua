@@ -125,17 +125,6 @@ function M.load_plugins(use, _)
   use {
     "phaazon/hop.nvim",
     opt = false,
-    keys = {
-      { "n", "sl" },
-      { "x", "sl" },
-      { "o", "sl" },
-      { "n", "ss" },
-      { "x", "ss" },
-      { "o", "ss" },
-      { "n", "s/" },
-      { "x", "s/" },
-      { "o", "s/" },
-    },
     setup = function()
       vim.keymap.nnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
       vim.keymap.xnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }

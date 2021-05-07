@@ -270,7 +270,6 @@ function M.config()
   set_keymap("<Space>fg", "live_grep")
   set_keymap("<Space>fG", "grep_prompt")
   set_keymap("<Space>fo", "oldfiles")
-  set_keymap("<Space>ft", "git_files")
   set_keymap("<Space>f/", "grep_last_search")
 
   -- Vim pickers
@@ -285,6 +284,7 @@ function M.config()
   set_keymap("<Space>lS", "lsp_workspace_symbols")
 
   -- Git pickers
+  set_keymap("<Space>gf", "git_files")
   set_keymap("<Space>gb", "git_branchs", { initial_mode = "normal" })
   set_keymap("<Space>gc", "git_bcommits", { initial_mode = "normal" })
   set_keymap("<Space>gC", "git_commits", { initial_mode = "normal" })

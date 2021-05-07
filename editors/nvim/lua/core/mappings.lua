@@ -1,6 +1,11 @@
 --- ~/.config/nvim/lua/mapping.lua
 --- Set global key mappings
 local api = vim.api
+local nnoremap = vim.keymap.nnoremap
+local inoremap = vim.keymap.inoremap
+local cnoremap = vim.keymap.cnoremap
+local vnoremap = vim.keymap.vnoremap
+local xnoremap = vim.keymap.xnoremap
 --[[
 -----------------------------------------------------------------------------
 | Commands \ Modes | Normal | Insert | Command | Visual | Select | Operator |
@@ -23,163 +28,228 @@ vim.g.localmapleader = ","
 
 --- Basic mappings {{{
 -- Disable Ex-mode, remap to register macros
-api.nvim_set_keymap("n", "Q", "q", { noremap = true })
+nnoremap { "Q", "q" }
+nnoremap { "gQ", "@q" }
 
 -- Disable dangerous/annoying default mappings
 --   ZZ - Save current file and quit
 --   ZQ - Quit without checking changes (:q!)
-api.nvim_set_keymap("n", "ZZ", "<Nop>", { noremap = true })
-api.nvim_set_keymap("n", "ZQ", "<Nop>", { noremap = true })
+nnoremap { "ZZ", "<Nop>" }
+nnoremap { "ZQ", "<Nop>" }
 
 -- Useless command. M - to middle line of window
-api.nvim_set_keymap("n", "M", "m", { noremap = true })
+nnoremap { "M", "m" }
 
 -- Y: yank text from cursor position to the EOL
-api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
+nnoremap { "Y", "y$" }
 
 -- Emacs-like cursor move in insert/command mode
 -- NOTE: <C-f> and <C-b> are mapped in lua/conf/vim-vsnip.lua
-api.nvim_set_keymap("i", "<C-a>", "<Home>", { noremap = true })
--- api.nvim_set_keymap("i", "<C-b>", "<Left>",  {noremap = true})
-api.nvim_set_keymap("i", "<C-d>", "<Del>", { noremap = true })
-api.nvim_set_keymap("i", "<C-e>", "<End>", { noremap = true })
--- api.nvim_set_keymap("i", "<C-f>", "<Right>", {noremap = true})
-api.nvim_set_keymap("i", "<C-k>", "<C-o>D", { noremap = true })
+inoremap { "<C-a>", "<Home>" }
+inoremap { "<C-b>", "<Left>" }
+inoremap { "<C-d>", "<Del>" }
+-- inoremap { "<C-e>", "<End>" }
+inoremap { "<C-f>", "<Right>" }
+inoremap { "<C-k>", "<C-o>D" }
 
-api.nvim_set_keymap("c", "<C-a>", "<Home>", { noremap = true })
-api.nvim_set_keymap("c", "<C-b>", "<Left>", { noremap = true })
-api.nvim_set_keymap("c", "<C-d>", "<Del>", { noremap = true })
-api.nvim_set_keymap("c", "<C-e>", "<End>", { noremap = true })
-api.nvim_set_keymap("c", "<C-f>", "<Right>", { noremap = true })
-api.nvim_set_keymap("c", "<C-n>", "<Down>", { noremap = true })
-api.nvim_set_keymap("c", "<C-p>", "<Up>", { noremap = true })
-
--- -- Smart scroll with <C-f>, <C-b>.
--- api.nvim_set_keymap("n", "<C-f>",
---   [[max([winheight(0) - 2, 1]) . "\<C-d>" . (line('w$') >= line('$') ? "L" : "M")]],
---   {noremap = true, expr = true})
--- api.nvim_set_keymap("n", "<C-b>",
---   [[max([winheight(0) - 2, 1]) . "\<C-u>" . (line('w0') <= 1 ? "H" : "M")]],
---   {noremap = true, expr = true})
+cnoremap { "<C-a>", "<Home>" }
+cnoremap { "<C-b>", "<Left>" }
+cnoremap { "<C-d>", "<Del>" }
+cnoremap { "<C-e>", "<End>" }
+cnoremap { "<C-f>", "<Right>" }
+cnoremap { "<C-n>", "<Down>" }
+cnoremap { "<C-p>", "<Up>" }
 
 -- Enable undo <C-w> and <C-u> in insert mode.
-api.nvim_set_keymap("i", "<C-w>", "<C-g>u<C-w>", { noremap = true })
-api.nvim_set_keymap("i", "<C-u>", "<C-g>u<C-u>", { noremap = true })
+inoremap { "<C-w>", "<C-g>u<C-w>" }
+inoremap { "<C-u>", "<C-g>u<C-u>" }
 
 -- <C-y>: paste
-api.nvim_set_keymap("c", "<C-y>", "<C-r>*", { noremap = true })
+cnoremap { "<C-y>", "<C-r>*" }
 -- <C-g>: exit
-api.nvim_set_keymap("c", "<C-g>", "<C-c>", { noremap = true })
+cnoremap { "<C-g>", "<C-c>" }
 
 -- Indent by > and < instead of >> and <<
-api.nvim_set_keymap("n", ">", ">>", { noremap = true })
-api.nvim_set_keymap("n", "<", "<<", { noremap = true })
+nnoremap { ">", ">>" }
+nnoremap { "<", "<<" }
 
 -- Maintain visual mode after shifting > and <
-api.nvim_set_keymap("x", ">", ">gv", { noremap = true })
-api.nvim_set_keymap("x", "<", "<gv", { noremap = true })
+xnoremap { ">", ">gv" }
+xnoremap { "<", "<gv" }
 
 -- Easy escape
-api.nvim_set_keymap("i", "jj", "<ESC>", { noremap = true })
-api.nvim_set_keymap("i", "j ", "j", { noremap = true })
-api.nvim_set_keymap(
-  "c", "j", [[getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j']],
-  { noremap = true, expr = true }
-)
+inoremap { "jj", "<ESC>" }
+inoremap { "j ", "j" }
+cnoremap {
+  "j",
+  [[getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j']],
+  expr = true,
+}
 
 -- Start new line from any cursor position
-api.nvim_set_keymap("i", "<S-Return>", "<C-o>o", { noremap = true })
+inoremap { "<S-Return>", "<C-o>o" }
 
 -- Change current word in a repeatable manner
-api.nvim_set_keymap("n", "cn", "*``cgn", { noremap = true })
-api.nvim_set_keymap("n", "cN", "*``cgN", { noremap = true })
+nnoremap { "cn", "*``cgn" }
+nnoremap { "cN", "*``cgN" }
 
 -- Change selected word in a repeatable manner
-api.nvim_set_keymap(
-  "v", "cn", [["y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"]],
-  { noremap = true, expr = true }
-)
-api.nvim_set_keymap(
-  "v", "cN", [["y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"]],
-  { noremap = true, expr = true }
-)
+vnoremap {
+  "cn",
+  [["y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"]],
+  expr = true,
+}
+
+vnoremap {
+  "cN",
+  [["y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"]],
+  expr = true,
+}
 
 -- Close windows with q
-api.nvim_set_keymap(
-  "n", "q", [[winnr('$') != 1 ? ':<C-u>close<CR>' : ':<C-u>bdelete<CR>']],
-  { noremap = true, silent = true, expr = true }
-)
+nnoremap {
+  "q",
+  [[winnr('$') != 1 ? ':<C-u>close<CR>' : ':<C-u>bdelete<CR>']],
+  silent = true,
+  expr = true,
+}
 
 -- Turn off search highlight
-api.nvim_set_keymap(
-  "n", "<ESC><Esc>", [[<Cmd>silent! nohlsearch<CR>]],
-  { noremap = true, silent = true }
-)
+nnoremap { "<ESC><ESC>", [[<Cmd>silent! nohlsearch<CR>]], silent = true }
+
 --- }}}
 
 --- Open/close folding: {{{
 -- Toggle fold
-api.nvim_set_keymap("n", "<CR>", "za", { noremap = true })
+nnoremap { "<CR>", "za" }
 -- Focus the current fold by closing all others
-api.nvim_set_keymap("n", "<S-Return>", "zMza", { noremap = true })
+nnoremap { "<S-Return>", "zMza" }
 
 -- Smart open/close fold
-function smart_fold_closer()
-  if vim.fn.foldlevel(".") == 0 then
+nnoremap { "l", [[foldclosed('.') != -1 ? 'zo' : 'l']], expr = true }
+xnoremap { "l", [[foldclosed(line('.')) != -1 ? 'zogv0' : 'l']], expr = true }
+nnoremap {
+  "<C-_>",
+  function()
+    if vim.fn.foldlevel(".") == 0 then
+      vim.cmd("normal! zM")
+      return
+    end
+
+    local foldc_lnum = vim.fn.foldclosed(".")
     vim.cmd("normal! zM")
+    if foldc_lnum == -1 then return end
+
+    if vim.fn.foldclosed('.') == foldc_lnum then vim.cmd("normal! zM") end
     return
-  end
+  end,
+  silent = true,
+}
 
-  local foldc_lnum = vim.fn.foldclosed(".")
-  vim.cmd("normal! zM")
-  if foldc_lnum == -1 then return end
-
-  if vim.fn.foldclosed('.') == foldc_lnum then vim.cmd("normal! zM") end
-  return
-end
-
-api.nvim_set_keymap(
-  "n", "l", [[foldclosed('.') != -1 ? 'zo' : 'l']],
-  { noremap = true, expr = true }
-)
-api.nvim_set_keymap(
-  "x", "l", [[foldclosed(line('.')) != -1 ? 'zogv0' : 'l']],
-  { noremap = true, expr = true }
-)
-api.nvim_set_keymap(
-  "n", "<C-_>", ":<C-u>lua smart_fold_closer()<CR>",
-  { noremap = true, silent = true }
-)
 --- }}}
 
 -- Window/Tabs operation {{{
 -- Use 's' key as the prefix to control window/tab
 
 -- new tab
-api.nvim_set_keymap("n", "st", ":tabnew<CR>", { noremap = true, silent = true })
+nnoremap { "st", ":tabnew<CR>", silent = true }
 -- close window
-api.nvim_set_keymap("n", "sc", ":close<CR>", { noremap = true, silent = true })
+nnoremap { "sc", ":close<CR>", silent = true }
 -- only current window
-api.nvim_set_keymap(
-  "n", "so", ":<C-u>only<CR>", { noremap = true, silent = true }
-)
+nnoremap { "so", ":only<CR>", silent = true }
+
 -- split window horizontally
-api.nvim_set_keymap(
-  "n", "s-", ":<C-u>split<CR>", { noremap = true, silent = true }
-)
+nnoremap { "s-", ":split<CR>", silent = true }
+
 -- split window virtically
-api.nvim_set_keymap(
-  "n", "s|", ":<C-u>vsplit<CR>", { noremap = true, silent = true }
-)
+nnoremap { "s|", ":vsplit<CR>", silent = true }
+
 -- equal size window
-api.nvim_set_keymap("n", "s=", "<C-w>=<CR>", { noremap = true, silent = true })
+nnoremap { "s=", "<C-w>=<CR>", silent = true }
 
 -- Resize window by Shift+arrow
-api.nvim_set_keymap("n", "<S-Left>", "<C-w><", { noremap = true })
-api.nvim_set_keymap("n", "<S-Right>", "<C-w>>", { noremap = true })
-api.nvim_set_keymap("n", "<S-Up>", "<C-w>+", { noremap = true })
-api.nvim_set_keymap("n", "<S-Down>", "<C-w>-", { noremap = true })
+nnoremap { "<S-Left>", "<C-w><" }
+nnoremap { "<S-Right>", "<C-w>>" }
+nnoremap { "<S-Up>", "<C-w>+" }
+nnoremap { "<S-Down>", "<C-w>-" }
+
 ---  }}}
+
+--- Toggle Editor UI {{{
+-- toggle cursorcolumn
+nnoremap {
+  "<Space>tc",
+  function() vim.wo.cursorcolumn = not vim.wo.cursorcolumn end,
+  silent = true,
+}
+
+-- toggle cursorline
+nnoremap {
+  "<Space>tl",
+  function() vim.wo.cursorline = not vim.wo.cursorline end,
+  silent = true,
+}
+
+-- toggle line numbers
+nnoremap {
+  "<Space>tn",
+  function()
+    vim.wo.number = not vim.wo.number
+    vim.wo.relativenumber = not vim.wo.relativenumber
+  end,
+  silent = true,
+}
+
+nnoremap {
+  "<Space>tp",
+  function()
+    vim.wo.paste = not vim.wo.paste
+    if vim.wo.paste then
+      vim.api.nvim_echo(
+        { { "paste-checking " }, { "enabled", "Green" } }, false, {}
+      )
+    else
+      vim.api.nvim_echo(
+        { { "paste-checking " }, { "disabled", "Red" } }, false, {}
+      )
+    end
+  end,
+  silent = true,
+}
+
+nnoremap {
+  "<Space>ts",
+  function()
+    vim.wo.spell = not vim.wo.spell
+    if vim.wo.spell then
+      vim.api.nvim_echo(
+        { { "spell-checking " }, { "enabled", "Green" } }, false, {}
+      )
+    else
+      vim.api.nvim_echo(
+        { { "spell-checking " }, { "disabled", "Red" } }, false, {}
+      )
+    end
+  end,
+  silent = true,
+}
+
+nnoremap {
+  "<Space>th",
+  function() vim.wo.list = not vim.wo.list end,
+  silent = true,
+}
+
+nnoremap {
+  "<Space>tw",
+  function()
+    vim.wo.wrap = not vim.wo.wrap
+    vim.wo.breakindent = not vim.wo.breakindent
+  end,
+  silent = true,
+}
+
+--- }}}
 
 --- Leader mappings {{{
 -- ;; to :
@@ -211,32 +281,5 @@ api.nvim_set_keymap(
 )
 api.nvim_set_keymap(
   "v", "<Leader>W", "<ESC>:wall!<CR>", { noremap = true, silent = true }
-)
-
--- Toggle editor visuals
-local function toggle_option(name)
-  return (":setlocal %s! %s?<CR>"):format(name, name)
-end
-api.nvim_set_keymap(
-  "n", "<Leader>tc", toggle_option("cursorcolumn"),
-  { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "n", "<Leader>tl", toggle_option("cursorline"),
-  { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "n", "<Leader>tn", ":setlocal number! relativenumber!<CR>",
-  { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "n", "<Leader>th", toggle_option("nolist"), { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "n", "<Leader>ts", toggle_option("spell"), { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "n", "<Leader>tw", ":setlocal wrap! breakindent!<CR>",
-  { noremap = true, silent = true }
 )
 --- }}}
