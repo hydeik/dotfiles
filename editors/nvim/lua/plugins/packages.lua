@@ -262,6 +262,9 @@ function M.load_plugins(use, _)
     config = require("plugins.config.eskk").config,
   }
 
+  -- Better quickfix windowin Neovim, polish old quickfix window
+  use { "kevinhwang91/nvim-bqf" }
+
   -- Perform the replacement in quickfix
   use {
     "thinca/vim-qfreplace",
@@ -285,7 +288,7 @@ function M.load_plugins(use, _)
     end,
   }
 
-  -- [[ ]]
+  -- [[ VCS ]]
   -- Asynchronously control git repositories
   -- { "lambdalisue/gina.vim", cmd = {"Gina"} },
 
