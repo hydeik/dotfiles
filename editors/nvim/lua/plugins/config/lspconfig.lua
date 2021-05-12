@@ -76,52 +76,103 @@ lspsaga.init_lsp_saga()
 local custom_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
 
+  local nnoremap = vim.keymap.nnoremap
+  local vnoremap = vim.keymap.vnoremap
+  local xnoremap = vim.keymap.xnoremap
+
   if client.config.flags then client.config.flags.allow_incremental_sync = true end
   -- key mappings
-  local wk = require("which-key")
-  wk.register(
-    {
-      ["<C-f>"] = {
-        "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>",
-        "Smart scroll with Saga (forward)",
-      },
-      ["<C-b>"] = {
-        "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>",
-        "Smart scroll with Saga (backward)",
-      },
-    }, { buffer = bufnr, silent = true, nowait = true }
-  )
+  nnoremap {
+    "<C-f>",
+    "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>",
+    buffer = true,
+    silent = true,
+    nowait = true,
+  }
+  nnoremap {
+    "<C-b>",
+    "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>",
+    buffer = true,
+    silent = true,
+    nowait = true,
+  }
+  nnoremap { "ma", "<cmd>Lspsaga code_action<CR>", buffer = true, silent = true }
+  vnoremap {
+    "ma",
+    ":<C-u>Lspsaga range_code_action<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "md",
+    "<cmd>Lspsaga preview_definition<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap { "mf", "<cmd>Lspsaga lsp_finder<CR>", buffer = true, silent = true }
+  nnoremap { "mh", "<cmd>Lspsaga hover_doc<CR>", buffer = true, silent = true }
+  nnoremap {
+    "m?",
+    "<cmd>Lspsaga signature_help<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap { "n", "mR", "<cmd>Lspsaga rename<CR>", buffer = true, silent = true }
+  nnoremap {
+    "m]",
+    "<cmd>Lspsaga diagnostic_jump_next<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "m[",
+    "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "me",
+    "<cmd>Lspsaga show_line_diagnostics<CR>",
+    buffer = true,
+    silent = true,
+  }
 
-  wk.register(
-    {
-      a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
-      d = { "<cmd>Lspsaga preview_definition<CR>", "Preview Definition" },
-      H = { "<cmd>Lspsaga lsp_finder<CR>", "Highlight cursor word" },
-      h = { "<cmd>Lspsaga hover_doc<CR>", "Hover Doc" },
-      s = { "<cmd>Lspsaga signature_help<CR>", "Signature Help" },
-      R = { "<cmd>Lspsaga rename<CR>", "Rename" },
-      ["["] = {
-        "<cmd>Lspsaga diagnostic_jump_next<CR>",
-        "Jump to Next Diagnostic",
-      },
-      ["]"] = {
-        "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-        "Jump to Previous Diagnostic",
-      },
-      e = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
-      D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
-      F = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" },
-      i = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation" },
-      t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type Definition" },
-      r = { "<cmd>lua vim.lsp.buf.references()<CR>", "References" },
-      o = { "<cmd>lua vim.lsp.buf.document_symbol()<CR>", "Document Symbol" },
-    }, { prefix = "m", buffer = bufnr, silent = true }
-  )
-
-  wk.register(
-    { a = { ":<C-u>Lspsaga range_code_action<CR>", "Code Action (range)" } },
-    { mode = "v", prefix = "m", buffer = bufnr, silent = true }
-  )
+  nnoremap {
+    "mD",
+    "<cmd>lua vim.lsp.buf.declaration()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mF",
+    "<cmd>lua vim.lsp.buf.formatting()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mi",
+    "<cmd>lua vim.lsp.buf.implementation()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mt",
+    "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mr",
+    "<cmd>lua vim.lsp.buf.references()<CR>",
+    buffer = true,
+    silent = true,
+  }
+  nnoremap {
+    "mo",
+    "<cmd>lua vim.lsp.buf.document_symbol()<cr>",
+    buffer = true,
+    silent = true,
+  }
 
   vim.cmd [[augroup user_plugin_lspconfig]]
   vim.cmd [[autocmd! * <buffer>]]
@@ -153,34 +204,27 @@ local custom_attach = function(client, bufnr)
   end
 
   if client.resolved_capabilities.document_range_formatting then
-    wk.register(
-      {
-        ["="] = {
-          "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
-          "Range Formatting",
-        },
-      }, { mode = "n", prefix = "m", buffer = bufnr, silent = true }
-    )
-
-    wk.register(
-      {
-        ["="] = {
-          "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
-          "Range Formatting",
-        },
-      }, { mode = "x", prefix = "m", buffer = bufnr, silent = true }
-    )
+    nnoremap {
+      "m=",
+      "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+      buffer = true,
+      silent = true,
+    }
+    xnoremap {
+      "m=",
+      "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+      buffer = true,
+      silent = true,
+    }
   end
 
   if client.resolved_capabilities.goto_definition then
-    wk.register(
-      {
-        ["<C-]>"] = {
-          "<cmd>lua vim.lsp.buf.goto_definition()<CR>",
-          "Goto Definition",
-        },
-      }, { buffer = bufnr, silent = true }
-    )
+    nnoremap {
+      "<C-]>",
+      "<cmd>lua vim.lsp.buf.definition()<CR>",
+      buffer = true,
+      silent = true,
+    }
   end
 
   if client.resolved_capabilities.document_highlight then

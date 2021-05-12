@@ -125,25 +125,25 @@ function M.config()
     }, { mode = "v" }
   )
 
-  -- -- LSP
-  -- wk.register(
-  --   {
-  --     m = {
-  --       a = { "Code Action" },
-  --       d = { "Preview Definition" },
-  --       D = { "Declaration" },
-  --       e = { "Show Line Diagnostics" },
-  --       F = { "Formatting" },
-  --       i = { "Implementaion" },
-  --       t = { "Type Definitions" },
-  --       r = { "Rename" },
-  --       o = { "Document Symbols" },
-  --       ["?"] = { "Signature Help" },
-  --       ["]"] = { "Next Diagnostic" },
-  --       ["["] = { "Previous Diagnostic" },
-  --     },
-  --   }, { buffer = 0 }
-  -- )
+  -- LSP
+  wk.register(
+    {
+      m = {
+        a = { "Code Action" },
+        d = { "Preview Definition" },
+        D = { "Declaration" },
+        e = { "Show Line Diagnostics" },
+        F = { "Formatting" },
+        i = { "Implementaion" },
+        t = { "Type Definitions" },
+        r = { "Rename" },
+        o = { "Document Symbols" },
+        ["?"] = { "Signature Help" },
+        ["]"] = { "Next Diagnostic" },
+        ["["] = { "Previous Diagnostic" },
+      },
+    }, { buffer = 0 }
+  )
 
   -- s-mappings [Window manager / sandwich / search]
   wk.register(
