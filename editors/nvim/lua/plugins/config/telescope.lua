@@ -279,16 +279,22 @@ function M.config()
 
   -- LSP pickers
   set_keymap("<Space>la", "lsp_code_actions")
+  set_keymap("<Space>ld", "lsp_definitions")
   set_keymap("<Space>lr", "lsp_references")
   set_keymap("<Space>ls", "lsp_documen_symbols")
   set_keymap("<Space>lS", "lsp_workspace_symbols")
+  set_keymap("<Space>le", "lsp_document_diagnostics")
+  set_keymap("<Space>lE", "lsp_workspace_diagnostics")
+  -- Treesitter
+  set_keymap("<Space>lt", "treesitter")
 
   -- Git pickers
   set_keymap("<Space>gf", "git_files")
-  set_keymap("<Space>gb", "git_branchs", { initial_mode = "normal" })
+  set_keymap("<Space>gb", "git_branches", { initial_mode = "normal" })
   set_keymap("<Space>gc", "git_bcommits", { initial_mode = "normal" })
   set_keymap("<Space>gC", "git_commits", { initial_mode = "normal" })
   set_keymap("<Space>gs", "git_status", { initial_mode = "normal" })
+  set_keymap("<Space>gS", "git_stash", { initial_mode = "normal" })
 
   -- nvim-dap inl_defaultctegration
   map_extension("<Space>dc", "dap", "commands")

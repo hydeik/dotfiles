@@ -75,104 +75,57 @@ lspsaga.init_lsp_saga()
 
 local custom_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+  local wk = require("which-key")
 
-  local nnoremap = vim.keymap.nnoremap
-  local vnoremap = vim.keymap.vnoremap
-  local xnoremap = vim.keymap.xnoremap
+  wk.register(
+    {
+      ["<C-f>"] = {
+        "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>",
+        "Smart Scroll with Saga (Forward)",
+      },
+      ["<C-b>"] = {
+        "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>",
+        "Smart Scroll with Saga (Backward)",
+      },
+    }, { buffer = bufnr, nowait = true }
+  )
+
+  wk.register(
+    {
+      name = "+lsp (buffer)",
+      a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
+      d = { "<cmd>Lspsaga preview_definition<CR>", "Preview Definition" },
+      e = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
+      f = { "<cmd>Lspsaga lsp_finder<CR>", "Find symbols" },
+      h = { "<cmd>Lspsaga hover_doc<CR>", "Hover Doc" },
+      R = { "<cmd>Lspsaga rename<CR>", "Rename" },
+      ["?"] = { "<cmd>Lspsaga signature_help<CR>", "Signature Help" },
+      ["["] = {
+        "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+        "Jump to Previous Diagnostic",
+      },
+      ["]"] = {
+        "<cmd>Lspsaga diagnostic_jump_next<CR>",
+        "Jump to Next Diagnostic",
+      },
+      D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
+      F = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" },
+      i = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation" },
+      t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type Definition" },
+      r = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "References" },
+      o = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Document Symbols" },
+    }, { prefix = "m", buffer = bufnr }
+  )
+
+  wk.register(
+    {
+      name = "+lsp (buffer)",
+      a = { "<cmd>Lspsaga range_code_action<CR>", "Range Code Action" },
+    }, { mode = "v", prefix = "m", buffer = bufnr }
+  )
 
   if client.config.flags then client.config.flags.allow_incremental_sync = true end
   -- key mappings
-  nnoremap {
-    "<C-f>",
-    "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>",
-    buffer = true,
-    silent = true,
-    nowait = true,
-  }
-  nnoremap {
-    "<C-b>",
-    "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>",
-    buffer = true,
-    silent = true,
-    nowait = true,
-  }
-  nnoremap { "ma", "<cmd>Lspsaga code_action<CR>", buffer = true, silent = true }
-  vnoremap {
-    "ma",
-    ":<C-u>Lspsaga range_code_action<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap {
-    "md",
-    "<cmd>Lspsaga preview_definition<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap { "mf", "<cmd>Lspsaga lsp_finder<CR>", buffer = true, silent = true }
-  nnoremap { "mh", "<cmd>Lspsaga hover_doc<CR>", buffer = true, silent = true }
-  nnoremap {
-    "m?",
-    "<cmd>Lspsaga signature_help<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap { "n", "mR", "<cmd>Lspsaga rename<CR>", buffer = true, silent = true }
-  nnoremap {
-    "m]",
-    "<cmd>Lspsaga diagnostic_jump_next<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap {
-    "m[",
-    "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap {
-    "me",
-    "<cmd>Lspsaga show_line_diagnostics<CR>",
-    buffer = true,
-    silent = true,
-  }
-
-  nnoremap {
-    "mD",
-    "<cmd>lua vim.lsp.buf.declaration()<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap {
-    "mF",
-    "<cmd>lua vim.lsp.buf.formatting()<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap {
-    "mi",
-    "<cmd>lua vim.lsp.buf.implementation()<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap {
-    "mt",
-    "<cmd>lua vim.lsp.buf.type_definition()<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap {
-    "mr",
-    "<cmd>lua vim.lsp.buf.references()<CR>",
-    buffer = true,
-    silent = true,
-  }
-  nnoremap {
-    "mo",
-    "<cmd>lua vim.lsp.buf.document_symbol()<cr>",
-    buffer = true,
-    silent = true,
-  }
 
   vim.cmd [[augroup user_plugin_lspconfig]]
   vim.cmd [[autocmd! * <buffer>]]
@@ -204,27 +157,31 @@ local custom_attach = function(client, bufnr)
   end
 
   if client.resolved_capabilities.document_range_formatting then
-    nnoremap {
-      "m=",
-      "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
-      buffer = true,
-      silent = true,
-    }
-    xnoremap {
-      "m=",
-      "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
-      buffer = true,
-      silent = true,
-    }
+    wk.register(
+      {
+        ["="] = {
+          "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+          "Range Formatting",
+        },
+      }, { mode = "n", prefix = "m", buffer = bufnr }
+    )
+    wk.register(
+      {
+        ["="] = {
+          "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+          "Range Formatting",
+        },
+      }, { mode = "x", prefix = "m", buffer = bufnr }
+    )
   end
 
   if client.resolved_capabilities.goto_definition then
-    nnoremap {
-      "<C-]>",
-      "<cmd>lua vim.lsp.buf.definition()<CR>",
-      buffer = true,
-      silent = true,
-    }
+    wk.register(
+      {
+        ["<C-]>"] = { "<cmd>lua vim.lsp.buf.definition()<CR>",
+                      "Goto Definition" },
+      }, { mode = "n", buffer = bufnr }
+    )
   end
 
   if client.resolved_capabilities.document_highlight then

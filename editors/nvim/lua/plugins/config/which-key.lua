@@ -47,10 +47,9 @@ function M.config()
         d = { "Find File" },
         D = { "Find File (All)" },
         e = { "File Browser" },
-        g = { "Live Grep" },
+        g = { "Live Grep (fzf_writer)" },
         G = { "Grep Files" },
         o = { "Old Files (frecency)" },
-        t = { "Git Files" },
         ["/"] = { "Grep Last Search" },
         b = { "Buffers" },
         h = { "Help Tags" },
@@ -59,19 +58,24 @@ function M.config()
       ["<Space>g"] = {
         name = "+git",
         b = { "Git Branch" },
-        c = { "Git BCommit" },
-        C = { "Git Commit" },
+        c = { "Git Commits (buffer)" },
+        C = { "Git Commits" },
         f = { "Git files" },
         l = { "LazyGit" },
-        m = { "Git messenger" },
+        m = { "Git Messenger" },
         s = { "Git Status" },
+        S = { "Git Stash" },
       },
       ["<Space>l"] = {
         name = "+lsp",
         a = { "CodeActions" },
+        d = { "Definitions" },
+        e = { "Document Diagnostics" },
+        E = { "Workspace Diagnostics" },
         r = { "References" },
         s = { "Document Symbols" },
         S = { "Workspace Symbols" },
+        t = { "Treesitter" },
       },
       ["<Space>t"] = {
         name = "+toggle UI",
@@ -123,26 +127,6 @@ function M.config()
         W = { "write all (:wall)" },
       },
     }, { mode = "v" }
-  )
-
-  -- LSP
-  wk.register(
-    {
-      m = {
-        a = { "Code Action" },
-        d = { "Preview Definition" },
-        D = { "Declaration" },
-        e = { "Show Line Diagnostics" },
-        F = { "Formatting" },
-        i = { "Implementaion" },
-        t = { "Type Definitions" },
-        r = { "Rename" },
-        o = { "Document Symbols" },
-        ["?"] = { "Signature Help" },
-        ["]"] = { "Next Diagnostic" },
-        ["["] = { "Previous Diagnostic" },
-      },
-    }, { buffer = 0 }
   )
 
   -- s-mappings [Window manager / sandwich / search]

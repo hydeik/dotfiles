@@ -492,6 +492,7 @@ function M.load_plugins(use, _)
     requires = {
       -- {"nvim-lua/lsp-status.nvim", opt = true},
       { "glepnir/lspsaga.nvim", opt = true },
+      { "folke/which-key.nvim" },
     },
     config = function()
       -- vim.cmd [[packadd lsp-status.nvim]]
