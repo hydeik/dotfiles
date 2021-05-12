@@ -16,6 +16,12 @@ function M.load_plugins(use, _)
   --   3. Lua plugins (automatically run files [lua/plugin/*.lua] on startup)
   use { "tjdevries/astronauta.nvim" }
 
+  -- Show keybindings in popup
+  use {
+    "folke/which-key.nvim",
+    config = require("plugins.config.which-key").config,
+  }
+
   -- Fix CursorHold performance
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
   use {
@@ -26,7 +32,31 @@ function M.load_plugins(use, _)
   -- Smoothly navigate between splits and panes
   use {
     "numToStr/Navigator.nvim",
-    config = require("plugins.config.navigator").config,
+    requires = { "folke/which-key.nvim" },
+    config = function()
+      require("Navigator").setup()
+      local wk = require("which-key")
+      wk.register(
+        {
+          ["<M-h>"] = {
+            "<cmd>lua require('Navigator').left()<CR>",
+            "Navigator (Left)",
+          },
+          ["<M-j>"] = {
+            "<cmd>lua require('Navigator').down()<CR>",
+            "Navigator (Down)",
+          },
+          ["<M-k>"] = {
+            "<cmd>lua require('Navigator').up()<CR>",
+            "Navigator (Up)",
+          },
+          ["<M-l>"] = {
+            "<cmd>lua require('Navigator').right()<CR>",
+            "Navigator (Right)",
+          },
+        }
+      )
+    end,
   }
 
   -- [[ UI ]]
@@ -196,12 +226,6 @@ function M.load_plugins(use, _)
   }
 
   -- A more adventurous wildmenu
-
-  -- Show keybindings in popup
-  use {
-    "folke/which-key.nvim",
-    config = require("plugins.config.which-key").config,
-  }
 
   -- A high-performance color highlighter for NeoVim
   use {
@@ -492,6 +516,7 @@ function M.load_plugins(use, _)
     requires = {
       -- {"nvim-lua/lsp-status.nvim", opt = true},
       { "glepnir/lspsaga.nvim", opt = true },
+      { "folke/which-key.nvim" },
     },
     config = function()
       -- vim.cmd [[packadd lsp-status.nvim]]
