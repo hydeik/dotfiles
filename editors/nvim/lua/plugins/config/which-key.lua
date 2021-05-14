@@ -3,7 +3,7 @@ local M = {}
 function M.config()
   local wk = require("which-key")
   wk.setup {
-    plugins = { presets = { operators = false } },
+    plugins = { spelling = { enabled = true }, presets = { operators = false } },
     operators = {
       d = "Delete",
       c = "Change",
