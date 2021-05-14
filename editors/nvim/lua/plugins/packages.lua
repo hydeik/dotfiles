@@ -263,7 +263,7 @@ function M.load_plugins(use, _)
   }
 
   -- Better quickfix windowin Neovim, polish old quickfix window
-  use { "kevinhwang91/nvim-bqf" }
+  use { "kevinhwang91/nvim-bqf", branch = "main" }
 
   -- Perform the replacement in quickfix
   use {
