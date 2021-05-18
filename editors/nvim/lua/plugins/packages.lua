@@ -31,8 +31,19 @@ function M.load_plugins(use, _)
 
   -- [[ UI ]]
   -- Colorschemes
+  use { "folke/tokyonight.nvim", opt = true }
   use { "sainnhe/edge", opt = true }
+  use { "sainnhe/everforest", opt = true }
   use { "sainnhe/sonokai", opt = true }
+  use { "shaunsingh/moonlight.nvim", opt = true }
+  use { "shaunsingh/nord.nvim", opt = true }
+
+  -- -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
+  -- use {
+  --   "hoob3rt/lualine.nvim",
+  --   requires = { "kyazdani42/nvim-web-devicons", opt = true },
+  --   config = require('plugins.config.lualine').config,
+  -- }
 
   -- A snazzy bufferline for Neovim
   use {
