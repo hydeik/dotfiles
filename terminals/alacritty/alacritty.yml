@@ -297,7 +297,8 @@ live_config_reload: true
 #   - (Linux/macOS) /bin/bash --login
 #   - (Windows) powershell
 shell:
-  program: /bin/zsh
+  # program: /bin/zsh
+  program: /usr/local/bin/zsh
   args:
     - --login
 
