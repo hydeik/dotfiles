@@ -204,7 +204,8 @@ draw_bold_text_with_bright_colors: true
 #
 # --- Import a file from themes dir ---
 import:
-  - ~/.config/alacritty/themes/sonokai_shusia.yml
+  - ~/.config/alacritty/themes/tokyonight_night.yml
+  # - ~/.config/alacritty/themes/sonokai_shusia.yml
 
 
 # Bell
