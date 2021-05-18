@@ -310,12 +310,10 @@ end
 -- [[ Utility functions ]]
 
 -- Colors
-local function highlight(group, guifg, ctermfg, guibg, ctermbg, attr)
+local function highlight(group, guifg, guibg, attr)
   local parts = { group }
   if guifg then table.insert(parts, "guifg=" .. guifg) end
   if guibg then table.insert(parts, "guibg=" .. guibg) end
-  if ctermfg then table.insert(parts, "ctermfg=" .. ctermfg) end
-  if ctermbg then table.insert(parts, "ctermbg=" .. ctermbg) end
   if attr then
     table.insert(parts, "gui=" .. attr)
     table.insert(parts, "cterm=" .. attr)
@@ -330,15 +328,9 @@ local function apply_theme()
   end
   local base_bg = M.theme['Base'].bg
   for group, colors in pairs(M.theme) do
-    highlight(
-      "StatusLine" .. group, colors.fg[1], colors.fg[2], colors.bg[1],
-      colors.bg[2], colors.attr
-    )
+    highlight("StatusLine" .. group, colors.fg, colors.bg, colors.attr)
     if group ~= "Base" then
-      highlight(
-        "StatusLine" .. group .. "Sep", colors.bg[1], colors.bg[2], base_bg[1],
-        base_bg[2], nil
-      )
+      highlight("StatusLine" .. group .. "Sep", colors.bg, base_bg, nil)
     end
   end
   theme_set = M.theme
