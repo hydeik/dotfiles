@@ -82,22 +82,6 @@ function M.load_plugins(use, _)
   -- Imporove foldtext for better looks
   use { "lambdalisue/readablefold.vim" }
 
-  -- Reopen files at your last edit position
-  use {
-    "ethanholz/nvim-lastplace",
-    config = function()
-      require'nvim-lastplace'.setup {
-        lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-        lastplace_ignore_filetype = {
-          "gitcommit",
-          "gitrebase",
-          "svn",
-          "hgcommit",
-        },
-        lastplace_open_folds = true,
-      }
-    end,
-  }
   -- Better glance searched information
   use {
     "kevinhwang91/nvim-hlslens",
@@ -519,11 +503,17 @@ function M.load_plugins(use, _)
     requires = {
       -- {"nvim-lua/lsp-status.nvim", opt = true},
       { "glepnir/lspsaga.nvim", opt = true },
+      {
+        "folke/trouble.nvim",
+        requires = { "kyazdani42/nvim-web-devicons", opt = true },
+        opt = true,
+      },
       { "folke/which-key.nvim" },
     },
     config = function()
       -- vim.cmd [[packadd lsp-status.nvim]]
       vim.cmd [[packadd lspsaga.nvim]]
+      vim.cmd [[packadd trouble.nvim]]
       require("plugins.config.lspconfig")
     end,
   }

@@ -73,6 +73,8 @@ local lspconfig = require("lspconfig")
 local lspsaga = require("lspsaga")
 lspsaga.init_lsp_saga()
 
+require("trouble").setup {}
+
 local custom_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
   local wk = require("which-key")
