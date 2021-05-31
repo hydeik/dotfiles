@@ -108,8 +108,5 @@ globals:load_variables()
 -- Environment variables
 globals:set_envs()
 
--- vim.opt
-require("core.globals.opt")
-
 return globals
 

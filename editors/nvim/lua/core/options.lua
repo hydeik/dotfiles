@@ -147,7 +147,6 @@ opt.shortmess = "aoOTIcF" -- Shorten messages and don't show intro
 -- Disable annoying bells
 opt.errorbells = false
 opt.visualbell = false
-opt.t_vb = ""
 opt.belloff = "all"
 
 -- Characters to fill the statuslines and vertical separators
