@@ -1,22 +1,23 @@
 [
-    {
-        "defaults": {
-            "link": {
-                "create": true,
-                "relink": true,
-                "force": true
-            }
-        }
-    },
-    {
-        "clean": [
-            "~/.config/alacritty"
-        ]
-    },
-    {
-        "link": {
-            "~/.config/alacritty/alacritty.yml": "terminals/alacritty/alacritty.yml",
-            "~/.config/alacritty/themes": "terminals/alacritty/themes"
-        }
+  {
+    "defaults": {
+      "link": {
+        "create": true,
+        "relink": true,
+        "force": true
+      }
     }
+  },
+  {
+    "clean": [
+      "~/.config/alacritty"
+    ]
+  },
+  {
+    "link": {
+      "~/.config/alacritty/alacritty.yml": "terminals/alacritty/alacritty.yml",
+      "~/.config/alacritty/fonts": "terminals/alacritty/fonts",
+      "~/.config/alacritty/themes": "terminals/alacritty/themes"
+    }
+  }
 ]

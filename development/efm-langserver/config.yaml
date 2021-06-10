@@ -380,9 +380,9 @@ languages:
     - <<: *buf-lint
 
   python:
-    - <<: *flake8-lint
+    # - <<: *flake8-lint
     # - <<: *pylint-lint
-    - <<: *mypy-lint
+    # - <<: *mypy-lint
     - <<: *black-format
     - <<: *isort-format
     # - <<: *pydocstyle-lint
