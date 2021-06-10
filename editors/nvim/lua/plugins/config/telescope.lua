@@ -122,7 +122,7 @@ function M.setup()
     "images",
     "*.min.*",
     "img",
-    "fonts",
+    -- "fonts",
   }
   local find_cmd, find_all_cmd;
   if vim.fn.executable("fd") then
