@@ -1,27 +1,27 @@
-# HackGen Font
+# Hack Nerd Font
 font:
   # Normal (roman) font face
   normal:
-    family: HackGenNerd
+    family: Cica
     style: Regular
 
   # Bold font face
   bold:
-    family: HackGenNerd
+    family: Cica
     style: Bold
 
   # Italic font face
   italic:
-    family: HackGenNerd
+    family: Cica
     style: Italic
 
   # Bold italic font face
   bold_italic:
-    family: HackGenNerd
+    family: Cica
     style: Bold Italic
 
   # Point size
-  size: 16.0
+  size: 18.0
 
   offset:
     x: 0
