@@ -155,27 +155,34 @@ function M.config()
 
   telescope.setup {
     defaults = {
-      prompt_position = "bottom",
-      prompt_prefix = " >",
+      prompt_prefix = "❯ ",
+      selection_caret = "❯ ",
+
       layout_strategy = "flex",
-      layout_default = {
+      layout_config = {
+        prompt_position = "bottom",
+        preview_cutoff = 100,
+
+        width = 0.90,
+        height = 0.85,
+
         horizontal = {
-          width_padding = 0.1,
-          height_padding = 0.1,
-          preview_width = 0.6,
+          preview_width = function(_, cols, _)
+            if cols > 200 then
+              return math.floor(cols * 0.4)
+            else
+              return math.floor(cols * 0.6)
+            end
+          end,
         },
-        vertical = {
-          width_padding = 0.05,
-          height_padding = 1,
-          preview_width = 0.5,
-        },
+        vertical = { width = 0.9, height = 0.9, preview_width = 0.5 },
+        flex = { horizontal = { preview_width = 0.9 } },
       },
 
       file_sorter = sorters.get_fzy_sorter,
 
       color_devicons = true,
 
-      preview_cutoff = 100,
       file_previewer = previewers.vim_buffer_cat.new,
       grep_previewer = previewers.vim_buffer_vimgrep.new,
       qflist_previewer = previewers.vim_buffer_qflist.new,
