@@ -23,11 +23,8 @@ function M.load_plugins(use, _)
     config = [[vim.g.cursorhold_updatetime = 100]],
   }
 
-  -- Smoothly navigate between splits and panes
-  use {
-    "numToStr/Navigator.nvim",
-    config = require("plugins.config.navigator").config,
-  }
+  -- tmux integration for nvim features pane movement and resizing from within nvim.
+  use { "aserowy/tmux.nvim", config = require("plugins.config.tmux").config }
 
   -- [[ UI ]]
   -- Colorschemes
