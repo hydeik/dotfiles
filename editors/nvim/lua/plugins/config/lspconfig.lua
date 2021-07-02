@@ -45,15 +45,14 @@ vim.lsp.protocol.CompletionItemKind = {
 }
 
 -- Handlers
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      underline = true,
-      virtual_text = true,
-      signs = { priority = 20 },
-      update_in_insert = false,
-    }
-  )
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    virtual_text = true,
+    signs = { priority = 20 },
+    update_in_insert = false,
+  }
+)
 
 vim.lsp.handlers["textDocument/formatting"] =
   function(err, _, result, _, bufnr)
@@ -294,10 +293,17 @@ lspconfig.pyright.setup {
 }
 
 -- https://github.com/rust-analyzer/rust-analyzer
-lspconfig.rust_analyzer.setup {
-  on_attach = custom_attach,
-  capabilities = snippet_capabilities,
-}
+-- https://github.com/simrat39/rust-tools.nvim
+
+local function setup_rust_tools()
+  require'rust-tools'.setup {
+    server = { on_attach = custom_attach, capabilities = snippet_capabilities },
+  }
+end
+-- lspconfig.rust_analyzer.setup {
+--   on_attach = custom_attach,
+--   capabilities = snippet_capabilities,
+-- }
 
 -- https://solargraph.org/
 lspconfig.solargraph.setup { on_attach = custom_attach }

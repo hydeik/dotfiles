@@ -414,8 +414,12 @@ function M.load_plugins(use, _)
   use {
     "editorconfig/editorconfig-vim",
     setup = function()
-      vim.g.EditorConfig_exclude_patterns =
-        { 'scp://.*', 'term://.*', 'gina://.*', 'fugitive://.*' }
+      vim.g.EditorConfig_exclude_patterns = {
+        'scp://.*',
+        'term://.*',
+        'gina://.*',
+        'fugitive://.*',
+      }
     end,
   }
 
@@ -508,12 +512,21 @@ function M.load_plugins(use, _)
         requires = { "kyazdani42/nvim-web-devicons", opt = true },
         opt = true,
       },
+      {
+        "simrat39/rust-tools.nvim",
+        requires = {
+          { "nvim-lua/plenary.nvim" },
+          { "nvim-lua/popup.nvim", opt = true },
+        },
+        opt = true,
+      },
       { "folke/which-key.nvim" },
     },
     config = function()
       -- vim.cmd [[packadd lsp-status.nvim]]
       vim.cmd [[packadd lspsaga.nvim]]
       vim.cmd [[packadd trouble.nvim]]
+      vim.cmd [[packadd rust-tools.nvim]]
       require("plugins.config.lspconfig")
     end,
   }
