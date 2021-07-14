@@ -295,11 +295,10 @@ lspconfig.pyright.setup {
 -- https://github.com/rust-analyzer/rust-analyzer
 -- https://github.com/simrat39/rust-tools.nvim
 
-local function setup_rust_tools()
-  require'rust-tools'.setup {
-    server = { on_attach = custom_attach, capabilities = snippet_capabilities },
-  }
-end
+require'rust-tools'.setup {
+  server = { on_attach = custom_attach, capabilities = snippet_capabilities },
+}
+
 -- lspconfig.rust_analyzer.setup {
 --   on_attach = custom_attach,
 --   capabilities = snippet_capabilities,
