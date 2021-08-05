@@ -1,6 +1,6 @@
 local M = {}
 local force_comment = require("snippets.utils").force_comment
-local indent = require('snippets.utils').match_indentation
+local indent = require("snippets.utils").match_indentation
 
 local licenses = {
   BSD2 = [[
@@ -97,7 +97,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 function M.get_snippets(key)
   local data = [[Copyright (C) ${=os.date("%Y")} Hidekazu Ikeno]] .. "\n\n" .. licenses[key]
   local S, indent_var = indent(force_comment(data))
-  table.insert(S, '\n')
+  table.insert(S, "\n")
   table.insert(S, indent_var)
   return S
 end

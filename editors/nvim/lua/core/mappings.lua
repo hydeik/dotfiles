@@ -131,16 +131,20 @@ xnoremap { "l", [[foldclosed(line('.')) != -1 ? 'zogv0' : 'l']], expr = true }
 nnoremap {
   "<C-_>",
   function()
-    if vim.fn.foldlevel(".") == 0 then
-      vim.cmd("normal! zM")
+    if vim.fn.foldlevel "." == 0 then
+      vim.cmd "normal! zM"
       return
     end
 
-    local foldc_lnum = vim.fn.foldclosed(".")
-    vim.cmd("normal! zM")
-    if foldc_lnum == -1 then return end
+    local foldc_lnum = vim.fn.foldclosed "."
+    vim.cmd "normal! zM"
+    if foldc_lnum == -1 then
+      return
+    end
 
-    if vim.fn.foldclosed('.') == foldc_lnum then vim.cmd("normal! zM") end
+    if vim.fn.foldclosed "." == foldc_lnum then
+      vim.cmd "normal! zM"
+    end
     return
   end,
   silent = true,
@@ -179,14 +183,18 @@ nnoremap { "<S-Down>", "<C-w>-" }
 -- toggle cursorcolumn
 nnoremap {
   "<Space>tc",
-  function() vim.wo.cursorcolumn = not vim.wo.cursorcolumn end,
+  function()
+    vim.wo.cursorcolumn = not vim.wo.cursorcolumn
+  end,
   silent = true,
 }
 
 -- toggle cursorline
 nnoremap {
   "<Space>tl",
-  function() vim.wo.cursorline = not vim.wo.cursorline end,
+  function()
+    vim.wo.cursorline = not vim.wo.cursorline
+  end,
   silent = true,
 }
 
@@ -205,13 +213,9 @@ nnoremap {
   function()
     vim.wo.paste = not vim.wo.paste
     if vim.wo.paste then
-      vim.api.nvim_echo(
-        { { "paste-checking " }, { "enabled", "Green" } }, false, {}
-      )
+      vim.api.nvim_echo({ { "paste-checking " }, { "enabled", "Green" } }, false, {})
     else
-      vim.api.nvim_echo(
-        { { "paste-checking " }, { "disabled", "Red" } }, false, {}
-      )
+      vim.api.nvim_echo({ { "paste-checking " }, { "disabled", "Red" } }, false, {})
     end
   end,
   silent = true,
@@ -222,13 +226,9 @@ nnoremap {
   function()
     vim.wo.spell = not vim.wo.spell
     if vim.wo.spell then
-      vim.api.nvim_echo(
-        { { "spell-checking " }, { "enabled", "Green" } }, false, {}
-      )
+      vim.api.nvim_echo({ { "spell-checking " }, { "enabled", "Green" } }, false, {})
     else
-      vim.api.nvim_echo(
-        { { "spell-checking " }, { "disabled", "Red" } }, false, {}
-      )
+      vim.api.nvim_echo({ { "spell-checking " }, { "disabled", "Red" } }, false, {})
     end
   end,
   silent = true,
@@ -236,7 +236,9 @@ nnoremap {
 
 nnoremap {
   "<Space>th",
-  function() vim.wo.list = not vim.wo.list end,
+  function()
+    vim.wo.list = not vim.wo.list
+  end,
   silent = true,
 }
 
@@ -256,30 +258,14 @@ nnoremap {
 -- api.nvim_set_keymap("n", "<Leader>;",  ":", {noremap = true, silent = true})
 
 -- Quit
-api.nvim_set_keymap(
-  "n", "<Leader>q", ":quit<CR>", { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "v", "<Leader>q", "<ESC>:quit<CR>", { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "n", "<Leader>Q", ":qall!<CR>", { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "v", "<Leader>Q", "<ESC>:qall!<CR>", { noremap = true, silent = true }
-)
+api.nvim_set_keymap("n", "<Leader>q", ":quit<CR>", { noremap = true, silent = true })
+api.nvim_set_keymap("v", "<Leader>q", "<ESC>:quit<CR>", { noremap = true, silent = true })
+api.nvim_set_keymap("n", "<Leader>Q", ":qall!<CR>", { noremap = true, silent = true })
+api.nvim_set_keymap("v", "<Leader>Q", "<ESC>:qall!<CR>", { noremap = true, silent = true })
 
 -- Fast saving
-api.nvim_set_keymap(
-  "n", "<Leader>w", ":update<CR>", { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "v", "<Leader>w", "<ESC>:update<CR>", { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "n", "<Leader>W", ":wall!<CR>", { noremap = true, silent = true }
-)
-api.nvim_set_keymap(
-  "v", "<Leader>W", "<ESC>:wall!<CR>", { noremap = true, silent = true }
-)
+api.nvim_set_keymap("n", "<Leader>w", ":update<CR>", { noremap = true, silent = true })
+api.nvim_set_keymap("v", "<Leader>w", "<ESC>:update<CR>", { noremap = true, silent = true })
+api.nvim_set_keymap("n", "<Leader>W", ":wall!<CR>", { noremap = true, silent = true })
+api.nvim_set_keymap("v", "<Leader>W", "<ESC>:wall!<CR>", { noremap = true, silent = true })
 --- }}}

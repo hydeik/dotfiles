@@ -1,4 +1,4 @@
-local utils = require("utils")
+local utils = require "utils"
 
 local conf = {
   style = utils.get_var("edge_style", "default"),

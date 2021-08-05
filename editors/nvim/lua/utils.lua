@@ -2,25 +2,27 @@ local M = {}
 
 --- OS specific settings
 M.os = (function()
-  local is_windows = vim.loop.os_uname().version:match("Windows")
-  local is_mac     = vim.loop.os_uname().version:match("Darwin")
+  local is_windows = vim.loop.os_uname().version:match "Windows"
+  local is_mac = vim.loop.os_uname().version:match "Darwin"
 
   -- Get back the output of an external command
   local function capture(cmd, raw)
-    local f = assert(io.popen(cmd, 'r'))
-    local s = assert(f:read('*a'))
+    local f = assert(io.popen(cmd, "r"))
+    local s = assert(f:read "*a")
     f:close()
-    if raw then return s end
-    s = string.gsub(s, '^%s+', '')
-    s = string.gsub(s, '%s+$', '')
-    s = string.gsub(s, '[\n\r]+', ' ')
+    if raw then
+      return s
+    end
+    s = string.gsub(s, "^%s+", "")
+    s = string.gsub(s, "%s+$", "")
+    s = string.gsub(s, "[\n\r]+", " ")
     return s
   end
 
   return {
-    is_windows = is_windows;
-    is_mac     = is_mac;
-    capture    = capture;
+    is_windows = is_windows,
+    is_mac = is_mac,
+    capture = capture,
   }
 end)()
 
@@ -43,10 +45,12 @@ M.path = (function()
 
   local dirname
   do
-    local strip_dir_pat = path_sep.."([^"..path_sep.."]+)$"
-    local strip_sep_pat = path_sep.."$"
+    local strip_dir_pat = path_sep .. "([^" .. path_sep .. "]+)$"
+    local strip_sep_pat = path_sep .. "$"
     dirname = function(path)
-      if not path then return end
+      if not path then
+        return
+      end
       local result = path:gsub(strip_sep_pat, ""):gsub(strip_dir_pat, "")
       if #result == 0 then
         return "/"
@@ -56,19 +60,17 @@ M.path = (function()
   end
 
   local function path_join(...)
-    local result =
-      table.concat(
-        vim.tbl_flatten {...}, path_sep):gsub(path_sep.."+", path_sep)
+    local result = table.concat(vim.tbl_flatten { ... }, path_sep):gsub(path_sep .. "+", path_sep)
     return result
   end
 
   return {
-    dirname = dirname;
-    exists  = exists;
-    is_dir  = is_dir;
-    is_file = is_file;
-    join    = path_join;
-    sep     = path_sep;
+    dirname = dirname,
+    exists = exists,
+    is_dir = is_dir,
+    is_file = is_file,
+    join = path_join,
+    sep = path_sep,
   }
 end)()
 
@@ -87,12 +89,12 @@ end
 function M.create_augroups(definitions)
   for group_name, definition in pairs(definitions) do
     vim.cmd("augroup " .. group_name)
-    vim.cmd("autocmd!")
+    vim.cmd "autocmd!"
     for _, def in ipairs(definition) do
-      local command = table.concat(vim.tbl_flatten{"autocmd", def}, " ")
+      local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
       vim.cmd(command)
     end
-    vim.cmd('augroup END')
+    vim.cmd "augroup END"
   end
 end
 

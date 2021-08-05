@@ -13,21 +13,21 @@ local M = {}
 -- end
 
 function M.custom_advance(offset)
-  local snip_plug = require("snippets")
+  local snip_plug = require "snippets"
   local _, expanded = snip_plug.lookup_snippet_at_cursor()
   if expanded then
     snip_plug.expand_or_advance(offset)
   else
     if offset == 1 then
-      vim.cmd[[execute <Left>]]
+      vim.cmd [[execute <Left>]]
     else
-      vim.cmd[[execute <Right>]]
+      vim.cmd [[execute <Right>]]
     end
   end
 end
 
 function M.config()
-  local snip_plug = require("snippets")
+  local snip_plug = require "snippets"
   local force_comment = require("snippets.utils").force_comment
   local snips = {}
 
@@ -35,12 +35,14 @@ function M.config()
   snips._global = {
     todo = "TODO (H. Ikeno): ",
     date = [[${=os.date("%Y-%m-%d")}]],
-    uname = function() return vim.loop.os_uname().sysname end,
+    uname = function()
+      return vim.loop.os_uname().sysname
+    end,
     copyright = force_comment [[Copyright (C) ${=os.date("%Y")} Hidekazu Ikeno}]],
-    BSD2 = require("conf.snippets.licenses").get_snippets("BSD2"),
-    BSD3 = require("conf.snippets.licenses").get_snippets("BSD3"),
-    GPL3 = require("conf.snippets.licenses").get_snippets("GPL3"),
-    MIT = require("conf.snippets.licenses").get_snippets("MIT"),
+    BSD2 = require("conf.snippets.licenses").get_snippets "BSD2",
+    BSD3 = require("conf.snippets.licenses").get_snippets "BSD3",
+    GPL3 = require("conf.snippets.licenses").get_snippets "GPL3",
+    MIT = require("conf.snippets.licenses").get_snippets "MIT",
   }
 
   snips.lua = require("conf.snippets.lua").get_snippets()
@@ -51,13 +53,13 @@ function M.config()
   snip_plug.snippets = snips
 
   -- UX
-  snip_plug.set_ux(require'snippets.inserters.floaty')
+  snip_plug.set_ux(require "snippets.inserters.floaty")
 
   -- Key mappings
-  local opts = {noremap = true, silent = true}
-  vim.api.nvim_set_keymap("i", "<C-f>", "<cmd>lua require'conf.snippets'.custom_advance(1)<CR>",  opts)
+  local opts = { noremap = true, silent = true }
+  vim.api.nvim_set_keymap("i", "<C-f>", "<cmd>lua require'conf.snippets'.custom_advance(1)<CR>", opts)
   vim.api.nvim_set_keymap("i", "<C-b>", "<cmd>lua require'conf.snippets'.custom_advance(-1)<CR>", opts)
-  vim.api.nvim_set_keymap("i", "<C-s>",   "<cmd>lua require'snippets'.expand_or_advance(1)<CR>",  opts)
+  vim.api.nvim_set_keymap("i", "<C-s>", "<cmd>lua require'snippets'.expand_or_advance(1)<CR>", opts)
   vim.api.nvim_set_keymap("i", "<C-S-s>", "<cmd>lua require'snippets'.expand_or_advance(-1)<CR>", opts)
 end
 

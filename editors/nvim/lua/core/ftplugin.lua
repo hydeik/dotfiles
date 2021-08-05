@@ -1,5 +1,5 @@
 local M = {}
-local event = require("core.event")
+local event = require "core.event"
 
 function M.setup()
   --- Global options for filetypes
@@ -12,18 +12,18 @@ function M.setup()
 
   -- Markdown
   vim.g.markdown_fenced_languages = {
-    'css',
-    'javascript',
-    'js=javascript',
-    'json=javascript',
-    'python',
-    'py=python',
-    'rust',
-    'sh',
-    'sass',
-    'xml',
-    'vim',
-    'help',
+    "css",
+    "javascript",
+    "js=javascript",
+    "json=javascript",
+    "python",
+    "py=python",
+    "rust",
+    "sh",
+    "sass",
+    "xml",
+    "vim",
+    "help",
   }
 
   -- Perl
@@ -47,26 +47,23 @@ function M.setup()
   vim.g.tex_fold_enabled = 1
 
   -- Vim
-  vim.g.vimsyn_embed = 'l'
+  vim.g.vimsyn_embed = "l"
 
   -- XML
   vim.g.xml_syntax_folding = 1
 
   --- Register filetype events
-  event.create_augroups(
-    {
-      user_ftplugin = {
-        { "FileType", "*", "lua require'core.ftplugin'.ftplugin_common()" },
-        { "FileType", "c, cpp", "lua require'core.ftplugin'.ftplugin_c_cpp()" },
-        { "FileType", "fortran",
-          "lua require'core.ftplugin'.ftplugin_fortran()" },
-        { "FileType", "help", "lua require'core.ftplugin'.ftplugin_help()" },
-        { "FileType", "ruby", "lua require'core.ftplugin'.ftplugin_ruby()" },
-        { "FileType", "toml", "lua require'core.ftplugin'.ftplugin_toml()" },
-        { "FileType", "vim", "lua require'core.ftplugin'.ftplugin_vim()" },
-      },
-    }
-  )
+  event.create_augroups {
+    user_ftplugin = {
+      { "FileType", "*", "lua require'core.ftplugin'.ftplugin_common()" },
+      { "FileType", "c, cpp", "lua require'core.ftplugin'.ftplugin_c_cpp()" },
+      { "FileType", "fortran", "lua require'core.ftplugin'.ftplugin_fortran()" },
+      { "FileType", "help", "lua require'core.ftplugin'.ftplugin_help()" },
+      { "FileType", "ruby", "lua require'core.ftplugin'.ftplugin_ruby()" },
+      { "FileType", "toml", "lua require'core.ftplugin'.ftplugin_toml()" },
+      { "FileType", "vim", "lua require'core.ftplugin'.ftplugin_vim()" },
+    },
+  }
 end
 
 --- ftplugin
@@ -82,11 +79,13 @@ function M.ftplugin_common()
 end
 
 -- C/C++
-function M.ftplugin_c_cpp() vim.bo.foldignore = "#/" end
+function M.ftplugin_c_cpp()
+  vim.bo.foldignore = "#/"
+end
 
 -- Fortran
 function M.ftplugin_fortran()
-  local ext = vim.fn.expand("%:e")
+  local ext = vim.fn.expand "%:e"
   -- fixed or free format
   if ext == "f" or ext == "for" then
     vim.b.fortran_free_source = 0
@@ -104,18 +103,26 @@ function M.ftplugin_fortran()
 end
 
 -- Ruby
-function M.ftplugin_ruby() vim.bo.iskeyword = vim.bo.iskeyword .. ",!,?" end
+function M.ftplugin_ruby()
+  vim.bo.iskeyword = vim.bo.iskeyword .. ",!,?"
+end
 
 -- TOML
-function M.ftplugin_toml() vim.cmd("syntax sync minlines=500") end
+function M.ftplugin_toml()
+  vim.cmd "syntax sync minlines=500"
+end
 
 -- VIM
 function M.ftplugin_vim()
-  if vim.fn.line("$") > 5000 then vim.cmd("syntax sync minlines=500") end
+  if vim.fn.line "$" > 5000 then
+    vim.cmd "syntax sync minlines=500"
+  end
   vim.wo.foldmethod = "indent"
 end
 
 -- VIM help
-function M.ftplugin_help() vim.bo.iskeyword = vim.bo.iskeyword .. ",:,#,-" end
+function M.ftplugin_help()
+  vim.bo.iskeyword = vim.bo.iskeyword .. ",:,#,-"
+end
 
 return M

@@ -8,8 +8,8 @@ function M.config()
   vim.g.nvim_tree_width = 40
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_icons = {
-    default = '',
-    symlink = '',
+    default = "",
+    symlink = "",
     git = {
       unstaged = "✗",
       staged = "✓",

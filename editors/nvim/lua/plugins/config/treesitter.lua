@@ -6,7 +6,7 @@ function M.config()
   vim.cmd [[packadd nvim-ts-rainbow]]
   vim.cmd [[packadd nvim-ts-context-commentstring]]
 
-  require'nvim-treesitter.configs'.setup {
+  require("nvim-treesitter.configs").setup {
     -- one of 'all', 'language', or a list of languages
     ensure_installed = "all",
     ignore_install = { "haskell" },

@@ -1,5 +1,5 @@
 local M = {}
-local indent = require('snippets.utils').match_indentation
+local indent = require("snippets.utils").match_indentation
 
 function M.get_snippets()
   return {
@@ -50,13 +50,13 @@ function ${1:name}()
     $0
 }
 ]],
---     tmp = indent [[
--- ${1:TMPFILE}=$(mktmp ${2:XXX})
--- trap "rm -f \\${$1}" 0             # EXIT
--- trap "rm -f \\${$1}; exit 1" 2     # INT
--- trap "rm -f \\${$1}; exit 1" 1 15  # HUP TERM
--- ${0}
--- ]],
+    --     tmp = indent [[
+    -- ${1:TMPFILE}=$(mktmp ${2:XXX})
+    -- trap "rm -f \\${$1}" 0             # EXIT
+    -- trap "rm -f \\${$1}; exit 1" 2     # INT
+    -- trap "rm -f \\${$1}; exit 1" 1 15  # HUP TERM
+    -- ${0}
+    -- ]],
     heredoc = indent [[
 << ${1:EOF}
     $0

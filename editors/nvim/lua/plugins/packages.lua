@@ -220,7 +220,9 @@ function M.load_plugins(use, _)
       "ColorizerReloadAllBuffers",
       "ColorizerToggle",
     },
-    config = function() require'colorizer'.setup() end,
+    config = function()
+      require("colorizer").setup()
+    end,
   }
 
   -- Breakdown Vim's --startuptime output
@@ -278,21 +280,17 @@ function M.load_plugins(use, _)
     "thinca/vim-qfreplace",
     ft = { "qf" },
     config = function()
-      require'core.event'.create_augroups(
-        {
-          user_plugin_qfreplace = {
-            {
-              "FileType",
-              "qf",
-              function()
-                vim.api.nvim_buf_set_keymap(
-                  0, "n", "R", "<cmd>Qfreplace<CR>", { noremap = true }
-                )
-              end,
-            },
+      require("core.event").create_augroups {
+        user_plugin_qfreplace = {
+          {
+            "FileType",
+            "qf",
+            function()
+              vim.api.nvim_buf_set_keymap(0, "n", "R", "<cmd>Qfreplace<CR>", { noremap = true })
+            end,
           },
-        }
-      )
+        },
+      }
     end,
   }
 
@@ -307,8 +305,7 @@ function M.load_plugins(use, _)
     setup = function()
       vim.g.lazygit_floating_window_winblend = 0
       vim.g.lazygit_floating_window_scaling_factor = 0.9
-      vim.g.lazygit_floating_window_corner_chars =
-        { '╭', '╮', '╰', '╯' }
+      vim.g.lazygit_floating_window_corner_chars = { "╭", "╮", "╰", "╯" }
       vim.g.lazygit_use_neovim_remote = 0
       vim.keymap.nnoremap { "<Space>gl", "<cmd>LazyGit<CR>", silent = true }
     end,
@@ -337,14 +334,18 @@ function M.load_plugins(use, _)
   use {
     "rhysd/committia.vim",
     event = { "BufEnter COMMIT_EDITMSG" },
-    setup = function() vim.g.committia_min_window_width = 100 end,
+    setup = function()
+      vim.g.committia_min_window_width = 100
+    end,
   }
 
   -- Git blame plugin for Neovim written in lua
   use {
     "f-person/git-blame.nvim",
     event = { "BufRead *", "BufNewFile *" },
-    setup = function() vim.g.gitblame_enabled = 0 end,
+    setup = function()
+      vim.g.gitblame_enabled = 0
+    end,
   }
 
   -- [[ Filetypes, Syntax ]]
@@ -412,10 +413,10 @@ function M.load_plugins(use, _)
     "editorconfig/editorconfig-vim",
     setup = function()
       vim.g.EditorConfig_exclude_patterns = {
-        'scp://.*',
-        'term://.*',
-        'gina://.*',
-        'fugitive://.*',
+        "scp://.*",
+        "term://.*",
+        "gina://.*",
+        "fugitive://.*",
       }
     end,
   }
@@ -430,7 +431,7 @@ function M.load_plugins(use, _)
   use {
     "terrortylor/nvim-comment",
     config = function()
-      require('nvim_comment').setup {
+      require("nvim_comment").setup {
         -- Linters prefer comment and line to have a space in between markers
         marker_padding = true,
         -- should comment out empty or whitespace only lines
@@ -533,7 +534,7 @@ function M.load_plugins(use, _)
       vim.cmd [[packadd null-ls.nvim]]
       vim.cmd [[packadd rust-tools.nvim]]
       vim.cmd [[packadd trouble.nvim]]
-      require("plugins.config.lspconfig")
+      require "plugins.config.lspconfig"
     end,
   }
 
@@ -556,7 +557,7 @@ function M.load_plugins(use, _)
         "hrsh7th/vim-vsnip",
         event = { "InsertCharPre *" },
         setup = function()
-          vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
+          vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/snippets"
         end,
       },
     },
@@ -599,21 +600,25 @@ function M.load_plugins(use, _)
       "<Space>fo",
       "<Space>f/",
     },
-    setup = function() require("plugins.config.telescope").setup() end,
+    setup = function()
+      require("plugins.config.telescope").setup()
+    end,
     config = function()
       for _, name in pairs {
-        'nvim-web-devicons',
-        'popup.nvim',
-        'sql.nvim',
-        'telescope-cheat.nvim',
-        'telescope-frecency.nvim',
-        'telescope-fzf-writer.nvim',
-        'telescope-fzy-native.nvim',
-        'telescope-ghq.nvim',
-        'telescope-github.nvim',
-        'telescope-packer.nvim',
-        'telescope-symbols.nvim',
-      } do vim.cmd('packadd ' .. name) end
+        "nvim-web-devicons",
+        "popup.nvim",
+        "sql.nvim",
+        "telescope-cheat.nvim",
+        "telescope-frecency.nvim",
+        "telescope-fzf-writer.nvim",
+        "telescope-fzy-native.nvim",
+        "telescope-ghq.nvim",
+        "telescope-github.nvim",
+        "telescope-packer.nvim",
+        "telescope-symbols.nvim",
+      } do
+        vim.cmd("packadd " .. name)
+      end
       require("plugins.config.telescope").config()
     end,
   }

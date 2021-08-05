@@ -3,7 +3,7 @@ local M = {}
 -- [[ Custom Pickers ]]
 
 function M.edit_nvim_config()
-  require('telescope.builtin').find_files {
+  require("telescope.builtin").find_files {
     find_command = M._find_command,
     prompt_title = "~ dotfiles ~",
     shorten_path = false,
@@ -15,7 +15,7 @@ function M.edit_nvim_config()
 end
 
 function M.edit_zsh_config()
-  require('telescope.builtin').find_files {
+  require("telescope.builtin").find_files {
     find_command = M._find_command,
     prompt_title = "~ dotfiles ~",
     shorten_path = false,
@@ -46,14 +46,12 @@ end
 function M.grep_prompt()
   require("telescope.builtin").grep_string {
     shorten_path = true,
-    search = vim.fn.input("Grep String > "),
+    search = vim.fn.input "Grep String > ",
   }
 end
 
 function M.grep_last_search()
-  local register = vim.fn.getreg('/'):gsub('\\<', ''):gsub('\\>', ''):gsub(
-    "\\C", ""
-  )
+  local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
   local opts = { shorten_path = true, word_match = "-w", search = register }
   require("telescope.builtin").grep_string(opts)
 end
@@ -91,23 +89,23 @@ function M.current_buffer_fuzzy_find()
   require("telescope.builtin").current_buffer_fuzzy_find(opts)
 end
 
-function M.oldfiles() require("telescope").extensions.frecency.frecency() end
+function M.oldfiles()
+  require("telescope").extensions.frecency.frecency()
+end
 
 function M.help_tags()
   require("telescope.builtin").help_tags { show_version = true }
 end
 
-M.pickers = setmetatable(
-  {}, {
-    __index = function(_, k)
-      if M[k] then
-        return M[k]
-      else
-        return require("telescope.builtin")[k]
-      end
-    end,
-  }
-)
+M.pickers = setmetatable({}, {
+  __index = function(_, k)
+    if M[k] then
+      return M[k]
+    else
+      return require("telescope.builtin")[k]
+    end
+  end,
+})
 
 -- setup: called befor loading telescope.nvim
 function M.setup()
@@ -124,8 +122,8 @@ function M.setup()
     "img",
     -- "fonts",
   }
-  local find_cmd, find_all_cmd;
-  if vim.fn.executable("fd") then
+  local find_cmd, find_all_cmd
+  if vim.fn.executable "fd" then
     find_cmd = { "fd", ".", "--hidden", "--follow", "--type", "f" }
     find_all_cmd = vim.deepcopy(find_cmd)
     table.insert(find_all_cmd, "--no-ignore")
@@ -133,7 +131,7 @@ function M.setup()
       table.insert(find_cmd, "--exclude")
       table.insert(find_cmd, x)
     end
-  elseif vim.fn.executable("rg") then
+  elseif vim.fn.executable "rg" then
     find_cmd = { "rg", "--follow", "--hidden", "--files" }
     find_all_cmd = vim.deepcopy(find_cmd)
     table.insert(find_all_cmd, "--no-ignore")
@@ -148,10 +146,10 @@ end
 
 -- config: called after telescope.nvim is loaded
 function M.config()
-  local telescope = require("telescope")
-  local actions = require("telescope.actions")
-  local previewers = require("telescope.previewers")
-  local sorters = require("telescope.sorters")
+  local telescope = require "telescope"
+  local actions = require "telescope.actions"
+  local previewers = require "telescope.previewers"
+  local sorters = require "telescope.sorters"
 
   telescope.setup {
     defaults = {
@@ -240,8 +238,9 @@ function M.config()
   local set_keymap = function(key, f, options, buffer)
     local mode = "n"
     local rhs = string.format(
-      "<cmd>lua require('plugins.config.telescope').pickers['%s'](%s)<CR>", f,
-      options and vim.inspect(options, { newline = '' }) or ''
+      "<cmd>lua require('plugins.config.telescope').pickers['%s'](%s)<CR>",
+      f,
+      options and vim.inspect(options, { newline = "" }) or ""
     )
     local map_opts = { noremap = true, silent = true }
     if buffer then
@@ -254,18 +253,17 @@ function M.config()
   local map_extension = function(key, e, f, options)
     local mode = "n"
     local rhs = string.format(
-      "<cmd>lua require('telescope').extensions['%s']['%s'](%s)<CR>", e, f,
-      options and vim.inspect(options, { newline = '' }) or ''
+      "<cmd>lua require('telescope').extensions['%s']['%s'](%s)<CR>",
+      e,
+      f,
+      options and vim.inspect(options, { newline = "" }) or ""
     )
     local opts = { noremap = true, silent = true }
     vim.api.nvim_set_keymap(mode, key, rhs, opts)
   end
 
   -- Call telescope on command line mode
-  vim.api.nvim_set_keymap(
-    "c", "<C-r><C-r>", "<Plug>(TelescopeFuzzyCommandSearch)",
-    { noremap = true, nowait = true }
-  )
+  vim.api.nvim_set_keymap("c", "<C-r><C-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { noremap = true, nowait = true })
 
   -- File pickers
   set_keymap("<Space>en", "edit_nvim_config")

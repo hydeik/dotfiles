@@ -1,5 +1,5 @@
 --- ~/.config/nvim/core/init.lua
-local globals = require("core.globals")
+local globals = require "core.globals"
 local opt = vim.opt
 
 --- Ensure cache and data directories exist
@@ -17,11 +17,10 @@ local function set_encodings()
   -- Set default text encoding
   opt.encoding = "utf-8"
   -- List of character encodings considered when starting to edit an existing file
-  opt.fileencodings =
-    "ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le,cp1250"
+  opt.fileencodings = "ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le,cp1250"
 
   -- IME setting
-  if vim.fn.has("multi_byte_ime") then
+  if vim.fn.has "multi_byte_ime" then
     opt.iminsert = 0
     opt.imsearch = 0
   end
@@ -111,4 +110,3 @@ set_encodings()
 enable_truecolor()
 set_providers()
 set_prefix_keys()
-

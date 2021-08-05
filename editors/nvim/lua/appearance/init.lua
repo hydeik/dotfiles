@@ -13,7 +13,8 @@
 -- require("appearance.statusline").setup("sonokai")
 vim.cmd [[packadd tokyonight.nvim]]
 vim.g.tokyonight_style = "night"
-if vim.fn.exists("g:GuiLoaded") == 0 and vim.fn.has("gui") == 0 and
-  vim.fn.exists("$SSH_CONNECTION") == 0 then vim.g.tokyonight_transparent = true end
+if vim.fn.exists "g:GuiLoaded" == 0 and vim.fn.has "gui" == 0 and vim.fn.exists "$SSH_CONNECTION" == 0 then
+  vim.g.tokyonight_transparent = true
+end
 vim.cmd [[colorscheme tokyonight]]
-require("appearance.statusline").setup("tokyonight")
+require("appearance.statusline").setup "tokyonight"

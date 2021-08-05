@@ -1,5 +1,5 @@
 local M = {}
-local indent = require('snippets.utils').match_indentation
+local indent = require("snippets.utils").match_indentation
 
 function M.get_snippets()
   return {

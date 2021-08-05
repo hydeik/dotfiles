@@ -10,13 +10,13 @@ function M.config()
     encoding = "utf-8",
   }
 
-  if vim.fn.has('mac') then
+  if vim.fn.has "mac" then
     vim.g["eskk#large_dictionary"] = {
       path = "~/Library/Application Support/AquaSKK/SKK-JISYO.L",
       sorted = 1,
       encoding = "euc-jp",
     }
-  elseif vim.fn.has('win32') or vim.fn.has('win64') then
+  elseif vim.fn.has "win32" or vim.fn.has "win64" then
     vim.g["eskk#large_dictionary"] = {
       path = "~/SKK-JISYO.L",
       sorted = 1,
@@ -43,19 +43,15 @@ function M.config()
   vim.g["eskk#start_completion_length"] = 2
 
   -- Key mappings
-  vim.api
-    .nvim_set_keymap("i", "<C-j>", "<Plug>(eskk:toggle)", { silent = true })
-  vim.api
-    .nvim_set_keymap("c", "<C-j>", "<Plug>(eskk:toggle)", { silent = true })
+  vim.api.nvim_set_keymap("i", "<C-j>", "<Plug>(eskk:toggle)", { silent = true })
+  vim.api.nvim_set_keymap("c", "<C-j>", "<Plug>(eskk:toggle)", { silent = true })
 
   -- easy escape with 'jj'
-  require'core.event'.create_augroups(
-    {
-      user_plugin_eskk = {
-        { "User", "eskk-initialize-post", "Eskk -remap jj <ESC>" },
-      },
-    }
-  )
+  require("core.event").create_augroups {
+    user_plugin_eskk = {
+      { "User", "eskk-initialize-post", "Eskk -remap jj <ESC>" },
+    },
+  }
 end
 
 return M

@@ -2,8 +2,8 @@
 local M = {
   _funcs = {},
   name = (function()
-    local file = debug.getinfo(1, 'S').source
-    return file:match('/(%a+)%.lua$')
+    local file = debug.getinfo(1, "S").source
+    return file:match "/(%a+)%.lua$"
   end)(),
 }
 
@@ -20,7 +20,7 @@ function M.create_augroups(groups)
         def = {
           def,
           function()
-            return type(def) == 'table' and vim.tbl_count(def) == 3
+            return type(def) == "table" and vim.tbl_count(def) == 3
           end,
           "each definition should contain 3 values",
         },
@@ -31,19 +31,17 @@ function M.create_augroups(groups)
         command = cmd_or_func
       else
         table.insert(M._funcs, cmd_or_func)
-        command = ([[lua require'core.%s'._funcs[%d]()]]):format(
-          M.name, #M._funcs
-        )
+        command = ([[lua require'core.%s'._funcs[%d]()]]):format(M.name, #M._funcs)
       end
-      table.insert(
-        cmds, string.format("autocmd %s %s %s", events, patterns, command)
-      )
+      table.insert(cmds, string.format("autocmd %s %s %s", events, patterns, command))
     end
 
     vim.cmd("augroup " .. name)
-    vim.cmd("autocmd!")
-    for _, command in ipairs(cmds) do vim.cmd(command) end
-    vim.cmd('augroup END')
+    vim.cmd "autocmd!"
+    for _, command in ipairs(cmds) do
+      vim.cmd(command)
+    end
+    vim.cmd "augroup END"
   end
 end
 

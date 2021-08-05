@@ -56,7 +56,8 @@ function M.config()
       let g:sandwich#recipes += [{'buns': ['（', '）']}, {'buns': ['『', '』']}]
       let g:sandwich#recipes += [{'buns': ['\(',  '\)'], 'filetype': ['vim'], 'nesting': 1}]
       let g:sandwich#recipes += [{'buns': ['\%(', '\)'], 'filetype': ['vim'], 'nesting': 1}]
-    ]=], false
+    ]=],
+    false
   )
 end
 

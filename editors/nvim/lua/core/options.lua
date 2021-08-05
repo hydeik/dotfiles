@@ -1,6 +1,6 @@
 --- ~/.config/nvim/lua/core/options.lua
 --- Set global options
-local globals = require("core.globals")
+local globals = require "core.globals"
 local opt = vim.opt
 
 --- Vim files & directories {{{
@@ -51,7 +51,7 @@ opt.virtualedit = "block"
 -- Allow backspacing over everything in insert mode
 opt.backspace = "indent,eol,start"
 -- Use system clipboard
-if globals.is_windows or vim.fn.has("clipboard") then
+if globals.is_windows or vim.fn.has "clipboard" then
   opt.clipboard = "unnamed"
 else
   opt.clipboard = "unnamedplus"
@@ -88,7 +88,7 @@ opt.splitbelow = true -- :split opens new window bottom of current window
 opt.splitright = true -- :vsplit opens new window right of the current window
 -- Move to next/prev line on certain keys
 opt.whichwrap = "b,s,h,l,<,>,[,],b,s~"
-if vim.fn.exists("+breakindent") then
+if vim.fn.exists "+breakindent" then
   opt.breakindent = true -- Every wrapped line will continue visually indented
   opt.wrap = true -- Wrap lines by default
 else
