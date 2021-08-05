@@ -1,20 +1,11 @@
-local globals = require("core.globals")
+local globals = require "core.globals"
 
 -- Icons for signcolumn and pum
 local sign_define = vim.fn.sign_define
-sign_define(
-  "LspDiagnosticsErrorSign", { text = "", texthl = "LspDiagnosticError" }
-)
-sign_define(
-  "LspDiagnosticsWarningSign", { text = "", texthl = "LspDiagnosticWarning" }
-)
-sign_define(
-  "LspDiagnosticsInformationSign",
-  { text = "", texthl = "LspDiagnosticInformtion" }
-)
-sign_define(
-  "LspDiagnosticsHintSign", { text = "", texthl = "LspDiagnosticHint" }
-)
+sign_define("LspDiagnosticsErrorSign", { text = "", texthl = "LspDiagnosticError" })
+sign_define("LspDiagnosticsWarningSign", { text = "", texthl = "LspDiagnosticWarning" })
+sign_define("LspDiagnosticsInformationSign", { text = "", texthl = "LspDiagnosticInformtion" })
+sign_define("LspDiagnosticsHintSign", { text = "", texthl = "LspDiagnosticHint" })
 
 vim.lsp.protocol.CompletionItemKind = {
   " [text]",
@@ -45,144 +36,136 @@ vim.lsp.protocol.CompletionItemKind = {
 }
 
 -- Handlers
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    virtual_text = true,
-    signs = { priority = 20 },
-    update_in_insert = false,
-  }
-)
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  underline = true,
+  virtual_text = true,
+  signs = { priority = 20 },
+  update_in_insert = false,
+})
 
-vim.lsp.handlers["textDocument/formatting"] =
-  function(err, _, result, _, bufnr)
-    if err ~= nil or result == nil then return end
-    if not vim.api.nvim_buf_get_option(bufnr, "modified") then
-      local view = vim.fn.winsaveview()
-      vim.lsp.util.apply_text_edits(result, bufnr)
-      vim.fn.winrestview(view)
-      if bufnr == vim.api.nvim_get_current_buf() then
-        vim.api.nvim_command("noautocmd :update")
-      end
+vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
+  if err ~= nil or result == nil then
+    return
+  end
+  if not vim.api.nvim_buf_get_option(bufnr, "modified") then
+    local view = vim.fn.winsaveview()
+    vim.lsp.util.apply_text_edits(result, bufnr)
+    vim.fn.winrestview(view)
+    if bufnr == vim.api.nvim_get_current_buf() then
+      vim.api.nvim_command "noautocmd :update"
     end
   end
+end
 
 -- [[ Configure LSP servers ]]
-local lspconfig = require("lspconfig")
-local lspsaga = require("lspsaga")
+local lspconfig = require "lspconfig"
+local lspsaga = require "lspsaga"
 lspsaga.init_lsp_saga()
 
 require("trouble").setup {}
 
 local custom_attach = function(client, bufnr)
-  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  local wk = require("which-key")
+  local wk = require "which-key"
 
-  wk.register(
-    {
-      ["<C-f>"] = {
-        "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>",
-        "Smart Scroll with Saga (Forward)",
-      },
-      ["<C-b>"] = {
-        "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>",
-        "Smart Scroll with Saga (Backward)",
-      },
-    }, { buffer = bufnr, nowait = true }
-  )
+  wk.register({
+    ["<C-f>"] = {
+      "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>",
+      "Smart Scroll with Saga (Forward)",
+    },
+    ["<C-b>"] = {
+      "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>",
+      "Smart Scroll with Saga (Backward)",
+    },
+  }, {
+    buffer = bufnr,
+    nowait = true,
+  })
 
-  wk.register(
-    {
-      name = "+lsp (buffer)",
-      a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
-      d = { "<cmd>Lspsaga preview_definition<CR>", "Preview Definition" },
-      e = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
-      f = { "<cmd>Lspsaga lsp_finder<CR>", "Find symbols" },
-      h = { "<cmd>Lspsaga hover_doc<CR>", "Hover Doc" },
-      R = { "<cmd>Lspsaga rename<CR>", "Rename" },
-      ["?"] = { "<cmd>Lspsaga signature_help<CR>", "Signature Help" },
-      ["["] = {
-        "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-        "Jump to Previous Diagnostic",
-      },
-      ["]"] = {
-        "<cmd>Lspsaga diagnostic_jump_next<CR>",
-        "Jump to Next Diagnostic",
-      },
-      D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
-      F = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" },
-      i = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation" },
-      t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type Definition" },
-      r = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "References" },
-      o = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Document Symbols" },
-    }, { prefix = "m", buffer = bufnr }
-  )
+  wk.register({
+    name = "+lsp (buffer)",
+    a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
+    d = { "<cmd>Lspsaga preview_definition<CR>", "Preview Definition" },
+    e = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
+    f = { "<cmd>Lspsaga lsp_finder<CR>", "Find symbols" },
+    h = { "<cmd>Lspsaga hover_doc<CR>", "Hover Doc" },
+    R = { "<cmd>Lspsaga rename<CR>", "Rename" },
+    ["?"] = { "<cmd>Lspsaga signature_help<CR>", "Signature Help" },
+    ["["] = {
+      "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+      "Jump to Previous Diagnostic",
+    },
+    ["]"] = {
+      "<cmd>Lspsaga diagnostic_jump_next<CR>",
+      "Jump to Next Diagnostic",
+    },
+    D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
+    -- F = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" },
+    i = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation" },
+    t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type Definition" },
+    r = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "References" },
+    o = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Document Symbols" },
+  }, {
+    prefix = "m",
+    buffer = bufnr,
+  })
 
-  wk.register(
-    {
-      name = "+lsp (buffer)",
-      a = { "<cmd>Lspsaga range_code_action<CR>", "Range Code Action" },
-    }, { mode = "v", prefix = "m", buffer = bufnr }
-  )
+  wk.register({
+    name = "+lsp (buffer)",
+    a = { "<cmd>Lspsaga range_code_action<CR>", "Range Code Action" },
+  }, {
+    mode = "v",
+    prefix = "m",
+    buffer = bufnr,
+  })
 
-  if client.config.flags then client.config.flags.allow_incremental_sync = true end
+  if client.config.flags then
+    client.config.flags.allow_incremental_sync = true
+  end
   -- key mappings
 
   vim.cmd [[augroup user_plugin_lspconfig]]
   vim.cmd [[autocmd! * <buffer>]]
   vim.cmd [[augroup END]]
 
-  -- This won't work with efm-langserver
-  -- if client.resolved_capabilities.document_formatting then
-  --   vim.cmd [[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
-  -- end
-  local ft_auto_format = {
-    "css",
-    "go",
-    "graphql",
-    "json",
-    "lua",
-    "python",
-    "rst",
-    "ruby",
-    "rust",
-    "scss",
-    "sh",
-    "typescript",
-    "vue",
-    "yaml",
-  }
-
-  if vim.tbl_contains(ft_auto_format, filetype) then
+  if client.resolved_capabilities.document_formatting then
+    wk.register(
+      { ["F"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" } },
+      { mode = "n", prefix = "m", buffer = bufnr }
+    )
+    -- vim.cmd [[autocmd user_plugin_lspconfig BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
     vim.cmd [[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
   end
 
   if client.resolved_capabilities.document_range_formatting then
-    wk.register(
-      {
-        ["="] = {
-          "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
-          "Range Formatting",
-        },
-      }, { mode = "n", prefix = "m", buffer = bufnr }
-    )
-    wk.register(
-      {
-        ["="] = {
-          "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
-          "Range Formatting",
-        },
-      }, { mode = "x", prefix = "m", buffer = bufnr }
-    )
+    wk.register({
+      ["="] = {
+        "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+        "Range Formatting",
+      },
+    }, {
+      mode = "n",
+      prefix = "m",
+      buffer = bufnr,
+    })
+    wk.register({
+      ["="] = {
+        "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+        "Range Formatting",
+      },
+    }, {
+      mode = "x",
+      prefix = "m",
+      buffer = bufnr,
+    })
   end
 
   if client.resolved_capabilities.goto_definition then
-    wk.register(
-      {
-        ["<C-]>"] = { "<cmd>lua vim.lsp.buf.definition()<CR>",
-                      "Goto Definition" },
-      }, { mode = "n", buffer = bufnr }
-    )
+    wk.register({
+      ["<C-]>"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
+    }, {
+      mode = "n",
+      buffer = bufnr,
+    })
   end
 
   if client.resolved_capabilities.document_highlight then
@@ -192,8 +175,7 @@ local custom_attach = function(client, bufnr)
 end
 
 local snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
-snippet_capabilities.textDocument.completion.completionItem.snippetSupport =
-  true
+snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- https://github.com/bash-lsp/bash-language-server
 lspconfig.bashls.setup { on_attach = custom_attach }
@@ -217,7 +199,7 @@ lspconfig.bashls.setup {
 }
 
 -- https://github.com/regen100/cmake-language-server
-if vim.fn.executable("cmake-language-server") == 1 then
+if vim.fn.executable "cmake-language-server" == 1 then
   lspconfig.cmake.setup { on_attach = custom_attach }
 end
 
@@ -228,47 +210,8 @@ lspconfig.cssls.setup {
   root_dir = lspconfig.util.root_pattern("package.json", ".git"),
 }
 
--- https://github.com/mattn/efm-langserver
-lspconfig.efm.setup {
-  on_attach = custom_attach,
-  root_dir = function(fname)
-    return lspconfig.util.find_git_ancestor(fname) or
-             lspconfig.util.path.dirname(fname)
-  end,
-  filetypes = {
-    "asciidoc",
-    "css",
-    "csv",
-    "dockerfile",
-    "html",
-    "json",
-    "make",
-    "markdown",
-    "rst",
-    "yaml",
-    "blade",
-    "elixir",
-    "javascript",
-    "lua",
-    "python",
-    "php",
-    "ruby",
-    "scss",
-    "sh",
-    "typescript",
-    "vim",
-  },
-  init_options = {
-    documentFormatting = true,
-    -- hover = true,
-    -- documentSymbol = true,
-    codeAction = true,
-    completion = true,
-  },
-}
-
 -- https://github.com/hansec/fortran-language-server
-if vim.fn.executable("fortran-language-server") == 1 then
+if vim.fn.executable "fortran-language-server" == 1 then
   lspconfig.fortls.setup { on_attach = custom_attach }
 end
 
@@ -295,7 +238,7 @@ lspconfig.pyright.setup {
 -- https://github.com/rust-analyzer/rust-analyzer
 -- https://github.com/simrat39/rust-tools.nvim
 
-require'rust-tools'.setup {
+require("rust-tools").setup {
   server = { on_attach = custom_attach, capabilities = snippet_capabilities },
 }
 
@@ -313,28 +256,24 @@ if globals.is_mac then
   system_name = "macOS"
 elseif globals.is_linux then
   system_name = "Linux"
-elseif globals.is_windows then
+elseif globals.is_iindows then
   system_name = "Windows"
 else
-  print("Unsupported system for sumneko")
+  print "Unsupported system for sumneko"
 end
-local sumneko_root_path = vim.fn.expand(
-  '$HOME/src/github.com/sumneko/lua-language-server'
-)
-local sumneko_binary = string.format(
-  "%s/bin/%s/lua-language-server", sumneko_root_path, system_name
-)
+local sumneko_root_path = vim.fn.expand "$HOME/src/github.com/sumneko/lua-language-server"
+local sumneko_binary = string.format("%s/bin/%s/lua-language-server", sumneko_root_path, system_name)
 lspconfig.sumneko_lua.setup {
   cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
   on_attach = custom_attach,
   settings = {
     Lua = {
-      diagnostics = { globals = { 'vim', "packer_plugins" } },
-      runtime = { version = 'LuaJIT', path = vim.split(package.path, ";") },
+      diagnostics = { globals = { "vim", "packer_plugins" } },
+      runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
       workspace = {
         library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
         },
       },
     },
@@ -346,3 +285,25 @@ lspconfig.vimls.setup { on_attach = custom_attach }
 
 -- https://github.com/redhat-developer/yaml-language-server
 lspconfig.yamlls.setup { on_attach = custom_attach }
+
+-- Using null-ls for formatting buffers
+-- https://github.com/jose-elias-alvarez/null-ls.nvim
+local null_ls = require "null-ls"
+local b = null_ls.builtins
+local sources = {
+  b.formatting.black,
+  b.formatting.cmake_format,
+  b.formatting.prettier.with {
+    filetypes = { "html", "json", "yaml", "markdown" },
+  },
+  b.formatting.shfmt.with {
+    args = { "-ln", "bash", "-i", "2", "-bn", "-ci", "-sr", "-kp" },
+  },
+  b.formatting.stylua,
+  b.diagnostics.shellcheck,
+  b.code_actions.gitsigns,
+}
+
+null_ls.config { sources = sources }
+
+lspconfig["null-ls"].setup { on_attach = custom_attach }

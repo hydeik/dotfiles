@@ -505,8 +505,11 @@ function M.load_plugins(use, _)
       -- {"nvim-lua/lsp-status.nvim", opt = true},
       { "glepnir/lspsaga.nvim", opt = true },
       {
-        "folke/trouble.nvim",
-        requires = { "kyazdani42/nvim-web-devicons", opt = true },
+        "jose-elias-alvarez/null-ls.nvim",
+        requires = {
+          { "nvim-lua/plenary.nvim" },
+          { "nvim-lua/popup.nvim", opt = true },
+        },
         opt = true,
       },
       {
@@ -517,13 +520,19 @@ function M.load_plugins(use, _)
         },
         opt = true,
       },
+      {
+        "folke/trouble.nvim",
+        requires = { "kyazdani42/nvim-web-devicons", opt = true },
+        opt = true,
+      },
       { "folke/which-key.nvim" },
     },
     config = function()
       -- vim.cmd [[packadd lsp-status.nvim]]
       vim.cmd [[packadd lspsaga.nvim]]
-      vim.cmd [[packadd trouble.nvim]]
+      vim.cmd [[packadd null-ls.nvim]]
       vim.cmd [[packadd rust-tools.nvim]]
+      vim.cmd [[packadd trouble.nvim]]
       require("plugins.config.lspconfig")
     end,
   }
