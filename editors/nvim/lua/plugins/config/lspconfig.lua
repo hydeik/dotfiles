@@ -174,8 +174,22 @@ local custom_attach = function(client, bufnr)
   end
 end
 
-local snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
-snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
+local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+updated_capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
+updated_capabilities.textDocument.completion.completionItem.preselectSupport = true
+updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+updated_capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+updated_capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+updated_capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+updated_capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    "documentation",
+    "detail",
+    "additionalTextEdits",
+  },
+}
 
 -- https://github.com/bash-lsp/bash-language-server
 lspconfig.bashls.setup { on_attach = custom_attach }
@@ -219,7 +233,7 @@ end
 lspconfig.gopls.setup {
   on_attach = custom_attach,
   cmd = { "gopls", "--remote=auto" },
-  capabilities = snippet_capabilities,
+  capabilities = updated_capabilities,
   init_options = { usePlaceholders = true, completeUnimported = true },
 }
 
@@ -239,7 +253,7 @@ lspconfig.pyright.setup {
 -- https://github.com/simrat39/rust-tools.nvim
 
 require("rust-tools").setup {
-  server = { on_attach = custom_attach, capabilities = snippet_capabilities },
+  server = { on_attach = custom_attach, capabilities = updated_capabilities },
 }
 
 -- lspconfig.rust_analyzer.setup {

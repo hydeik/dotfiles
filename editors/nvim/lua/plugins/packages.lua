@@ -563,6 +563,63 @@ function M.load_plugins(use, _)
     },
     event = { "InsertEnter *" },
     config = require("plugins.config.completion").config,
+    disable = true,
+  }
+
+  --   use {
+  --     "hrsh7th/vim-vsnip",
+  --     setup = function()
+  --       vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/snippets"
+  --     end,
+  --   }
+
+  use {
+    "L3MON4D3/LuaSnip",
+    event = { "InsertCharPre *" },
+    config = function()
+      require("plugins.config.luasnip").config()
+    end,
+  }
+
+  use {
+    "hrsh7th/nvim-cmp",
+    event = { "InsertEnter *" },
+    requires = {
+      { "L3MON4D3/LuaSnip" },
+      { "hrsh7th/cmp-nvim-lsp", opt = true },
+      { "hrsh7th/cmp-buffer", opt = true },
+      { "hrsh7th/cmp-calc", opt = true },
+      { "hrsh7th/cmp-emoji", opt = true },
+      { "hrsh7th/cmp-path", opt = true },
+      { "octaltree/cmp-look", opt = true },
+      { "saadparwaiz1/cmp_luasnip", requires = "L3MON4D3/LuaSnip", opt = true },
+    },
+    config = function()
+      vim.cmd [[packadd cmp-nvim-lsp]]
+      vim.cmd [[packadd cmp-buffer]]
+      vim.cmd [[packadd cmp-calc]]
+      vim.cmd [[packadd cmp-emoji]]
+      vim.cmd [[packadd cmp-path]]
+      vim.cmd [[packadd cmp-luasnip]]
+      local cmp = require "cmp"
+      -- cmp.register_source("look", require('cmp_look').new())
+      cmp.setup {
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        sources = {
+          { name = "nvim_lsp" },
+          { name = "buffer" },
+          { name = "calc" },
+          { name = "emoji" },
+          { name = "path" },
+          { name = "luasnip" },
+        },
+      }
+      require("cmp_nvim_lsp").setup {}
+    end,
   }
 
   -- [[ Fuzzy finder ]]
