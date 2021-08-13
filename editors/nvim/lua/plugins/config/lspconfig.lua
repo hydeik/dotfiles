@@ -132,8 +132,8 @@ local custom_attach = function(client, bufnr)
       { ["F"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" } },
       { mode = "n", prefix = "m", buffer = bufnr }
     )
-    -- vim.cmd [[autocmd user_plugin_lspconfig BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
-    vim.cmd [[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
+    vim.cmd [[autocmd user_plugin_lspconfig BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
+    -- vim.cmd [[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
   end
 
   if client.resolved_capabilities.document_range_formatting then
