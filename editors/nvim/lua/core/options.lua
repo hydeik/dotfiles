@@ -101,7 +101,7 @@ opt.switchbuf = "useopen,usetab,vsplit"
 -- Keywork completion
 opt.showfulltag = true -- Show tag and tidy search in completion
 opt.complete = "." -- No wins, buffs, tags, include scanning
-opt.completeopt = "menuone,noselect"
+-- opt.completeopt = "menuone,noselect"
 
 -- Diff mode
 opt.diffopt = "filler,iwhite,internal,algorithm:histogram,indent-heuristic"
