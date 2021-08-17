@@ -41,7 +41,8 @@ nnoremap { "ZQ", "<Nop>" }
 nnoremap { "M", "m" }
 
 -- Y: yank text from cursor position to the EOL
-nnoremap { "Y", "y$" }
+-- -> Now this mapping is default. (https://github.com/neovim/neovim/pull/13268)
+-- nnoremap { "Y", "y$" }
 
 -- Emacs-like cursor move in insert/command mode
 -- NOTE: <C-f> and <C-b> are mapped in lua/conf/vim-vsnip.lua
