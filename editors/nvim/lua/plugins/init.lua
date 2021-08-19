@@ -9,7 +9,19 @@ function Packer:load_packer()
   if not packer then
     vim.cmd [[packadd packer.nvim]]
     packer = require "packer"
-    packer.init { disable_commands = true, max_jobs = 50 }
+    packer.init {
+      disable_commands = true,
+      max_jobs = 50,
+      display = {
+        open_fn = function()
+          return require("packer.util").float { border = "single" }
+        end,
+      },
+      -- prifile = {
+      --   enable = true,
+      --   threshold = 1,
+      -- },
+    }
   end
   packer.reset()
 
