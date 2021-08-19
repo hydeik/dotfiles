@@ -6,8 +6,10 @@ function M.config()
     "buffer",
     "calc",
     "emoji",
+    "nvim_lua",
     "path",
     "vsnip",
+    "latex_symbols",
   } do
     require("cmp").register_source(name, require("cmp_" .. name).new())
   end
@@ -65,15 +67,17 @@ function M.config()
       },
     },
     formatting = {
-      format=cmp_formatting,
+      format = cmp_formatting,
     },
     sources = {
       { name = "nvim_lsp" },
       { name = "buffer" },
       { name = "calc" },
+      { name = "nvim_lua" },
       { name = "emoji" },
       { name = "path" },
       { name = "vsnip" },
+      { name = "latex_symbols" },
     },
   }
 end

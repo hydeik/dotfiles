@@ -595,16 +595,20 @@ function M.load_plugins(use, _)
       { "hrsh7th/cmp-buffer", opt = true },
       { "hrsh7th/cmp-calc", opt = true },
       { "hrsh7th/cmp-emoji", opt = true },
+      { "hrsh7th/cmp-nvim-lua", opt = true },
       { "hrsh7th/cmp-path", opt = true },
       { "hrsh7th/cmp-vsnip", opt = true },
+      { "kdheepak/cmp-latex-symbols", opt = true },
     },
     config = function()
       vim.cmd[[packadd cmp-nvim-lsp]]
       vim.cmd[[packadd cmp-buffer]]
       vim.cmd[[packadd cmp-calc]]
       vim.cmd[[packadd cmp-emoji]]
+      vim.cmd[[packadd cmp-nvim-lua]]
       vim.cmd[[packadd cmp-path]]
       vim.cmd[[packadd cmp-vsnip]]
+      vim.cmd[[packadd cmp-latex-symbols]]
       require("plugins.config.nvim-cmp").config()
     end,
   }
