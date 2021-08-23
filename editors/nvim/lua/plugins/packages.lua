@@ -361,7 +361,26 @@ function M.load_plugins(use, _)
       { "p00f/nvim-ts-rainbow", opt = true },
       { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
     },
-    config = require("plugins.config.treesitter").config,
+    config = function()
+      vim.cmd [[packadd nvim-treesitter-refactor]]
+      vim.cmd [[packadd nvim-treesitter-textobjects]]
+      vim.cmd [[packadd nvim-ts-rainbow]]
+      vim.cmd [[packadd nvim-ts-context-commentstring]]
+      vim.cmd [[packadd treesitter-unit]]
+      require("plugins.config.treesitter").config()
+    end,
+  }
+
+  -- A Neovim plugin to deal with treesitter unit
+  use {
+    "David-Kunz/treesitter-unit",
+    requires = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      vim.keymap.xnoremap { "iu", ":lua require('treesitter-unit').select()<CR>", silent = true }
+      vim.keymap.xnoremap { "au", ":lua require('treesitter-unit').select(true)<CR>", silent = true }
+      vim.keymap.onoremap { "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", silent = true }
+      vim.keymap.onoremap { "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", silent = true }
+    end,
   }
 
   -- Vim help in japanese
@@ -601,14 +620,14 @@ function M.load_plugins(use, _)
       { "kdheepak/cmp-latex-symbols", opt = true },
     },
     config = function()
-      vim.cmd[[packadd cmp-nvim-lsp]]
-      vim.cmd[[packadd cmp-buffer]]
-      vim.cmd[[packadd cmp-calc]]
-      vim.cmd[[packadd cmp-emoji]]
-      vim.cmd[[packadd cmp-nvim-lua]]
-      vim.cmd[[packadd cmp-path]]
-      vim.cmd[[packadd cmp-vsnip]]
-      vim.cmd[[packadd cmp-latex-symbols]]
+      vim.cmd [[packadd cmp-nvim-lsp]]
+      vim.cmd [[packadd cmp-buffer]]
+      vim.cmd [[packadd cmp-calc]]
+      vim.cmd [[packadd cmp-emoji]]
+      vim.cmd [[packadd cmp-nvim-lua]]
+      vim.cmd [[packadd cmp-path]]
+      vim.cmd [[packadd cmp-vsnip]]
+      vim.cmd [[packadd cmp-latex-symbols]]
       require("plugins.config.nvim-cmp").config()
     end,
   }

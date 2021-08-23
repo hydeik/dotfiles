@@ -1,11 +1,6 @@
 local M = {}
 
 function M.config()
-  vim.cmd [[packadd nvim-treesitter-refactor]]
-  vim.cmd [[packadd nvim-treesitter-textobjects]]
-  vim.cmd [[packadd nvim-ts-rainbow]]
-  vim.cmd [[packadd nvim-ts-context-commentstring]]
-
   require("nvim-treesitter.configs").setup {
     -- one of 'all', 'language', or a list of languages
     ensure_installed = "all",

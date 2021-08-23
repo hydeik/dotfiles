@@ -189,6 +189,7 @@ function M.config()
       S = { "a statement block (treesitter)" },
       d = { "a comment block (treesitter)" },
       m = { "a call block(treesitter)" },
+      u = { "a unit (treesitter)" },
       ["%"] = { "a block match-up" },
     },
     i = {
@@ -202,6 +203,7 @@ function M.config()
       S = { "inner statement (treesitter)" },
       d = { "inner comment (treesitter)" },
       m = { "inner call (treesitter)" },
+      m = { "inner unit (treesitter)" },
       ["%"] = { "inner match-up" },
     },
   }
