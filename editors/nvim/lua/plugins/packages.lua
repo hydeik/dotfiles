@@ -49,7 +49,7 @@ function M.load_plugins(use, _)
     event = "VimEnter",
     config = function()
       require("bufferline").setup {
-        options = { mappings = true, always_show_bufferline = true },
+        options = { always_show_bufferline = true },
       }
     end,
   }
