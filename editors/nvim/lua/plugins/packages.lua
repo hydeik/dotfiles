@@ -20,11 +20,16 @@ function M.load_plugins(use, _)
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
   use {
     "antoinemadec/FixCursorHold.nvim",
-    config = [[vim.g.cursorhold_updatetime = 100]],
+    config = function()
+      vim.g.cursorhold_updatetime = 100
+    end,
   }
 
   -- tmux integration for nvim features pane movement and resizing from within nvim.
-  use { "aserowy/tmux.nvim", config = require("plugins.config.tmux").config }
+  use {
+    "aserowy/tmux.nvim",
+    config = [[require("plugins.config.tmux").config()]],
+  }
 
   -- [[ UI ]]
   -- Colorschemes
@@ -58,15 +63,15 @@ function M.load_plugins(use, _)
   use {
     "ntpeters/vim-better-whitespace",
     event = { "BufNewFile *", "BufRead *" },
-    setup = require("plugins.config.vim-better-whitespace").setup,
+    setup = [[require("plugins.config.vim-better-whitespace").setup()]],
   }
 
   -- A file explorer tree for neovim written in lua
   use {
     "kyazdani42/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
-    setup = require("plugins.config.nvim-tree").setup,
-    config = require("plugins.config.nvim-tree").config,
+    setup = [[require("plugins.config.nvim-tree").setup()]],
+    config = [[require("plugins.config.nvim-tree").config()]],
   }
 
   -- [[ Editor ]]
@@ -83,22 +88,20 @@ function M.load_plugins(use, _)
   use {
     "kevinhwang91/nvim-hlslens",
     config = function()
-      local nnoremap = vim.keymap.nnoremap
-
-      nnoremap {
+      vim.keymap.nnoremap {
         "n",
         "<cmd>execute('normal! ' . v:count1 . 'n')<CR><cmd>lua require'hlslens'.start()<CR>",
         silent = true,
       }
-      nnoremap {
+      vim.keymap.nnoremap {
         "N",
         "<cmd>execute('normal! ' . v:count1 . 'N')<CR><cmd>lua require'hlslens'.start()<CR>",
         silent = true,
       }
-      nnoremap { "*", "*<cmd>lua require'hlslens'.start()<CR>", silent = true }
-      nnoremap { "#", "#<cmd>lua require'hlslens'.start()<CR>", silent = true }
-      nnoremap { "g*", "g*<cmd>lua require'hlslens'.start()<CR>", silent = true }
-      nnoremap { "g#", "g#<cmd>lua require'hlslens'.start()<CR>", silent = true }
+      vim.keymap.nnoremap { "*", "*<cmd>lua require'hlslens'.start()<CR>", silent = true }
+      vim.keymap.nnoremap { "#", "#<cmd>lua require'hlslens'.start()<CR>", silent = true }
+      vim.keymap.nnoremap { "g*", "g*<cmd>lua require'hlslens'.start()<CR>", silent = true }
+      vim.keymap.nnoremap { "g#", "g#<cmd>lua require'hlslens'.start()<CR>", silent = true }
     end,
   }
 
@@ -132,7 +135,7 @@ function M.load_plugins(use, _)
   -- Neovim motions on speed!
   use {
     "phaazon/hop.nvim",
-    opt = false,
+    module = { "hop" },
     setup = function()
       vim.keymap.nnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
       vim.keymap.xnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
@@ -208,7 +211,7 @@ function M.load_plugins(use, _)
   -- Show keybindings in popup
   use {
     "folke/which-key.nvim",
-    config = require("plugins.config.which-key").config,
+    config = [[require("plugins.config.which-key").config()]],
   }
 
   -- A high-performance color highlighter for NeoVim
@@ -254,8 +257,8 @@ function M.load_plugins(use, _)
       { "o", "<Plug>(textobj-sandwich-" },
       { "x", "<Plug>(textobj-sandwich-" },
     },
-    setup = require("plugins.config.sandwich").setup,
-    config = require("plugins.config.sandwich").config,
+    setup = [[require("plugins.config.sandwich").setup()]],
+    config = [[require("plugins.config.sandwich").config()]],
   }
 
   -- Smart align
@@ -273,7 +276,7 @@ function M.load_plugins(use, _)
   }
 
   -- Better quickfix windowin Neovim, polish old quickfix window
-  use { "kevinhwang91/nvim-bqf", branch = "main" }
+  use { "kevinhwang91/nvim-bqf", branch = "main", ft = { "qf" } }
 
   -- Perform the replacement in quickfix
   use {
@@ -316,7 +319,7 @@ function M.load_plugins(use, _)
     "lewis6991/gitsigns.nvim",
     branch = "main",
     requires = { "nvim-lua/plenary.nvim" },
-    config = require("plugins.config.gitsigns").config,
+    config = [[require("plugins.config.gitsigns").config()]],
   }
 
   -- Reveal the commit messages under the cursor
@@ -334,18 +337,14 @@ function M.load_plugins(use, _)
   use {
     "rhysd/committia.vim",
     event = { "BufEnter COMMIT_EDITMSG" },
-    setup = function()
-      vim.g.committia_min_window_width = 100
-    end,
+    setup = [[vim.g.committia_min_window_width = 100]],
   }
 
   -- Git blame plugin for Neovim written in lua
   use {
     "f-person/git-blame.nvim",
     event = { "BufRead *", "BufNewFile *" },
-    setup = function()
-      vim.g.gitblame_enabled = 0
-    end,
+    setup = [[vim.g.gitblame_enabled = 0]],
   }
 
   -- [[ Filetypes, Syntax ]]
@@ -407,7 +406,6 @@ function M.load_plugins(use, _)
   use { "tjdevries/manillua.nvim" }
 
   -- Markdown
-  use { "rcmdnk/vim-markdown" }
   use { "rhysd/vim-gfm-syntax", ft = { "markdown" } }
   use {
     "mattn/vim-maketable",
@@ -443,7 +441,7 @@ function M.load_plugins(use, _)
   -- Visually displaying indent levels in code
   use {
     "glepnir/indent-guides.nvim",
-    config = require("plugins.config.indent_guides").config,
+    config = [[require("plugins.config.indent_guides").config()]],
   }
 
   -- Comment plugin
@@ -493,17 +491,14 @@ function M.load_plugins(use, _)
       "php",
       "javascript",
       "typescript",
-      "coffee",
       "lua",
       "java",
       "groovy",
       "ruby",
-      "scalar",
-      "kotlin",
-      "r",
-      "c",
       "cpp",
-      "sh",
+      "c",
+      "bash",
+      "rust",
     },
     -- setup = "require'conf.vim-doge'.setup()"
     setup = function()
@@ -560,51 +555,36 @@ function M.load_plugins(use, _)
   -- Debug Adapter Protocol client implementation for Neovim
   use {
     "mfussenegger/nvim-dap",
-    ft = { "c", "cpp", "python", "rust" },
+    module = { "dap" },
     requires = {
       { "mfussenegger/nvim-dap-python", opt = true },
       { "theHamsta/nvim-dap-virtual-text", opt = true },
     },
-    config = require("plugins.config.dap").config,
+    setup = [[require("plugins.config.dap").setup()]],
+    config = [[require("plugins.config.dap").config()]],
   }
 
   -- [[ Auto completions ]]
-  use {
-    "hrsh7th/nvim-compe",
-    requires = {
-      {
-        "hrsh7th/vim-vsnip",
-        event = { "InsertCharPre *" },
-        setup = function()
-          vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/snippets"
-        end,
-      },
-    },
-    event = { "InsertEnter *" },
-    config = require("plugins.config.completion").config,
-    disable = true,
-  }
-
-  use {
-    "hrsh7th/vim-vsnip",
-    event = "InsertEnter *",
-    requires = {
-      "rafamadriz/friendly-snippets",
-    },
-    setup = function()
-      require("plugins.config.vim-vsnip").setup()
-    end,
-    config = function()
-      require("plugins.config.vim-vsnip").config()
-    end,
-  }
-
   -- use {
-  --   "L3MON4D3/LuaSnip",
+  --   "hrsh7th/vim-vsnip",
+  --   event = "InsertEnter *",
+  --   requires = {
+  --     "rafamadriz/friendly-snippets",
+  --   },
+  --   setup = function()
+  --     require("plugins.config.vim-vsnip").setup()
+  --   end,
   --   config = function()
-  --     require("plugins.config.luasnip").config()
+  --     require("plugins.config.vim-vsnip").config()
   --   end,
   -- }
+
+  use {
+    "L3MON4D3/LuaSnip",
+    module = { "luasnip" },
+    requires = { "rafamadriz/friendly-snippets" },
+    config = [[require("plugins.config.luasnip").config()]],
+  }
 
   use {
     "hrsh7th/nvim-cmp",
@@ -616,8 +596,9 @@ function M.load_plugins(use, _)
       { "hrsh7th/cmp-emoji", opt = true },
       { "hrsh7th/cmp-nvim-lua", opt = true },
       { "hrsh7th/cmp-path", opt = true },
-      { "hrsh7th/cmp-vsnip", opt = true },
+      -- { "hrsh7th/cmp-vsnip", opt = true },
       { "kdheepak/cmp-latex-symbols", opt = true },
+      { "saadparwaiz1/cmp_luasnip", opt = true },
     },
     config = function()
       vim.cmd [[packadd cmp-nvim-lsp]]
@@ -626,8 +607,9 @@ function M.load_plugins(use, _)
       vim.cmd [[packadd cmp-emoji]]
       vim.cmd [[packadd cmp-nvim-lua]]
       vim.cmd [[packadd cmp-path]]
-      vim.cmd [[packadd cmp-vsnip]]
+      -- vim.cmd [[packadd cmp-vsnip]]
       vim.cmd [[packadd cmp-latex-symbols]]
+      vim.cmd [[packadd cmp_luasnip]]
       require("plugins.config.nvim-cmp").config()
     end,
   }
@@ -653,20 +635,7 @@ function M.load_plugins(use, _)
       { "nvim-telescope/telescope-symbols.nvim", opt = true },
     },
     cmd = { "Telescope" },
-    keys = {
-      "<Space>en",
-      "<Space>ez",
-      "<Space>fb",
-      "<Space>fd",
-      "<Space>fD",
-      "<Space>fe",
-      "<Space>ff",
-      "<Space>fg",
-      "<Space>fG",
-      "<Space>fh",
-      "<Space>fo",
-      "<Space>f/",
-    },
+    module = { "telescope" },
     setup = function()
       require("plugins.config.telescope").setup()
     end,

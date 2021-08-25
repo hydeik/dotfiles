@@ -8,8 +8,9 @@ function M.config()
     "emoji",
     "nvim_lua",
     "path",
-    "vsnip",
+    -- "vsnip",
     "latex_symbols",
+    "luasnip",
   } do
     require("cmp").register_source(name, require("cmp_" .. name).new())
   end
@@ -51,7 +52,8 @@ function M.config()
   cmp.setup {
     snippet = {
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+        -- vim.fn["vsnip#anonymous"](args.body)
+        require("luasnip").lsp_expand(args.body)
       end,
     },
     mapping = {
@@ -76,8 +78,9 @@ function M.config()
       { name = "nvim_lua" },
       { name = "emoji" },
       { name = "path" },
-      { name = "vsnip" },
+      -- { name = "vsnip" },
       { name = "latex_symbols" },
+      { name = "luasnip" },
     },
   }
 end

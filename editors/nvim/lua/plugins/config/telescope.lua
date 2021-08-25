@@ -142,6 +142,79 @@ function M.setup()
 
   M._find_command = find_cmd
   M._find_all_command = find_all_cmd
+
+  -- mappings
+  local set_keymap = function(key, f, options, buffer)
+    local mode = "n"
+    local rhs = string.format(
+      "<cmd>lua require('plugins.config.telescope').pickers['%s'](%s)<CR>",
+      f,
+      options and vim.inspect(options, { newline = "" }) or ""
+    )
+    local map_opts = { noremap = true, silent = true }
+    if buffer then
+      vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_opts)
+    else
+      vim.api.nvim_set_keymap(mode, key, rhs, map_opts)
+    end
+  end
+
+  local map_extension = function(key, e, f, options)
+    local mode = "n"
+    local rhs = string.format(
+      "<cmd>lua require('telescope').extensions['%s']['%s'](%s)<CR>",
+      e,
+      f,
+      options and vim.inspect(options, { newline = "" }) or ""
+    )
+    local opts = { noremap = true, silent = true }
+    vim.api.nvim_set_keymap(mode, key, rhs, opts)
+  end
+
+  -- Call telescope on command line mode
+  vim.api.nvim_set_keymap("c", "<C-r><C-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { noremap = true, nowait = true })
+
+  -- File pickers
+  set_keymap("<Space>en", "edit_nvim_config")
+  set_keymap("<Space>ez", "edit_zsh_config")
+
+  set_keymap("<Space>fd", "fd")
+  set_keymap("<Space>fD", "fd_all")
+  set_keymap("<Space>fe", "file_browser")
+  set_keymap("<Space>fg", "live_grep")
+  set_keymap("<Space>fG", "grep_prompt")
+  set_keymap("<Space>fo", "oldfiles")
+  set_keymap("<Space>f/", "grep_last_search")
+
+  -- Vim pickers
+  set_keymap("<Space>fb", "buffers")
+  set_keymap("<Space>fh", "help_tags")
+  set_keymap("<Space>ff", "current_buffer_fuzzy_find")
+
+  -- LSP pickers
+  set_keymap("<Space>la", "lsp_code_actions")
+  set_keymap("<Space>ld", "lsp_definitions")
+  set_keymap("<Space>lr", "lsp_references")
+  set_keymap("<Space>ls", "lsp_documen_symbols")
+  set_keymap("<Space>lS", "lsp_workspace_symbols")
+  set_keymap("<Space>le", "lsp_document_diagnostics")
+  set_keymap("<Space>lE", "lsp_workspace_diagnostics")
+  -- Treesitter
+  set_keymap("<Space>lt", "treesitter")
+
+  -- Git pickers
+  set_keymap("<Space>gf", "git_files")
+  set_keymap("<Space>gb", "git_branches", { initial_mode = "normal" })
+  set_keymap("<Space>gc", "git_bcommits", { initial_mode = "normal" })
+  set_keymap("<Space>gC", "git_commits", { initial_mode = "normal" })
+  set_keymap("<Space>gs", "git_status", { initial_mode = "normal" })
+  set_keymap("<Space>gS", "git_stash", { initial_mode = "normal" })
+
+  -- nvim-dap inl_defaultctegration
+  map_extension("<Space>dc", "dap", "commands")
+  map_extension("<Space>dC", "dap", "configurations")
+  map_extension("<Space>dl", "dap", "list_breakpoints")
+  map_extension("<Space>dv", "dap", "variables;")
 end
 
 -- config: called after telescope.nvim is loaded
@@ -233,79 +306,6 @@ function M.config()
   pcall(telescope.load_extension, "fzy_native")
   pcall(telescope.load_extension, "gh")
   pcall(telescope.load_extension, "ghq")
-
-  -- mappings
-  local set_keymap = function(key, f, options, buffer)
-    local mode = "n"
-    local rhs = string.format(
-      "<cmd>lua require('plugins.config.telescope').pickers['%s'](%s)<CR>",
-      f,
-      options and vim.inspect(options, { newline = "" }) or ""
-    )
-    local map_opts = { noremap = true, silent = true }
-    if buffer then
-      vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_opts)
-    else
-      vim.api.nvim_set_keymap(mode, key, rhs, map_opts)
-    end
-  end
-
-  local map_extension = function(key, e, f, options)
-    local mode = "n"
-    local rhs = string.format(
-      "<cmd>lua require('telescope').extensions['%s']['%s'](%s)<CR>",
-      e,
-      f,
-      options and vim.inspect(options, { newline = "" }) or ""
-    )
-    local opts = { noremap = true, silent = true }
-    vim.api.nvim_set_keymap(mode, key, rhs, opts)
-  end
-
-  -- Call telescope on command line mode
-  vim.api.nvim_set_keymap("c", "<C-r><C-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { noremap = true, nowait = true })
-
-  -- File pickers
-  set_keymap("<Space>en", "edit_nvim_config")
-  set_keymap("<Space>ez", "edit_zsh_config")
-
-  set_keymap("<Space>fd", "fd")
-  set_keymap("<Space>fD", "fd_all")
-  set_keymap("<Space>fe", "file_browser")
-  set_keymap("<Space>fg", "live_grep")
-  set_keymap("<Space>fG", "grep_prompt")
-  set_keymap("<Space>fo", "oldfiles")
-  set_keymap("<Space>f/", "grep_last_search")
-
-  -- Vim pickers
-  set_keymap("<Space>fb", "buffers")
-  set_keymap("<Space>fh", "help_tags")
-  set_keymap("<Space>ff", "current_buffer_fuzzy_find")
-
-  -- LSP pickers
-  set_keymap("<Space>la", "lsp_code_actions")
-  set_keymap("<Space>ld", "lsp_definitions")
-  set_keymap("<Space>lr", "lsp_references")
-  set_keymap("<Space>ls", "lsp_documen_symbols")
-  set_keymap("<Space>lS", "lsp_workspace_symbols")
-  set_keymap("<Space>le", "lsp_document_diagnostics")
-  set_keymap("<Space>lE", "lsp_workspace_diagnostics")
-  -- Treesitter
-  set_keymap("<Space>lt", "treesitter")
-
-  -- Git pickers
-  set_keymap("<Space>gf", "git_files")
-  set_keymap("<Space>gb", "git_branches", { initial_mode = "normal" })
-  set_keymap("<Space>gc", "git_bcommits", { initial_mode = "normal" })
-  set_keymap("<Space>gC", "git_commits", { initial_mode = "normal" })
-  set_keymap("<Space>gs", "git_status", { initial_mode = "normal" })
-  set_keymap("<Space>gS", "git_stash", { initial_mode = "normal" })
-
-  -- nvim-dap inl_defaultctegration
-  map_extension("<Space>dc", "dap", "commands")
-  map_extension("<Space>dC", "dap", "configurations")
-  map_extension("<Space>dl", "dap", "list_breakpoints")
-  map_extension("<Space>dv", "dap", "variables;")
 end
 
 return M
