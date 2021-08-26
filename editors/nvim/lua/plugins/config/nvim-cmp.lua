@@ -1,6 +1,15 @@
 local M = {}
 
 function M.config()
+  vim.cmd [[packadd cmp-nvim-lsp]]
+  vim.cmd [[packadd cmp-buffer]]
+  vim.cmd [[packadd cmp-calc]]
+  vim.cmd [[packadd cmp-emoji]]
+  vim.cmd [[packadd cmp-nvim-lua]]
+  vim.cmd [[packadd cmp-path]]
+  vim.cmd [[packadd cmp-latex-symbols]]
+  vim.cmd [[packadd cmp_luasnip]]
+
   -- Register sources
   for _, name in pairs {
     "buffer",
@@ -8,7 +17,6 @@ function M.config()
     "emoji",
     "nvim_lua",
     "path",
-    -- "vsnip",
     "latex_symbols",
     "luasnip",
   } do
@@ -52,19 +60,18 @@ function M.config()
   cmp.setup {
     snippet = {
       expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body)
         require("luasnip").lsp_expand(args.body)
       end,
     },
     mapping = {
-      ["<C-p>"] = cmp.mapping.prev_item(),
-      ["<C-n>"] = cmp.mapping.next_item(),
-      ["<C-b>"] = cmp.mapping.scroll(-4),
-      ["<C-f>"] = cmp.mapping.scroll(4),
+      ["<C-p>"] = cmp.mapping.select_prev_item(),
+      ["<C-n>"] = cmp.mapping.select_next_item(),
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-Space>"] = cmp.mapping.complete(),
       ["<C-e>"] = cmp.mapping.close(),
       ["<CR>"] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
+        behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       },
     },
@@ -78,7 +85,6 @@ function M.config()
       { name = "nvim_lua" },
       { name = "emoji" },
       { name = "path" },
-      -- { name = "vsnip" },
       { name = "latex_symbols" },
       { name = "luasnip" },
     },

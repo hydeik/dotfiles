@@ -612,18 +612,7 @@ function M.load_plugins(use, _)
       { "kdheepak/cmp-latex-symbols", opt = true },
       { "saadparwaiz1/cmp_luasnip", opt = true },
     },
-    config = function()
-      vim.cmd [[packadd cmp-nvim-lsp]]
-      vim.cmd [[packadd cmp-buffer]]
-      vim.cmd [[packadd cmp-calc]]
-      vim.cmd [[packadd cmp-emoji]]
-      vim.cmd [[packadd cmp-nvim-lua]]
-      vim.cmd [[packadd cmp-path]]
-      -- vim.cmd [[packadd cmp-vsnip]]
-      vim.cmd [[packadd cmp-latex-symbols]]
-      vim.cmd [[packadd cmp_luasnip]]
-      require("plugins.config.nvim-cmp").config()
-    end,
+    config = [[require("plugins.config.nvim-cmp").config()]],
   }
 
   -- [[ Fuzzy finder ]]
@@ -648,27 +637,8 @@ function M.load_plugins(use, _)
     },
     cmd = { "Telescope" },
     module = { "telescope" },
-    setup = function()
-      require("plugins.config.telescope").setup()
-    end,
-    config = function()
-      for _, name in pairs {
-        "nvim-web-devicons",
-        "popup.nvim",
-        "sql.nvim",
-        "telescope-cheat.nvim",
-        "telescope-frecency.nvim",
-        "telescope-fzf-writer.nvim",
-        "telescope-fzy-native.nvim",
-        "telescope-ghq.nvim",
-        "telescope-github.nvim",
-        "telescope-packer.nvim",
-        "telescope-symbols.nvim",
-      } do
-        vim.cmd("packadd " .. name)
-      end
-      require("plugins.config.telescope").config()
-    end,
+    setup = [[require("plugins.config.telescope").setup()]],
+    config = [[require("plugins.config.telescope").config()]],
   }
 end
 
