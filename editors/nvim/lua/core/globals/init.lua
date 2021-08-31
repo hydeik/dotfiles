@@ -101,6 +101,7 @@ function globals:set_envs()
   }, os.getenv "MANPATH")
 end
 
+-- Some variables used in configuration files
 globals:load_variables()
 
 -- Environment variables

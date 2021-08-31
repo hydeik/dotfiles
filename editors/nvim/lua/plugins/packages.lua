@@ -6,6 +6,8 @@ function M.load_plugins(use, _)
   -- (Packer can manage itself as an optional plugin)
   use { "wbthomason/packer.nvim", opt = true }
 
+  use { "lewis6991/impatient.nvim" }
+
   -- plenary: full; complete; entire; absolute; unqualified.
   use { "nvim-lua/plenary.nvim" }
 
