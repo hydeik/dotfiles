@@ -1,5 +1,10 @@
 local globals = require "core.globals"
 
+vim.cmd [[packadd lspsaga.nvim]]
+vim.cmd [[packadd null-ls.nvim]]
+vim.cmd [[packadd rust-tools.nvim]]
+vim.cmd [[packadd trouble.nvim]]
+
 -- Icons for signcolumn and pum
 local sign_define = vim.fn.sign_define
 sign_define("LspDiagnosticsErrorSign", { text = "", texthl = "LspDiagnosticError" })

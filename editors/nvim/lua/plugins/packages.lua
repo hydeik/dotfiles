@@ -20,9 +20,7 @@ function M.load_plugins(use, _)
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
   use {
     "antoinemadec/FixCursorHold.nvim",
-    config = function()
-      vim.g.cursorhold_updatetime = 100
-    end,
+    config = [[vim.g.cursorhold_updatetime = 100]],
   }
 
   -- tmux integration for nvim features pane movement and resizing from within nvim.
@@ -360,14 +358,7 @@ function M.load_plugins(use, _)
       { "p00f/nvim-ts-rainbow", opt = true },
       { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
     },
-    config = function()
-      vim.cmd [[packadd nvim-treesitter-refactor]]
-      vim.cmd [[packadd nvim-treesitter-textobjects]]
-      vim.cmd [[packadd nvim-ts-rainbow]]
-      vim.cmd [[packadd nvim-ts-context-commentstring]]
-      vim.cmd [[packadd treesitter-unit]]
-      require("plugins.config.treesitter").config()
-    end,
+    config = [[require("plugins.config.treesitter").config()]],
   }
 
   -- A Neovim plugin to deal with treesitter unit
@@ -554,14 +545,7 @@ function M.load_plugins(use, _)
       },
       { "folke/which-key.nvim" },
     },
-    config = function()
-      -- vim.cmd [[packadd lsp-status.nvim]]
-      vim.cmd [[packadd lspsaga.nvim]]
-      vim.cmd [[packadd null-ls.nvim]]
-      vim.cmd [[packadd rust-tools.nvim]]
-      vim.cmd [[packadd trouble.nvim]]
-      require "plugins.config.lspconfig"
-    end,
+    config = [[require "plugins.config.lspconfig"]],
   }
 
   -- Debug Adapter Protocol client implementation for Neovim
