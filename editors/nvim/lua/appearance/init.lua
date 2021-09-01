@@ -11,10 +11,30 @@
 -- vim.cmd("autocmd VimEnter * ++nested colorscheme sonokai")
 -- -- Set statusline
 -- require("appearance.statusline").setup("sonokai")
-vim.cmd [[packadd tokyonight.nvim]]
-vim.g.tokyonight_style = "night"
+
+-- [[ Tokyo Night ]]
+-- vim.cmd [[packadd tokyonight.nvim]]
+-- vim.g.tokyonight_style = "night"
+-- if vim.fn.exists "g:GuiLoaded" == 0 and vim.fn.has "gui" == 0 and vim.fn.exists "$SSH_CONNECTION" == 0 then
+--   vim.g.tokyonight_transparent = true
+-- end
+-- vim.cmd [[colorscheme tokyonight]]
+-- require("appearance.statusline").setup "tokyonight"
+
+-- [[ NightFox ]]
+vim.cmd [[packadd nightfox.nvim]]
+local nightfox = require "nightfox"
+local opts = {
+  fox = "nightfox",
+  styles = {
+    comments = "italic",
+    keywords = "bold",
+  },
+}
 if vim.fn.exists "g:GuiLoaded" == 0 and vim.fn.has "gui" == 0 and vim.fn.exists "$SSH_CONNECTION" == 0 then
-  vim.g.tokyonight_transparent = true
+  opts.transparent = true
 end
-vim.cmd [[colorscheme tokyonight]]
-require("appearance.statusline").setup "tokyonight"
+nightfox.setup(opts) -- configure
+nightfox.load() -- set colorscheme
+
+require("appearance.statusline").setup "nightfox"

@@ -33,6 +33,7 @@ function M.load_plugins(use, _)
 
   -- [[ UI ]]
   -- Colorschemes
+  use { "EdenEast/nightfox.nvim", opt = true }
   use { "folke/tokyonight.nvim", opt = true }
   use { "sainnhe/edge", opt = true }
   use { "sainnhe/everforest", opt = true }
