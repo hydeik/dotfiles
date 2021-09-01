@@ -45,20 +45,20 @@ end
 
 function M.grep_prompt()
   require("telescope.builtin").grep_string {
-    shorten_path = true,
+    path_display = { "shorten" },
     search = vim.fn.input "Grep String > ",
   }
 end
 
 function M.grep_last_search()
   local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
-  local opts = { shorten_path = true, word_match = "-w", search = register }
+  local opts = { path_display = { "shorten" }, word_match = "-w", search = register }
   require("telescope.builtin").grep_string(opts)
 end
 
 function M.live_grep()
   require("telescope").extensions.fzf_writer.staged_grep {
-    shorten_path = true,
+    path_display = { "shorten" },
     previewer = false,
   }
 end
@@ -266,13 +266,10 @@ function M.config()
         flex = { horizontal = { preview_width = 0.9 } },
       },
 
-      file_sorter = sorters.get_fzy_sorter,
-
+      scroll_strategy = "cycle",
       color_devicons = true,
 
-      file_previewer = previewers.vim_buffer_cat.new,
-      grep_previewer = previewers.vim_buffer_vimgrep.new,
-      qflist_previewer = previewers.vim_buffer_qflist.new,
+      file_sorter = sorters.get_fzy_sorter,
 
       mappings = {
         -- insert mode
