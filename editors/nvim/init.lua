@@ -4,7 +4,10 @@ if not string.find(package.cpath, cpath_extra, 1, true) then
   package.cpath = package.cpath .. ";" .. cpath_extra
 end
 
-local _ = pcall(require, "impatient")
+local ok, impatient = pcall(require, "impatient")
+if ok then
+  impatient.enable_profile()
+end
 
 if vim.fn.has "vim_starting" == 1 then
   require "core.startup"
