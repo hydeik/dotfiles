@@ -17,8 +17,7 @@ opt.viewdir = globals.nvim_dir.view
 
 -- Customize shada files entries.
 -- Shada files are stored to $XDG_DATA_HOME/nvim/shada/main.shada by default
--- opt.shada = [['1000,<50,@100,s10,h]]
-opt.shada = { "'1000", "<50", "@100", "s10", "h" }
+opt.shada = { "'200", "<50", "@100", "s10", "h" }
 --- }}}
 
 --- Language {{{

@@ -1,15 +1,6 @@
 local M = {}
 
-function M.config()
-  require("tmux").setup {
-    navigation = { enable_default_keybindings = false },
-    resize = {
-      enable_default_keybindings = false,
-      resize_step_x = 2,
-      resize_step_y = 2,
-    },
-  }
-
+function M.setup()
   -- Custom keybindings
   local nnoremap = vim.keymap.nnoremap
 
@@ -61,6 +52,17 @@ function M.config()
     "<cmd>lua require('tmux').resize_right()<CR>",
     silent = true,
     nowait = true,
+  }
+end
+
+function M.config()
+  require("tmux").setup {
+    navigation = { enable_default_keybindings = false },
+    resize = {
+      enable_default_keybindings = false,
+      resize_step_x = 2,
+      resize_step_y = 2,
+    },
   }
 end
 

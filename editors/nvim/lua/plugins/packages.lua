@@ -28,6 +28,8 @@ function M.load_plugins(use, _)
   -- tmux integration for nvim features pane movement and resizing from within nvim.
   use {
     "aserowy/tmux.nvim",
+    module = { "tmux" },
+    setup = [[require("plugins.config.tmux").setup()]],
     config = [[require("plugins.config.tmux").config()]],
   }
 
@@ -320,6 +322,7 @@ function M.load_plugins(use, _)
     "lewis6991/gitsigns.nvim",
     branch = "main",
     requires = { "nvim-lua/plenary.nvim" },
+    event = { "FocusLost", "CursorHold" },
     config = [[require("plugins.config.gitsigns").config()]],
   }
 
