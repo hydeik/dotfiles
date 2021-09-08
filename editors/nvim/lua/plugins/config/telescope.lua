@@ -237,7 +237,6 @@ function M.config()
 
   local telescope = require "telescope"
   local actions = require "telescope.actions"
-  local previewers = require "telescope.previewers"
   local sorters = require "telescope.sorters"
 
   telescope.setup {
@@ -288,6 +287,10 @@ function M.config()
           ["<M-q>"] = actions.smart_add_to_qflist + actions.open_qflist,
         },
       },
+
+      cache_picker = {
+        num_pickers = 20
+      }
     },
 
     extensions = {

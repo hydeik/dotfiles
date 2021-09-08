@@ -1,17 +1,17 @@
 local globals = require "core.globals"
 
-vim.cmd [[packadd lspsaga.nvim]]
 vim.cmd [[packadd null-ls.nvim]]
 vim.cmd [[packadd rust-tools.nvim]]
 vim.cmd [[packadd trouble.nvim]]
 
--- Icons for signcolumn and pum
-local sign_define = vim.fn.sign_define
-sign_define("LspDiagnosticsErrorSign", { text = "", texthl = "LspDiagnosticError" })
-sign_define("LspDiagnosticsWarningSign", { text = "", texthl = "LspDiagnosticWarning" })
-sign_define("LspDiagnosticsInformationSign", { text = "", texthl = "LspDiagnosticInformtion" })
-sign_define("LspDiagnosticsHintSign", { text = "", texthl = "LspDiagnosticHint" })
+-- Change diagnostic symbols in the sign column (gutter)
+local signs = { Error = "", Warning = "", Info = "", Hint = "" }
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
 
+-- Completion kinds (icons for pum)
 vim.lsp.protocol.CompletionItemKind = {
   " [text]",
   "Ƒ [method]",
@@ -40,6 +40,18 @@ vim.lsp.protocol.CompletionItemKind = {
   "♛ [type]",
 }
 
+-- Borders for floating windows
+local border = {
+  { "╭", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╮", "FloatBorder" },
+  { "│", "FloatBorder" },
+  { "╯", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╰", "FloatBorder" },
+  { "│", "FloatBorder" },
+}
+
 -- Handlers
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   underline = true,
@@ -48,59 +60,39 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   update_in_insert = false,
 })
 
-vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
-  if err ~= nil or result == nil then
-    return
-  end
-  if not vim.api.nvim_buf_get_option(bufnr, "modified") then
-    local view = vim.fn.winsaveview()
-    vim.lsp.util.apply_text_edits(result, bufnr)
-    vim.fn.winrestview(view)
-    if bufnr == vim.api.nvim_get_current_buf() then
-      vim.api.nvim_command "noautocmd :update"
-    end
-  end
-end
-
 -- [[ Configure LSP servers ]]
 local lspconfig = require "lspconfig"
-local lspsaga = require "lspsaga"
-lspsaga.init_lsp_saga()
 
 require("trouble").setup {}
 
 local custom_attach = function(client, bufnr)
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+
   local wk = require "which-key"
-
-  wk.register({
-    ["<C-f>"] = {
-      "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>",
-      "Smart Scroll with Saga (Forward)",
-    },
-    ["<C-b>"] = {
-      "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>",
-      "Smart Scroll with Saga (Backward)",
-    },
-  }, {
-    buffer = bufnr,
-    nowait = true,
-  })
-
   wk.register({
     name = "+lsp (buffer)",
-    a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
-    d = { "<cmd>Lspsaga preview_definition<CR>", "Preview Definition" },
-    e = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
-    f = { "<cmd>Lspsaga lsp_finder<CR>", "Find symbols" },
-    h = { "<cmd>Lspsaga hover_doc<CR>", "Hover Doc" },
-    R = { "<cmd>Lspsaga rename<CR>", "Rename" },
-    ["?"] = { "<cmd>Lspsaga signature_help<CR>", "Signature Help" },
+    a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
+    d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
+    e = {
+      function()
+        vim.lsp.diagnostic.show_line_diagnostics { border = border }
+      end,
+      "Show Line Diagnostics",
+    },
+    h = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover Doc" },
+    R = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+    ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
     ["["] = {
-      "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+      function()
+        vim.lsp.diagnostic.goto_prev { popup_opts = { border = border } }
+      end,
       "Jump to Previous Diagnostic",
     },
     ["]"] = {
-      "<cmd>Lspsaga diagnostic_jump_next<CR>",
+      function()
+        vim.lsp.diagnostic.goto_next { popup_opts = { border = border } }
+      end,
       "Jump to Next Diagnostic",
     },
     D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
@@ -108,7 +100,7 @@ local custom_attach = function(client, bufnr)
     i = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation" },
     t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type Definition" },
     r = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "References" },
-    o = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Document Symbols" },
+    o = { "<cmd>lua vim.lsp.buf.document_symbol()<CR>", "Document Symbols" },
   }, {
     prefix = "m",
     buffer = bufnr,
@@ -116,7 +108,7 @@ local custom_attach = function(client, bufnr)
 
   wk.register({
     name = "+lsp (buffer)",
-    a = { "<cmd>Lspsaga range_code_action<CR>", "Range Code Action" },
+    a = { "<cmd>lua vim.lsp.buf.range_code_action()<CR>", "Range Code Action" },
   }, {
     mode = "v",
     prefix = "m",
@@ -137,8 +129,8 @@ local custom_attach = function(client, bufnr)
       { ["F"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" } },
       { mode = "n", prefix = "m", buffer = bufnr }
     )
-    vim.cmd [[autocmd user_plugin_lspconfig BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
-    -- vim.cmd [[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
+    -- vim.cmd [[autocmd user_plugin_lspconfig BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
+    vim.cmd [[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
   end
 
   if client.resolved_capabilities.document_range_formatting then

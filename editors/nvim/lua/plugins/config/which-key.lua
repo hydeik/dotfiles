@@ -203,7 +203,7 @@ function M.config()
       S = { "inner statement (treesitter)" },
       d = { "inner comment (treesitter)" },
       m = { "inner call (treesitter)" },
-      m = { "inner unit (treesitter)" },
+      u = { "inner unit (treesitter)" },
       ["%"] = { "inner match-up" },
     },
   }

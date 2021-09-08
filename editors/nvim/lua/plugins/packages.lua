@@ -399,7 +399,6 @@ function M.load_plugins(use, _)
   use { "tmhedberg/SimpylFold", ft = { "python" } }
 
   -- Lua
-  use { "tjdevries/nlua.nvim", ft = { "lua" } }
   use { "tjdevries/manillua.nvim" }
 
   -- Markdown
@@ -527,7 +526,7 @@ function M.load_plugins(use, _)
     event = { "BufRead *" },
     requires = {
       -- {"nvim-lua/lsp-status.nvim", opt = true},
-      { "glepnir/lspsaga.nvim", opt = true },
+      -- { "glepnir/lspsaga.nvim", opt = true },
       {
         "jose-elias-alvarez/null-ls.nvim",
         requires = {
