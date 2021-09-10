@@ -90,7 +90,8 @@ function M.load_plugins(use, _)
   -- Better glance searched information
   use {
     "kevinhwang91/nvim-hlslens",
-    config = function()
+    module = { "hlslens" },
+    setup = function()
       vim.keymap.nnoremap {
         "n",
         "<cmd>execute('normal! ' . v:count1 . 'n')<CR><cmd>lua require'hlslens'.start()<CR>",
@@ -105,6 +106,12 @@ function M.load_plugins(use, _)
       vim.keymap.nnoremap { "#", "#<cmd>lua require'hlslens'.start()<CR>", silent = true }
       vim.keymap.nnoremap { "g*", "g*<cmd>lua require'hlslens'.start()<CR>", silent = true }
       vim.keymap.nnoremap { "g#", "g#<cmd>lua require'hlslens'.start()<CR>", silent = true }
+    end,
+    config = function()
+      require("hlslens").setup {
+        auto_enable = true,
+        calm_down = true,
+      }
     end,
   }
 
@@ -330,7 +337,7 @@ function M.load_plugins(use, _)
   use {
     "rhysd/git-messenger.vim",
     cmd = { "GitMessenger" },
-    keys = { "n", "<Plug>(git-messenger" },
+    keys = { { "n", "<Plug>(git-messenger" } },
     setup = function()
       vim.g.git_messenger_no_default_mappings = true
       vim.keymap.nmap { "<Space>gm", "<Plug>(git-messenger)", silent = true }
@@ -384,9 +391,6 @@ function M.load_plugins(use, _)
 
   -- GNU As
   use { "Shirk/vim-gas" }
-
-  -- Jsonc
-  use { "neoclide/jsonc.vim" }
 
   -- Python
   use { "vim-scripts/python_match.vim" }
@@ -474,6 +478,8 @@ function M.load_plugins(use, _)
   -- A tree like view for symbols in Neovim using the Language Server Protocol.
   use {
     "simrat39/symbols-outline.nvim",
+    module = { "symbols-outline" },
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
     config = function()
       require("symbols-outline").setup {
         -- whether to highlight the currently hovered symbol disable if your
