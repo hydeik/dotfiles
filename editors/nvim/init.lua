@@ -1,9 +1,4 @@
 -- ~/.config/nvim/init.lua -- NeoVim configuration
-local cpath_extra = os.getenv "HOME" .. "/.luarocks/lib/lua/5.1/?.so"
-if not string.find(package.cpath, cpath_extra, 1, true) then
-  package.cpath = package.cpath .. ";" .. cpath_extra
-end
-
 local ok, impatient = pcall(require, "impatient")
 if ok then
   impatient.enable_profile()

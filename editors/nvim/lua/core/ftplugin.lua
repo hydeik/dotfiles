@@ -1,6 +1,17 @@
 local M = {}
 local event = require "core.event"
 
+function M.on_filetype()
+  local s = vim.cmd [[filetype]]
+  if s:find "OFF" ~= nil then
+    vim.cmd [[
+      silent! filetype plugin indent on
+      syntax enable
+      filetype detect
+    ]]
+  end
+end
+
 function M.setup()
   --- Global options for filetypes
   -- Bash

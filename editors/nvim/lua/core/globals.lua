@@ -70,7 +70,7 @@ local function configure_path(new_paths, path_var)
 end
 
 function globals:set_envs()
-  -- Set PATH/MANPATH so that Nvim GUI frontend can recognize these variables
+  -- Set PATH so that Nvim GUI frontend can recognize these variables
   vim.env.PATH = configure_path({
     "~/.poetry/bin",
     "~/.yarn/bin",
@@ -91,14 +91,14 @@ function globals:set_envs()
     "/sbin",
   }, os.getenv "PATH")
 
-  vim.env.MANPATH = configure_path({
-    "~/.local/share/man",
-    "/usr/share/man/",
-    "/usr/local/share/man/ja",
-    "/usr/local/share/man/",
-    "/Applications/Xcode.app/Contents/Developer/usr/share/man",
-    "/opt/intel/man/",
-  }, os.getenv "MANPATH")
+  -- vim.env.MANPATH = configure_path({
+  --   "~/.local/share/man",
+  --   "/usr/share/man/",
+  --   "/usr/local/share/man/ja",
+  --   "/usr/local/share/man/",
+  --   "/Applications/Xcode.app/Contents/Developer/usr/share/man",
+  --   "/opt/intel/man/",
+  -- }, os.getenv "MANPATH")
 end
 
 -- Some variables used in configuration files
