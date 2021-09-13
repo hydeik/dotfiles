@@ -43,12 +43,12 @@ function M.load_plugins(use, _)
   use { "shaunsingh/moonlight.nvim", opt = true }
   use { "shaunsingh/nord.nvim", opt = true }
 
-  -- -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
-  -- use {
-  --   "hoob3rt/lualine.nvim",
-  --   requires = { "kyazdani42/nvim-web-devicons", opt = true },
-  --   config = require('plugins.config.lualine').config,
-  -- }
+  -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
+  use {
+    "hoob3rt/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    config = [[require('plugins.config.lualine').config()]],
+  }
 
   -- A snazzy bufferline for Neovim
   use {
@@ -394,7 +394,7 @@ function M.load_plugins(use, _)
 
   -- Python
   use { "vim-scripts/python_match.vim" }
-  use { "raimon49/requirements.txt.vim" }
+  -- use { "raimon49/requirements.txt.vim" }
   use {
     "petobens/poet-v",
     ft = { "python" },

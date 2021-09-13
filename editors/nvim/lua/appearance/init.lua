@@ -37,4 +37,4 @@ end
 nightfox.setup(opts) -- configure
 nightfox.load() -- set colorscheme
 
-require("appearance.statusline").setup "nightfox"
+-- require("appearance.statusline").setup "nightfox"
