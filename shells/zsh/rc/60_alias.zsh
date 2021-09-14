@@ -107,8 +107,8 @@ function mpg321() { command mpg321 -s $* | esdcat & }
 # XDG compliancy fix for Tmux
 alias tmux="tmux -f ${XDG_CONFIG_HOME}/tmux/tmux.conf"
 
-## Vim 
-alias vim="VIMINIT='let \$MYVIMRC=\"\$XDG_CONFIG_HOME/vim/vimrc\" | source \$MYVIMRC' vim"
+## Vim
+# alias vim="VIMINIT='let \$MYVIMRC=\"\$XDG_CONFIG_HOME/vim/vimrc\" | source \$MYVIMRC' vim"
 
 # ----- End of file -----
 # vim: foldmethod=marker
