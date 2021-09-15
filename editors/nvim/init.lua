@@ -7,16 +7,13 @@ end
 if vim.fn.has "vim_starting" == 1 then
   require "core.startup"
 end
+require "core.keymap" -- introduce vim.keymap DSL
+
+-- vim.cmd [[ silent! filetype off ]]
+-- vim.cmd [[ syntax off ]]
 
 require("plugins").ensure_plugins()
-vim.cmd [[command! PackerInstall           lua require('plugins').install()]]
-vim.cmd [[command! PackerUpdate            lua require('plugins').update()]]
-vim.cmd [[command! PackerSync              lua require('plugins').sync()]]
-vim.cmd [[command! PackerClean             lua require('plugins').clean()]]
-vim.cmd [[command! -nargs=* PackerCompile  lua require('plugins').compile(<q-args>)]]
-vim.cmd [[command! PackerStatus            lua require('plugins').status()]]
-vim.cmd [[command! PackerProfile           lua require('plugins').profile_output()]]
-vim.cmd [[command! -nargs=+ -complete=customlist,v:lua.require'plugins'.loader_complete PackerLoad lua require('plugins').loader(<q-args>)]]
+require("plugins").define_commands()
 
 require "core.options"
 require "core.mappings"
@@ -24,3 +21,7 @@ require("core.ftplugin").setup()
 require("core.event").load_autocmds()
 
 require "appearance"
+
+if vim.fn.empty(vim.fn.argv()) == 0 then
+  require("core.ftplugin").on_filetype()
+end

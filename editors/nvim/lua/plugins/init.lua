@@ -40,16 +40,6 @@ function Packer:init_ensure_plugins()
     packer.install()
     packer.compile()
   end
-
-  -- Install astronauta.nvim automatically if necessary.
-  local astronauta_dir = site_packages .. "/pack/packer/start/astronauta.nvim"
-  local astronauta_repo = "https://github.com/tjdevries/packer.nvim"
-  state = vim.loop.fs_stat(astronauta_dir)
-  if not state then
-    local out = vim.fn.system { "git", "clone", astronauta_repo, astronauta_dir }
-    print(out)
-  end
-  vim.cmd [[runtime plugin/astronauta.vim]]
 end
 
 local plugins = setmetatable({}, {
@@ -68,6 +58,17 @@ function plugins.auto_compile()
   if file:match "nvim/lua/plugins/packages.lua" or file:match "nvim/lua/plugins/config/%a+.lua" then
     plugins.compile()
   end
+end
+
+function plugins.define_commands()
+  vim.cmd [[command! PackerInstall           lua require('plugins').install()]]
+  vim.cmd [[command! PackerUpdate            lua require('plugins').update()]]
+  vim.cmd [[command! PackerSync              lua require('plugins').sync()]]
+  vim.cmd [[command! PackerClean             lua require('plugins').clean()]]
+  vim.cmd [[command! -nargs=* PackerCompile  lua require('plugins').compile(<q-args>)]]
+  vim.cmd [[command! PackerStatus            lua require('plugins').status()]]
+  vim.cmd [[command! PackerProfile           lua require('plugins').profile_output()]]
+  vim.cmd [[command! -nargs=+ -complete=customlist,v:lua.require'plugins'.loader_complete PackerLoad lua require('plugins').loader(<q-args>)]]
 end
 
 return plugins

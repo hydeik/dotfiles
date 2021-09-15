@@ -91,20 +91,22 @@ function globals:set_envs()
     "/sbin",
   }, os.getenv "PATH")
 
-  -- vim.env.MANPATH = configure_path({
-  --   "~/.local/share/man",
-  --   "/usr/share/man/",
-  --   "/usr/local/share/man/ja",
-  --   "/usr/local/share/man/",
-  --   "/Applications/Xcode.app/Contents/Developer/usr/share/man",
-  --   "/opt/intel/man/",
-  -- }, os.getenv "MANPATH")
+  vim.env.MANPATH = configure_path({
+    "~/.local/share/man",
+    "/usr/share/man/",
+    "/usr/local/share/man/ja",
+    "/usr/local/share/man/",
+    "/Applications/Xcode.app/Contents/Developer/usr/share/man",
+    "/opt/intel/man/",
+  }, os.getenv "MANPATH")
 end
 
 -- Some variables used in configuration files
 globals:load_variables()
 
 -- Environment variables
-globals:set_envs()
+if vim.fn.has "gui_running" == 1 then
+  globals:set_envs()
+end
 
 return globals

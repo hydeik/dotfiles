@@ -11,13 +11,6 @@ function M.load_plugins(use, _)
   -- plenary: full; complete; entire; absolute; unqualified.
   use { "nvim-lua/plenary.nvim" }
 
-  -- You now feel at home traveling to the moon.
-  -- It provides:
-  --   1. Lua Keymap DSL (https://github.com/neovim/neovim/pull/13823)
-  --   2. Lua ftplugin (https://github.com/neovim/neovim/issues/12670)
-  --   3. Lua plugins (automatically run files [lua/plugin/*.lua] on startup)
-  use { "tjdevries/astronauta.nvim" }
-
   -- Fix CursorHold performance
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
   use {
