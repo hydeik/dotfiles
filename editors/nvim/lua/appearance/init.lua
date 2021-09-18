@@ -25,7 +25,7 @@
 vim.cmd [[packadd nightfox.nvim]]
 local nightfox = require "nightfox"
 local opts = {
-  fox = "nightfox",
+  fox = "palefox",
   styles = {
     comments = "italic",
     keywords = "bold",
