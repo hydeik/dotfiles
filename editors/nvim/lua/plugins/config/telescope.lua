@@ -219,21 +219,7 @@ end
 
 -- config: called after telescope.nvim is loaded
 function M.config()
-  for _, name in pairs {
-    "nvim-web-devicons",
-    "popup.nvim",
-    "sql.nvim",
-    "telescope-cheat.nvim",
-    "telescope-frecency.nvim",
-    "telescope-fzf-writer.nvim",
-    "telescope-fzy-native.nvim",
-    "telescope-ghq.nvim",
-    "telescope-github.nvim",
-    "telescope-packer.nvim",
-    "telescope-symbols.nvim",
-  } do
-    vim.cmd("packadd " .. name)
-  end
+  vim.cmd [[packadd telescope-frecency.nvim]]
 
   local telescope = require "telescope"
   local actions = require "telescope.actions"
@@ -289,8 +275,8 @@ function M.config()
       },
 
       cache_picker = {
-        num_pickers = 20
-      }
+        num_pickers = 20,
+      },
     },
 
     extensions = {

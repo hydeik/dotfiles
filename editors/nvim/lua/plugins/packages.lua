@@ -47,7 +47,7 @@ function M.load_plugins(use, _)
   use {
     "akinsho/nvim-bufferline.lua",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
-    event = "VimEnter",
+    event = "BufReadPre",
     config = function()
       require("bufferline").setup {
         options = { always_show_bufferline = true },
@@ -58,7 +58,7 @@ function M.load_plugins(use, _)
   -- Better whitespace highlighting
   use {
     "ntpeters/vim-better-whitespace",
-    event = { "BufNewFile *", "BufRead *" },
+    event = { "BufNewFile", "BufRead" },
     setup = [[require("plugins.config.vim-better-whitespace").setup()]],
   }
 
@@ -251,7 +251,7 @@ function M.load_plugins(use, _)
   }
   use {
     "machakann/vim-sandwich",
-    event = "CursorHold *",
+    event = "CursorHold",
     keys = {
       { "n", "<Plug>(operator-sandwich-" },
       { "o", "<Plug>(operator-sandwich-" },
@@ -274,7 +274,7 @@ function M.load_plugins(use, _)
   -- SKK input method for Japanese
   use {
     "tyru/eskk.vim",
-    event = "InsertCharPre *",
+    event = "InsertCharPre",
     config = require("plugins.config.eskk").config,
   }
 
@@ -321,8 +321,8 @@ function M.load_plugins(use, _)
   use {
     "lewis6991/gitsigns.nvim",
     branch = "main",
-    requires = { "nvim-lua/plenary.nvim" },
     event = { "FocusLost", "CursorHold" },
+    requires = { "nvim-lua/plenary.nvim" },
     config = [[require("plugins.config.gitsigns").config()]],
   }
 
@@ -347,7 +347,7 @@ function M.load_plugins(use, _)
   -- Git blame plugin for Neovim written in lua
   use {
     "f-person/git-blame.nvim",
-    event = { "BufRead *", "BufNewFile *" },
+    event = { "BufRead", "BufNewFile" },
     setup = [[vim.g.gitblame_enabled = 0]],
   }
 
@@ -381,6 +381,9 @@ function M.load_plugins(use, _)
 
   -- Vim help in japanese
   use { "vim-jp/vimdoc-ja" }
+
+  -- The luv docs in vimdoc format.
+  use { "nanotee/luv-vimdocs" }
 
   -- GNU As
   use { "Shirk/vim-gas" }
@@ -519,18 +522,17 @@ function M.load_plugins(use, _)
     end,
   }
 
-  -- Language Server Protocol (LSP)
+  -- Language Server Protocop (LSP)
   use {
     "neovim/nvim-lspconfig",
-    event = { "BufRead *" },
+    event = { "BufReadPre" },
     requires = {
-      -- {"nvim-lua/lsp-status.nvim", opt = true},
-      -- { "glepnir/lspsaga.nvim", opt = true },
+      { "folke/lua-dev.nvim" },
       {
         "jose-elias-alvarez/null-ls.nvim",
         requires = {
           { "nvim-lua/plenary.nvim" },
-          { "nvim-lua/popup.nvim", opt = true },
+          { "nvim-lua/popup.nvim" },
         },
         opt = true,
       },
@@ -538,16 +540,19 @@ function M.load_plugins(use, _)
         "simrat39/rust-tools.nvim",
         requires = {
           { "nvim-lua/plenary.nvim" },
-          { "nvim-lua/popup.nvim", opt = true },
+          { "nvim-lua/popup.nvim" },
         },
-        opt = true,
       },
-      {
-        "folke/trouble.nvim",
-        requires = { "kyazdani42/nvim-web-devicons", opt = true },
-        opt = true,
-      },
+      -- {
+      --   "folke/trouble.nvim",
+      --   requires = { "kyazdani42/nvim-web-devicons" },
+      -- },
       { "folke/which-key.nvim" },
+    },
+    wants = {
+      "lua-dev.nvim",
+      "null-ls.nvim",
+      "rust-tools.nvim",
     },
     config = [[require "plugins.config.lspconfig"]],
   }
@@ -596,7 +601,6 @@ function M.load_plugins(use, _)
       { "hrsh7th/cmp-emoji", opt = true },
       { "hrsh7th/cmp-nvim-lua", opt = true },
       { "hrsh7th/cmp-path", opt = true },
-      -- { "hrsh7th/cmp-vsnip", opt = true },
       { "kdheepak/cmp-latex-symbols", opt = true },
       { "saadparwaiz1/cmp_luasnip", opt = true },
     },
@@ -607,21 +611,21 @@ function M.load_plugins(use, _)
   use {
     "nvim-telescope/telescope.nvim",
     requires = {
-      { "nvim-lua/popup.nvim", opt = true },
-      { "nvim-lua/plenary.nvim", opt = true },
-      { "kyazdani42/nvim-web-devicons", opt = true },
-      { "nvim-telescope/telescope-cheat.nvim", opt = true },
-      { "nvim-telescope/telescope-dap.nvim", opt = true },
+      { "nvim-lua/popup.nvim" },
+      { "nvim-lua/plenary.nvim" },
+      { "kyazdani42/nvim-web-devicons" },
+      { "nvim-telescope/telescope-cheat.nvim" },
+      { "nvim-telescope/telescope-dap.nvim" },
       {
         "nvim-telescope/telescope-frecency.nvim",
-        requires = { "tami5/sql.nvim", opt = true },
+        requires = { "tami5/sqlite.lua" },
         opt = true,
       },
-      { "nvim-telescope/telescope-fzf-writer.nvim", opt = true },
-      { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
-      { "nvim-telescope/telescope-ghq.nvim", opt = true },
-      { "nvim-telescope/telescope-packer.nvim", opt = true },
-      { "nvim-telescope/telescope-symbols.nvim", opt = true },
+      { "nvim-telescope/telescope-fzf-writer.nvim" },
+      { "nvim-telescope/telescope-fzy-native.nvim" },
+      { "nvim-telescope/telescope-ghq.nvim" },
+      { "nvim-telescope/telescope-packer.nvim" },
+      { "nvim-telescope/telescope-symbols.nvim" },
     },
     cmd = { "Telescope" },
     module = { "telescope" },
