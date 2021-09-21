@@ -1,8 +1,9 @@
 local globals = require "core.globals"
 
-vim.cmd [[packadd null-ls.nvim]]
-vim.cmd [[packadd rust-tools.nvim]]
-vim.cmd [[packadd trouble.nvim]]
+-- vim.cmd [[packadd lua-dev.nvim]]
+-- vim.cmd [[packadd null-ls.nvim]]
+-- vim.cmd [[packadd rust-tools.nvim]]
+-- vim.cmd [[packadd trouble.nvim]]
 
 -- Change diagnostic symbols in the sign column (gutter)
 local signs = { Error = "", Warning = "", Info = "", Hint = "" }
@@ -63,7 +64,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 -- [[ Configure LSP servers ]]
 local lspconfig = require "lspconfig"
 
-require("trouble").setup {}
+-- require("trouble").setup {}
 
 local custom_attach = function(client, bufnr)
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
@@ -262,6 +263,7 @@ require("rust-tools").setup {
 lspconfig.solargraph.setup { on_attach = custom_attach }
 
 -- https://github.com/sumneko/lua-language-server
+-- https://github.com/folke/lua-dev.nvim
 local system_name
 if globals.is_mac then
   system_name = "macOS"
@@ -274,22 +276,26 @@ else
 end
 local sumneko_root_path = vim.fn.expand "$HOME/src/github.com/sumneko/lua-language-server"
 local sumneko_binary = string.format("%s/bin/%s/lua-language-server", sumneko_root_path, system_name)
-lspconfig.sumneko_lua.setup {
-  cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-  on_attach = custom_attach,
-  settings = {
-    Lua = {
-      diagnostics = { globals = { "vim", "packer_plugins" } },
-      runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-      workspace = {
-        library = {
-          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+
+local luadev = require("lua-dev").setup {
+  lspconfig = {
+    cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+    on_attach = custom_attach,
+    settings = {
+      Lua = {
+        diagnostics = { globals = { "vim", "packer_plugins" } },
+        runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
+        workspace = {
+          library = {
+            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+          },
         },
       },
     },
   },
 }
+lspconfig.sumneko_lua.setup(luadev)
 
 -- https://github.com/iamcco/vim-language-server
 lspconfig.vimls.setup { on_attach = custom_attach }
