@@ -9,16 +9,12 @@ if vim.fn.has "vim_starting" == 1 then
 end
 require "utils.keymap" -- introduce vim.keymap DSL
 
--- vim.cmd [[ silent! filetype off ]]
--- vim.cmd [[ syntax off ]]
-
 require("plugins").ensure_plugins()
 require("plugins").define_commands()
 
 require "event"
-require("ftplugin").setup()
+require "ftplugin_"
 require "options"
 require "mappings"
--- require("core.ftplugin").setup()
 
 require "appearance"

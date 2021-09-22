@@ -220,6 +220,7 @@ function M.load_plugins(use, _)
   -- A high-performance color highlighter for NeoVim
   use {
     "norcalli/nvim-colorizer.lua",
+    event = "BufReadPre",
     cmd = {
       "ColorizerAttachToBuffer",
       "ColorizerDetachFromBuffer",
@@ -557,6 +558,16 @@ function M.load_plugins(use, _)
     config = [[require "plugins.config.lspconfig"]],
   }
 
+  use {
+    "folke/trouble.nvim",
+    cmd = { "TroubleToggle", "Trouble" },
+    event = { "BufReadPre" },
+    requires = { "kyazdani42/nvim-web-devicons" },
+    config = function()
+      require("trouble").setup {}
+    end,
+  }
+
   -- Debug Adapter Protocol client implementation for Neovim
   use {
     "mfussenegger/nvim-dap",
@@ -625,6 +636,7 @@ function M.load_plugins(use, _)
       { "nvim-telescope/telescope-fzy-native.nvim" },
       { "nvim-telescope/telescope-ghq.nvim" },
       { "nvim-telescope/telescope-packer.nvim" },
+      { "nvim-telescope/telescope-symbols.nvim" },
       { "nvim-telescope/telescope-symbols.nvim" },
     },
     cmd = { "Telescope" },
