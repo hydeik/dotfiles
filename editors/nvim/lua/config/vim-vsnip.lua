@@ -1,8 +1,8 @@
 local M = {}
 
 function M.setup()
-  vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/snippets"
   local nvim_dir = require("core.globals").nvim_dir
+  vim.g.vsnip_snippet_dir = nvim_dir.config .. "/snippets"
   vim.g.vsnip_snippet_dirs = { nvim_dir.site_packages .. "/pack/packer/start/friendly-snippets/snippets" }
 end
 

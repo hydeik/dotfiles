@@ -1,4 +1,4 @@
-local nvim_dir = require("core.globals").nvim_dir
+local nvim_dir = require("globals").nvim_dir
 local site_packages = nvim_dir.site_packages
 local packer = nil
 

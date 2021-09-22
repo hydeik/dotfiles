@@ -1,6 +1,6 @@
 --- ~/.config/nvim/lua/core/options.lua
 --- Set global options
-local globals = require "core.globals"
+local globals = require "globals"
 local opt = vim.opt
 
 -- List of character encodings considered when starting to edit an existing file

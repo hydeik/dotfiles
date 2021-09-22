@@ -1,5 +1,5 @@
 --- ~/.config/nvim/core/init.lua
-local globals = require "core.globals"
+local globals = require "globals"
 
 --- Ensure cache and data directories exist
 local function ensure_nvim_dirs()

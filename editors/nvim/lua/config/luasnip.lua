@@ -7,10 +7,10 @@ function M.config()
     updateevents = "TextChanged,TextChangedI",
   }
 
-  local nvim_dir = require("core.globals").nvim_dir
+  local nvim_dir = require("globals").nvim_dir
   require("luasnip.loaders.from_vscode").load {
     paths = {
-      vim.fn.stdpath "config" .. "/snippets",
+      nvim_dir.config .. "/snippets",
       nvim_dir.site_packages .. "/pack/packer/start/friendly-snippets/snippets",
     },
   }
