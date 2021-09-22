@@ -22,8 +22,12 @@ function M.load_plugins(use, _)
   use {
     "aserowy/tmux.nvim",
     module = { "tmux" },
-    setup = [[require("config.tmux").setup()]],
-    config = [[require("config.tmux").config()]],
+    setup = function()
+      require("config.tmux").setup()
+    end,
+    config = function()
+      require("config.tmux").config()
+    end,
   }
 
   -- [[ UI ]]
@@ -59,15 +63,21 @@ function M.load_plugins(use, _)
   use {
     "ntpeters/vim-better-whitespace",
     event = { "BufNewFile", "BufRead" },
-    setup = [[require("config.vim-better-whitespace").setup()]],
+    setup = function()
+      require("config.vim-better-whitespace").setup()
+    end,
   }
 
   -- A file explorer tree for neovim written in lua
   use {
     "kyazdani42/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
-    setup = [[require("config.nvim-tree").setup()]],
-    config = [[require("config.nvim-tree").config()]],
+    setup = function()
+      require("config.nvim-tree").setup()
+    end,
+    config = function()
+      require("config.nvim-tree").config()
+    end,
   }
 
   -- [[ Editor ]]
@@ -85,26 +95,10 @@ function M.load_plugins(use, _)
     "kevinhwang91/nvim-hlslens",
     module = { "hlslens" },
     setup = function()
-      vim.keymap.nnoremap {
-        "n",
-        "<cmd>execute('normal! ' . v:count1 . 'n')<CR><cmd>lua require'hlslens'.start()<CR>",
-        silent = true,
-      }
-      vim.keymap.nnoremap {
-        "N",
-        "<cmd>execute('normal! ' . v:count1 . 'N')<CR><cmd>lua require'hlslens'.start()<CR>",
-        silent = true,
-      }
-      vim.keymap.nnoremap { "*", "*<cmd>lua require'hlslens'.start()<CR>", silent = true }
-      vim.keymap.nnoremap { "#", "#<cmd>lua require'hlslens'.start()<CR>", silent = true }
-      vim.keymap.nnoremap { "g*", "g*<cmd>lua require'hlslens'.start()<CR>", silent = true }
-      vim.keymap.nnoremap { "g#", "g#<cmd>lua require'hlslens'.start()<CR>", silent = true }
+      require("config.hlslens").setup()
     end,
     config = function()
-      require("hlslens").setup {
-        auto_enable = true,
-        calm_down = true,
-      }
+      require("config.hlslens").config()
     end,
   }
 
@@ -120,18 +114,7 @@ function M.load_plugins(use, _)
       { "x", "<Plug>(eft-" },
     },
     setup = function()
-      vim.keymap.nmap { "f", "<Plug>(eft-f-repeatable)" }
-      vim.keymap.xmap { "f", "<Plug>(eft-f-repeatable)" }
-      vim.keymap.omap { "f", "<Plug>(eft-f-repeatable)" }
-      vim.keymap.nmap { "F", "<Plug>(eft-F-repeatable)" }
-      vim.keymap.xmap { "F", "<Plug>(eft-F-repeatable)" }
-      vim.keymap.omap { "F", "<Plug>(eft-F-repeatable)" }
-      vim.keymap.nmap { "t", "<Plug>(eft-t-repeatable)" }
-      vim.keymap.xmap { "t", "<Plug>(eft-t-repeatable)" }
-      vim.keymap.omap { "t", "<Plug>(eft-t-repeatable)" }
-      vim.keymap.nmap { "T", "<Plug>(eft-T-repeatable)" }
-      vim.keymap.xmap { "T", "<Plug>(eft-T-repeatable)" }
-      vim.keymap.omap { "T", "<Plug>(eft-T-repeatable)" }
+      require("config.vim-eft").setup()
     end,
   }
 
@@ -140,17 +123,7 @@ function M.load_plugins(use, _)
     "phaazon/hop.nvim",
     module = { "hop" },
     setup = function()
-      vim.keymap.nnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
-      vim.keymap.xnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
-      vim.keymap.onoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
-
-      vim.keymap.nnoremap { "sl", "<cmd>lua require'hop'.hint_lines()<CR>" }
-      vim.keymap.xnoremap { "sl", "<cmd>lua require'hop'.hint_lines()<CR>" }
-      vim.keymap.onoremap { "sl", "<cmd>lua require'hop'.hint_lines()<CR>" }
-
-      vim.keymap.nnoremap { "s/", "<cmd>lua require'hop'.hint_patterns()<CR>" }
-      vim.keymap.xnoremap { "s/", "<cmd>lua require'hop'.hint_patterns()<CR>" }
-      vim.keymap.onoremap { "s/", "<cmd>lua require'hop'.hint_patterns()<CR>" }
+      require("config.hop").setup()
     end,
   }
 
@@ -159,29 +132,23 @@ function M.load_plugins(use, _)
     "kana/vim-niceblock",
     keys = { { "v", "<Plug>(niceblock-" } },
     setup = function()
-      vim.g.niceblock_no_default_key_mappings = 1
-      vim.keymap.vmap { "I", "<Plug>(niceblock-I)" }
-      vim.keymap.vmap { "gI", "<Plug>(niceblock-gI)" }
-      vim.keymap.vmap { "A", "<Plug>(niceblock-A)" }
+      require("config.vim-niceblock").setup()
     end,
   }
 
   -- Smart line join
-  use {
-    "osyo-manga/vim-jplus",
-    keys = {
-      { "n", "<Plug>(jplus)" },
-      { "v", "<Plug>(jplus)" },
-      { "n", "<Plug>(jplus-input)" },
-      { "v", "<Plug>(jplus-input)" },
-    },
-    setup = function()
-      vim.keymap.nmap { "J", "<Plug>(jplus)" }
-      vim.keymap.vmap { "J", "<Plug>(jplus)" }
-      vim.keymap.nmap { "<Leader>J", "<Plug>(jplus-input)" }
-      vim.keymap.vmap { "<Leader>J", "<Plug>(jplus-input)" }
-    end,
-  }
+  -- use {
+  --   "osyo-manga/vim-jplus",
+  --   keys = {
+  --     { "n", "<Plug>(jplus)" },
+  --     { "v", "<Plug>(jplus)" },
+  --     { "n", "<Plug>(jplus-input)" },
+  --     { "v", "<Plug>(jplus-input)" },
+  --   },
+  --   setup = function()
+  --     require("config.vim-jplus").setup()
+  --   end,
+  -- }
 
   -- The killring-alike plugin with no default mappings.
   -- (Use this plugin until https://github.com/neovim/neovim/issues/1822 is fixed)
@@ -190,8 +157,9 @@ function M.load_plugins(use, _)
     keys = { { "n", "<Plug>(miniyank-" } },
     setup = function()
       vim.g.miniyank_maxitems = 100
-      vim.keymap.nmap { "p", "<Plug>(miniyank-autoput)" }
-      vim.keymap.nmap { "P", "<Plug>(miniyank-autoPut)" }
+      local keymap = require "utils.keymap"
+      keymap.nmap { "p", "<Plug>(miniyank-autoput)" }
+      keymap.nmap { "P", "<Plug>(miniyank-autoPut)" }
     end,
   }
 
@@ -200,35 +168,39 @@ function M.load_plugins(use, _)
     "monaqa/dial.nvim",
     keys = { { "n", "<Plug>(dial-" }, { "v", "<Plug>(dial-" } },
     setup = function()
-      vim.keymap.nmap { "<C-a>", "<Plug>(dial-increment)" }
-      vim.keymap.nmap { "<C-x>", "<Plug>(dial-decrement)" }
-      vim.keymap.vmap { "<C-a>", "<Plug>(dial-increment)" }
-      vim.keymap.vmap { "<C-x>", "<Plug>(dial-decrement)" }
-      vim.keymap.vmap { "g<C-a>", "<Plug>(dial-increment-additional)" }
-      vim.keymap.vmap { "g<C-x>", "<Plug>(dial-decrement-additional)" }
+      local keymap = require "utils.keymap"
+      keymap.nmap { "<C-a>", "<Plug>(dial-increment)" }
+      keymap.nmap { "<C-x>", "<Plug>(dial-decrement)" }
+      keymap.vmap { "<C-a>", "<Plug>(dial-increment)" }
+      keymap.vmap { "<C-x>", "<Plug>(dial-decrement)" }
+      keymap.vmap { "g<C-a>", "<Plug>(dial-increment-additional)" }
+      keymap.vmap { "g<C-x>", "<Plug>(dial-decrement-additional)" }
     end,
   }
 
-  -- A more adventurous wildmenu
+  -- Preview the content of the registers
+  use {
+    "tversteeg/registers.nvim",
+    keys = {
+      { "n", '"' },
+      { "i", "<C-r>" },
+    },
+  }
 
   -- Show keybindings in popup
   use {
     "folke/which-key.nvim",
-    config = [[require("config.which-key").config()]],
+    config = function()
+      require("config.which-key").config()
+    end,
   }
 
   -- A high-performance color highlighter for NeoVim
   use {
     "norcalli/nvim-colorizer.lua",
     event = "BufReadPre",
-    cmd = {
-      "ColorizerAttachToBuffer",
-      "ColorizerDetachFromBuffer",
-      "ColorizerReloadAllBuffers",
-      "ColorizerToggle",
-    },
     config = function()
-      require("colorizer").setup()
+      require("config.colorizer").config()
     end,
   }
 
@@ -246,8 +218,9 @@ function M.load_plugins(use, _)
       { "x", "<Plug>(operator-replace)" },
     },
     setup = function()
-      vim.keymap.nmap { "_", "<Plug>(operator-replace)" }
-      vim.keymap.xmap { "_", "<Plug>(operator-replace)" }
+      local keymap = require "utils.keymap"
+      keymap.nmap { "_", "<Plug>(operator-replace)" }
+      keymap.xmap { "_", "<Plug>(operator-replace)" }
     end,
   }
   use {
@@ -261,22 +234,30 @@ function M.load_plugins(use, _)
       { "o", "<Plug>(textobj-sandwich-" },
       { "x", "<Plug>(textobj-sandwich-" },
     },
-    setup = [[require("config.sandwich").setup()]],
-    config = [[require("config.sandwich").config()]],
+    setup = function()
+      require("config.sandwich").setup()
+    end,
+    config = function()
+      require("config.sandwich").config()
+    end,
   }
 
   -- Smart align
   use {
     "junegunn/vim-easy-align",
     keys = { { "n", "<Plug>(EasyAlign)" }, { "v", "<Plug>(EasyAlign)" } },
-    setup = require("config.vim-easy-align").setup,
+    setup = function()
+      require("config.vim-easy-align").setup()
+    end,
   }
 
   -- SKK input method for Japanese
   use {
     "tyru/eskk.vim",
     event = "InsertCharPre",
-    config = require("config.eskk").config,
+    config = function()
+      require("config.eskk").config()
+    end,
   }
 
   -- Better quickfix windowin Neovim, polish old quickfix window
@@ -288,13 +269,13 @@ function M.load_plugins(use, _)
     ft = { "qf" },
     config = function()
       require("utils.autocmd").group("MyAutoCmd", {
-          {
-            "FileType",
-            "qf",
-            function()
-              vim.api.nvim_buf_set_keymap(0, "n", "R", "<cmd>Qfreplace<CR>", { noremap = true })
-            end,
-          },
+        {
+          "FileType",
+          "qf",
+          function()
+            vim.api.nvim_buf_set_keymap(0, "n", "R", "<cmd>Qfreplace<CR>", { noremap = true })
+          end,
+        },
       })
     end,
   }
@@ -312,7 +293,7 @@ function M.load_plugins(use, _)
       vim.g.lazygit_floating_window_scaling_factor = 0.9
       vim.g.lazygit_floating_window_corner_chars = { "╭", "╮", "╰", "╯" }
       vim.g.lazygit_use_neovim_remote = 0
-      vim.keymap.nnoremap { "<Space>gl", "<cmd>LazyGit<CR>", silent = true }
+      require("utils.keymap").nnoremap { "<Space>gl", "<cmd>LazyGit<CR>", silent = true }
     end,
   }
 
@@ -322,7 +303,9 @@ function M.load_plugins(use, _)
     branch = "main",
     event = { "FocusLost", "CursorHold" },
     requires = { "nvim-lua/plenary.nvim" },
-    config = [[require("config.gitsigns").config()]],
+    config = function()
+      require("config.gitsigns").config()
+    end,
   }
 
   -- Reveal the commit messages under the cursor
@@ -332,7 +315,7 @@ function M.load_plugins(use, _)
     keys = { { "n", "<Plug>(git-messenger" } },
     setup = function()
       vim.g.git_messenger_no_default_mappings = true
-      vim.keymap.nmap { "<Space>gm", "<Plug>(git-messenger)", silent = true }
+      require("utils.keymap").nmap { "<Space>gm", "<Plug>(git-messenger)", silent = true }
     end,
   }
 
@@ -371,10 +354,11 @@ function M.load_plugins(use, _)
     "David-Kunz/treesitter-unit",
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      vim.keymap.xnoremap { "iu", ":lua require('treesitter-unit').select()<CR>", silent = true }
-      vim.keymap.xnoremap { "au", ":lua require('treesitter-unit').select(true)<CR>", silent = true }
-      vim.keymap.onoremap { "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", silent = true }
-      vim.keymap.onoremap { "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", silent = true }
+      local keymap = require "utils.keymap"
+      keymap.xnoremap { "iu", ":lua require('treesitter-unit').select()<CR>", silent = true }
+      keymap.xnoremap { "au", ":lua require('treesitter-unit').select(true)<CR>", silent = true }
+      keymap.onoremap { "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", silent = true }
+      keymap.onoremap { "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", silent = true }
     end,
   }
 
@@ -487,7 +471,7 @@ function M.load_plugins(use, _)
         show_guides = true,
       }
 
-      vim.keymap.nnoremap { "ms", "<cmd>SymbolsOutline<CR>", silent = true }
+      require("utils.keymap").nnoremap { "ms", "<cmd>SymbolsOutline<CR>", silent = true }
     end,
   }
 
@@ -533,7 +517,6 @@ function M.load_plugins(use, _)
           { "nvim-lua/plenary.nvim" },
           { "nvim-lua/popup.nvim" },
         },
-        opt = true,
       },
       {
         "simrat39/rust-tools.nvim",
@@ -553,7 +536,10 @@ function M.load_plugins(use, _)
       "null-ls.nvim",
       "rust-tools.nvim",
     },
-    config = [[require "config.lspconfig"]],
+    -- config = [[require "config.lspconfig"]],
+    config = function()
+      require "config.lsp"
+    end,
   }
 
   use {
@@ -574,30 +560,21 @@ function M.load_plugins(use, _)
       { "mfussenegger/nvim-dap-python", opt = true },
       { "theHamsta/nvim-dap-virtual-text", opt = true },
     },
-    setup = [[require("config.dap").setup()]],
-    config = [[require("config.dap").config()]],
+    setup = function()
+      require("config.dap").setup()
+    end,
+    config = function()
+      require("config.dap").config()
+    end,
   }
-
-  -- [[ Auto completions ]]
-  -- use {
-  --   "hrsh7th/vim-vsnip",
-  --   event = "InsertEnter *",
-  --   requires = {
-  --     "rafamadriz/friendly-snippets",
-  --   },
-  --   setup = function()
-  --     require("config.vim-vsnip").setup()
-  --   end,
-  --   config = function()
-  --     require("config.vim-vsnip").config()
-  --   end,
-  -- }
 
   use {
     "L3MON4D3/LuaSnip",
     module = { "luasnip" },
     requires = { "rafamadriz/friendly-snippets" },
-    config = [[require("config.luasnip").config()]],
+    config = function()
+      require("config.luasnip").config()
+    end,
   }
 
   use {
@@ -613,7 +590,9 @@ function M.load_plugins(use, _)
       { "kdheepak/cmp-latex-symbols", opt = true },
       { "saadparwaiz1/cmp_luasnip", opt = true },
     },
-    config = [[require("config.nvim-cmp").config()]],
+    config = function()
+      require("config.nvim-cmp").config()
+    end,
   }
 
   -- [[ Fuzzy finder ]]
@@ -639,8 +618,12 @@ function M.load_plugins(use, _)
     },
     cmd = { "Telescope" },
     module = { "telescope" },
-    setup = [[require("config.telescope").setup()]],
-    config = [[require("config.telescope").config()]],
+    setup = function()
+      require("config.telescope").setup()
+    end,
+    config = function()
+      require("config.telescope").config()
+    end,
   }
 end
 
