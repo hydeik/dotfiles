@@ -226,6 +226,4 @@ function keymap.tnoremap(opts)
   return make_mapper("t", { noremap = true }, opts)
 end
 
-vim.keymap = vim.keymap or keymap
-
 return keymap

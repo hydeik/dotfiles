@@ -16,6 +16,7 @@ function M.config()
   }
 
   -- key mappings
+  local keymap = require "utils.keymap"
   local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
@@ -49,17 +50,17 @@ function M.config()
       return t "<S-Tab>"
     end
   end
-  vim.keymap.imap { "<Tab>", "v:lua.tab_complete()", expr = true, silent = true, }
-  vim.keymap.smap { "<Tab>", "v:lua.tab_complete()", expr = true, silent = true, }
-  vim.keymap.imap { "<S-Tab>", "v:lua.s_tab_complete()", expr = true, silent = true, }
-  vim.keymap.smap { "<S-Tab>", "v:lua.s_tab_complete()", expr = true, silent = true, }
-  vim.keymap.imap {
+  keymap.imap { "<Tab>", "v:lua.tab_complete()", expr = true, silent = true }
+  keymap.smap { "<Tab>", "v:lua.tab_complete()", expr = true, silent = true }
+  keymap.imap { "<S-Tab>", "v:lua.s_tab_complete()", expr = true, silent = true }
+  keymap.smap { "<S-Tab>", "v:lua.s_tab_complete()", expr = true, silent = true }
+  keymap.imap {
     "<C-e>",
     "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<End>'",
     expr = true,
     silent = true,
   }
-  vim.keymap.smap {
+  keymap.smap {
     "<C-e>",
     "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-e>'",
     expr = true,

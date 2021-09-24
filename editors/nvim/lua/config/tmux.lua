@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
   -- Custom keybindings
-  local nnoremap = vim.keymap.nnoremap
+  local nnoremap = require("utils.keymap").nnoremap
 
   nnoremap {
     "<M-h>",
