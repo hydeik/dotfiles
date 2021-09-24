@@ -9,7 +9,10 @@ function M.load_plugins(use, _)
   use { "lewis6991/impatient.nvim" }
 
   -- plenary: full; complete; entire; absolute; unqualified.
-  use { "nvim-lua/plenary.nvim" }
+  use { "nvim-lua/plenary.nvim", module = "plenary" }
+
+  -- An implementation of the popup API from vim in Neovim. Hope to upstream when complete.
+  use { "nvim-lua/popup.nvim", module = "popup" }
 
   -- Fix CursorHold performance
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
@@ -40,17 +43,34 @@ function M.load_plugins(use, _)
   use { "shaunsingh/moonlight.nvim", opt = true }
   use { "shaunsingh/nord.nvim", opt = true }
 
-  -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
+  -- Icons
   use {
-    "hoob3rt/lualine.nvim",
-    requires = { "kyazdani42/nvim-web-devicons", opt = true },
-    config = [[require('config.lualine').config()]],
+    "kyazdani42/nvim-web-devicons",
+    module = "nvim-web-devicons",
+    config = function()
+      require("nvim-web-devicons").setup {
+        default = true,
+      }
+    end,
+  }
+
+  -- A minimal, stylish and customizable statusline for Neovim written in Lua
+  use {
+    "famiu/feline.nvim",
+    requires = {
+      { "kyazdani42/nvim-web-devicons" },
+      { "lewis6991/gitsigns.nvim" },
+    },
+    wants = { "nvim-web-devicons", "gitsigns.nvim" },
+    config = function()
+      require "config.feline"
+    end,
   }
 
   -- A snazzy bufferline for Neovim
   use {
     "akinsho/nvim-bufferline.lua",
-    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    requires = { "kyazdani42/nvim-web-devicons" },
     event = "BufReadPre",
     config = function()
       require("bufferline").setup {
@@ -407,6 +427,7 @@ function M.load_plugins(use, _)
   -- EditorConfig
   use {
     "editorconfig/editorconfig-vim",
+    event = "BufRead",
     setup = function()
       vim.g.EditorConfig_exclude_patterns = {
         "scp://.*",
@@ -546,7 +567,7 @@ function M.load_plugins(use, _)
     "folke/trouble.nvim",
     cmd = { "TroubleToggle", "Trouble" },
     event = { "BufReadPre" },
-    requires = { "kyazdani42/nvim-web-devicons" },
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
       require("trouble").setup {}
     end,
@@ -613,7 +634,6 @@ function M.load_plugins(use, _)
       { "nvim-telescope/telescope-fzy-native.nvim" },
       { "nvim-telescope/telescope-ghq.nvim" },
       { "nvim-telescope/telescope-packer.nvim" },
-      { "nvim-telescope/telescope-symbols.nvim" },
       { "nvim-telescope/telescope-symbols.nvim" },
     },
     cmd = { "Telescope" },
