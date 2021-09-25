@@ -366,7 +366,9 @@ function M.load_plugins(use, _)
       { "p00f/nvim-ts-rainbow", opt = true },
       { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
     },
-    config = [[require("config.treesitter").config()]],
+    config = function()
+      require("config.treesitter").config()
+    end,
   }
 
   -- A Neovim plugin to deal with treesitter unit

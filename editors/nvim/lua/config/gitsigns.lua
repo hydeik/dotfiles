@@ -33,7 +33,7 @@ function M.config()
       ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
     },
     sign_priority = 6,
-    watch_index = { enabled = true, interval = 1000 },
+    watch_gitdir = { enabled = true, interval = 1000 },
     status_formatter = nil, -- use default
   }
 end
