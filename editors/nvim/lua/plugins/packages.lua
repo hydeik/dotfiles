@@ -21,6 +21,9 @@ function M.load_plugins(use, _)
     config = [[vim.g.cursorhold_updatetime = 100]],
   }
 
+  -- A faster version of filetype.vim
+  use { "nathom/filetype.nvim", branch = "main" }
+
   -- tmux integration for nvim features pane movement and resizing from within nvim.
   use {
     "aserowy/tmux.nvim",

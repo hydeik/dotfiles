@@ -8,6 +8,7 @@ if vim.fn.has "vim_starting" == 1 then
   require "startup"
 end
 
+vim.g.did_load_filetypes = 1
 require("plugins").ensure_plugins()
 require("plugins").define_commands()
 
