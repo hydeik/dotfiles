@@ -85,7 +85,7 @@ end
 
 opt.showmatch = true -- Jump to matching bracket
 opt.matchtime = 1 -- Tenths of a second to show the matching paren
-opt.matchpairs = "(:),{:},[:],<:>"
+opt.matchpairs:append { "<:>", "（:）", "「:」", "【:】", "［:］", "｛:｝", "＜:＞" }
 --- }}}
 
 --- Timing {{{
@@ -101,7 +101,6 @@ opt.infercase = true -- Adjust case in insert completion mode
 --- }}}
 
 --- Behavior {{{
-opt.history = 10000 -- Amount of command line history
 opt.hidden = true -- Hide buffers when abandoned instead of unload
 opt.linebreak = true -- Break long lines at 'breakat'
 opt.showbreak = [[\]] -- String to put at the start of wrapped lines
@@ -109,7 +108,18 @@ opt.breakat = [[\ \	;:,!?]] -- Chars to break long lines
 opt.splitbelow = true -- :split opens new window bottom of current window
 opt.splitright = true -- :vsplit opens new window right of the current window
 -- Move to next/prev line on certain keys
-opt.whichwrap = "b,s,h,l,<,>,[,],b,s~"
+opt.whichwrap:append {
+  b = true,
+  s = true,
+  h = true,
+  l = true,
+  ["<"] = true,
+  [">"] = true,
+  ["~"] = true,
+  ["["] = true,
+  ["]"] = true,
+}
+
 if vim.fn.exists "+breakindent" then
   opt.breakindent = true -- Every wrapped line will continue visually indented
   opt.wrap = true -- Wrap lines by default
@@ -125,11 +135,6 @@ opt.complete = "." -- No wins, buffs, tags, include scanning
 -- Diff mode
 opt.diffopt = { "filler", "iwhite", "internal", "algorithm:histogram", "indent-heuristic" }
 
--- What to save for views:
-opt.viewoptions = { "folds", "cursor", "curdir", "slash", "unix" }
-
--- What to save in sessions:
-opt.sessionoptions = { "curdir", "tabpages", "winsize" }
 --- }}}
 
 -- Editor UI Appearances {{{
@@ -153,7 +158,7 @@ opt.cmdwinheight = 5 -- Command-line lines
 
 opt.equalalways = false -- Don't resize windows on split or close
 opt.colorcolumn = "+1" -- Highlight 'textwidth+1'-th column
-opt.display = { "lastline", "uhex" }
+opt.display:append { "lastline", "uhex" }
 
 opt.listchars = {
   tab = "▸ ",
@@ -163,7 +168,16 @@ opt.listchars = {
   nbsp = "%",
   eol = "↲",
 }
-opt.shortmess = "aoOTIcF" -- Shorten messages and don't show intro
+-- opt.shortmess = "aoOTIcF" -- Shorten messages and don't show intro
+opt.shortmess = {
+  a = true,
+  o = true,
+  O = true,
+  T = true,
+  I = true,
+  c = true,
+  F = true,
+}
 
 -- Disable annoying bells
 opt.errorbells = false
@@ -182,7 +196,6 @@ opt.foldcolumn = "0"
 --- Wildmenu: enhanced command line completion {{{
 
 -- Display candidates by popup menu (requires NeoVim 0.4.x or later)
-opt.wildoptions = { "pum", "tagfile" }
 opt.pumblend = 10
 
 -- Ignore compiled files
