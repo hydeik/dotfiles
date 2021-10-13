@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  local keymap = require "utils.keymap"
+  local keymap = require "rc.core.keymap"
   keymap.nnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
   keymap.xnoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }
   keymap.onoremap { "ss", "<cmd>lua require'hop'.hint_char2()<CR>" }

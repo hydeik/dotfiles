@@ -7,16 +7,16 @@ function M.config()
     updateevents = "TextChanged,TextChangedI",
   }
 
-  local nvim_dir = require("globals").nvim_dir
+  local path = require "rc.core.path"
   require("luasnip.loaders.from_vscode").load {
     paths = {
-      nvim_dir.config .. "/snippets",
-      nvim_dir.site_packages .. "/pack/packer/start/friendly-snippets/snippets",
+      path.join(path.config_home, "snippets"),
+      path.join(path.pack_root, "pack", "packer", "friendly-snippets", "snippets"),
     },
   }
 
   -- key mappings
-  local keymap = require "utils.keymap"
+  local keymap = require "rc.core.keymap"
   local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end

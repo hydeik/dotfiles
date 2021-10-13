@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  local keymap = require "utils.keymap"
+  local keymap = require "rc.core.keymap"
   keymap.nnoremap {
     "n",
     "<cmd>execute('normal! ' . v:count1 . 'n')<CR><cmd>lua require'hlslens'.start()<CR>",

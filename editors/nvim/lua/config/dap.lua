@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  local keymap = require "utils.keymap"
+  local keymap = require "rc.core.keymap"
   keymap.nnoremap { "<F5>", "<cmd>lua require'dap'.continue()<CR>", silent = true }
   keymap.nnoremap { "<F10>", "<cmd>lua require'dap'.stop_over()<CR>", silent = true }
   keymap.nnoremap { "<Space>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", silent = true }

@@ -1,6 +1,6 @@
 --- ~/.config/nvim/lua/mapping.lua
 --- Set global key mappings
-local keymap = require "utils.keymap"
+local keymap = require "rc.core.keymap"
 local nnoremap = keymap.nnoremap
 local inoremap = keymap.inoremap
 local cnoremap = keymap.cnoremap

@@ -1,6 +1,7 @@
---- ~/.config/nvim/lua/core/options.lua
---- Set global options
-local globals = require "globals"
+--- ~/.config/nvim/lua/rc/user/options.lua
+--- Overwrite nvim default global options
+local path = require "rc.core.path"
+local platform = require "rc.core.platform"
 local opt = vim.opt
 
 -- List of character encodings considered when starting to edit an existing file
@@ -40,10 +41,10 @@ opt.undofile = true
 opt.swapfile = false
 
 -- Directories to store backup, swap, view, and shada files
-opt.backupdir = globals.nvim_dir.backup
-opt.directory = globals.nvim_dir.swap
-opt.undodir = globals.nvim_dir.undo
-opt.viewdir = globals.nvim_dir.view
+opt.backupdir = path.join(path.data_home, "backup")
+opt.directory = path.join(path.data_home, "swap")
+opt.undodir = path.join(path.data_home, "undo")
+opt.viewdir = path.join(path.data_home, "view")
 
 -- Customize shada files entries.
 -- Shada files are stored to $XDG_DATA_HOME/nvim/shada/main.shada by default
@@ -54,7 +55,7 @@ opt.shada = { "'200", "<50", "@100", "s10", "h" }
 -- prefer english help
 opt.helplang = { "en", "ja" }
 -- The words list file where words are added by `zw` and `zg` command
-opt.spellfile = globals.nvim_dir.data .. "/spell/en.utf-8.add"
+opt.spellfile = path.join(path.data_home, "spell", "en.utf-8.add")
 -- spell check (ignore on check on Asian characters (China, Japan, Korea))
 opt.spelllang = { "en_us", "cjk" }
 -- opt.spell = false
@@ -76,7 +77,7 @@ opt.virtualedit = { "block" }
 -- Allow backspacing over everything in insert mode
 opt.backspace = { "indent", "eol", "start" }
 -- Use system clipboard
-if globals.is_windows or vim.fn.has "clipboard" then
+if platform.is_windows or vim.fn.has "clipboard" then
   opt.clipboard = { "unnamed" }
 else
   opt.clipboard = { "unnamedplus" }

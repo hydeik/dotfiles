@@ -1,5 +1,5 @@
 local M = {}
-local utils = require "utils"
+local utils = require "rc.core.util"
 
 M.autoformat = true
 

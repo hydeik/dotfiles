@@ -3,3 +3,4 @@
 *.pyc
 editors/nvim/plugin/packer_compiled.vim
 editors/nvim/plugin/packer_compiled.lua
+editors/nvim/lua/packer_compiled.lua

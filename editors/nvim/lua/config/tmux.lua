@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
   -- Custom keybindings
-  local nnoremap = require("utils.keymap").nnoremap
+  local nnoremap = require("rc.core.keymap").nnoremap
 
   nnoremap {
     "<M-h>",

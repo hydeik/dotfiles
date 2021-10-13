@@ -1,11 +1,11 @@
 local M = {}
 
 function M.config()
-  local cache_dir = require("globals").nvim_dir.cache
-  vim.g["eskk#directory"] = cache_dir .. "/eskk"
+  local path = require "rc.core.path"
+  vim.g["eskk#directory"] = path.join(path.cache_home, "eskk")
 
   vim.g["eskk#dictionary"] = {
-    path = cache_dir .. "/skk-jisyo",
+    path = path.join(path.cache_home, "skk-jisyo"),
     sorted = 1,
     encoding = "utf-8",
   }
@@ -47,7 +47,7 @@ function M.config()
   vim.api.nvim_set_keymap("c", "<C-j>", "<Plug>(eskk:toggle)", { silent = true })
 
   -- easy escape with 'jj'
-  require("utils.autocmd").group("MyAutoCmd", {
+  require("rc.core.autocmd").group("MyAutoCmd", {
     { "User", "eskk-initialize-post", "Eskk -remap jj <ESC>" },
   })
 end

@@ -16,7 +16,7 @@ function M.setup()
     "which_key",
   }
 
-  require("utils.keymap").nnoremap { "<Leader>x", "<cmd>StripWhitespace<CR>", silent = true }
+  require("rc.core.keymap").nnoremap { "<Leader>x", "<cmd>StripWhitespace<CR>", silent = true }
 end
 
 return M

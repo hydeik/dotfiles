@@ -180,7 +180,7 @@ function M.load_plugins(use, _)
     keys = { { "n", "<Plug>(miniyank-" } },
     setup = function()
       vim.g.miniyank_maxitems = 100
-      local keymap = require "utils.keymap"
+      local keymap = require "rc.core.keymap"
       keymap.nmap { "p", "<Plug>(miniyank-autoput)" }
       keymap.nmap { "P", "<Plug>(miniyank-autoPut)" }
     end,
@@ -191,7 +191,7 @@ function M.load_plugins(use, _)
     "monaqa/dial.nvim",
     keys = { { "n", "<Plug>(dial-" }, { "v", "<Plug>(dial-" } },
     setup = function()
-      local keymap = require "utils.keymap"
+      local keymap = require "rc.core.keymap"
       keymap.nmap { "<C-a>", "<Plug>(dial-increment)" }
       keymap.nmap { "<C-x>", "<Plug>(dial-decrement)" }
       keymap.vmap { "<C-a>", "<Plug>(dial-increment)" }
@@ -241,7 +241,7 @@ function M.load_plugins(use, _)
       { "x", "<Plug>(operator-replace)" },
     },
     setup = function()
-      local keymap = require "utils.keymap"
+      local keymap = require "rc.core.keymap"
       keymap.nmap { "_", "<Plug>(operator-replace)" }
       keymap.xmap { "_", "<Plug>(operator-replace)" }
     end,
@@ -291,7 +291,7 @@ function M.load_plugins(use, _)
     "thinca/vim-qfreplace",
     ft = { "qf" },
     config = function()
-      require("utils.autocmd").group("MyAutoCmd", {
+      require("rc.core.autocmd").group("MyAutoCmd", {
         {
           "FileType",
           "qf",
@@ -316,7 +316,7 @@ function M.load_plugins(use, _)
       vim.g.lazygit_floating_window_scaling_factor = 0.9
       vim.g.lazygit_floating_window_corner_chars = { "╭", "╮", "╰", "╯" }
       vim.g.lazygit_use_neovim_remote = 0
-      require("utils.keymap").nnoremap { "<Space>gl", "<cmd>LazyGit<CR>", silent = true }
+      require("rc.core.keymap").nnoremap { "<Space>gl", "<cmd>LazyGit<CR>", silent = true }
     end,
   }
 
@@ -338,7 +338,7 @@ function M.load_plugins(use, _)
     keys = { { "n", "<Plug>(git-messenger" } },
     setup = function()
       vim.g.git_messenger_no_default_mappings = true
-      require("utils.keymap").nmap { "<Space>gm", "<Plug>(git-messenger)", silent = true }
+      require("rc.core.keymap").nmap { "<Space>gm", "<Plug>(git-messenger)", silent = true }
     end,
   }
 
@@ -379,7 +379,7 @@ function M.load_plugins(use, _)
     "David-Kunz/treesitter-unit",
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      local keymap = require "utils.keymap"
+      local keymap = require "rc.core.keymap"
       keymap.xnoremap { "iu", ":lua require('treesitter-unit').select()<CR>", silent = true }
       keymap.xnoremap { "au", ":lua require('treesitter-unit').select(true)<CR>", silent = true }
       keymap.onoremap { "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", silent = true }
@@ -497,7 +497,7 @@ function M.load_plugins(use, _)
         show_guides = true,
       }
 
-      require("utils.keymap").nnoremap { "ms", "<cmd>SymbolsOutline<CR>", silent = true }
+      require("rc.core.keymap").nnoremap { "ms", "<cmd>SymbolsOutline<CR>", silent = true }
     end,
   }
 

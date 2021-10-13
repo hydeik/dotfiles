@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  local keymap = require "utils.keymap"
+  local keymap = require "rc.core.keymap"
   keymap.nmap { "J", "<Plug>(jplus)" }
   keymap.vmap { "J", "<Plug>(jplus)" }
   keymap.nmap { "<Leader>J", "<Plug>(jplus-input)" }

@@ -6,7 +6,7 @@ function M.setup()
   vim.g.textobj_sandwich_no_default_key_mappings = 1
 
   -- Key mappings
-  local keymap = require "utils.keymap"
+  local keymap = require "rc.core.keymap"
   local nmap = keymap.nmap
   local xmap = keymap.xmap
   local omap = keymap.omap

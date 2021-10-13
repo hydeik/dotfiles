@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  local keymap = require "utils.keymap"
+  local keymap = require "rc.core.keymap"
   keymap.nmap { "f", "<Plug>(eft-f-repeatable)" }
   keymap.xmap { "f", "<Plug>(eft-f-repeatable)" }
   keymap.omap { "f", "<Plug>(eft-f-repeatable)" }

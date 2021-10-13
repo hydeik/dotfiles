@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  require("utils.keymap").nnoremap { "<Space>ft", "<cmd>NvimTreeToggle<CR>", silent = true }
+  require("rc.core.keymap").nnoremap { "<Space>ft", "<cmd>NvimTreeToggle<CR>", silent = true }
 end
 
 function M.config()

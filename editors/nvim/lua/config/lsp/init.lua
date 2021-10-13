@@ -1,6 +1,6 @@
 local lspconfig = require "lspconfig"
-local globals = require "globals"
-local utils = require "utils"
+local platform = require "rc.core.platform"
+local utils = require "rc.core.util"
 
 require "config.lsp.diagnostics"
 require("config.lsp.kind").setup()
@@ -96,11 +96,11 @@ require("rust-tools").setup {
 -- https://github.com/sumneko/lua-language-server
 -- https://github.com/folke/lua-dev.nvim
 local system_name
-if globals.is_mac then
+if platform.is_mac then
   system_name = "macOS"
-elseif globals.is_linux then
+elseif platform.is_linux then
   system_name = "Linux"
-elseif globals.is_iindows then
+elseif platform.is_windows then
   system_name = "Windows"
 else
   print "Unsupported system for sumneko"
