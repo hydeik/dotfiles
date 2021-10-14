@@ -10,7 +10,8 @@ M.sep = platform.is_windows and [[\]] or "/"
 ---@params ... string
 ---@return string
 function M.join(...)
-  return table.concat(vim.tbl_flatten { ... }, M.sep):gsub(M.sep .. "+", M.sep)
+  -- return table.concat(vim.tbl_flatten { ... }, M.sep):gsub(M.sep .. "+", M.sep)
+  return table.concat(vim.tbl_flatten { ... }, M.sep)
 end
 
 -- Important paths

@@ -11,7 +11,7 @@ function M.config()
   require("luasnip.loaders.from_vscode").load {
     paths = {
       path.join(path.config_home, "snippets"),
-      path.join(path.pack_root, "pack", "packer", "friendly-snippets", "snippets"),
+      path.join(path.pack_root, "packer", "start", "friendly-snippets", "snippets"),
     },
   }
 
