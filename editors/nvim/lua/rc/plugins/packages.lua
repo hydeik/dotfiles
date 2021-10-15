@@ -38,11 +38,8 @@ function M.load_plugins(use, _)
 
   -- [[ UI ]]
   -- Colorschemes
-  use { "EdenEast/nightfox.nvim", opt = true }
+  use { "EdenEast/nightfox.nvim" }
   use { "folke/tokyonight.nvim", opt = true }
-  use { "sainnhe/edge", opt = true }
-  use { "sainnhe/everforest", opt = true }
-  use { "sainnhe/sonokai", opt = true }
   use { "shaunsingh/moonlight.nvim", opt = true }
   use { "shaunsingh/nord.nvim", opt = true }
 
@@ -57,18 +54,27 @@ function M.load_plugins(use, _)
     end,
   }
 
-  -- A minimal, stylish and customizable statusline for Neovim written in Lua
+  -- A blazing fast and easy to configure neovim statusline wirtten in pure lua
   use {
-    "famiu/feline.nvim",
-    requires = {
-      { "kyazdani42/nvim-web-devicons" },
-      { "lewis6991/gitsigns.nvim" },
-    },
-    wants = { "nvim-web-devicons", "gitsigns.nvim" },
-    config = function()
-      require "config.feline"
-    end,
+    "hoob3rt/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    --config = [[require("config.lualine").config()]],
+    config = [[require("config.evil_lualine")]],
   }
+
+  -- A minimal, stylish and customizable statusline for Neovim written in Lua
+  -- use {
+  --   "famiu/feline.nvim",
+  --   -- event = "VimEnter",
+  --   requires = {
+  --     { "kyazdani42/nvim-web-devicons" },
+  --     { "lewis6991/gitsigns.nvim" },
+  --   },
+  --   wants = { "nvim-web-devicons", "gitsigns.nvim" },
+  --   config = function()
+  --     require "config.feline"
+  --   end,
+  -- }
 
   -- A snazzy bufferline for Neovim
   use {
