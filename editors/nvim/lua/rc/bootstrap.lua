@@ -64,6 +64,10 @@ local function set_envs()
   }, os.getenv "MANPATH")
 end
 
+local function set_packpath()
+  vim.o.packpath = path.join(path.data_home, "site")
+end
+
 --- Disable unnecessary default plugins
 local function disable_builtin_plugins()
   vim.g.loaded_2html_plugin = 1
@@ -144,6 +148,7 @@ local function init()
     set_envs()
   end
 
+  set_packpath()
   disable_builtin_plugins()
   set_providers()
   ensure_nvim_dirs()

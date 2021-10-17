@@ -158,7 +158,6 @@ opt.cmdwinheight = 5 -- Command-line lines
 
 opt.equalalways = false -- Don't resize windows on split or close
 opt.colorcolumn = "+1" -- Highlight 'textwidth+1'-th column
-opt.display:append { "lastline", "uhex" }
 
 opt.listchars = {
   tab = "▸ ",
