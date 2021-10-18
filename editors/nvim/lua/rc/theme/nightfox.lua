@@ -13,13 +13,13 @@ local opts = {
   },
   hlgroups = {
     -- Vi mode
-    StatuslineModeNormal = { fg = "${black}", bg = "${blue}", style = "bold" },
-    StatuslineModeInsert = { fg = "${black}", bg = "${green}", style = "bold" },
-    StatuslineModeVisual = { fg = "${black}", bg = "${magenta}", style = "bold" },
-    StatuslineModeReplace = { fg = "${black}", bg = "${red}", style = "bold" },
-    StatuslineModeCommand = { fg = "${black}", bg = "${yellow}", style = "bold" },
-    StatuslineModeSelect = { fg = "${black}", bg = "${cyan}", style = "bold" },
-    StatuslineModeOther = { fg = "${black}", bg = "${white}", style = "bold" },
+    StatuslineModeNormal = { fg = "${blue}", bg = "${bg_statusline}", style = "bold" },
+    StatuslineModeInsert = { fg = "${green}", bg = "${bg_statusline}", style = "bold" },
+    StatuslineModeVisual = { fg = "${magenta}", bg = "${bg_statusline}", style = "bold" },
+    StatuslineModeReplace = { fg = "${red}", bg = "${bg_statusline}", style = "bold" },
+    StatuslineModeCommand = { fg = "${yellow}", bg = "${bg_statusline}", style = "bold" },
+    StatuslineModeSelect = { fg = "${cyan}", bg = "${bg_statusline}", style = "bold" },
+    StatuslineModeOther = { fg = "${white}", bg = "${bg_statusline}", style = "bold" },
     -- File info
     StatuslineFileIcon = { fg = "${blue}", bg = "${bg_statusline}" },
     StatuslineFileName = { fg = "${fg}", bg = "${bg_statusline}", style = "bold" },
@@ -77,8 +77,7 @@ nightfox.load() -- set colorscheme
 --   blue_br = "#c5a3ff",
 --   magenta_br = "#ffb8d1",
 --   cyan_br = "#c2ffdf",
---   white_br = "#ffefff",
---   orange_br = "#efc39a",
+--   white_br = "#ffefff", orange_br = "#efc39a",
 --   pink_br = "#fbc7d9",
 
 --   -- -15 brightness, -15 saturation

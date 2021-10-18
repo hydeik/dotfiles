@@ -112,8 +112,7 @@ local function progress()
   return [[%3P]]
 end
 
--- [ Git info ]
-
+-- [ Git info (using gitsigns.nvim) ]
 local function git_branch()
   local branch = vim.b.gitsigns_head or vim.g.gitsigns_head or ""
   if #branch > 0 then
@@ -142,60 +141,76 @@ local function git_diff_changed()
   return git_diff("changed", " ")
 end
 
--- -- Vi mode
--- local current_mode_label = setmetatable({
+-- Vi mode
+
+-- local vi_mode_alias = setmetatable({
 --   ["n"] = "NORMAL",
---   ["no"] = "NORMAL-OP",
+--   ["no"] = "OP",
+--   ["nov"] = "OP",
+--   ["noV"] = "OP",
+--   ["no"] = "OP",
+--   ["niI"] = "NORMAL",
+--   ["niR"] = "NORMAL",
+--   ["niV"] = "NORMAL",
 --   ["v"] = "VISUAL",
---   ["V"] = "VISUAL-L",
---   [""] = "VISUAL-B",
+--   ["vs"] = "VISUAL",
+--   ["V"] = "LINES",
+--   ["Vs"] = "LINES",
+--   [""] = "BLOCK",
+--   ["s"] = "BLOCK",
 --   ["s"] = "SELECT",
---   ["S"] = "SELECT-L",
---   [""] = "SELECT-B",
+--   ["S"] = "SELECT",
+--   [""] = "BLOCK",
 --   ["i"] = "INSERT",
 --   ["ic"] = "INSERT",
 --   ["ix"] = "INSERT",
 --   ["R"] = "REPLACE",
+--   ["Rx"] = "REPLACE",
 --   ["Rv"] = "V-REPLACE",
+--   ["Rvc"] = "REPLACE",
+--   ["Rvx"] = "REPLACE",
 --   ["c"] = "COMMAND",
---   ["cv"] = "VIM EX",
---   ["ce"] = "EX",
---   ["r"] = "PROMPT",
+--   ["cv"] = "COMMAND",
+--   ["ce"] = "COMMAND",
+--   ["r"] = "ENTER",
 --   ["rm"] = "MORE",
 --   ["r?"] = "CONFIRM",
 --   ["!"] = "SHELL",
 --   ["t"] = "TERMINAL",
+--   ["null"] = "NONE",
 -- }, {
 --   -- fix wired issues
 --   __index = function(_, _)
---     return "V-BLOCK"
+--     return "UNKNOWN"
 --   end,
 -- })
 
--- local current_mode_hi_groups = setmetatable({
---   ["n"] = "Normal",
---   ["i"] = "Insert",
---   ["v"] = "Visual",
---   ["V"] = "Visual",
---   [""] = "Visual",
---   ["R"] = "Replace",
---   ["Rv"] = "Replace",
---   ["c"] = "Command",
---   ["t"] = "Terminal",
--- }, {
---   __index = function(_, _)
---     return "Normal"
---   end,
--- })
+local vi_mode_hlgroup = setmetatable({
+  ["n"] = "Normal",
+  ["v"] = "Visual",
+  ["V"] = "Visual",
+  [""] = "Visual",
+  ["s"] = "Select",
+  ["S"] = "Select",
+  [""] = "Select",
+  ["i"] = "Insert",
+  ["R"] = "Replace",
+  ["c"] = "Command",
+}, {
+  __index = function(_, _)
+    return "Other"
+  end,
+})
 
--- local function vi_mode(inactive)
---   local mode = vim.api.nvim_get_mode()["mode"]
---   local label = current_mode_label[mode]
---   local hl = inactive and "NC" or current_mode_hi_groups[mode]
---   return string.format("%s%%#Statusline%s#%s%s", left_separator(hl), hl, label, right_separator(hl))
--- end
+local function vi_mode()
+  local mode = vim.api.nvim_get_mode()["mode"]
+  local m = string.sub(mode, 1, 1) -- get the leading character of vi mode
+  local hl = vi_mode_hlgroup[m]
+  return string.format("%%#StatuslineMode%s#▊", hl)
+end
 
 -- [ LSP status ]
+-- LSP clients names
 local function lsp_client_names()
   local clients = {}
   for _, client in pairs(vim.lsp.buf_get_clients(0)) do
@@ -207,6 +222,7 @@ local function lsp_client_names()
   return ""
 end
 
+-- LSP diagnostics info
 local function get_diagnostics_count(severity)
   local active_clients = vim.lsp.buf_get_clients(0)
   if not active_clients then
@@ -243,6 +259,7 @@ end
 -- [ Building statusline ]
 local components_active = {
   left = {
+    { provider = vi_mode, left_sep = "", right_sep = "" },
     { provider = file_icon, hl = "StatuslineFileIcon", left_sep = " ", right_sep = "" },
     { provider = file_name, hl = "StatuslineFileName", left_sep = " ", right_sep = "" },
     { provider = file_modified, hl = "StatuslineFileModified", left_sep = " ", right_sep = "" },
@@ -265,6 +282,7 @@ local components_active = {
     { provider = file_encoding, hl = "Statusline", left_sep = "", right_sep = " " },
     { provider = location, hl = "Statusline", left_sep = "", right_sep = " " },
     { provider = progress, hl = "Statusline", left_sep = "", right_sep = " " },
+    { provider = vi_mode, left_sep = "", right_sep = "" },
   },
 }
 
@@ -283,7 +301,11 @@ local function build_statusline(components)
   for _, c in ipairs(components) do
     local body = c.provider()
     if #body > 0 then
-      table.insert(results, string.format("%%#%s#%s%s%s", c.hl, c.left_sep, body, c.right_sep))
+      if c.hl ~= nil then
+        table.insert(results, string.format("%%#%s#%s%s%s", c.hl, c.left_sep, body, c.right_sep))
+      else
+        table.insert(results, string.format("%s%s%s", c.left_sep, body, c.right_sep))
+      end
     end
   end
   return table.concat(results, "")
