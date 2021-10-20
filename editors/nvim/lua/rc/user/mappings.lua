@@ -6,6 +6,7 @@ local inoremap = keymap.inoremap
 local cnoremap = keymap.cnoremap
 local vnoremap = keymap.vnoremap
 local xnoremap = keymap.xnoremap
+local onoremap = keymap.onoremap
 -- local api = vim.api
 -- local nnoremap = vim.keymap.nnoremap
 -- local inoremap = vim.keymap.inoremap
@@ -120,6 +121,11 @@ nnoremap {
   silent = true,
   expr = true,
 }
+
+-- Improve the behavior of '0': tobble between '^' and '0'
+nnoremap { "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", expr = true }
+xnoremap { "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", expr = true }
+onoremap { "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", expr = true }
 
 -- Turn off search highlight
 nnoremap { "<ESC><ESC>", [[<Cmd>silent! nohlsearch<CR>]], silent = true }

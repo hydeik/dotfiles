@@ -13,17 +13,18 @@ local function on_attach(client, bufnr)
   require("config.lsp.code_lens").setup(client)
 end
 
--- Capabilities
+-- Capabilities (for nvim-cmp)
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-updated_capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
-updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
-updated_capabilities.textDocument.completion.completionItem.preselectSupport = true
-updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-updated_capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-updated_capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-updated_capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-updated_capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
+local completionItem = updated_capabilities.textDocument.completion.completionItem
+completionItem.documentationFormat = { "markdown" }
+completionItem.snippetSupport = true
+completionItem.preselectSupport = true
+completionItem.insertReplaceSupport = true
+completionItem.labelDetailsSupport = true
+completionItem.deprecatedSupport = true
+completionItem.commitCharactersSupport = true
+completionItem.tagSupport = { valueSet = { 1 } }
+completionItem.resolveSupport = {
   properties = {
     "documentation",
     "detail",
