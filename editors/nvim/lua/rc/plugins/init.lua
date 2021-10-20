@@ -87,6 +87,9 @@ end
 --- Takes a callback function that takes if packer.nvim was installed.
 ---@param callback function(boolean)
 function plugins.bootstrap(callback)
+  -- hook before loading any plugins
+  require "rc.plugins.hook_before"
+
   local installed = Packer:ensure_plugins()
 
   if callback then
