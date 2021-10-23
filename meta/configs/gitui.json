@@ -1,0 +1,21 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "clean": [
+            "~/.config/gitui"
+        ]
+    },
+    {
+        "link": {
+            "~/.config/gitui/key_config.ron": "development/gitui/key_config.ron"
+        }
+    }
+]
