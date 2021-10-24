@@ -147,7 +147,7 @@ function M.setup()
   local set_keymap = function(key, f, options, buffer)
     local mode = "n"
     local rhs = string.format(
-      "<cmd>lua require('config.telescope').pickers['%s'](%s)<CR>",
+      "<cmd>lua require('rc.config.telescope').pickers['%s'](%s)<CR>",
       f,
       options and vim.inspect(options, { newline = "" }) or ""
     )

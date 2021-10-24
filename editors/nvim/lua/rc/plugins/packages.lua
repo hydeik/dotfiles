@@ -28,8 +28,8 @@ function M.load_plugins(use, _)
   use {
     "aserowy/tmux.nvim",
     module = { "tmux" },
-    setup = [[require("config.tmux").setup()]],
-    config = [[require("config.tmux").config()]],
+    setup = [[require("rc.config.tmux").setup()]],
+    config = [[require("rc.config.tmux").config()]],
   }
 
   -- [[ UI ]]
@@ -62,15 +62,15 @@ function M.load_plugins(use, _)
   use {
     "ntpeters/vim-better-whitespace",
     event = { "BufNewFile", "BufRead" },
-    setup = [[require("config.vim-better-whitespace").setup()]],
+    setup = [[require("rc.config.vim-better-whitespace").setup()]],
   }
 
   -- A file explorer tree for neovim written in lua
   use {
     "kyazdani42/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
-    setup = [[require("config.nvim-tree").setup()]],
-    config = [[require("config.nvim-tree").config()]],
+    setup = [[require("rc.config.nvim-tree").setup()]],
+    config = [[require("rc.config.nvim-tree").config()]],
   }
 
   -- [[ Editor ]]
@@ -87,8 +87,8 @@ function M.load_plugins(use, _)
   use {
     "kevinhwang91/nvim-hlslens",
     module = { "hlslens" },
-    setup = [[require("config.hlslens").setup()]],
-    config = [[require("config.hlslens").config()]],
+    setup = [[require("rc.config.hlslens").setup()]],
+    config = [[require("rc.config.hlslens").config()]],
   }
 
   -- -- Preview the contents of register
@@ -102,21 +102,21 @@ function M.load_plugins(use, _)
       { "o", "<Plug>(eft-" },
       { "x", "<Plug>(eft-" },
     },
-    setup = [[require("config.vim-eft").setup()]],
+    setup = [[require("rc.config.vim-eft").setup()]],
   }
 
   -- Neovim motions on speed!
   use {
     "phaazon/hop.nvim",
     module = { "hop" },
-    setup = [[require("config.hop").setup()]],
+    setup = [[require("rc.config.hop").setup()]],
   }
 
   -- Make blockwise visual mode more useful
   use {
     "kana/vim-niceblock",
     keys = { { "v", "<Plug>(niceblock-" } },
-    setup = [[require("config.vim-niceblock").setup()]],
+    setup = [[require("rc.config.vim-niceblock").setup()]],
   }
 
   -- The killring-alike plugin with no default mappings.
@@ -124,14 +124,14 @@ function M.load_plugins(use, _)
   use {
     "bfredl/nvim-miniyank",
     keys = { { "n", "<Plug>(miniyank-" } },
-    setup = [[require("config.miniyank").setup()]],
+    setup = [[require("rc.config.miniyank").setup()]],
   }
 
   -- Enhanced increment/decrement plugin for Neovim.
   use {
     "monaqa/dial.nvim",
     keys = { { "n", "<Plug>(dial-" }, { "v", "<Plug>(dial-" } },
-    setup = [[require("config.dial").setup()]],
+    setup = [[require("rc.config.dial").setup()]],
   }
 
   -- Preview the content of the registers
@@ -147,14 +147,14 @@ function M.load_plugins(use, _)
   -- Show keybindings in popup
   use {
     "folke/which-key.nvim",
-    config = [[require("config.which-key").config()]],
+    config = [[require("rc.config.which-key").config()]],
   }
 
   -- A high-performance color highlighter for NeoVim
   use {
     "norcalli/nvim-colorizer.lua",
     event = "BufReadPre",
-    config = [[require("config.colorizer").config()]],
+    config = [[require("rc.config.colorizer").config()]],
   }
 
   -- Breakdown Vim's --startuptime output
@@ -187,22 +187,22 @@ function M.load_plugins(use, _)
       { "o", "<Plug>(textobj-sandwich-" },
       { "x", "<Plug>(textobj-sandwich-" },
     },
-    setup = [[require("config.sandwich").setup()]],
-    config = [[require("config.sandwich").config()]],
+    setup = [[require("rc.config.sandwich").setup()]],
+    config = [[require("rc.config.sandwich").config()]],
   }
 
   -- Smart align
   use {
     "junegunn/vim-easy-align",
     keys = { { "n", "<Plug>(EasyAlign)" }, { "v", "<Plug>(EasyAlign)" } },
-    setup = [[require("config.vim-easy-align").setup()]],
+    setup = [[require("rc.config.vim-easy-align").setup()]],
   }
 
   -- SKK input method for Japanese
   use {
     "tyru/eskk.vim",
     event = "InsertCharPre",
-    config = [[require("config.eskk").config()]],
+    config = [[require("rc.config.eskk").config()]],
   }
 
   -- Better quickfix windowin Neovim, polish old quickfix window
@@ -248,7 +248,7 @@ function M.load_plugins(use, _)
     branch = "main",
     event = { "FocusLost", "CursorHold" },
     requires = { "nvim-lua/plenary.nvim" },
-    config = [[require("config.gitsigns").config()]],
+    config = [[require("rc.config.gitsigns").config()]],
   }
 
   -- Reveal the commit messages under the cursor
@@ -289,7 +289,7 @@ function M.load_plugins(use, _)
       { "p00f/nvim-ts-rainbow", opt = true },
       { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
     },
-    config = [[require("config.treesitter").config()]],
+    config = [[require("rc.config.treesitter").config()]],
   }
 
   -- A Neovim plugin to deal with treesitter unit
@@ -361,7 +361,7 @@ function M.load_plugins(use, _)
     "lukas-reineke/indent-blankline.nvim",
     requires = { "nvim-treesitter/nvim-treesitter" },
     event = { "FocusLost", "CursorHold" },
-    config = [[require("config.indent-blankline").config()]],
+    config = [[require("rc.config.indent-blankline").config()]],
   }
 
   -- Comment plugin
@@ -465,8 +465,7 @@ function M.load_plugins(use, _)
       "null-ls.nvim",
       "rust-tools.nvim",
     },
-    -- config = [[require "config.lspconfig"]],
-    config = [[require "config.lsp"]],
+    config = [[require "rc.config.lsp"]],
   }
 
   use {
@@ -485,15 +484,15 @@ function M.load_plugins(use, _)
       { "mfussenegger/nvim-dap-python", opt = true },
       { "theHamsta/nvim-dap-virtual-text", opt = true },
     },
-    setup = [[require("config.dap").setup()]],
-    config = [[require("config.dap").config()]],
+    setup = [[require("rc.config.dap").setup()]],
+    config = [[require("rc.config.dap").config()]],
   }
 
   use {
     "L3MON4D3/LuaSnip",
     module = { "luasnip" },
     requires = { "rafamadriz/friendly-snippets" },
-    config = [[require("config.luasnip").config()]],
+    config = [[require("rc.config.luasnip").config()]],
   }
 
   use {
@@ -509,7 +508,7 @@ function M.load_plugins(use, _)
       { "kdheepak/cmp-latex-symbols", opt = true },
       { "saadparwaiz1/cmp_luasnip", opt = true },
     },
-    config = [[require("config.nvim-cmp").config()]],
+    config = [[require("rc.config.nvim-cmp").config()]],
   }
 
   -- [[ Fuzzy finder ]]
@@ -534,8 +533,8 @@ function M.load_plugins(use, _)
     },
     cmd = { "Telescope" },
     module = { "telescope" },
-    setup = [[require("config.telescope").setup()]],
-    config = [[require("config.telescope").config()]],
+    setup = [[require("rc.config.telescope").setup()]],
+    config = [[require("rc.config.telescope").config()]],
   }
 end
 

@@ -2,15 +2,15 @@ local lspconfig = require "lspconfig"
 local platform = require "rc.core.platform"
 local utils = require "rc.core.util"
 
-require "config.lsp.diagnostics"
-require("config.lsp.kind").setup()
+require "rc.config.lsp.diagnostics"
+require("rc.config.lsp.kind").setup()
 
 -- custom 'on_attach' function
 local function on_attach(client, bufnr)
-  require("config.lsp.formatting").setup(client, bufnr)
-  require("config.lsp.keymap").setup(client, bufnr)
-  require("config.lsp.highlight").setup(client)
-  require("config.lsp.code_lens").setup(client)
+  require("rc.config.lsp.formatting").setup(client, bufnr)
+  require("rc.config.lsp.keymap").setup(client, bufnr)
+  require("rc.config.lsp.highlight").setup(client)
+  require("rc.config.lsp.code_lens").setup(client)
 end
 
 -- Capabilities (for nvim-cmp)
@@ -86,7 +86,7 @@ local servers = {
 }
 
 -- Register null-ls as a language server.
-require("config.lsp.null-ls").setup()
+require("rc.config.lsp.null-ls").setup()
 
 -- https://github.com/rust-analyzer/rust-analyzer
 -- https://github.com/simrat39/rust-tools.nvim

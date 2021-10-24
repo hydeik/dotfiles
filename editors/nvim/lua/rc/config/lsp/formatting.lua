@@ -20,7 +20,7 @@ end
 
 function M.setup(client, bufnr)
   local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  local null_ls = require "config.lsp.null-ls"
+  local null_ls = require "rc.config.lsp.null-ls"
   local enable = false
   if null_ls.has_formatter(ft) then
     enable = client.name == "null-ls"
@@ -35,7 +35,7 @@ function M.setup(client, bufnr)
     vim.cmd [[
       augroup ConfigLspFormat
         autocmd! * <buffer>
-        autocmd BufWritePre <buffer> lua require("config.lsp.formatting").format()
+        autocmd BufWritePre <buffer> lua require("rc.config.lsp.formatting").format()
       augroup END
     ]]
   end
