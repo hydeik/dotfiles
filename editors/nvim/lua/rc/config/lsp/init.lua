@@ -4,6 +4,8 @@ local utils = require "rc.core.util"
 
 require "rc.config.lsp.diagnostics"
 require("rc.config.lsp.kind").setup()
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
 
 -- custom 'on_attach' function
 local function on_attach(client, bufnr)

@@ -1,15 +1,15 @@
 local M = {}
 
-local border = {
-  { "╭", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "╮", "FloatBorder" },
-  { "│", "FloatBorder" },
-  { "╯", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "╰", "FloatBorder" },
-  { "│", "FloatBorder" },
-}
+-- local border = {
+--   { "╭", "FloatBorder" },
+--   { "─", "FloatBorder" },
+--   { "╮", "FloatBorder" },
+--   { "│", "FloatBorder" },
+--   { "╯", "FloatBorder" },
+--   { "─", "FloatBorder" },
+--   { "╰", "FloatBorder" },
+--   { "│", "FloatBorder" },
+-- }
 
 function M.setup(client, bufnr)
   local wk = require "which-key"
@@ -19,7 +19,7 @@ function M.setup(client, bufnr)
     d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
     e = {
       function()
-        vim.lsp.diagnostic.show_line_diagnostics { border = border }
+        vim.lsp.diagnostic.show_line_diagnostics { border = "single" }
       end,
       "Show Line Diagnostics",
     },
@@ -28,13 +28,13 @@ function M.setup(client, bufnr)
     ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
     ["["] = {
       function()
-        vim.lsp.diagnostic.goto_prev { popup_opts = { border = border } }
+        vim.lsp.diagnostic.goto_prev { popup_opts = { border = "single" } }
       end,
       "Jump to Previous Diagnostic",
     },
     ["]"] = {
       function()
-        vim.lsp.diagnostic.goto_next { popup_opts = { border = border } }
+        vim.lsp.diagnostic.goto_next { popup_opts = { border = "single" } }
       end,
       "Jump to Next Diagnostic",
     },
