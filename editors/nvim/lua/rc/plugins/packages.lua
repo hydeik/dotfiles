@@ -366,21 +366,11 @@ function M.load_plugins(use, _)
 
   -- Comment plugin
   use {
-    "terrortylor/nvim-comment",
-    config = function()
-      require("nvim_comment").setup {
-        -- Linters prefer comment and line to have a space in between markers
-        marker_padding = true,
-        -- should comment out empty or whitespace only lines
-        comment_empty = false,
-        -- Should key mappings be created
-        create_mappings = true,
-        -- Normal mode mapping left hand side
-        line_mapping = "gcc",
-        -- Visual/Operator mapping left hand side
-        operator_mapping = "gc",
-      }
-    end,
+    "numToStr/Comment.nvim",
+    keys = { "gc", "gb", "gcc", "gbc" },
+    requires = { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
+    wants = { "nvim-ts-context-commentstring" },
+    config = [[require("rc.config.comment").config()]],
   }
 
   -- A tree like view for symbols in Neovim using the Language Server Protocol.
