@@ -8,6 +8,9 @@ function M.setup()
     sources = {
       null_ls.builtins.formatting.black,
       null_ls.builtins.formatting.cmake_format,
+      null_ls.builtins.formatting.fixjson.with {
+        filetypes = { "jsonc" },
+      },
       null_ls.builtins.formatting.prettier.with {
         filetypes = { "html", "json", "yaml", "markdown" },
       },
@@ -22,14 +25,9 @@ function M.setup()
 end
 
 function M.has_formatter(ft)
-  local config = require("null-ls.config").get()
-  local formatters = config._generators["NULL_LS_FORMATTING"]
-  for _, f in ipairs(formatters) do
-    if vim.tbl_contains(f.filetypes, ft) then
-      return true
-    end
-  end
-  return false
+  local sources = require("null-ls.sources")
+  local available = sources.get_available(ft, "NULL_LS_FORMATTING")
+  return #available > 0
 end
 
 return M
