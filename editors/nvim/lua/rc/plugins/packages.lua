@@ -6,6 +6,7 @@ function M.load_plugins(use, _)
   -- (Packer can manage itself as an optional plugin)
   use { "wbthomason/packer.nvim", opt = true }
 
+  -- Speed up loading Lua modules in Neovim to improve startup time.
   use { "lewis6991/impatient.nvim" }
 
   -- plenary: full; complete; entire; absolute; unqualified.
@@ -58,6 +59,30 @@ function M.load_plugins(use, _)
     config = [[require("bufferline").setup { options = { always_show_bufferline = true } }]],
   }
 
+  -- A fancy, configurable, notification manager for Neovim
+  use {
+    "rcarriga/nvim-notify",
+    module = "notify",
+  }
+
+  -- Enter ex-commands in a nice floating input.
+  use {
+    "VonHeikemen/fine-cmdline.nvim",
+    requires = { "MunifTanjim/nui.nvim" },
+    module = { "fine-cmdline" },
+    setup = [[require("rc.config.fine-cmdline").setup()]],
+    config = [[require("rc.config.fine-cmdline").config()]],
+  }
+
+  -- Start your search from a more confortable place, say the upper right corner?
+  use {
+    "VonHeikemen/searchbox.nvim",
+    requires = { "MunifTanjim/nui.nvim" },
+    module = { "searchbox" },
+    setup = [[require("rc.config.searchbox").setup()]],
+    config = [[require("rc.config.searchbox").config()]],
+  }
+
   -- Better whitespace highlighting
   use {
     "ntpeters/vim-better-whitespace",
@@ -83,13 +108,13 @@ function M.load_plugins(use, _)
   -- Imporove foldtext for better looks
   use { "lambdalisue/readablefold.vim" }
 
-  -- Better glance searched information
-  use {
-    "kevinhwang91/nvim-hlslens",
-    module = { "hlslens" },
-    setup = [[require("rc.config.hlslens").setup()]],
-    config = [[require("rc.config.hlslens").config()]],
-  }
+  -- -- Better glance searched information
+  -- use {
+  --   "kevinhwang91/nvim-hlslens",
+  --   module = { "hlslens" },
+  --   setup = [[require("rc.config.hlslens").setup()]],
+  --   config = [[require("rc.config.hlslens").config()]],
+  -- }
 
   -- -- Preview the contents of register
   -- use { "tversteeg/registers.nvim" }
@@ -492,6 +517,7 @@ function M.load_plugins(use, _)
       { "hrsh7th/cmp-nvim-lsp", opt = true },
       { "hrsh7th/cmp-buffer", opt = true },
       { "hrsh7th/cmp-calc", opt = true },
+      { "hrsh7th/cmp-cmdline", opt = true },
       { "hrsh7th/cmp-emoji", opt = true },
       { "hrsh7th/cmp-nvim-lua", opt = true },
       { "hrsh7th/cmp-path", opt = true },

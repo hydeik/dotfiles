@@ -4,6 +4,7 @@ function M.config()
   vim.cmd [[packadd cmp-nvim-lsp]]
   vim.cmd [[packadd cmp-buffer]]
   vim.cmd [[packadd cmp-calc]]
+  vim.cmd [[packadd cmp-cmdline]]
   vim.cmd [[packadd cmp-emoji]]
   vim.cmd [[packadd cmp-nvim-lua]]
   vim.cmd [[packadd cmp-path]]
@@ -14,6 +15,7 @@ function M.config()
   for _, name in pairs {
     "buffer",
     "calc",
+    "cmdline",
     "emoji",
     "nvim_lua",
     "path",
@@ -114,6 +116,22 @@ function M.config()
       },
     },
   }
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline("/", {
+    sources = {
+      { name = "buffer" },
+    },
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(":", {
+    sources = cmp.config.sources({
+      { name = "path" },
+    }, {
+      { name = "cmdline" },
+    }),
+  })
 end
 
 return M
