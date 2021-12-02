@@ -4,7 +4,7 @@
 ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/zinit"
 
 if [[ ! -s "${ZINIT_HOME}/bin/zinit.zsh" ]]; then
-    git clone https://github.com/zdharma/zinit.git ${ZINIT_HOME}/bin
+    git clone https://github.com/zdharma-continuum/zinit.git ${ZINIT_HOME}/bin
 fi
 
 typeset -gAH ZINIT
@@ -37,7 +37,7 @@ zinit wait lucid light-mode for \
 
 zinit wait lucid light-mode for \
     atinit"zicompinit; zicdreplay" \
-    zdharma/fast-syntax-highlighting \
+    zdharma-continuum/fast-syntax-highlighting \
     OMZP::colored-man-pages
 
 ##
