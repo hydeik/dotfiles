@@ -39,13 +39,6 @@ zinit wait lucid light-mode for \
     atinit"zicompinit; zicdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
     OMZP::colored-man-pages
-
-##
-## History
-##
-zinit lucid light-mode for \
-    zsh-users/zsh-history-substring-search
-
 ##
 ## Theme
 ##
@@ -59,4 +52,10 @@ zinit lucid depth=1 light-mode for \
 #zinit wait'[[ -n ${ZLAST_COMMANDS[xpanes*]} ]]' lucid light-mode for \
 zinit wait'1' lucid light-mode for \
     as"program" pick"bin/*" greymd/tmux-xpanes
+
+##
+## History
+##
+zinit lucid light-mode for \
+    zsh-users/zsh-history-substring-search
 
