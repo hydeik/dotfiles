@@ -117,7 +117,7 @@ import:
   # - ~/.config/alacritty/fonts/hackgen.yml
   # - ~/.config/alacritty/fonts/mononoki.yml
   - ~/.config/alacritty/fonts/plemoljp.yml
-  - ~/.config/alacritty/themes/nightfox_planefox.yml
+  - ~/.config/alacritty/themes/nightfox_duskfox.yml
   # - ~/.config/alacritty/themes/tokyonight_night.yml
   # - ~/.config/alacritty/themes/sonokai_shusia.yml
 
