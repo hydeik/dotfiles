@@ -5,7 +5,8 @@ function M.setup(client)
     vim.cmd [[
       augroup ConfigLspCodeLens
       autocmd! * <buffer>
-      autocmd BufWritePost,CursorHold <buffer> lua vim.lsp.buf.codelens.refresh()
+      autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
+      autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
       augroup END
     ]]
   end
