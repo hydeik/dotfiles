@@ -94,7 +94,9 @@ local function disable_builtin_plugins()
 
   -- Also disable $VIMRUNTIME/filetype.vim.
   -- Use filetype.nvim, a faster version of filetype.vim instead.
+  vim.g.did_indent_on = 1
   vim.g.did_load_filetypes = 1
+  vim.g.did_load_ftplugin = 1
 end
 
 --- Python, Node.js providers
