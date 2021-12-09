@@ -15,4 +15,8 @@ function M.setup()
   keymap.onoremap { "s/", "<cmd>lua require'hop'.hint_patterns()<CR>" }
 end
 
+function M.config()
+  require("hop").setup {}
+end
+
 return M

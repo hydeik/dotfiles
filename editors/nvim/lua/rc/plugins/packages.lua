@@ -135,6 +135,7 @@ function M.load_plugins(use, _)
     "phaazon/hop.nvim",
     module = { "hop" },
     setup = [[require("rc.config.hop").setup()]],
+    config = [[require("rc.config.hop").config()]],
   }
 
   -- Make blockwise visual mode more useful
