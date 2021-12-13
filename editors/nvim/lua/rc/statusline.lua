@@ -224,16 +224,16 @@ end
 
 -- LSP diagnostics info
 local function get_diagnostics_count(severity)
-  local active_clients = vim.lsp.buf_get_clients(0)
-  if not active_clients then
-    return 0
-  end
-  local count = 0
-  for _, client in pairs(active_clients) do
-    count = count + vim.lsp.diagnostic.get_count(0, severity, client.id)
-  end
-  return count
+  return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity[severity] })
 end
+--
+-- local function get_diagnostics_count()
+--   local diagnostics = vim.diagnostic.get(0)
+--   local count = { 0, 0, 0, 0 } -- ERROR, WARN, INFO, HINT
+--   for _, diagnostic in ipairs(diagnostics) do
+--     count[diagnostic.severity] = count[diagnostic.severity] + 1
+--   end
+-- end
 
 local function get_diagnostics(severity, icon)
   local count = get_diagnostics_count(severity)
@@ -241,19 +241,19 @@ local function get_diagnostics(severity, icon)
 end
 
 local function diagnostics_errors()
-  return get_diagnostics("Error", " ")
+  return get_diagnostics("ERROR", " ")
 end
 
 local function diagnostics_warnings()
-  return get_diagnostics("Warning", " ")
+  return get_diagnostics("WARN", " ")
 end
 
 local function diagnostics_info()
-  return get_diagnostics("Warning", " ")
+  return get_diagnostics("INFO", " ")
 end
 
 local function diagnostics_hints()
-  return get_diagnostics("Warning", " ")
+  return get_diagnostics("HINTS", " ")
 end
 
 -- [ Building statusline ]
