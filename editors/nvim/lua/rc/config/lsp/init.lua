@@ -73,8 +73,6 @@ local servers = {
   html = { cmd = { "html-languageserver", "--stdio" } },
   -- https://github.com/vscode-langservers/vscode-json-languageserver
   jsonls = { cmd = { "vscode-json-languageserver", "--stdio" } },
-  -- https://github.com/jose-elias-alvarez/null-ls.nvim
-  ["null-ls"] = {},
   -- https://github.com/microsoft/pyright
   pyright = {
     settings = { python = { formatting = { provider = "black" } } },
@@ -87,8 +85,10 @@ local servers = {
   yamlls = {},
 }
 
--- Register null-ls as a language server.
-require("rc.config.lsp.null-ls").setup()
+-- https://github.com/jose-elias-alvarez/null-ls.nvim
+require("rc.config.lsp.null-ls").setup {
+  on_attach = on_attach,
+}
 
 -- https://github.com/rust-analyzer/rust-analyzer
 -- https://github.com/simrat39/rust-tools.nvim

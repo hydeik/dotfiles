@@ -1,8 +1,8 @@
 local M = {}
 
-function M.setup()
+function M.setup(opts)
   local null_ls = require "null-ls"
-  null_ls.config {
+  null_ls.setup {
     debounce = 150,
     save_after_format = false, -- toggle manually
     sources = {
@@ -20,6 +20,7 @@ function M.setup()
       null_ls.builtins.diagnostics.shellcheck,
       null_ls.builtins.code_actions.gitsigns,
     },
+    on_attach = opts.on_attach,
   }
 end
 
