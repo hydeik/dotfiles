@@ -92,10 +92,12 @@ local function disable_builtin_plugins()
   vim.g.loaded_zip = 1
   vim.g.loaded_zipPlugin = 1
 
-  -- Also disable $VIMRUNTIME/filetype.vim.
-  -- Use filetype.nvim, a faster version of filetype.vim instead.
+  -- Disable $VIMRUNTIME/filetype.vim and use $VIMRUNTIME/filetype.lua for
+  -- file type detection
+  vim.g.do_filetype_lua = 1
+  vim.g.did_load_filetypes = 0
+  -- Also disable $VIMRUNTIME/{indent,ftplugin}.vim
   vim.g.did_indent_on = 1
-  vim.g.did_load_filetypes = 1
   vim.g.did_load_ftplugin = 1
 end
 

@@ -10,8 +10,9 @@ function M.config()
   local path = require "rc.core.path"
   require("luasnip.loaders.from_vscode").load {
     paths = {
-      path.join(path.config_home, "snippets"),
-      path.join(path.pack_root, "packer", "start", "friendly-snippets", "snippets"),
+      -- REMARK: package.json files are required in the following directories
+      -- path.join(path.config_home, "snippets"),
+      path.join(path.pack_root, "packer", "start", "friendly-snippets"),
     },
   }
 
