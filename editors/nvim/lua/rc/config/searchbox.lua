@@ -1,11 +1,8 @@
 local M = {}
 
 function M.setup()
-  local keymap = require "rc.core.keymap"
-  keymap.nnoremap { "<Leader>/", "<cmd>lua require'searchbox'.incsearch()<CR>" }
-  keymap.nnoremap { "<Leader>?", "<cmd>lua require'searchbox'.incsearch{ reverse = true }<CR>" }
-  -- If you'd like to remap `:` instead,
-  -- keymap.nnoremap { ":", "<cmd>lua require'fine-cmdline'.open()<CR>" }
+  vim.keymap.set("n", "<Leader>/", "<Cmd>lua require'searchbox'.incsearch()<CR>")
+  vim.keymap.set("n", "<Leader>?", "<Cmd>lua require'searchbox'.incsearch{ reverse = true }<CR>")
 end
 
 function M.config()

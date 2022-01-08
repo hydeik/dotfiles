@@ -133,16 +133,16 @@ local function init_prefix_keys()
   vim.g.mapleader = ";"
   vim.g.maplocalleader = "\\"
   -- release keymappings for plugins
-  vim.api.nvim_set_keymap("n", "<Space>", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("x", "<Space>", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("n", ";", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("x", ";", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("n", ",", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("x", ",", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("n", "m", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("x", "m", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("n", "s", "<Nop>", { noremap = true })
-  vim.api.nvim_set_keymap("x", "s", "<Nop>", { noremap = true })
+  vim.keymap.set("n", "<Space>", "<Nop>")
+  vim.keymap.set("x", "<Space>", "<Nop>")
+  vim.keymap.set("n", ";", "<Nop>")
+  vim.keymap.set("x", ";", "<Nop>")
+  vim.keymap.set("n", ",", "<Nop>")
+  vim.keymap.set("x", ",", "<Nop>")
+  vim.keymap.set("n", "m", "<Nop>")
+  vim.keymap.set("x", "m", "<Nop>")
+  vim.keymap.set("n", "s", "<Nop>")
+  vim.keymap.set("x", "s", "<Nop>")
 end
 
 --- Run

@@ -6,46 +6,24 @@ function M.setup()
   vim.g.textobj_sandwich_no_default_key_mappings = 1
 
   -- Key mappings
-  local keymap = require "rc.core.keymap"
-  local nmap = keymap.nmap
-  local xmap = keymap.xmap
-  local omap = keymap.omap
+  -- add
+  vim.keymap.set("", "sa", "<Plug>(sandwich-add)")
 
-  nmap {
-    "sd",
-    "<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)",
-    silent = true,
-  }
-  nmap {
-    "sr",
-    "<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)",
-    silent = true,
-  }
-  nmap {
-    "sd",
-    "<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)",
-    silent = true,
-  }
-  nmap {
-    "sr",
-    "<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)",
-    silent = true,
-  }
+  -- delete
+  vim.keymap.set({ "n", "x" }, "sd", "<Plug>(sandwich-delete)")
+  vim.keymap.set("n", "sdb", "<Plug>(sandwich-delete-auto)")
 
-  nmap { "sa", "<Plug>(operator-sandwich-add)" }
-  xmap { "sa", "<Plug>(operator-sandwich-add)" }
-  omap { "sa", "<Plug>(operator-sandwich-g@)" }
-  xmap { "sd", "<Plug>(operator-sandwich-delete)" }
-  xmap { "sr", "<Plug>(operator-sandwich-replace)" }
+  -- replace
+  vim.keymap.set({ "n", "x" }, "sr", "<Plug>(sandwich-replace)")
+  vim.keymap.set("n", "srb", "<Plug>(sandwich-replace-auto)")
 
-  omap { "ab", "<Plug>(textobj-sandwich-auto-a)" }
-  omap { "ib", "<Plug>(textobj-sandwich-auto-i)" }
-  xmap { "ab", "<Plug>(textobj-sandwich-auto-a)" }
-  xmap { "ib", "<Plug>(textobj-sandwich-auto-i)" }
-  omap { "as", "<Plug>(textobj-sandwich-query-a)" }
-  omap { "is", "<Plug>(textobj-sandwich-query-i)" }
-  xmap { "as", "<Plug>(textobj-sandwich-query-a)" }
-  xmap { "is", "<Plug>(textobj-sandwich-query-i)" }
+  -- textobj auto
+  vim.keymap.set({ "o", "x" }, "ab", "<Plug>(textobj-sandwich-auto-a)")
+  vim.keymap.set({ "o", "x" }, "ib", "<Plug>(textobj-sandwich-auto-i)")
+
+  -- textobj query
+  vim.keymap.set({ "o", "x" }, "as", "<Plug>(textobj-sandwich-query-a)")
+  vim.keymap.set({ "o", "x" }, "is", "<Plug>(textobj-sandwich-query-i)")
 end
 
 function M.config()

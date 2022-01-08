@@ -2,8 +2,7 @@ local M = {}
 
 function M.setup()
   -- key mappings
-  vim.api.nvim_set_keymap("n", "<Leader>a", "<Plug>(EasyAlign)", { silent = true })
-  vim.api.nvim_set_keymap("v", "<Leader>a", "<Plug>(EasyAlign)", { silent = true })
+  vim.keymap.set({ "n", "v" }, "<Leader>a", "<Plug>(EasyAlign)", { silent = true })
   -- extending alignment rules
   vim.g.easy_align_delimiters = {
     [">"] = { pattern = [[>>\|=>\|>]] },

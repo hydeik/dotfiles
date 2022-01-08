@@ -2,57 +2,16 @@ local M = {}
 
 function M.setup()
   -- Custom keybindings
-  local nnoremap = require("rc.core.keymap").nnoremap
+  local opts = { silent = true, nowait = true }
+  vim.keymap.set("n", "<M-h>", "<Cmd>lua require('tmux').move_left()<CR>", opts)
+  vim.keymap.set("n", "<M-j>", "<Cmd>lua require('tmux').move_bottom()<CR>", opts)
+  vim.keymap.set("n", "<M-k>", "<Cmd>lua require('tmux').move_top()<CR>", opts)
+  vim.keymap.set("n", "<M-l>", "<Cmd>lua require('tmux').move_right()<CR>", opts)
 
-  nnoremap {
-    "<M-h>",
-    "<cmd>lua require('tmux').move_left()<CR>",
-    silent = true,
-    nowait = true,
-  }
-  nnoremap {
-    "<M-j>",
-    "<cmd>lua require('tmux').move_bottom()<CR>",
-    silent = true,
-    nowait = true,
-  }
-  nnoremap {
-    "<M-k>",
-    "<cmd>lua require('tmux').move_top()<CR>",
-    silent = true,
-    nowait = true,
-  }
-  nnoremap {
-    "<M-l>",
-    "<cmd>lua require('tmux').move_right()<CR>",
-    silent = true,
-    nowait = true,
-  }
-
-  nnoremap {
-    "<C-M-h>",
-    "<cmd>lua require('tmux').resize_left()<CR>",
-    silent = true,
-    nowait = true,
-  }
-  nnoremap {
-    "<C-M-j>",
-    "<cmd>lua require('tmux').resize_bottom()<CR>",
-    silent = true,
-    nowait = true,
-  }
-  nnoremap {
-    "<C-M-k>",
-    "<cmd>lua require('tmux').resize_top()<CR>",
-    silent = true,
-    nowait = true,
-  }
-  nnoremap {
-    "<C-M-l>",
-    "<cmd>lua require('tmux').resize_right()<CR>",
-    silent = true,
-    nowait = true,
-  }
+  vim.keymap.set("n", "<C-M-h>", "<Cmd>lua require('tmux').resize_left()<CR>", opts)
+  vim.keymap.set("n", "<C-M-j>", "<Cmd>lua require('tmux').resize_bottom()<CR>", opts)
+  vim.keymap.set("n", "<C-M-k>", "<Cmd>lua require('tmux').resize_top()<CR>", opts)
+  vim.keymap.set("n", "<C-M-l>", "<Cmd>lua require('tmux').resize_right()<CR>", opts)
 end
 
 function M.config()

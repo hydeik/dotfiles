@@ -62,15 +62,6 @@ function M.load_plugins(use, _)
     module = "notify",
   }
 
-  -- Enter ex-commands in a nice floating input.
-  use {
-    "VonHeikemen/fine-cmdline.nvim",
-    requires = { "MunifTanjim/nui.nvim" },
-    module = { "fine-cmdline" },
-    setup = [[require("rc.config.fine-cmdline").setup()]],
-    config = [[require("rc.config.fine-cmdline").config()]],
-  }
-
   -- Start your search from a more confortable place, say the upper right corner?
   use {
     "VonHeikemen/searchbox.nvim",
@@ -93,6 +84,7 @@ function M.load_plugins(use, _)
     cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
     setup = [[require("rc.config.nvim-tree").setup()]],
     config = [[require("rc.config.nvim-tree").config()]],
+    disable = true,
   }
 
   -- [[ Editor ]]
@@ -170,6 +162,7 @@ function M.load_plugins(use, _)
   -- Show keybindings in popup
   use {
     "folke/which-key.nvim",
+    disable = true,
     config = [[require("rc.config.which-key").config()]],
   }
 
@@ -194,9 +187,7 @@ function M.load_plugins(use, _)
       { "x", "<Plug>(operator-replace)" },
     },
     setup = function()
-      local keymap = require "rc.core.keymap"
-      keymap.nmap { "_", "<Plug>(operator-replace)" }
-      keymap.xmap { "_", "<Plug>(operator-replace)" }
+      vim.keymap.set({ "n", "x" }, "_", "<Plug>(operator-replace)")
     end,
   }
   use {
@@ -219,13 +210,6 @@ function M.load_plugins(use, _)
     "junegunn/vim-easy-align",
     keys = { { "n", "<Plug>(EasyAlign)" }, { "v", "<Plug>(EasyAlign)" } },
     setup = [[require("rc.config.vim-easy-align").setup()]],
-  }
-
-  -- SKK input method for Japanese
-  use {
-    "tyru/eskk.vim",
-    event = "InsertCharPre",
-    config = [[require("rc.config.eskk").config()]],
   }
 
   -- Better quickfix windowin Neovim, polish old quickfix window
@@ -261,7 +245,7 @@ function M.load_plugins(use, _)
       vim.g.lazygit_floating_window_scaling_factor = 0.9
       vim.g.lazygit_floating_window_corner_chars = { "╭", "╮", "╰", "╯" }
       vim.g.lazygit_use_neovim_remote = 0
-      require("rc.core.keymap").nnoremap { "<Space>gl", "<cmd>LazyGit<CR>", silent = true }
+      vim.keymap.set("n", "<Space>gl", "<Cmd>LazyGit<CR>", { silent = true })
     end,
   }
 
@@ -281,7 +265,7 @@ function M.load_plugins(use, _)
     keys = { { "n", "<Plug>(git-messenger" } },
     setup = function()
       vim.g.git_messenger_no_default_mappings = true
-      require("rc.core.keymap").nmap { "<Space>gm", "<Plug>(git-messenger)", silent = true }
+      vim.keymap.set("n", "<Space>gm", "<Plug>(git-messenger)", { silent = true })
     end,
   }
 
@@ -320,11 +304,10 @@ function M.load_plugins(use, _)
     "David-Kunz/treesitter-unit",
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      local keymap = require "rc.core.keymap"
-      keymap.xnoremap { "iu", ":lua require('treesitter-unit').select()<CR>", silent = true }
-      keymap.xnoremap { "au", ":lua require('treesitter-unit').select(true)<CR>", silent = true }
-      keymap.onoremap { "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", silent = true }
-      keymap.onoremap { "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", silent = true }
+      vim.keymap.set("x", "iu", ":lua require('treesitter-unit').select()<CR>", { silent = true })
+      vim.keymap.set("x", "au", ":lua require('treesitter-unit').select(true)<CR>", { silent = true })
+      vim.keymap.set("o", "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", { silent = true })
+      vim.keymap.set("o", "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", { silent = true })
     end,
   }
 
@@ -413,7 +396,7 @@ function M.load_plugins(use, _)
         show_guides = true,
       }
 
-      require("rc.core.keymap").nnoremap { "ms", "<cmd>SymbolsOutline<CR>", silent = true }
+      vim.keymap.set("n", "ms", "<Cmd>SymbolsOutline<CR>", { silent = true })
     end,
   }
 
@@ -506,6 +489,7 @@ function M.load_plugins(use, _)
     module = { "luasnip" },
     requires = { "rafamadriz/friendly-snippets" },
     config = [[require("rc.config.luasnip").config()]],
+    disable = true,
   }
 
   use {

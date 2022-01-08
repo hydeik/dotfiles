@@ -1,18 +1,5 @@
 --- ~/.config/nvim/lua/mapping.lua
---- Set global key mappings
-local keymap = require "rc.core.keymap"
-local nnoremap = keymap.nnoremap
-local inoremap = keymap.inoremap
-local cnoremap = keymap.cnoremap
-local vnoremap = keymap.vnoremap
-local xnoremap = keymap.xnoremap
-local onoremap = keymap.onoremap
--- local api = vim.api
--- local nnoremap = vim.keymap.nnoremap
--- local inoremap = vim.keymap.inoremap
--- local cnoremap = vim.keymap.cnoremap
--- local vnoremap = vim.keymap.vnoremap
--- local xnoremap = vim.keymap.xnoremap
+
 --[[
 -----------------------------------------------------------------------------
 | Commands \ Modes | Normal | Insert | Command | Visual | Select | Operator |
@@ -35,133 +22,123 @@ vim.g.localmapleader = ","
 
 --- Basic mappings {{{
 -- Disable Ex-mode, remap to register macros
-nnoremap { "Q", "q" }
-nnoremap { "gQ", "@q" }
+vim.keymap.set("n", "Q", "q")
+vim.keymap.set("n", "gQ", "@q")
 
 -- Disable dangerous/annoying default mappings
 --   ZZ - Save current file and quit
 --   ZQ - Quit without checking changes (:q!)
-nnoremap { "ZZ", "<Nop>" }
-nnoremap { "ZQ", "<Nop>" }
+vim.keymap.set("n", "ZZ", "<Nop>")
+vim.keymap.set("n", "ZQ", "<Nop>")
 
 -- Useless command. M - to middle line of window
-nnoremap { "M", "m" }
+vim.keymap.set("n", "M", "m")
 
 -- Y: yank text from cursor position to the EOL
 -- -> Now this mapping is default. (https://github.com/neovim/neovim/pull/13268)
 -- nnoremap { "Y", "y$" }
 
 -- Emacs-like cursor move in insert/command mode
--- NOTE: <C-f> and <C-b> are mapped in lua/conf/vim-vsnip.lua
-inoremap { "<C-a>", "<Home>" }
-inoremap { "<C-b>", "<Left>" }
-inoremap { "<C-d>", "<Del>" }
--- inoremap { "<C-e>", "<End>" }
-inoremap { "<C-f>", "<Right>" }
-inoremap { "<C-k>", "<C-o>D" }
-
-cnoremap { "<C-a>", "<Home>" }
-cnoremap { "<C-b>", "<Left>" }
-cnoremap { "<C-d>", "<Del>" }
-cnoremap { "<C-e>", "<End>" }
-cnoremap { "<C-f>", "<Right>" }
-cnoremap { "<C-n>", "<Down>" }
-cnoremap { "<C-p>", "<Up>" }
-
+vim.keymap.set("i", "<C-a>", "<Home>")
+vim.keymap.set("i", "<C-b>", "<Left>")
+vim.keymap.set("i", "<C-d>", "<Del>")
+vim.keymap.set("i", "<C-e>", "<End>")
+vim.keymap.set("i", "<C-f>", "<Right>")
+vim.keymap.set("i", "<C-k>", "<C-o>D")
 -- Enable undo <C-w> and <C-u> in insert mode.
-inoremap { "<C-w>", "<C-g>u<C-w>" }
-inoremap { "<C-u>", "<C-g>u<C-u>" }
+vim.keymap.set("i", "<C-w>", "<C-g>u<C-w>")
+vim.keymap.set("i", "<C-u>", "<C-g>u<C-u>")
 
+-- Command-line mode key mappings
+-- <C-a>: move to head
+vim.keymap.set("c", "<C-a>", "<Home>")
+-- <C-b>: previous char
+vim.keymap.set("c", "<C-b>", "<Left>")
+-- <C-d>: delete char
+vim.keymap.set("c", "<C-d>", "<Del>")
+-- <C-e>: move to end
+vim.keymap.set("c", "<C-e>", "<End>")
+-- <C-f>: next char
+vim.keymap.set("c", "<C-f>", "<Right>")
+-- <C-n>: next history
+vim.keymap.set("c", "<C-n>", "<Down>")
+-- <C-p>: previous history
+vim.keymap.set("c", "<C-p>", "<Up>")
 -- <C-y>: paste
-cnoremap { "<C-y>", "<C-r>*" }
+vim.keymap.set("c", "<C-y>", "<C-r>*")
 -- <C-g>: exit
-cnoremap { "<C-g>", "<C-c>" }
+vim.keymap.set("c", "<C-g>", "<C-c>")
+-- <C-k>: delete to the end
+vim.keymap.set("c", "<C-k>", [[repeat("\<Del>", strchars(getcmdline()[getcmdpos() - 1:]))]], { expr = true })
 
 -- Indent by > and < instead of >> and <<
-nnoremap { ">", ">>" }
-nnoremap { "<", "<<" }
+vim.keymap.set("n", ">", ">>")
+vim.keymap.set("n", "<", "<<")
 
 -- Maintain visual mode after shifting > and <
-xnoremap { ">", ">gv" }
-xnoremap { "<", "<gv" }
+vim.keymap.set("x", ">", ">gv")
+vim.keymap.set("x", "<", "<gv")
 
 -- Easy escape
-inoremap { "jj", "<ESC>" }
-inoremap { "j ", "j" }
-cnoremap {
-  "j",
-  [[getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j']],
-  expr = true,
-}
+vim.keymap.set("i", "jj", "<ESC>")
+vim.keymap.set("i", "j ", "j")
+vim.keymap.set("c", "j", [[getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j']], { expr = true })
 
 -- Start new line from any cursor position
-inoremap { "<S-Return>", "<C-o>o" }
+vim.keymap.set("i", "<S-Return>", "<C-o>o")
 
 -- Change current word in a repeatable manner
-nnoremap { "cn", "*``cgn" }
-nnoremap { "cN", "*``cgN" }
+vim.keymap.set("n", "cn", "*``cgn")
+vim.keymap.set("n", "cN", "*``cgN")
 
 -- Change selected word in a repeatable manner
-vnoremap {
-  "cn",
-  [["y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"]],
-  expr = true,
-}
-
-vnoremap {
-  "cN",
-  [["y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"]],
-  expr = true,
-}
+vim.keymap.set("v", "cn", [["y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"]], { expr = true })
+vim.keymap.set("v", "cn", [["y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"]], { expr = true })
 
 -- Close windows with q
-nnoremap {
-  "q",
-  [[winnr('$') != 1 ? ':<C-u>close<CR>' : ':<C-u>bdelete<CR>']],
+vim.keymap.set("n", "q", [[winnr('$') != 1 ? ':<C-u>close<CR>' : ':<C-u>bdelete<CR>']], {
   silent = true,
   expr = true,
-}
+})
 
 -- Improve the behavior of '0': tobble between '^' and '0'
-nnoremap { "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", expr = true }
-xnoremap { "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", expr = true }
-onoremap { "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", expr = true }
+vim.keymap.set({ "n", "x", "o" }, "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
 
 -- Turn off search highlight
-nnoremap { "<ESC><ESC>", [[<Cmd>silent! nohlsearch<CR>]], silent = true }
+vim.keymap.set("n", "<ESC><ESC>", [[<Cmd>silent! nohlsearch<CR>]], { silent = true })
 
 --- }}}
 
 --- Open/close folding: {{{
--- Toggle fold
-nnoremap { "<CR>", "za" }
 -- Focus the current fold by closing all others
-nnoremap { "<S-Return>", "zMza" }
+vim.keymap.set("n", "<S-Return>", "zMza")
 
 -- Smart open/close fold
-nnoremap { "l", [[foldclosed('.') != -1 ? 'zo' : 'l']], expr = true }
-xnoremap { "l", [[foldclosed(line('.')) != -1 ? 'zogv0' : 'l']], expr = true }
-nnoremap {
-  "<C-_>",
-  function()
-    if vim.fn.foldlevel "." == 0 then
-      vim.cmd "normal! zM"
-      return
-    end
+vim.keymap.set("n", "l", function()
+  return vim.fn.foldclosed "." ~= -1 and "zo0" or "l"
+end, { expr = true })
 
-    local foldc_lnum = vim.fn.foldclosed "."
-    vim.cmd "normal! zM"
-    if foldc_lnum == -1 then
-      return
-    end
+vim.keymap.set("x", "l", function()
+  return vim.fn.foldclosed "." ~= -1 and "zogv0" or "l"
+end, { expr = true })
 
-    if vim.fn.foldclosed "." == foldc_lnum then
-      vim.cmd "normal! zM"
-    end
+vim.keymap.set("n", "<C-_>", function()
+  if vim.fn.foldlevel "." == 0 then
+    vim.cmd [[normal! zM]]
     return
-  end,
-  silent = true,
-}
+  end
+
+  local foldc_lnum = vim.fn.foldclosed "."
+  vim.cmd [[normal! zM]]
+  if foldc_lnum == -1 then
+    return
+  end
+
+  if vim.fn.foldclosed "." == foldc_lnum then
+    vim.cmd [[normal! zM]]
+  end
+  return
+end, { silent = true })
 
 --- }}}
 
@@ -169,100 +146,68 @@ nnoremap {
 -- Use 's' key as the prefix to control window/tab
 
 -- new tab
-nnoremap { "st", ":tabnew<CR>", silent = true }
+vim.keymap.set("n", "st", "<Cmd>tabnew<CR>", { silent = true })
+
 -- close window
-nnoremap { "sc", ":close<CR>", silent = true }
+vim.keymap.set("n", "sc", "<Cmd>close<CR>", { silent = true })
+
 -- only current window
-nnoremap { "so", ":only<CR>", silent = true }
+vim.keymap.set("n", "so", "<Cmd>only<CR>", { silent = true })
 
 -- split window horizontally
-nnoremap { "s-", ":split<CR>", silent = true }
+vim.keymap.set("n", "s-", "<Cmd>split<CR>", { silent = true })
 
 -- split window virtically
-nnoremap { "s|", ":vsplit<CR>", silent = true }
+vim.keymap.set("n", "s|", "<Cmd>vsplit<CR>", { silent = true })
 
 -- equal size window
-nnoremap { "s=", "<C-w>=<CR>", silent = true }
+vim.keymap.set("n", "s=", "<C-w>=<CR>", { silent = true })
 
 -- Resize window by Shift+arrow
-nnoremap { "<S-Left>", "<C-w><" }
-nnoremap { "<S-Right>", "<C-w>>" }
-nnoremap { "<S-Up>", "<C-w>+" }
-nnoremap { "<S-Down>", "<C-w>-" }
+vim.keymap.set("n", "<S-Left>", "<C-w><")
+vim.keymap.set("n", "<S-Right>", "<C-w>>")
+vim.keymap.set("n", "<S-Up>", "<C-w>+")
+vim.keymap.set("n", "<S-Down>", "<C-w>-")
 
 ---  }}}
 
 --- Toggle Editor UI {{{
 -- toggle cursorcolumn
-nnoremap {
-  "<Space>tc",
-  function()
-    vim.wo.cursorcolumn = not vim.wo.cursorcolumn
-  end,
-  silent = true,
-}
+vim.keymap.set("n", "<Space>tc", function()
+  vim.wo.cursorcolumn = not vim.wo.cursorcolumn
+end, { silent = true })
 
 -- toggle cursorline
-nnoremap {
-  "<Space>tl",
-  function()
-    vim.wo.cursorline = not vim.wo.cursorline
-  end,
-  silent = true,
-}
+vim.keymap.set("n", "<Space>tl", function()
+  vim.wo.cursorline = not vim.wo.cursorline
+end, { silent = true })
 
 -- toggle line numbers
-nnoremap {
-  "<Space>tn",
-  function()
-    vim.wo.number = not vim.wo.number
-    vim.wo.relativenumber = not vim.wo.relativenumber
-  end,
-  silent = true,
-}
+vim.keymap.set("n", "<Space>tn", function()
+  vim.wo.number = not vim.wo.number
+  vim.wo.relativenumber = not vim.wo.relativenumber
+end, { silent = true })
 
-nnoremap {
-  "<Space>tp",
-  function()
-    vim.wo.paste = not vim.wo.paste
-    if vim.wo.paste then
-      vim.api.nvim_echo({ { "paste-checking " }, { "enabled", "Green" } }, false, {})
-    else
-      vim.api.nvim_echo({ { "paste-checking " }, { "disabled", "Red" } }, false, {})
-    end
-  end,
-  silent = true,
-}
+-- toggle spell checking
+vim.keymap.set("n", "<Space>ts", function()
+  vim.wo.spell = not vim.wo.spell
+  if vim.wo.spell then
+    vim.api.nvim_echo({ { "spell-checking " }, { "enabled", "Green" } }, false, {})
+  else
+    vim.api.nvim_echo({ { "spell-checking " }, { "disabled", "Red" } }, false, {})
+  end
+end, { silent = true })
 
-nnoremap {
-  "<Space>ts",
-  function()
-    vim.wo.spell = not vim.wo.spell
-    if vim.wo.spell then
-      vim.api.nvim_echo({ { "spell-checking " }, { "enabled", "Green" } }, false, {})
-    else
-      vim.api.nvim_echo({ { "spell-checking " }, { "disabled", "Red" } }, false, {})
-    end
-  end,
-  silent = true,
-}
+-- toggle list char (control characters)
+vim.keymap.set("n", "<Space>th", function()
+  vim.wo.list = not vim.wo.list
+end, { silent = true })
 
-nnoremap {
-  "<Space>th",
-  function()
-    vim.wo.list = not vim.wo.list
-  end,
-  silent = true,
-}
-
-nnoremap {
-  "<Space>tw",
-  function()
-    vim.wo.wrap = not vim.wo.wrap
-    vim.wo.breakindent = not vim.wo.breakindent
-  end,
-  silent = true,
-}
+-- toggle wrap
+vim.keymap.set("n", "<Space>tw", function()
+  vim.wo.wrap = not vim.wo.wrap
+  vim.wo.breakindent = not vim.wo.breakindent
+end, { silent = true })
 
 --- }}}
 
@@ -271,14 +216,15 @@ nnoremap {
 -- api.nvim_set_keymap("n", "<Leader>;",  ":", {noremap = true, silent = true})
 
 -- Quit
-vim.api.nvim_set_keymap("n", "<Leader>q", ":quit<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<Leader>q", "<ESC>:quit<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Leader>Q", ":qall!<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<Leader>Q", "<ESC>:qall!<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<Leader>q", ":quit<CR>", { silent = true })
+vim.keymap.set("v", "<Leader>q", "<ESC>:quit<CR>", { silent = true })
+vim.keymap.set("n", "<Leader>Q", ":qall!<CR>", { silent = true })
+vim.keymap.set("v", "<Leader>Q", "<ESC>:qall!<CR>", { silent = true })
 
 -- Fast saving
-vim.api.nvim_set_keymap("n", "<Leader>w", ":update<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<Leader>w", "<ESC>:update<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Leader>W", ":wall!<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<Leader>W", "<ESC>:wall!<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<Leader>w", "<Cmd>update<CR>", { silent = true })
+vim.keymap.set("v", "<Leader>w", "<ESC>:update<CR>", { silent = true })
+vim.keymap.set("n", "<Leader>W", "<Cmd>wall!<CR>", { silent = true })
+vim.keymap.set("v", "<Leader>W", "<ESC>:wall!<CR>", { silent = true })
 --- }}}

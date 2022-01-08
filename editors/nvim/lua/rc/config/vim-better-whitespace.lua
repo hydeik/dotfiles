@@ -16,7 +16,7 @@ function M.setup()
     "which_key",
   }
 
-  require("rc.core.keymap").nnoremap { "<Leader>x", "<cmd>StripWhitespace<CR>", silent = true }
+  vim.keymap.set("n", "<Leader>x", "<Cmd>StripWhitespace<CR>", { silent = true })
 end
 
 return M

@@ -1,13 +1,12 @@
 local M = {}
 
 function M.setup()
-  local keymap = require "rc.core.keymap"
-  keymap.nnoremap { "<F5>", "<cmd>lua require'dap'.continue()<CR>", silent = true }
-  keymap.nnoremap { "<F10>", "<cmd>lua require'dap'.stop_over()<CR>", silent = true }
-  keymap.nnoremap { "<Space>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", silent = true }
-  keymap.nnoremap { "<Space>dr", "<cmd>lua require'dap'.repr.open()<CR>", silent = true }
-  keymap.nnoremap { "<Space>dn", "<cmd>lua require'dap-python'.test_method()<CR>", silent = true }
-  keymap.vnoremap { "<Space>ds", "<ESC>:lua require'dap-python'.debug_selection()<CR>", silent = true }
+  vim.keymap.set("n", "<F5>", "<Cmd>lua require'dap'.continue()<CR>", { silent = true })
+  vim.keymap.set("n", "<F10>", "<Cmd>lua require'dap'.stop_over()<CR>", { silent = true })
+  vim.keymap.set("n", "<Space>db", "<Cmd>lua require'dap'.toggle_breakpoint()<CR>", { silent = true })
+  vim.keymap.set("n", "<Space>dr", "<Cmd>lua require'dap'.repr.open()<CR>", { silent = true })
+  vim.keymap.set("n", "<Space>dn", "<Cmd>lua require'dap-python'.test_method()<CR>", { silent = true })
+  vim.keymap.set("n", "<Space>ds", "<ESC>:lua require'dap-python'.debug_selection()<CR>", { silent = true })
 end
 
 function M.config()
