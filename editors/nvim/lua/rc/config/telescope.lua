@@ -64,10 +64,11 @@ function M.live_grep()
 end
 
 function M.file_browser()
-  require("telescope.builtin").file_browser {
+  local opts = {
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",
   }
+  require("telescope").extensions.file_browser.file_browser(opts)
 end
 
 function M.buffers()
@@ -223,6 +224,7 @@ function M.config()
 
   local telescope = require "telescope"
   local actions = require "telescope.actions"
+  local action_layout = require "telescope.actions.layout"
   local sorters = require "telescope.sorters"
 
   telescope.setup {
@@ -260,8 +262,10 @@ function M.config()
         -- insert mode
         i = {
           ["<Tab>"] = actions.toggle_selection,
+          ["<C-_>"] = actions.which_key,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
           ["<M-q>"] = actions.smart_add_to_qflist + actions.open_qflist,
+          ["<M-p>"] = action_layout.toggle_preview,
         },
         -- normal mode
         n = {
@@ -271,6 +275,7 @@ function M.config()
           ["<C-p>"] = actions.move_selection_previous,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
           ["<M-q>"] = actions.smart_add_to_qflist + actions.open_qflist,
+          ["<M-p>"] = action_layout.toggle_preview,
         },
       },
 
@@ -280,6 +285,7 @@ function M.config()
     },
 
     extensions = {
+      file_browser = {},
       frecency = {
         ignore_patterns = { "*.git/*", "*/tmp/*", "*/build/*" },
         show_scores = true,
@@ -304,10 +310,13 @@ function M.config()
   }
 
   pcall(telescope.load_extension, "dap")
+  pcall(telescope.load_extension, "file_browser")
   pcall(telescope.load_extension, "freceny")
   pcall(telescope.load_extension, "fzy_native")
   pcall(telescope.load_extension, "gh")
-  pcall(telescope.load_extension, "ghq")
+  pcall(telescope.load_extension, "hop")
+  pcall(telescope.load_extension, "smart_history")
+  pcall(telescope.load_extension, "ui-select")
 end
 
 return M
