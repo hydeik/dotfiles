@@ -105,8 +105,12 @@ function M.load_plugins(use, _)
   --   config = [[require("rc.config.hlslens").config()]],
   -- }
 
-  -- -- Preview the contents of register
-  -- use { "tversteeg/registers.nvim" }
+  -- The extended search
+  use {
+    "hrsh7th/vim-searchx",
+    setup = [[require("rc.config.vim-searchx").setup()]],
+    config = [[require("rc.config.vim-searchx").config()]],
+  }
 
   -- Enhanced f/t
   use {

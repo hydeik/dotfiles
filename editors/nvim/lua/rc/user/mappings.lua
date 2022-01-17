@@ -105,7 +105,7 @@ vim.keymap.set("n", "q", [[winnr('$') != 1 ? ':<C-u>close<CR>' : ':<C-u>bdelete<
 vim.keymap.set({ "n", "x", "o" }, "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
 
 -- Turn off search highlight
-vim.keymap.set("n", "<ESC><ESC>", [[<Cmd>silent! nohlsearch<CR>]], { silent = true })
+-- vim.keymap.set("n", "<ESC><ESC>", [[<Cmd>silent! nohlsearch<CR>]], { silent = true })
 
 --- }}}
 
