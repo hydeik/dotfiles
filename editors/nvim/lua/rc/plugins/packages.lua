@@ -19,15 +19,38 @@ function M.load_plugins(use, _)
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
   use {
     "antoinemadec/FixCursorHold.nvim",
-    config = [[vim.g.cursorhold_updatetime = 100]],
+    config = function()
+      vim.g.cursorhold_updatetime = 100
+    end,
   }
 
   -- tmux integration for nvim features pane movement and resizing from within nvim.
   use {
     "aserowy/tmux.nvim",
     module = { "tmux" },
-    setup = [[require("rc.config.tmux").setup()]],
-    config = [[require("rc.config.tmux").config()]],
+    setup = function()
+      -- Custom keybindings
+      local opts = { silent = true, nowait = true }
+      vim.keymap.set("n", "<M-h>", "<Cmd>lua require('tmux').move_left()<CR>", opts)
+      vim.keymap.set("n", "<M-j>", "<Cmd>lua require('tmux').move_bottom()<CR>", opts)
+      vim.keymap.set("n", "<M-k>", "<Cmd>lua require('tmux').move_top()<CR>", opts)
+      vim.keymap.set("n", "<M-l>", "<Cmd>lua require('tmux').move_right()<CR>", opts)
+
+      vim.keymap.set("n", "<C-M-h>", "<Cmd>lua require('tmux').resize_left()<CR>", opts)
+      vim.keymap.set("n", "<C-M-j>", "<Cmd>lua require('tmux').resize_bottom()<CR>", opts)
+      vim.keymap.set("n", "<C-M-k>", "<Cmd>lua require('tmux').resize_top()<CR>", opts)
+      vim.keymap.set("n", "<C-M-l>", "<Cmd>lua require('tmux').resize_right()<CR>", opts)
+    end,
+    config = function()
+      require("tmux").setup {
+        navigation = { enable_default_keybindings = false },
+        resize = {
+          enable_default_keybindings = false,
+          resize_step_x = 2,
+          resize_step_y = 2,
+        },
+      }
+    end,
   }
 
   -- [[ UI ]]
@@ -53,7 +76,9 @@ function M.load_plugins(use, _)
     "akinsho/nvim-bufferline.lua",
     requires = { "kyazdani42/nvim-web-devicons" },
     event = "BufReadPre",
-    config = [[require("bufferline").setup { options = { always_show_bufferline = true } }]],
+    config = function()
+      require("bufferline").setup { options = { always_show_bufferline = true } }
+    end,
   }
 
   -- A fancy, configurable, notification manager for Neovim
@@ -62,30 +87,38 @@ function M.load_plugins(use, _)
     module = "notify",
   }
 
-  -- Start your search from a more confortable place, say the upper right corner?
-  use {
-    "VonHeikemen/searchbox.nvim",
-    requires = { "MunifTanjim/nui.nvim" },
-    module = { "searchbox" },
-    setup = [[require("rc.config.searchbox").setup()]],
-    config = [[require("rc.config.searchbox").config()]],
-  }
-
   -- Better whitespace highlighting
   use {
     "ntpeters/vim-better-whitespace",
     event = { "BufNewFile", "BufRead" },
-    setup = [[require("rc.config.vim-better-whitespace").setup()]],
+    setup = function()
+      vim.g.better_whitespace_enabled = 1
+      vim.g.strip_whitespace_on_save = 1
+      vim.g.show_spaces_that_precede_tabs = 1
+      vim.g.better_whitespace_filetypes_blacklist = {
+        "diff",
+        "gitcommit",
+        "defx",
+        "denite",
+        "qf",
+        "help",
+        "markdown",
+        "packer",
+        "which_key",
+      }
+      -- keymap
+      vim.keymap.set("n", "<Leader>x", "<Cmd>StripWhitespace<CR>", { silent = true })
+    end,
   }
 
-  -- A file explorer tree for neovim written in lua
-  use {
-    "kyazdani42/nvim-tree.lua",
-    cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
-    setup = [[require("rc.config.nvim-tree").setup()]],
-    config = [[require("rc.config.nvim-tree").config()]],
-    disable = true,
-  }
+  -- -- A file explorer tree for neovim written in lua
+  -- use {
+  --   "kyazdani42/nvim-tree.lua",
+  --   cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
+  --   setup = [[require("rc.config.nvim-tree").setup()]],
+  --   config = [[require("rc.config.nvim-tree").config()]],
+  --   disable = true,
+  -- }
 
   -- [[ Editor ]]
   -- Enable repeating supported plugin maps with "."
@@ -108,8 +141,52 @@ function M.load_plugins(use, _)
   -- The extended search
   use {
     "hrsh7th/vim-searchx",
-    setup = [[require("rc.config.vim-searchx").setup()]],
-    config = [[require("rc.config.vim-searchx").config()]],
+    fn = { "searchx#*" },
+    setup = function()
+      -- Overwrite / and ?.
+      vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
+      vim.keymap.set({ "n", "x" }, "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+      vim.keymap.set("n", "'", "<Cmd>call searchx#select()<CR>)")
+      -- Move to next/prev match
+      vim.keymap.set({ "n", "x" }, "N", "<Cmd>call searchx#prev_dir()<CR>")
+      vim.keymap.set({ "n", "x" }, "n", "<Cmd>call searchx#next_dir()<CR>")
+      vim.keymap.set({ "n", "x", "c" }, "<C-j>", "<Cmd>call searchx#next()<CR>")
+      vim.keymap.set({ "n", "x", "c" }, "<C-k>", "<Cmd>call searchx#prev()<CR>")
+      -- Clear highlights
+      vim.keymap.set("n", "<Esc><Esc>", "<Cmd>call searchx#clear()<CR>)")
+    end,
+    config = function()
+      vim.api.nvim_exec(
+        [=[
+          let g:searchx = {}
+
+          " Auto jump if the recent input matches to any marker.
+          let g:searchx.auto_accept = v:true
+
+          " The scrolloff value for moving to next/prev.
+          let g:searchx.scrolloff = &scrolloff
+
+          " To enable scrolling animation.
+          let g:searchx.scrolltime = 0
+
+          " Marker characters.
+          let g:searchx.markers = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '.\zs')
+
+          " Convert search pattern.
+          function g:searchx.convert(input) abort
+            if a:input !~# '\k'
+              return '\V' .. a:input
+            endif
+            return a:input[0] .. substitute(a:input[1:], '\\\@<! ', '.\\{-}', 'g')
+          endfunction
+
+          " Set highlight for markers
+          highlight! link SearchxMarker DiffChange
+          highlight! link SearchxMarkerCurrent WarningMsg
+        ]=],
+        false
+      )
+    end,
   }
 
   -- Enhanced f/t
@@ -120,22 +197,49 @@ function M.load_plugins(use, _)
       { "o", "<Plug>(eft-" },
       { "x", "<Plug>(eft-" },
     },
-    setup = [[require("rc.config.vim-eft").setup()]],
+    setup = function()
+      vim.keymap.set({ "n", "x", "o" }, "f", "<Plug>(eft-f-repeatable)")
+      vim.keymap.set({ "n", "x", "o" }, "F", "<Plug>(eft-F-repeatable)")
+      vim.keymap.set({ "n", "x", "o" }, "t", "<Plug>(eft-t-repeatable)")
+      vim.keymap.set({ "n", "x", "o" }, "T", "<Plug>(eft-T-repeatable)")
+    end,
   }
 
   -- Neovim motions on speed!
   use {
     "phaazon/hop.nvim",
+    -- keys = {
+    --   { "n", "ss" },
+    --   { "o", "ss" },
+    --   { "x", "ss" },
+    --   { "n", "sl" },
+    --   { "o", "sl" },
+    --   { "x", "sl" },
+    --   { "n", "s/" },
+    --   { "o", "s/" },
+    --   { "x", "s/" },
+    -- },
     module = { "hop" },
-    setup = [[require("rc.config.hop").setup()]],
-    config = [[require("rc.config.hop").config()]],
+    setup = function()
+      vim.keymap.set({ "n", "x", "o" }, "ss", "<Cmd>lua require'hop'.hint_char2()<CR>")
+      vim.keymap.set({ "n", "x", "o" }, "sl", "<Cmd>lua require'hop'.hint_lines()<CR>")
+      vim.keymap.set({ "n", "x", "o" }, "s/", "<Cmd>lua require'hop'.hint_patterns()<CR>")
+    end,
+    config = function()
+      require("hop").setup()
+    end,
   }
 
   -- Make blockwise visual mode more useful
   use {
     "kana/vim-niceblock",
     keys = { { "v", "<Plug>(niceblock-" } },
-    setup = [[require("rc.config.vim-niceblock").setup()]],
+    setup = function()
+      vim.g.niceblock_no_default_key_mappings = 1
+      vim.keymap.set("v", "I", "<Plug>(niceblock-I)")
+      vim.keymap.set("v", "gI", "<Plug>(niceblock-gI)")
+      vim.keymap.set("v", "A", "<Plug>(niceblock-A)")
+    end,
   }
 
   -- The killring-alike plugin with no default mappings.
@@ -143,14 +247,26 @@ function M.load_plugins(use, _)
   use {
     "bfredl/nvim-miniyank",
     keys = { { "n", "<Plug>(miniyank-" } },
-    setup = [[require("rc.config.miniyank").setup()]],
+    setup = function()
+      vim.g.miniyank_maxitems = 100
+      vim.keymap.set("n", "p", "<Plug>(miniyank-autoput)")
+      vim.keymap.set("n", "P", "<Plug>(miniyank-autoPut)")
+    end,
   }
 
   -- Enhanced increment/decrement plugin for Neovim.
   use {
     "monaqa/dial.nvim",
-    keys = { { "n", "<Plug>(dial-" }, { "v", "<Plug>(dial-" } },
-    setup = [[require("rc.config.dial").setup()]],
+    keys = {
+      { "n", "<Plug>(dial-" },
+      { "v", "<Plug>(dial-" },
+    },
+    setup = function()
+      vim.keymap.set({ "n", "v" }, "<C-a>", "<Plug>(dial-increment)")
+      vim.keymap.set({ "n", "v" }, "<C-x>", "<Plug>(dial-decrement)")
+      vim.keymap.set("v", "g<C-a>", "<Plug>(dial-increment-additional)")
+      vim.keymap.set("v", "g<C-x>", "<Plug>(dial-decrement-additional)")
+    end,
   }
 
   -- Preview the content of the registers
@@ -166,15 +282,28 @@ function M.load_plugins(use, _)
   -- Show keybindings in popup
   use {
     "folke/which-key.nvim",
-    disable = true,
     config = [[require("rc.config.which-key").config()]],
+    disable = true,
   }
 
   -- A high-performance color highlighter for NeoVim
   use {
     "norcalli/nvim-colorizer.lua",
     event = "BufReadPre",
-    config = [[require("rc.config.colorizer").config()]],
+    config = function()
+      require("colorizer").setup(nil, {
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        names = true, -- "Name" codes like Blue
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+        -- Available modes: foreground, background
+        mode = "background", -- Set the display mode.
+      })
+    end,
   }
 
   -- Breakdown Vim's --startuptime output
@@ -205,15 +334,84 @@ function M.load_plugins(use, _)
       { "o", "<Plug>(textobj-sandwich-" },
       { "x", "<Plug>(textobj-sandwich-" },
     },
-    setup = [[require("rc.config.sandwich").setup()]],
-    config = [[require("rc.config.sandwich").config()]],
+    setup = function()
+      vim.g.sandwich_no_default_key_mappings = 1
+      vim.g.operator_sandwich_no_default_key_mappings = 1
+      vim.g.textobj_sandwich_no_default_key_mappings = 1
+
+      -- Key mappings
+      -- add
+      vim.keymap.set("", "sa", "<Plug>(sandwich-add)")
+
+      -- delete
+      vim.keymap.set({ "n", "x" }, "sd", "<Plug>(sandwich-delete)")
+      vim.keymap.set("n", "sdb", "<Plug>(sandwich-delete-auto)")
+
+      -- replace
+      vim.keymap.set({ "n", "x" }, "sr", "<Plug>(sandwich-replace)")
+      vim.keymap.set("n", "srb", "<Plug>(sandwich-replace-auto)")
+
+      -- textobj auto
+      vim.keymap.set({ "o", "x" }, "ab", "<Plug>(textobj-sandwich-auto-a)")
+      vim.keymap.set({ "o", "x" }, "ib", "<Plug>(textobj-sandwich-auto-i)")
+
+      -- textobj query
+      vim.keymap.set({ "o", "x" }, "as", "<Plug>(textobj-sandwich-query-a)")
+      vim.keymap.set({ "o", "x" }, "is", "<Plug>(textobj-sandwich-query-i)")
+    end,
+    config = function()
+      vim.g["textobj#sandwich#stimeoutlen"] = 100
+      vim.api.nvim_exec(
+        [=[
+          let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+          let g:sandwich#recipes += [{'buns': ['「', '」']}, {'buns': ['【', '】']}]
+          let g:sandwich#recipes += [{'buns': ['（', '）']}, {'buns': ['『', '』']}]
+          let g:sandwich#recipes += [{'buns': ['\(',  '\)'], 'filetype': ['vim'], 'nesting': 1}]
+          let g:sandwich#recipes += [{'buns': ['\%(', '\)'], 'filetype': ['vim'], 'nesting': 1}]
+        ]=],
+        false
+      )
+    end,
   }
 
   -- Smart align
   use {
     "junegunn/vim-easy-align",
-    keys = { { "n", "<Plug>(EasyAlign)" }, { "v", "<Plug>(EasyAlign)" } },
-    setup = [[require("rc.config.vim-easy-align").setup()]],
+    keys = {
+      { "n", "<Plug>(EasyAlign)" },
+      { "v", "<Plug>(EasyAlign)" },
+    },
+    setup = function()
+      -- key mappings
+      vim.keymap.set({ "n", "v" }, "<Leader>a", "<Plug>(EasyAlign)", { silent = true })
+      -- extending alignment rules
+      vim.g.easy_align_delimiters = {
+        [">"] = { pattern = [[>>\|=>\|>]] },
+        ["/"] = { pattern = [[//\+\|/\*\|\*/]], ignore_groups = { "String" } },
+        ["#"] = {
+          pattern = [[#\+]],
+          ignore_groups = { "String" },
+          delimiter_align = "l",
+        },
+        ["]"] = {
+          pattern = [=[[[\]]]=],
+          left_margin = 0,
+          right_margin = 0,
+          stick_to_left = 0,
+        },
+        [")"] = {
+          pattern = "[()]",
+          left_margin = 0,
+          right_margin = 0,
+          stick_to_left = 0,
+        },
+        ["d"] = {
+          pattern = [[ \(\S\+\s*[;=]\)\@=]],
+          left_margin = 0,
+          right_margin = 0,
+        },
+      }
+    end,
   }
 
   -- Better quickfix windowin Neovim, polish old quickfix window
@@ -259,7 +457,19 @@ function M.load_plugins(use, _)
     branch = "main",
     event = { "FocusLost", "CursorHold" },
     requires = { "nvim-lua/plenary.nvim" },
-    config = [[require("rc.config.gitsigns").config()]],
+    config = function()
+      require("gitsigns").setup {
+        signs = {
+          add = { hl = "DiffAdd", text = "│", numhl = "GitSignsAddNr" },
+          change = { hl = "DiffChange", text = "│", numhl = "GitSignsChangeNr" },
+          delete = { hl = "DiffDelete", text = "_", numhl = "GitSignsDeleteNr" },
+          topdelete = { hl = "DiffDelete", text = "‾", numhl = "GitSignsDeleteNr" },
+          changedelete = { hl = "DiffChange", text = "~", numhl = "GitSignsChangeNr" },
+        },
+        numhl = true,
+        word_diff = true,
+      }
+    end,
   }
 
   -- Reveal the commit messages under the cursor
@@ -276,44 +486,39 @@ function M.load_plugins(use, _)
   -- More pleasant editing on commit messsages
   use {
     "rhysd/committia.vim",
-    event = { "BufEnter COMMIT_EDITMSG" },
-    setup = [[vim.g.committia_min_window_width = 100]],
-  }
-
-  -- Git blame plugin for Neovim written in lua
-  use {
-    "f-person/git-blame.nvim",
-    event = { "BufRead", "BufNewFile" },
-    setup = [[vim.g.gitblame_enabled = 0]],
+    ft = { "gitcommit" },
+    setup = function()
+      vim.g.committia_min_window_width = 100
+    end,
   }
 
   -- [[ Filetypes, Syntax ]]
   -- Nvim Treesitter configurations and abstraction layer
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    event = "BufRead *",
-    run = ":TSUpdate",
-    requires = {
-      -- nvim-treesitter plugins
-      { "nvim-treesitter/nvim-treesitter-refactor", opt = true },
-      { "nvim-treesitter/nvim-treesitter-textobjects", opt = true },
-      { "p00f/nvim-ts-rainbow", opt = true },
-      { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
-    },
-    config = [[require("rc.config.treesitter").config()]],
-  }
+  -- use {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   event = "BufRead *",
+  --   run = ":TSUpdate",
+  --   requires = {
+  --     -- nvim-treesitter plugins
+  --     { "nvim-treesitter/nvim-treesitter-refactor", opt = true },
+  --     { "nvim-treesitter/nvim-treesitter-textobjects", opt = true },
+  --     { "p00f/nvim-ts-rainbow", opt = true },
+  --     { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
+  --   },
+  --   config = [[require("rc.config.treesitter").config()]],
+  -- }
 
-  -- A Neovim plugin to deal with treesitter unit
-  use {
-    "David-Kunz/treesitter-unit",
-    requires = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      vim.keymap.set("x", "iu", ":lua require('treesitter-unit').select()<CR>", { silent = true })
-      vim.keymap.set("x", "au", ":lua require('treesitter-unit').select(true)<CR>", { silent = true })
-      vim.keymap.set("o", "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", { silent = true })
-      vim.keymap.set("o", "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", { silent = true })
-    end,
-  }
+  -- -- A Neovim plugin to deal with treesitter unit
+  -- use {
+  --   "David-Kunz/treesitter-unit",
+  --   requires = { "nvim-treesitter/nvim-treesitter" },
+  --   config = function()
+  --     vim.keymap.set("x", "iu", ":lua require('treesitter-unit').select()<CR>", { silent = true })
+  --     vim.keymap.set("x", "au", ":lua require('treesitter-unit').select(true)<CR>", { silent = true })
+  --     vim.keymap.set("o", "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", { silent = true })
+  --     vim.keymap.set("o", "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", { silent = true })
+  --   end,
+  -- }
 
   -- Vim help in japanese
   use { "vim-jp/vimdoc-ja" }
@@ -352,7 +557,9 @@ function M.load_plugins(use, _)
   use {
     "Shougo/vinarise.vim",
     cmd = { "Vinarise" },
-    setup = "vim.g.vinarise_enable_auto_detect = 1",
+    setup = function()
+      vim.g.vinarise_enable_auto_detect = 1
+    end,
   }
 
   -- [[ Programming tools ]]
@@ -361,9 +568,14 @@ function M.load_plugins(use, _)
   use {
     "editorconfig/editorconfig-vim",
     event = "BufRead",
-    setup = [[
-    vim.g.EditorConfig_exclude_patterns = { "scp://.*", "term://.*", "gina://.*", "fugitive://.*" }
-    ]],
+    setup = function()
+      vim.g.EditorConfig_exclude_patterns = {
+        "scp://.*",
+        "term://.*",
+        "gina://.*",
+        "fugitive://.*",
+      }
+    end,
   }
 
   -- Indent guides for Neovim
@@ -371,7 +583,17 @@ function M.load_plugins(use, _)
     "lukas-reineke/indent-blankline.nvim",
     requires = { "nvim-treesitter/nvim-treesitter" },
     event = { "FocusLost", "CursorHold" },
-    config = [[require("rc.config.indent-blankline").config()]],
+    config = function()
+      require("indent_blankline").setup {
+        char = "│",
+        buftype_exclude = { "prompt", "terminal" },
+        filetype_exclude = { "help", "packer" },
+        use_treesitter = true,
+        show_first_indent_level = false,
+        show_current_context = true,
+        show_end_of_line = true,
+      }
+    end,
   }
 
   -- Comment plugin
@@ -380,7 +602,66 @@ function M.load_plugins(use, _)
     keys = { "gc", "gb", "gcc", "gbc" },
     requires = { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
     wants = { "nvim-ts-context-commentstring" },
-    config = [[require("rc.config.comment").config()]],
+    config = function()
+      require("Comment").setup {
+        ---LHS of toggle mappings in NORMAL + VISUAL mode
+        ---@type table
+        toggler = {
+          ---line-comment keymap
+          line = "gcc",
+          ---block-comment keymap
+          block = "gbc",
+        },
+
+        ---LHS of operator-pending mappings in NORMAL + VISUAL mode
+        ---@type table
+        opleader = {
+          ---line-comment keymap
+          line = "gc",
+          ---block-comment keymap
+          block = "gb",
+        },
+
+        ---Create basic (operator-pending) and extended mappings for NORMAL + VISUAL mode
+        ---@type table
+        mappings = {
+          ---operator-pending mapping
+          ---Includes `gcc`, `gcb`, `gc[count]{motion}` and `gb[count]{motion}`
+          ---NOTE: These mappings can be changed individually by `opleader` and `toggler` config
+          basic = true,
+          ---extra mapping
+          ---Includes `gco`, `gcO`, `gcA`
+          extra = true,
+          ---extended mapping
+          ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
+          extended = false,
+        },
+        ---Pre-hook, called before commenting the line
+        ---@type function
+        pre_hook = function(ctx)
+          -- Only calculate commentstring for tsx filetypes
+          if vim.bo.filetype == "typescriptreact" then
+            local U = require "Comment.utils"
+
+            -- Detemine whether to use linewise or blockwise commentstring
+            local type = ctx.ctype == U.ctype.line and "__default" or "__multiline"
+
+            -- Determine the location where to calculate commentstring from
+            local location = nil
+            if ctx.ctype == U.ctype.block then
+              location = require("ts_context_commentstring.utils").get_cursor_location()
+            elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+              location = require("ts_context_commentstring.utils").get_visual_start_location()
+            end
+
+            return require("ts_context_commentstring.internal").calculate_commentstring {
+              key = type,
+              location = location,
+            }
+          end
+        end,
+      }
+    end,
   }
 
   -- A tree like view for symbols in Neovim using the Language Server Protocol.
@@ -394,12 +675,10 @@ function M.load_plugins(use, _)
         -- cpu usage is higher than you want it or you just hate the highlight
         -- default: true
         highlight_hovered_item = true,
-
         -- whether to show outline guides
         -- default: true
         show_guides = true,
       }
-
       vim.keymap.set("n", "ms", "<Cmd>SymbolsOutline<CR>", { silent = true })
     end,
   }
@@ -465,7 +744,9 @@ function M.load_plugins(use, _)
       "null-ls.nvim",
       "rust-tools.nvim",
     },
-    config = [[require "rc.config.lsp"]],
+    config = function()
+      require "rc.config.lsp"
+    end,
   }
 
   use {
@@ -473,7 +754,9 @@ function M.load_plugins(use, _)
     cmd = { "TroubleToggle", "Trouble" },
     event = { "BufReadPre" },
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
-    config = [[require("trouble").setup {}]],
+    config = function()
+      require("trouble").setup {}
+    end,
   }
 
   -- Debug Adapter Protocol client implementation for Neovim
@@ -484,16 +767,21 @@ function M.load_plugins(use, _)
       { "mfussenegger/nvim-dap-python", opt = true },
       { "theHamsta/nvim-dap-virtual-text", opt = true },
     },
-    setup = [[require("rc.config.dap").setup()]],
-    config = [[require("rc.config.dap").config()]],
+    setup = function()
+      require("rc.config.dap").setup()
+    end,
+    config = function()
+      require("rc.config.dap").config()
+    end,
   }
 
   use {
     "L3MON4D3/LuaSnip",
     module = { "luasnip" },
     requires = { "rafamadriz/friendly-snippets" },
-    config = [[require("rc.config.luasnip").config()]],
-    disable = true,
+    config = function()
+      require("rc.config.luasnip").config()
+    end,
   }
 
   use {
@@ -510,7 +798,9 @@ function M.load_plugins(use, _)
       { "kdheepak/cmp-latex-symbols", opt = true },
       { "saadparwaiz1/cmp_luasnip", opt = true },
     },
-    config = [[require("rc.config.nvim-cmp").config()]],
+    config = function()
+      require("rc.config.nvim-cmp").config()
+    end,
   }
 
   -- [[ Fuzzy finder ]]
@@ -542,8 +832,12 @@ function M.load_plugins(use, _)
     },
     cmd = { "Telescope" },
     module = { "telescope" },
-    setup = [[require("rc.config.telescope").setup()]],
-    config = [[require("rc.config.telescope").config()]],
+    setup = function()
+      require("rc.config.telescope").setup()
+    end,
+    config = function()
+      require("rc.config.telescope").config()
+    end,
   }
 end
 
