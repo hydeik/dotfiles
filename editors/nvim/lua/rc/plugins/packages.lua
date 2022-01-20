@@ -494,31 +494,31 @@ function M.load_plugins(use, _)
 
   -- [[ Filetypes, Syntax ]]
   -- Nvim Treesitter configurations and abstraction layer
-  -- use {
-  --   "nvim-treesitter/nvim-treesitter",
-  --   event = "BufRead *",
-  --   run = ":TSUpdate",
-  --   requires = {
-  --     -- nvim-treesitter plugins
-  --     { "nvim-treesitter/nvim-treesitter-refactor", opt = true },
-  --     { "nvim-treesitter/nvim-treesitter-textobjects", opt = true },
-  --     { "p00f/nvim-ts-rainbow", opt = true },
-  --     { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
-  --   },
-  --   config = [[require("rc.config.treesitter").config()]],
-  -- }
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    event = "BufRead *",
+    run = ":TSUpdate",
+    requires = {
+      -- nvim-treesitter plugins
+      { "nvim-treesitter/nvim-treesitter-refactor", opt = true },
+      { "nvim-treesitter/nvim-treesitter-textobjects", opt = true },
+      { "p00f/nvim-ts-rainbow", opt = true },
+      { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
+    },
+    config = [[require("rc.config.treesitter").config()]],
+  }
 
-  -- -- A Neovim plugin to deal with treesitter unit
-  -- use {
-  --   "David-Kunz/treesitter-unit",
-  --   requires = { "nvim-treesitter/nvim-treesitter" },
-  --   config = function()
-  --     vim.keymap.set("x", "iu", ":lua require('treesitter-unit').select()<CR>", { silent = true })
-  --     vim.keymap.set("x", "au", ":lua require('treesitter-unit').select(true)<CR>", { silent = true })
-  --     vim.keymap.set("o", "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", { silent = true })
-  --     vim.keymap.set("o", "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", { silent = true })
-  --   end,
-  -- }
+  -- A Neovim plugin to deal with treesitter unit
+  use {
+    "David-Kunz/treesitter-unit",
+    requires = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      vim.keymap.set("x", "iu", ":lua require('treesitter-unit').select()<CR>", { silent = true })
+      vim.keymap.set("x", "au", ":lua require('treesitter-unit').select(true)<CR>", { silent = true })
+      vim.keymap.set("o", "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", { silent = true })
+      vim.keymap.set("o", "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", { silent = true })
+    end,
+  }
 
   -- Vim help in japanese
   use { "vim-jp/vimdoc-ja" }
@@ -780,7 +780,19 @@ function M.load_plugins(use, _)
     module = { "luasnip" },
     requires = { "rafamadriz/friendly-snippets" },
     config = function()
-      require("rc.config.luasnip").config()
+      require("luasnip").config.set_config {
+        history = true,
+        updateevents = "TextChanged,TextChangedI",
+      }
+      -- register snippets directories
+      local path = require "rc.core.path"
+      require("luasnip.loaders.from_vscode").load {
+        paths = {
+          -- REMARK: package.json files are required in the following directories
+          -- path.join(path.config_home, "snippets"),
+          path.join(path.pack_root, "packer", "start", "friendly-snippets"),
+        },
+      }
     end,
   }
 
@@ -788,6 +800,7 @@ function M.load_plugins(use, _)
     "hrsh7th/nvim-cmp",
     event = "InsertEnter *",
     requires = {
+      { "L3MON4D3/LuaSnip" },
       { "hrsh7th/cmp-nvim-lsp", opt = true },
       { "hrsh7th/cmp-buffer", opt = true },
       { "hrsh7th/cmp-calc", opt = true },

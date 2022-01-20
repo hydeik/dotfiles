@@ -26,14 +26,9 @@ function M.config()
   end
   require("cmp_nvim_lsp").setup {}
 
-  local function cmp_formatting(_, vim_item)
-    local kind_presets = require("rc.config.lsp.kind").icons
-    vim_item.kind = kind_presets[vim_item.kind]
-    return vim_item
-  end
-
-  local kind_icons = require("rc.config.lsp.kind").icons
-  local menu = {
+  -- Icons & menu
+  local cmp_kinds = require("rc.config.lsp.kind").icons
+  local cmp_menu = {
     buffer = "[Buffer]",
     calc = "[Calc]",
     emoji = "[Emoji]",
@@ -43,12 +38,21 @@ function M.config()
     latex_symbols = "[Latex]",
     luasnip = "[LuaSnip]",
   }
+
+  -- utility functions
+
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+  end
+
   -- Configurations
   local cmp = require "cmp"
+  local luasnip = require "luasnip"
   cmp.setup {
     snippet = {
       expand = function(args)
-        require("luasnip").lsp_expand(args.body)
+        luasnip.lsp_expand(args.body)
       end,
     },
     mapping = {
@@ -56,21 +60,44 @@ function M.config()
       ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
       ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
       ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-Space>"] = cmp.mapping.complete(),
-      ["<C-e>"] = cmp.mapping.close(),
+      ["<C-e>"] = {
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      },
       ["<CR>"] = cmp.mapping {
         i = cmp.mapping.confirm { behavior = cmp.SelectBehavior.Replace, select = true },
         c = cmp.mapping.confirm { select = false },
       },
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
     },
     formatting = {
       format = function(entry, vim_item)
         -- Kind icons
-        vim_item.kind = kind_icons[vim_item.kind]
+        vim_item.kind = cmp_kinds[vim_item.kind]
         -- Source
-        vim_item.menu = menu[entry.source.name]
+        vim_item.menu = cmp_menu[entry.source.name]
         return vim_item
       end,
     },
