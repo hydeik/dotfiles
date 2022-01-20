@@ -27,36 +27,22 @@ function M.config()
   require("cmp_nvim_lsp").setup {}
 
   local function cmp_formatting(_, vim_item)
-    local kind_presets = {
-      Text = " [text]",
-      Method = "Ƒ [method]",
-      Function = " [function]",
-      Constructor = " [constructor]",
-      Field = "ﰠ [field]",
-      Variable = "",
-      Class = " [class]",
-      Interface = " [interface]",
-      Module = " [module]",
-      Property = " [property]",
-      Unit = " [unit]",
-      Value = " [value]",
-      Enum = " [enum]",
-      Keyword = " [key]",
-      Snippet = "﬌ [snippet]",
-      Color = " [color]",
-      File = " [file]",
-      Reference = " [reference]",
-      Folder = " [folder]",
-      EnumMember = " [enum member]",
-      Constant = " [constant]",
-      Struct = " [struct]",
-      Event = " [event]",
-      Operator = " [operator]",
-      TypeParameter = " [type]",
-    }
+    local kind_presets = require("rc.config.lsp.kind").icons
     vim_item.kind = kind_presets[vim_item.kind]
     return vim_item
   end
+
+  local kind_icons = require("rc.config.lsp.kind").icons
+  local menu = {
+    buffer = "[Buffer]",
+    calc = "[Calc]",
+    emoji = "[Emoji]",
+    nvim_lsp = "[LSP]",
+    nvim_lua = "[Lua]",
+    path = "[PATH]",
+    latex_symbols = "[Latex]",
+    luasnip = "[LuaSnip]",
+  }
   -- Configurations
   local cmp = require "cmp"
   cmp.setup {
@@ -80,7 +66,13 @@ function M.config()
       },
     },
     formatting = {
-      format = cmp_formatting,
+      format = function(entry, vim_item)
+        -- Kind icons
+        vim_item.kind = kind_icons[vim_item.kind]
+        -- Source
+        vim_item.menu = menu[entry.source.name]
+        return vim_item
+      end,
     },
     sources = {
       { name = "nvim_lsp" },
