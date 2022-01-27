@@ -759,6 +759,14 @@ function M.load_plugins(use, _)
     end,
   }
 
+  use {
+    "j-hui/fidget.nvim",
+    after = { "nvim-lspconfig" },
+    config = function()
+      require("fidget").setup {}
+    end,
+  }
+
   -- Debug Adapter Protocol client implementation for Neovim
   use {
     "mfussenegger/nvim-dap",
