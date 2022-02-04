@@ -167,7 +167,11 @@ function M.load_plugins(use, _)
           let g:searchx.scrolloff = &scrolloff
 
           " To enable scrolling animation.
-          let g:searchx.scrolltime = 0
+          let g:searchx.scrolltime = 500
+
+          " To enable auto nohlsearch after cursor is moved
+          let g:searchx.nohlsearch = {}
+          let g:searchx.nohlsearch.jump = v:true
 
           " Marker characters.
           let g:searchx.markers = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '.\zs')
