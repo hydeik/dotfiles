@@ -38,22 +38,6 @@ completionItem.resolveSupport = {
 local servers = {
   -- https://github.com/bash-lsp/bash-language-server
   bashls = {},
-  -- https://clangd.llvm.org/installation.html
-  clangd = {
-    cmd = {
-      "clangd",
-      "--background-index",
-      "--clang-tidy",
-      "--header-insertion=iwyu",
-      "--suggest-missing-includes",
-      "--cross-file-rename",
-    },
-    init_options = {
-      clangdFileStatus = true,
-      usePlaceholders = true,
-      completeUnimported = true,
-    },
-  },
   -- https://github.com/regen100/cmake-language-server
   cmake = {},
   -- https://github.com/vscode-langservers/vscode-css-languageserver-bin
@@ -94,6 +78,31 @@ require("rc.config.lsp.null-ls").setup {
 -- https://github.com/simrat39/rust-tools.nvim
 require("rust-tools").setup {
   server = { on_attach = on_attach, capabilities = updated_capabilities },
+}
+
+-- https://clangd.llvm.org/installation.html
+-- https://github.com/p00f/clangd_extensions.nvim
+require("clangd_extensions").setup {
+  server = {
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--clang-tidy",
+      "--header-insertion=iwyu",
+      "--suggest-missing-includes",
+      "--cross-file-rename",
+    },
+    init_options = {
+      clangdFileStatus = true,
+      usePlaceholders = true,
+      completeUnimported = true,
+    },
+    on_attach = on_attach,
+    capabilities = updated_capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    },
+  },
 }
 
 -- https://github.com/sumneko/lua-language-server

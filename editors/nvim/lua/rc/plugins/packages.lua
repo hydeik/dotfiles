@@ -760,16 +760,14 @@ function M.load_plugins(use, _)
           { "nvim-lua/popup.nvim" },
         },
       },
-      -- {
-      --   "folke/trouble.nvim",
-      --   requires = { "kyazdani42/nvim-web-devicons" },
-      -- },
+      { "p00f/clangd_extensions.nvim" },
       { "folke/which-key.nvim" },
     },
     wants = {
       "lua-dev.nvim",
       "null-ls.nvim",
       "rust-tools.nvim",
+      "clangd_extensions.nvim",
     },
     config = function()
       require "rc.config.lsp"
