@@ -125,7 +125,7 @@ function M.load_plugins(use, _)
   use { "tpope/vim-repeat" }
 
   -- Even better % navigation and highlight mathching words
-  use { "andymass/vim-matchup", event = { "CursorHold" } }
+  use { "andymass/vim-matchup", event = { "CursorHold" }, disable = true }
 
   -- Imporove foldtext for better looks
   use { "lambdalisue/readablefold.vim" }
@@ -496,6 +496,29 @@ function M.load_plugins(use, _)
     end,
   }
 
+  -- A lua neovim plugin to generate shareable file permalinks (with line ranges) for several git web frontend hosts.
+  -- Inspired by tpope/vim-fugitive's :GBrowse
+  use {
+    "ruifm/gitlinker.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+    module = { "gitlinker" },
+    setup = function()
+      vim.keymap.set("n", "<Space>gy", "<Cmd>lua require'gitlinker'.get_buf_range_url('n')<CR>", { silent = true })
+      vim.keymap.set("v", "<Space>gy", "<Cmd>lua require'gitlinker'.get_buf_range_url('n')<CR>")
+      vim.keymap.set("n", "<Space>gY", "<Cmd>lua require'gitlinker'.get_repo_url()<CR>")
+      vim.keymap.set(
+        "n",
+        "<Space>gB",
+        "<Cmd>lua require'gitlinker'.get_repo_url({action_callback = require'gitlinker.actions'.open_in_browser})<CR>"
+      )
+    end,
+    config = function()
+      require("gitlinker").setup {
+        mappings = nil,
+      }
+    end,
+  }
+
   -- [[ Filetypes, Syntax ]]
   -- Nvim Treesitter configurations and abstraction layer
   use {
@@ -763,6 +786,7 @@ function M.load_plugins(use, _)
     end,
   }
 
+  -- Standalone UI for nvim-lsp progress. Eye candy for the impatient.
   use {
     "j-hui/fidget.nvim",
     after = { "nvim-lspconfig" },
