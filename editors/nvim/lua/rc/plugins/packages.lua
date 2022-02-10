@@ -155,42 +155,7 @@ function M.load_plugins(use, _)
       -- Clear highlights
       vim.keymap.set("n", "<Esc><Esc>", "<Cmd>call searchx#clear()<CR>)")
     end,
-    config = function()
-      vim.api.nvim_exec(
-        [=[
-          let g:searchx = {}
-
-          " Auto jump if the recent input matches to any marker.
-          let g:searchx.auto_accept = v:true
-
-          " The scrolloff value for moving to next/prev.
-          let g:searchx.scrolloff = &scrolloff
-
-          " To enable scrolling animation.
-          let g:searchx.scrolltime = 500
-
-          " To enable auto nohlsearch after cursor is moved
-          let g:searchx.nohlsearch = {}
-          let g:searchx.nohlsearch.jump = v:true
-
-          " Marker characters.
-          let g:searchx.markers = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '.\zs')
-
-          " Convert search pattern.
-          function g:searchx.convert(input) abort
-            if a:input !~# '\k'
-              return '\V' .. a:input
-            endif
-            return a:input[0] .. substitute(a:input[1:], '\\\@<! ', '.\\{-}', 'g')
-          endfunction
-
-          " Set highlight for markers
-          highlight! link SearchxMarker DiffChange
-          highlight! link SearchxMarkerCurrent WarningMsg
-        ]=],
-        false
-      )
-    end,
+    config = [[require("rc.config.vim-searchx")]],
   }
 
   -- Enhanced f/t
@@ -286,8 +251,7 @@ function M.load_plugins(use, _)
   -- Show keybindings in popup
   use {
     "folke/which-key.nvim",
-    config = [[require("rc.config.which-key").config()]],
-    disable = true,
+    config = [[require("rc.config.which-key")]],
   }
 
   -- A high-performance color highlighter for NeoVim
@@ -745,7 +709,19 @@ function M.load_plugins(use, _)
     "neovim/nvim-lspconfig",
     event = { "BufReadPre" },
     requires = {
-      { "williamboman/nvim-lsp-installer", branch = "main" },
+      {
+        "williamboman/nvim-lsp-installer",
+        branch = "main",
+        module = "nvim-lsp-installer",
+        cmd = {
+          "LspInstall",
+          "LspInstallInfo",
+          "LspUninstall",
+          "LspUninstallAll",
+          "LspInstallLog",
+          "LspPrintInstalled",
+        },
+      },
       {
         "jose-elias-alvarez/null-ls.nvim",
         requires = {
@@ -755,6 +731,7 @@ function M.load_plugins(use, _)
       },
       {
         "simrat39/rust-tools.nvim",
+        module = { "rust-tools" },
         requires = {
           { "nvim-lua/plenary.nvim" },
           { "nvim-lua/popup.nvim" },
@@ -769,9 +746,7 @@ function M.load_plugins(use, _)
       "nvim-lsp-installer",
       "rust-tools.nvim",
     },
-    config = function()
-      require "rc.config.lsp"
-    end,
+    config = [[require "rc.config.lsp"]],
   }
 
   use {
@@ -879,12 +854,8 @@ function M.load_plugins(use, _)
     },
     cmd = { "Telescope" },
     module = { "telescope" },
-    setup = function()
-      require("rc.config.telescope").setup()
-    end,
-    config = function()
-      require("rc.config.telescope").config()
-    end,
+    setup = [[require("rc.config.telescope").setup()]],
+    config = [[require("rc.config.telescope").config()]],
   }
 end
 
