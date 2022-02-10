@@ -745,7 +745,7 @@ function M.load_plugins(use, _)
     "neovim/nvim-lspconfig",
     event = { "BufReadPre" },
     requires = {
-      { "folke/lua-dev.nvim" },
+      { "williamboman/nvim-lsp-installer", branch = "main" },
       {
         "jose-elias-alvarez/null-ls.nvim",
         requires = {
@@ -764,10 +764,10 @@ function M.load_plugins(use, _)
       { "folke/which-key.nvim" },
     },
     wants = {
-      "lua-dev.nvim",
-      "null-ls.nvim",
-      "rust-tools.nvim",
       "clangd_extensions.nvim",
+      "null-ls.nvim",
+      "nvim-lsp-installer",
+      "rust-tools.nvim",
     },
     config = function()
       require "rc.config.lsp"
