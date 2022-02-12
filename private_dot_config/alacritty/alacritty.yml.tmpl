@@ -212,8 +212,15 @@ live_config_reload: true
 #   - (Linux/macOS) /bin/bash --login
 #   - (Windows) powershell
 shell:
-  # program: /bin/zsh
+{{- if (eq .chezmoi.os "darwin") }}
+  {{- if (eq .chezmoi.arch "arm64") }}
+  program: /opt/homebrew/bin/zsh
+  {{- else }}
   program: /usr/local/bin/zsh
+  {{- end }}
+{{- else }}
+  program: /bin/zsh
+{{- end }}
   args:
     - --login
 
