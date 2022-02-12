@@ -1,4 +1,8 @@
+# -*- mode: zsh -*-
+# vim: ft=zsh
+##
 ## .zshenv --- Zsh configuration file
+##
 
 ##
 ## NOTE: Zsh configuration file loading order
@@ -75,6 +79,9 @@ umask 022
 ##
 limit coredumpsize 0
 
+##============================================================================
+## Environment variables
+##============================================================================
 ## HOST
 export HOST=$(uname -n)
 
@@ -89,9 +96,29 @@ export LANG="${LANGUAGE}"
 export LC_ALL="${LANGUAGE}"
 export LC_CTYPE="${LANGUAGE}"
 
-##==============================================================================
+##
+## Pager
+##
+export PAGER=less
+
+##
+## EDITOR
+##
+if (( ${+commands[nvim]} )); then
+    export EDITOR="nvim"
+elif (( ${+commands[vim]} )); then
+    export EDITOR="vim"
+else
+    export EDITOR="vi"
+fi
+export VISUAL="${EDITOR}"
+
+# available $INTERACTIVE_FILTER
+export INTERACTIVE_FILTER="fzf:fzf-tmux:peco:percol:gof:pick"
+
+##
 ## XDG Base Directory Specification
-##==============================================================================
+##
 # --- User directories
 export XDG_CONFIG_HOME="${HOME}/.config"     # [default: $HOME/.config]
 export XDG_CACHE_HOME="${HOME}/.cache"       # [default: $HOME/.cache]
@@ -107,7 +134,7 @@ export XDG_LIB_HOME="${HOME}/.local/lib"
 #export XDG_CONFIG_DIRS=/etc/xdg
 
 ##==============================================================================
-## Set path environment
+## Environment variables
 ##==============================================================================
 #
 # Note:
@@ -127,6 +154,7 @@ fpath=(
     ${ZDOTDIR}/functions(N-/)
     ${ZDOTDIR}/plugins/zsh-completions(N-/)
     /usr/local/share/zsh/site-functions(N-/)
+    /usr/share/zsh/site-functions(N-/)
     $fpath[@]
 )
 
@@ -136,30 +164,11 @@ path=(
     ${HOME}/bin(N-/)
     # $HOME/.local/bin(N-/) # for pip --user
     ${XDG_BIN_HOME}(N-/)
-    # Poetry bin dir
-    ${HOME}/.poetry/bin(N-/)
-    # Yarn bin dir (set by `yarn config set prefix $HOME/.yarn`)
-    ${HOME}/.yarn/bin
-    # LuaRocks bin dir
-    ${HOME}/.luarocks/bin
-    # Nodejs npm
-    ${XDG_DATA_HOME}/npm/bin(N-/)
-    # Ruby gem
-    ${XDG_DATA_HOME}/gem/bin(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
-    # for OSX, GNU commands installed with Homebrew
-    /usr/local/opt/coreutils/libexec/gnubin(N-/)
-    /usr/local/opt/findutils/libexec/gnubin(N-/)
-    /usr/local/opt/gnu-sed/libexec/gnubin(N-/)
-    /usr/local/opt/gnu-tar/libexec/gnubin(N-/)
-    /usr/local/opt/grep/libexec/gnubin(N-/)
-    /usr/local/opt/llvm/bin(N-/)
-    /usr/local/opt/sqlite/bin(N-/)
-    # *nix local, Homebrew
+    # *nix local
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
-    # Cuda
     /usr/local/cuda/bin(N-/)
     # System
     /usr/bin(N-/)
@@ -178,14 +187,7 @@ path=(
 ## manpath / MANPATH
 typeset -gxU manpath
 manpath=(
-    ${HOME}/man(N-/)
-    ${HOME}/dev/man(N-/)
     ${XDG_DATA_HOME}/man(N-/)
-    /usr/local/opt/coreutils/libexec/gnuman(N-/)
-    /usr/local/opt/findutils/libexec/gnuman(N-/)
-    /usr/local/opt/gnu-sed/libexec/gnuman(N-/)
-    /usr/local/opt/gnu-tar/libexec/gnuman(N-/)
-    /usr/local/opt/grep/libexec/gnuman(N-/)
     /usr/local/cuda/doc/man(N-/)
     /usr/local/share/jman(N-/)
     /usr/local/share/man/ja(N-/)
@@ -199,8 +201,6 @@ manpath=(
 typeset -gxU  infopath INFOPATH
 typeset -gxTU INFOPATH infopath  # tie the new array to the variables
 infopath=(
-    ${HOME}/share/info(N-/)
-    ${HOME}/dev/share/info(N-/)
     ${XDG_DATA_HOME}/info(N-/)
     /usr/local/share/info(N-/)
     /usr/share/info(N-/)
@@ -211,7 +211,6 @@ infopath=(
 typeset -gxU  pkg_config_path PKG_CONFIG_PATH
 typeset -gxTU PKG_CONFIG_PATH pkg_config_path
 pkg_config_path=(
-    ${HOME}/.linuxbrew/lib/pkgconfig(N-/)
     /usr/local/lib/pkgconfig(N-/)
     /usr/local/share/pkgconfig(N-/)
     /usr/lib/x86_64-linux-gnu/pkgconfig(N-/)
@@ -229,7 +228,6 @@ typeset -U ld_library_path
 ld_library_path=(
     ${HOME}/lib(N-/)
     ${HOME}/opt/lib(N-/)
-    ${XDG_LIB_HOME}(N-/)
     /usr/local/lib(N-/)
     /usr/local/lib32(N-/)
     /usr/local/cuda/lib64(N-)
@@ -237,36 +235,61 @@ ld_library_path=(
 )
 
 ##============================================================================
-## Other environment variables
+## Set package managers & development tools
 ##============================================================================
 ##
-## Pager
+## Homebrew
 ##
-export PAGER=less
-
-##
-## EDITOR
-##
-if (( ${+commands[nvim]} )); then
-    export EDITOR="nvim"
-elif (( ${+commands[vim]} )); then
-    export EDITOR="vim"
-else
-    export EDITOR="vi"
-fi
-export VISUAL="${EDITOR}"
-
-##============================================================================
-## Development environment
-##============================================================================
-
-##
-## asdf-vm
-##
-export ASDF_DATA_DIR="${HOME}/.asdf"
-export ASDF_CONFIG_FILE=${XDG_CONFIG_HOME}/asdf/asdfrc
-source ${HOME}/.asdf/asdf.sh
-fpath=( ${ASDF_DIR}/completions $fpath[@] )
+case ${OSTYPE} in
+    darwin*)
+        case ${CPUTYPE} in
+            arm64*)
+                export HOMEBREW_PREFIX="/opt/homebrew"
+                export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar"
+                export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}"
+                ;;
+            x86_64*)
+                export HOMEBREW_PREFIX="/usr/local"
+                export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}"
+                export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}/Homebrew"
+                ;;
+        esac
+        ;;
+    linux*gnu)
+        export HOMEBREW_PREFIX="${HOME}/.linuxbrew"
+	;;
+    *)
+        ;;
+esac
+path=(
+    ${HOMEBREW_PREFIX}/bin(N-/)
+    ${HOMEBREW_PREFIX}/sbin(N-/)
+    ${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin(N-/)
+    ${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin(N-/)
+    ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin(N-/)
+    ${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin(N-/)
+    ${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin(N-/)
+    ${HOMEBREW_PREFIX}/opt/llvm/bin(N-/)
+    ${HOMEBREW_PREFIX}/opt/sqlite/bin(N-/)
+    $path[@]
+)
+manpath=(
+    ${HOMEBREW_PREFIX}/share/man(N-/)
+    ${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnuman(N-/)
+    ${HOMEBREW_PREFIX}/opt/findutils/libexec/gnuman(N-/)
+    ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnuman(N-/)
+    ${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnuman(N-/)
+    ${HOMEBREW_PREFIX}/opt/grep/libexec/gnuman(N-/)
+    $manpath[@]
+)
+infopath=(
+    ${HOMEBREW_PREFIX}/share/info(N-/)
+    $infopath[@]
+)
+pkg_config_path=(
+    ${HOME}/.linuxbrew/lib/pkgconfig(N-/)
+    $pkg_config_path[@]
+)
 
 ##
 ## pip --user install location
@@ -284,6 +307,11 @@ export PIPX_HOME="${HOME}/.local/pipx"
 ##
 export PIPENV_CACHE_DIR="${XDG_CACHE_HOME}/pipenv"
 export PIPENV_VENV_IN_PROJECT=1
+
+##
+## Poetry
+##
+path=( ${HOME}/.poetry/bin(N-/) $path[@] )
 
 ##
 ## IPython
@@ -309,18 +337,53 @@ export JUPYTER_DATA_DIR="${XDG_DATA_HOME}/jupyter"
 ## npm
 ##
 # export NPM_CONFIG_USERCONFIG=${XDG_CONFIG_HOME}/npm/npmrc
-export NPM_CONFIG_PREFIX=${XDG_DATA_HOME}/npm
-export NPM_CONFIG_CACHE=${XDG_CACHE_HOME}/npm
+export NPM_CONFIG_PREFIX="${XDG_DATA_HOME}/npm"
+export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
+path=( ${NPM_CONFIG_PREFIX}/bin $path[@] )
+
+##
+## LuaRocks
+##
+path=( ${HOME}/.luarocks/bin $path[@] )
 
 ##
 ## RubyGems
 ##
-export GEM_HOME=${XDG_DATA_HOME}/gem
-export GEM_SPEC_CACHE=${XDG_CACHE_HOME}/gem
-path=( ${GEM_HOME}(N-/) $path[@] )
+export GEM_HOME="${XDG_DATA_HOME}/gem"
+export GEM_SPEC_CACHE="${XDG_CACHE_HOME}/gem"
+path=( ${GEM_HOME}/bin $path[@] )
 
 ##
-## Rust
+## Go
+##
+export GOPATH=${HOME}
+# path=( ${GOPATH}/bin(N-/) $path[@] )
+
+##
+## asdf-vm
+##
+case ${OSTYPE} in
+    darwin*)
+        # Install asdf via homebrew
+        export ASDF_DIR="${HOMEBREW_PREFIX}/opt/asdf/libexec"
+        source ${ASDF_DIR}/asdf.sh
+        ;;
+    linux*gnu)
+        export ASDF_DIR="${HOME}/.asdf"
+        source ${ASDF_DIR}/asdf.sh
+        ;;
+    # TODO: add setting for other architecture
+esac
+export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
+export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
+fpath=(
+    ${ASDF_DIR}/completions(N-/)
+    ${ASDF_DIR}/libexec/completions(N-/)
+    $fpath[@]
+)
+
+##
+## Rust, cargo
 ##
 path=( ${HOME}/.cargo/bin(N-/) $path[@] )
 if (( ${+commands[rustc]} )); then
@@ -334,7 +397,7 @@ if (( ${+commands[rustc]} )); then
             ;;
         # TODO: add setting for other architecture
     esac
-    if [[ "x$RUST_SYS_ROOT" != "x" ]]; then
+    if [[ ! -x "$RUST_SYS_ROOT" ]]; then
         export RUST_SRC_PATH="${RUST_SYS_ROOT}/lib/rustlib/src/rust/src"
         # for cargo completion
         fpath=( ${RUST_SYS_ROOT}/share/zsh/site-functions $fpath[@] )
@@ -343,22 +406,11 @@ if (( ${+commands[rustc]} )); then
 fi
 
 ##
-## Go
-##
-export GOPATH=${HOME}
-# path=( ${GOPATH}/bin(N-/) $path[@] )
-
-##
 ## Intel OneAPI -- source on request
 ##
 # if [[ -f /opt/intel/oneapi/setvars.sh ]]; then
 #     source /opt/intel/oneapi/setvars.sh
 # fi
-
-##
-## Tig
-##
-export TIGRC_USER=${XDG_CONFIG_HOME}/tig/config
 
 ##============================================================================
 ## Computational programs
@@ -380,11 +432,8 @@ fi
 # path=( ${WIENROOT}(N-/) $path[@] )
 # export SCRATCH=./
 
-# available $INTERACTIVE_FILTER
-export INTERACTIVE_FILTER="fzf:fzf-tmux:peco:percol:gof:pick"
-
 ## Quantum ESPRESSO
-export ESPRESSO_PSEUDO=${HOME}/.local/share/quantum_espresso/SSSP_efficiency_pseudos
+export ESPRESSO_PSEUDO="${HOME}/.local/share/quantum_espresso/SSSP_efficiency_pseudos"
 
 ##============================================================================
 ## Machine local enviriments if provided

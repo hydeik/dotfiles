@@ -4,3 +4,5 @@ stylua.toml
 {{- if (ne .chezmoi.os "darwin") }}
 .config/karabiner
 {{- end }}
+
+.config/nvim/lua/packer_compiled.lua
