@@ -69,6 +69,7 @@ CARGO_INSTALL_TARGET=(
   hx
   hyperfine
   inferno
+  jless
   jql
   lsd
   procs
