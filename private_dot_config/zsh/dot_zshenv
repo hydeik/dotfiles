@@ -362,25 +362,8 @@ export GOPATH=${HOME}
 ##
 ## asdf-vm
 ##
-case ${OSTYPE} in
-    darwin*)
-        # Install asdf via homebrew
-        export ASDF_DIR="${HOMEBREW_PREFIX}/opt/asdf/libexec"
-        source ${ASDF_DIR}/asdf.sh
-        ;;
-    linux*gnu)
-        export ASDF_DIR="${HOME}/.asdf"
-        source ${ASDF_DIR}/asdf.sh
-        ;;
-    # TODO: add setting for other architecture
-esac
-export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
-export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
-fpath=(
-    ${ASDF_DIR}/completions(N-/)
-    ${ASDF_DIR}/libexec/completions(N-/)
-    $fpath[@]
-)
+source "$HOME/.asdf/asdf.sh"
+fpath=( ${ASDF_DIR}/completions(N-/) $fpath[@] )
 
 ##
 ## Rust, cargo
