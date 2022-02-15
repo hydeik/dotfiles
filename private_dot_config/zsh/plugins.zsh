@@ -53,6 +53,10 @@ zinit lucid depth=1 light-mode for \
 zinit wait'1' lucid light-mode for \
     as"program" pick"bin/*" greymd/tmux-xpanes
 
+zinit as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' \
+  atpull'%atclone' pick"direnv" src"zhook.zsh" for \
+  direnv/direnv
+
 ##
 ## History
 ##
