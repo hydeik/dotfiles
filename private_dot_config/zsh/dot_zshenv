@@ -228,6 +228,7 @@ typeset -U ld_library_path
 ld_library_path=(
     ${HOME}/lib(N-/)
     ${HOME}/opt/lib(N-/)
+    ${XDG_LIB_HOME}(N-/)
     /usr/local/lib(N-/)
     /usr/local/lib32(N-/)
     /usr/local/cuda/lib64(N-)
