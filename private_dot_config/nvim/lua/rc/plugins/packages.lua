@@ -401,7 +401,7 @@ function M.load_plugins(use, _)
     end,
   }
 
-  -- [[ Filetypes, Syntax ]]
+  -- [[ Treesitter ]]
   -- Nvim Treesitter configurations and abstraction layer
   use {
     "nvim-treesitter/nvim-treesitter",
@@ -414,27 +414,17 @@ function M.load_plugins(use, _)
       { "nvim-treesitter/playground", opt = true },
       { "p00f/nvim-ts-rainbow", opt = true },
       { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
+      { "David-Kunz/treesitter-unit", opt = true },
     },
-    after = {
+    wants = {
       "nvim-treesitter-refactor",
       "nvim-treesitter-textobjects",
       "playground",
       "nvim-ts-rainbow",
       "nvim-ts-context-commentstring",
+      "treesitter-unit",
     },
-    config = [[require("rc.config.treesitter")]],
-  }
-
-  -- A Neovim plugin to deal with treesitter unit
-  use {
-    "David-Kunz/treesitter-unit",
-    requires = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      vim.keymap.set("x", "iu", ":lua require('treesitter-unit').select()<CR>", { silent = true })
-      vim.keymap.set("x", "au", ":lua require('treesitter-unit').select(true)<CR>", { silent = true })
-      vim.keymap.set("o", "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", { silent = true })
-      vim.keymap.set("o", "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", { silent = true })
-    end,
+    config = [[require("rc.config.treesitter").config()]],
   }
 
   -- [[ Language Server Protocop (LSP) ]]
