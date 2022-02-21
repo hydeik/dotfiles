@@ -18,7 +18,7 @@ function M.load_plugins(use, _)
   -- fix cursorhold performance
   -- todo: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
   use {
-    "antoinemadec/fixcursorhold.nvim",
+    "antoinemadec/FixCursorHold.nvim",
     config = [[vim.g.cursorhold_updatetime = 100]],
   }
 
@@ -203,44 +203,8 @@ function M.load_plugins(use, _)
       { "o", "<Plug>(textobj-sandwich-" },
       { "x", "<Plug>(textobj-sandwich-" },
     },
-    setup = function()
-      vim.g.sandwich_no_default_key_mappings = 1
-      vim.g.operator_sandwich_no_default_key_mappings = 1
-      vim.g.textobj_sandwich_no_default_key_mappings = 1
-
-      -- Key mappings
-      -- add
-      vim.keymap.set("", "sa", "<Plug>(sandwich-add)")
-
-      -- delete
-      vim.keymap.set({ "n", "x" }, "sd", "<Plug>(sandwich-delete)")
-      vim.keymap.set("n", "sdb", "<Plug>(sandwich-delete-auto)")
-
-      -- replace
-      vim.keymap.set({ "n", "x" }, "sr", "<Plug>(sandwich-replace)")
-      vim.keymap.set("n", "srb", "<Plug>(sandwich-replace-auto)")
-
-      -- textobj auto
-      vim.keymap.set({ "o", "x" }, "ab", "<Plug>(textobj-sandwich-auto-a)")
-      vim.keymap.set({ "o", "x" }, "ib", "<Plug>(textobj-sandwich-auto-i)")
-
-      -- textobj query
-      vim.keymap.set({ "o", "x" }, "as", "<Plug>(textobj-sandwich-query-a)")
-      vim.keymap.set({ "o", "x" }, "is", "<Plug>(textobj-sandwich-query-i)")
-    end,
-    config = function()
-      vim.g["textobj#sandwich#stimeoutlen"] = 100
-      vim.api.nvim_exec(
-        [=[
-          let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
-          let g:sandwich#recipes += [{'buns': ['「', '」']}, {'buns': ['【', '】']}]
-          let g:sandwich#recipes += [{'buns': ['（', '）']}, {'buns': ['『', '』']}]
-          let g:sandwich#recipes += [{'buns': ['\(',  '\)'], 'filetype': ['vim'], 'nesting': 1}]
-          let g:sandwich#recipes += [{'buns': ['\%(', '\)'], 'filetype': ['vim'], 'nesting': 1}]
-        ]=],
-        false
-      )
-    end,
+    setup = [[require("rc.config.vim-sandwich").setup()]],
+    config = [[require("rc.config.vim-sandwich").config()]],
   }
 
   -- Smart align
@@ -250,37 +214,8 @@ function M.load_plugins(use, _)
       { "n", "<Plug>(EasyAlign)" },
       { "v", "<Plug>(EasyAlign)" },
     },
-    setup = function()
-      -- key mappings
-      vim.keymap.set({ "n", "v" }, "<Leader>a", "<Plug>(EasyAlign)", { silent = true })
-      -- extending alignment rules
-      vim.g.easy_align_delimiters = {
-        [">"] = { pattern = [[>>\|=>\|>]] },
-        ["/"] = { pattern = [[//\+\|/\*\|\*/]], ignore_groups = { "String" } },
-        ["#"] = {
-          pattern = [[#\+]],
-          ignore_groups = { "String" },
-          delimiter_align = "l",
-        },
-        ["]"] = {
-          pattern = [=[[[\]]]=],
-          left_margin = 0,
-          right_margin = 0,
-          stick_to_left = 0,
-        },
-        [")"] = {
-          pattern = "[()]",
-          left_margin = 0,
-          right_margin = 0,
-          stick_to_left = 0,
-        },
-        ["d"] = {
-          pattern = [[ \(\S\+\s*[;=]\)\@=]],
-          left_margin = 0,
-          right_margin = 0,
-        },
-      }
-    end,
+    setup = [[require("rc.config.vim-easy-align").setup()]],
+    config = [[require("rc.config.vim-easy-align").config()]],
   }
 
   -- Better quickfix windowin Neovim, polish old quickfix window
@@ -326,19 +261,7 @@ function M.load_plugins(use, _)
     branch = "main",
     event = { "FocusLost", "CursorHold" },
     requires = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("gitsigns").setup {
-        signs = {
-          add = { hl = "DiffAdd", text = "│", numhl = "GitSignsAddNr" },
-          change = { hl = "DiffChange", text = "│", numhl = "GitSignsChangeNr" },
-          delete = { hl = "DiffDelete", text = "_", numhl = "GitSignsDeleteNr" },
-          topdelete = { hl = "DiffDelete", text = "‾", numhl = "GitSignsDeleteNr" },
-          changedelete = { hl = "DiffChange", text = "~", numhl = "GitSignsChangeNr" },
-        },
-        numhl = true,
-        word_diff = true,
-      }
-    end,
+    config = [[require("rc.config.gitsigns").config()]],
   }
 
   -- Reveal the commit messages under the cursor
@@ -356,9 +279,7 @@ function M.load_plugins(use, _)
   use {
     "rhysd/committia.vim",
     ft = { "gitcommit" },
-    setup = function()
-      vim.g.committia_min_window_width = 100
-    end,
+    setup = [[vim.g.committia_min_window_width = 100]],
   }
 
   -- A lua neovim plugin to generate shareable file permalinks (with line ranges) for several git web frontend hosts.
