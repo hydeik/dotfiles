@@ -1,6 +1,6 @@
 local au = require "rc.core.autocmd"
 au.group("MyAutoCmd", {
-  { "BufWritePost", "*.lua", "lua require'rc.plugins'.auto_compile()" },
+  -- { "BufWritePost", "*.lua", "lua require'rc.plugins'.auto_compile()" },
   { "BufWritePre", "/tmp/*", "setlocal noundofile" },
   { "BufWritePre", "*.tmp", "setlocal noundofile" },
   { "BufWritePre", "*.bak", "setlocal noundofile" },

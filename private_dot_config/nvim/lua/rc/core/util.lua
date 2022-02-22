@@ -1,16 +1,4 @@
 local M = {}
----Get a variable with defaults
-function M.get_var(name, default_value)
-  local ok, data = pcall(vim.api.nvim_get_var, name)
-  return ok and data or default_value
-end
-
----Get a buffer local variable with defaults
-function M.buf_get_var(bufnr, name, default_value)
-  local ok, data = pcall(vim.api.nvim_buf_get_var, bufnr, name)
-  return ok and data or default_value
-end
-
 ---Echo a log message.
 ---@param msg string  The body of the log message
 ---@param hl string (optional) The highlight group for the log message [Default: "Todo"]

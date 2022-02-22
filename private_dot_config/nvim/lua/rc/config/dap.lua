@@ -1,18 +1,22 @@
 local M = {}
 
 function M.setup()
+  vim.keymap.set("n", "<F1>", "<Cmd>lua require'dap'.step_back()<CR>", { silent = true })
+  vim.keymap.set("n", "<F2>", "<Cmd>lua require'dap'.step_into()<CR>", { silent = true })
+  vim.keymap.set("n", "<F3>", "<Cmd>lua require'dap'.step_over()<CR>", { silent = true })
+  vim.keymap.set("n", "<F4>", "<Cmd>lua require'dap'.step_out()<CR>", { silent = true })
   vim.keymap.set("n", "<F5>", "<Cmd>lua require'dap'.continue()<CR>", { silent = true })
-  vim.keymap.set("n", "<F10>", "<Cmd>lua require'dap'.stop_over()<CR>", { silent = true })
   vim.keymap.set("n", "<Space>db", "<Cmd>lua require'dap'.toggle_breakpoint()<CR>", { silent = true })
   vim.keymap.set("n", "<Space>dr", "<Cmd>lua require'dap'.repr.open()<CR>", { silent = true })
   vim.keymap.set("n", "<Space>dn", "<Cmd>lua require'dap-python'.test_method()<CR>", { silent = true })
   vim.keymap.set("n", "<Space>ds", "<ESC>:lua require'dap-python'.debug_selection()<CR>", { silent = true })
+  vim.keymap.set("n", "<Space>de", "<Cmd>lua require'dapui'.eval()<CR>", { silent = true })
+  vim.keymap.set("n", "<Space>dE", function()
+    require'dapui'.eval(vim.fn.input("[DAP] Condition > "))
+  end, { silent = true })
 end
 
 function M.config()
-  vim.cmd [[packadd nvim-dap-python]]
-  vim.cmd [[packadd nvim-dap-virtual-text]]
-
   vim.g.dap_virtual_text = true
 
   local dap = require "dap"

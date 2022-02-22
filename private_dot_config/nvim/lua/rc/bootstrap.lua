@@ -1,7 +1,7 @@
 --- ~/.config/nvim/rc/bootstrap.lua
 local platform = require "rc.core.platform"
 local path = require "rc.core.path"
-local plugins = require "rc.plugins"
+-- local plugins = require "rc.plugins"
 
 --- Set enviromnent variables (mainly for Neovim GUI).
 local function is_empty_string(str)
@@ -65,7 +65,8 @@ local function set_envs()
 end
 
 local function set_packpath()
-  vim.o.packpath = path.join(path.data_home, "site")
+  -- vim.o.packpath = path.join(path.data_home, "site")
+  vim.o.packpath = ""
 end
 
 --- Disable unnecessary default plugins
@@ -158,16 +159,18 @@ local function init()
   ensure_nvim_dirs()
   init_prefix_keys()
 
-  plugins.bootstrap(function(installed)
-    if installed then
-      -- Automatically set up plugin configuration after cloning packer.nvim.
-      vim.cmd [[autocmd User PackerComplete ++once lua require("rc.main")]]
-      plugins.sync()
-    else
-      -- packer.nvim is not required on startup, so just require main configuration file
-      require "rc.main"
-    end
-  end)
+  require "rc.dein"
+  require "rc.main"
+  -- plugins.bootstrap(function(installed)
+  --   if installed then
+  --     -- Automatically set up plugin configuration after cloning packer.nvim.
+  --     vim.cmd [[autocmd User PackerComplete ++once lua require("rc.main")]]
+  --     plugins.sync()
+  --   else
+  --     -- packer.nvim is not required on startup, so just require main configuration file
+  --     require "rc.main"
+  --   end
+  -- end)
 end
 
 init()
