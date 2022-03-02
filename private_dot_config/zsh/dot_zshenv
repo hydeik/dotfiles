@@ -343,6 +343,11 @@ export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
 path=( ${NPM_CONFIG_PREFIX}/bin $path[@] )
 
 ##
+## Deno
+##
+export DENO_DIR="${XDG_CACHE_HOME}/deno"
+
+##
 ## LuaRocks
 ##
 path=( ${HOME}/.luarocks/bin $path[@] )
