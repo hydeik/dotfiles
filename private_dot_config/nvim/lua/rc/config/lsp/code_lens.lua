@@ -1,14 +1,25 @@
 local M = {}
 
-function M.setup(client)
+function M.setup(client, bufnr)
   if client.resolved_capabilities.code_lens then
-    vim.cmd [[
-      augroup ConfigLspCodeLens
-      autocmd! * <buffer>
-      autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
-      autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
-      augroup END
-    ]]
+    vim.api.nvim_create_augroup("ConfigLspCodeLens", { clear = true })
+    vim.api.nvim_create_autocmd("BufEnter", {
+      group = "ConfigLspCodeLens",
+      buffer = bufnr,
+      once = true,
+      callback = function()
+        vim.lsp.codelens.refresh()
+      end,
+      desc = "[LSP] Refresh the codelens for the current buffer.",
+    })
+    vim.api.nvim_create_autocmd({ "BufWritePost", "CursorHold" }, {
+      group = "ConfigLspCodeLens",
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.codelens.refresh()
+      end,
+      desc = "[LSP] Refresh the codelens for the current buffer.",
+    })
   end
 end
 

@@ -9,8 +9,8 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { 
 local function on_attach(client, bufnr)
   require("rc.config.lsp.formatting").setup(client, bufnr)
   require("rc.config.lsp.keymap").setup(client, bufnr)
-  require("rc.config.lsp.highlight").setup(client)
-  require("rc.config.lsp.code_lens").setup(client)
+  require("rc.config.lsp.highlight").setup(client, bufnr)
+  require("rc.config.lsp.code_lens").setup(client, bufnr)
 end
 
 -- Capabilities (for nvim-cmp)

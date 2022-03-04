@@ -226,14 +226,12 @@ function M.load_plugins(use, _)
     "thinca/vim-qfreplace",
     ft = { "qf" },
     config = function()
-      require("rc.core.autocmd").group("MyAutoCmd", {
-        {
-          "FileType",
-          "qf",
-          function()
-            vim.api.nvim_buf_set_keymap(0, "n", "R", "<cmd>Qfreplace<CR>", { noremap = true })
-          end,
-        },
+      vim.api.nvim_create_autocmd("FileType", {
+        group = "MyAutoCmd",
+        pattern = { "qf" },
+        callback = function()
+          vim.keymap.set("n", "R", "<cmd>Qfreplace<CR>", { buffer = true })
+        end,
       })
     end,
   }

@@ -13,7 +13,7 @@ function M.toggle()
 end
 
 function M.format()
-  if M.autoformat then
+    if M.autoformat then
     vim.lsp.buf.formatting_sync()
   end
 end
@@ -32,12 +32,15 @@ function M.setup(client, bufnr)
 
   -- Format on save
   if client.resolved_capabilities.document_formatting then
-    vim.cmd [[
-      augroup ConfigLspFormat
-        autocmd! * <buffer>
-        autocmd BufWritePre <buffer> lua require("rc.config.lsp.formatting").format()
-      augroup END
-    ]]
+    vim.api.nvim_create_augroup("ConfigLspFormat", { clear = true })
+    vim.api.nvim_create_autocmd("BufWritePost", {
+      group = "ConfigLspFormat",
+      buffer = bufnr,
+      callback = function()
+        require("rc.config.lsp.formatting").format()
+      end,
+      desc = "[LSP] Format the current buffer on save.",
+    })
   end
 end
 

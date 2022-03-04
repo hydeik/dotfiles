@@ -47,8 +47,11 @@ function M.config()
   vim.api.nvim_set_keymap("c", "<C-j>", "<Plug>(eskk:toggle)", { silent = true })
 
   -- easy escape with 'jj'
-  require("rc.core.autocmd").group("MyAutoCmd", {
-    { "User", "eskk-initialize-post", "Eskk -remap jj <ESC>" },
+  vim.api.nvim_create_autocmd("User", {
+    group = "MyAutoCmd",
+    pattern = "eskk-initialize-post",
+    command = "Eskk -remap jj <ESC>",
+    desc = "[eskk] map 'jj' to escape",
   })
 end
 
