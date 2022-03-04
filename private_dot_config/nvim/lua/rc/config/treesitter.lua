@@ -1,8 +1,10 @@
 local M = {}
--- vim.cmd [[packadd nvim-treesitter-refactor]]
--- vim.cmd [[packadd nvim-treesitter-textobjects]]
--- vim.cmd [[packadd nvim-ts-rainbow]]
--- vim.cmd [[packadd nvim-ts-context-commentstring]]
+vim.cmd [[packadd nvim-treesitter-refactor]]
+vim.cmd [[packadd nvim-treesitter-textobjects]]
+vim.cmd [[packadd nvim-ts-rainbow]]
+vim.cmd [[packadd nvim-ts-context-commentstring]]
+vim.cmd [[packadd nvim-treesitter-unit]]
+vim.cmd [[packadd playground]]
 
 function M.setup() end
 
