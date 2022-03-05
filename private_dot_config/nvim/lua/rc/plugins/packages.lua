@@ -366,7 +366,7 @@ function M.load_plugins(use, _)
   use {
     "lukas-reineke/indent-blankline.nvim",
     -- requires = { "nvim-treesitter/nvim-treesitter" },
-    after = { "nvim-treesitter" },
+    -- after = { "nvim-treesitter" },
     event = { "FocusLost", "CursorHold" },
     config = [[require("rc.config.indent_blankline").config()]],
   }
@@ -375,8 +375,7 @@ function M.load_plugins(use, _)
   use {
     "numToStr/Comment.nvim",
     keys = { "gc", "gb", "gcc", "gbc" },
-    requires = { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
-    wants = { "nvim-ts-context-commentstring" },
+    -- requires = { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
     config = [[require("rc.config.comment").config()]],
   }
 

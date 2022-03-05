@@ -2,7 +2,7 @@ vim.api.nvim_create_augroup("MyAutoCmd", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = "MyAutoCmd",
-  pattern = { "*/rc/plugins/*.lua" },
+  pattern = { "*.lua" },
   callback = function()
     require("rc.plugins").auto_compile()
   end,

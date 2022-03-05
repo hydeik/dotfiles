@@ -77,16 +77,66 @@ local plugins = setmetatable({}, {
 
 --- Define commands provided by packer.nvim
 function plugins.define_commands()
-  vim.cmd [[
-    command! -nargs=* -complete=customlist,v:lua.require'rc.plugins'.plugin_complete PackerInstall lua require('rc.plugins').install(<f-args>)
-    command! -nargs=* -complete=customlist,v:lua.require'rc.plugins'.plugin_complete PackerUpdate lua require('rc.plugins').update(<f-args>)
-    command! -nargs=* -complete=customlist,v:lua.require'rc.plugins'.plugin_complete PackerSync lua require('rc.plugins').sync(<f-args>)
-    command! PackerClean             lua require('rc.plugins').clean()
-    command! -nargs=* PackerCompile  lua require('rc.plugins').compile(<q-args>)
-    command! PackerStatus            lua require('rc.plugins').status()
-    command! PackerProfile           lua require('rc.plugins').profile_output()
-    command! -bang -nargs=+ -complete=customlist,v:lua.require'rc.plugins'.loader_complete PackerLoad lua require('rc.plugins').loader(<f-args>, '<bang>' == '!')
-    ]]
+  vim.api.nvim_add_user_command("PackerInstall", function(opts)
+    local fargs = opts.args ~= "" and opts.fargs or {}
+    require("rc.plugins").install(unpack(fargs))
+  end, {
+    complete = require("rc.plugins").plugin_complete,
+    nargs = "*",
+    desc = "[Packer] Install plugin(s).",
+  })
+
+  vim.api.nvim_add_user_command("PackerUpdate", function(opts)
+    local fargs = opts.args ~= "" and opts.fargs or {}
+    require("rc.plugins").update(unpack(fargs))
+  end, {
+    complete = require("rc.plugins").plugin_complete,
+    nargs = "*",
+    desc = "[Packer] Update plugin(s).",
+  })
+
+  vim.api.nvim_add_user_command("PackerSync", function(opts)
+    local fargs = opts.args ~= "" and opts.fargs or {}
+    require("rc.plugins").sync(unpack(fargs))
+  end, {
+    complete = require("rc.plugins").plugin_complete,
+    nargs = "*",
+    desc = "[Packer] Sync plugin(s).",
+  })
+
+  vim.api.nvim_add_user_command("PackerClean", function()
+    require("rc.plugins").clean()
+  end, {
+    desc = "[Packer] Clean plugin(s).",
+  })
+
+  vim.api.nvim_add_user_command("PackerStatus", function()
+    require("rc.plugins").status()
+  end, {
+    desc = "[Packer] Output plugins' status.",
+  })
+
+  vim.api.nvim_add_user_command("PackerProfile", function()
+    require("rc.plugins").profile_output()
+  end, {
+    desc = "[Packer] Output plugins' profile.",
+  })
+
+  vim.api.nvim_add_user_command("PackerCompile", function(opts)
+    require("rc.plugins").compile(opts.args)
+  end, {
+    nargs = "*",
+    desc = "[Packer] Output plugins' profile.",
+  })
+
+  vim.api.nvim_add_user_command("PackerLoad", function(opts)
+    require("rc.plugins").loader(opts.fargs, opts.bang)
+  end, {
+    complete = require("rc.plugins").loader_complete,
+    bang = true,
+    nargs = "+",
+    desc = "[Packer] Load plugin(s).",
+  })
 end
 
 --- Bootstrapping plugsins.
