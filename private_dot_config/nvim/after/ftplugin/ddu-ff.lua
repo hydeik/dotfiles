@@ -1,0 +1,18 @@
+local bufnr = vim.api.nvim_get_current_buf()
+
+vim.keymap.set("n", "<CR>", "<Cmd>call ddu#ui#ff#do_action('itemAction')<CR>", { buffer = bufnr })
+vim.keymap.set("n", "<Space>", "<Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>", { buffer = bufnr })
+vim.keymap.set("n", "<C-l>", "<Cmd>call ddu#ui#ff#do_action('refreshItems')<CR>", { buffer = bufnr })
+vim.keymap.set("n", "i", "<Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>", { buffer = bufnr })
+vim.keymap.set("n", "p", "<Cmd>call ddu#ui#ff#do_action('preview')<CR>", { buffer = bufnr })
+vim.keymap.set("n", "q", "<Cmd>call ddu#ui#ff#do_action('quit')<CR>", { buffer = bufnr })
+vim.keymap.set("n", "a", "<Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>", { buffer = bufnr })
+vim.keymap.set("n", "c", "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'cd'})<CR>", { buffer = bufnr })
+vim.keymap.set("n", "d", "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'delete'})<CR>", { buffer = bufnr })
+vim.keymap.set("n", "e", "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'edit'})<CR>", { buffer = bufnr })
+vim.keymap.set("n", "E", "<Cmd>call ddu#ui#ff#do_action('itemAction', {'params': eval(input('params: '))})<CR>", { buffer = bufnr })
+vim.keymap.set("n", "v", "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>", { buffer = bufnr })
+vim.keymap.set("n", "N", "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'new'})<CR>", { buffer = bufnr })
+vim.keymap.set("n", "r", "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>", { buffer = bufnr })
+vim.keymap.set("n", "u", "<Cmd>call ddu#ui#ff#do_action('updateOptions', {'sourceOptions': {'_': {'matchers': []}}})<CR>", { buffer = bufnr })
+

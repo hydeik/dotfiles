@@ -12,15 +12,19 @@ function M.load_plugins(use, _)
   -- plenary: full; complete; entire; absolute; unqualified.
   use { "nvim-lua/plenary.nvim", module = "plenary" }
 
-  -- An implementation of the popup API from vim in Neovim. Hope to upstream when complete.
-  use { "nvim-lua/popup.nvim", module = "popup" }
-
   -- fix cursorhold performance
   -- todo: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
   use {
     "antoinemadec/FixCursorHold.nvim",
     config = [[vim.g.cursorhold_updatetime = 100]],
   }
+
+  -- [[ UI ]]
+  -- An implementation of the popup API from vim in Neovim. Hope to upstream when complete.
+  use { "nvim-lua/popup.nvim", module = "popup" }
+
+  -- Original popup completion menu framework library
+  use { "Shougo/pum.vim" }
 
   -- tmux integration for nvim features pane movement and resizing from within nvim.
   use {
@@ -30,13 +34,6 @@ function M.load_plugins(use, _)
     config = [[require("rc.config.tmux").config()]],
   }
 
-  -- [[ UI ]]
-  -- Colorschemes
-  use { "EdenEast/nightfox.nvim" }
-  use { "folke/tokyonight.nvim", opt = true }
-  use { "shaunsingh/moonlight.nvim", opt = true }
-  use { "shaunsingh/nord.nvim", opt = true }
-
   -- Icons
   use {
     "kyazdani42/nvim-web-devicons",
@@ -45,6 +42,12 @@ function M.load_plugins(use, _)
       require("nvim-web-devicons").setup { default = true }
     end,
   }
+
+  -- Colorschemes
+  use { "EdenEast/nightfox.nvim" }
+  use { "folke/tokyonight.nvim", opt = true }
+  use { "shaunsingh/moonlight.nvim", opt = true }
+  use { "shaunsingh/nord.nvim", opt = true }
 
   -- A snazzy bufferline for Neovim
   use {
@@ -99,13 +102,13 @@ function M.load_plugins(use, _)
   --   config = [[require("rc.config.hlslens").config()]],
   -- }
 
-  -- The extended search
-  use {
-    "hrsh7th/vim-searchx",
-    fn = { "searchx#*" },
-    setup = [[require("rc.config.vim-searchx").setup()]],
-    config = [[require("rc.config.vim-searchx").config()]],
-  }
+  -- -- The extended search
+  -- use {
+  --   "hrsh7th/vim-searchx",
+  --   fn = { "searchx#*" },
+  --   setup = [[require("rc.config.vim-searchx").setup()]],
+  --   config = [[require("rc.config.vim-searchx").config()]],
+  -- }
 
   -- Enhanced f/t
   use {
@@ -535,38 +538,101 @@ function M.load_plugins(use, _)
     config = [[require("rc.config.nvim-cmp").config()]],
   }
 
-  -- [[ Fuzzy finder ]]
-  -- Find, Filter, Preview, Pick. All lua, all the time.
+  -- -- [[ Fuzzy finder ]]
+  -- -- Find, Filter, Preview, Pick. All lua, all the time.
+  -- use {
+  --   "nvim-telescope/telescope.nvim",
+  --   requires = {
+  --     { "nvim-lua/popup.nvim" },
+  --     { "nvim-lua/plenary.nvim" },
+  --     { "kyazdani42/nvim-web-devicons" },
+  --     { "nvim-telescope/telescope-cheat.nvim" },
+  --     { "nvim-telescope/telescope-dap.nvim" },
+  --     { "nvim-telescope/telescope-file-browser.nvim" },
+  --     {
+  --       "nvim-telescope/telescope-frecency.nvim",
+  --       requires = { "tami5/sqlite.lua" },
+  --       opt = true,
+  --     },
+  --     { "nvim-telescope/telescope-fzf-writer.nvim" },
+  --     { "nvim-telescope/telescope-fzy-native.nvim" },
+  --     { "nvim-telescope/telescope-hop.nvim" },
+  --     { "nvim-telescope/telescope-packer.nvim" },
+  --     {
+  --       "nvim-telescope/telescope-smart-history.nvim",
+  --       requires = { "tami5/sqlite.lua" },
+  --       opt = true,
+  --     },
+  --     { "nvim-telescope/telescope-symbols.nvim" },
+  --     { "nvim-telescope/telescope-ui-select.nvim" },
+  --   },
+  --   cmd = { "Telescope" },
+  --   module = { "telescope" },
+  --   setup = [[require("rc.config.telescope").setup()]],
+  --   config = [[require("rc.config.telescope").config()]],
+  -- }
+
+  -- [[ Denops plugins ]]
+  -- An ecosystem of Vim/Neovim which allows developpers to write cross-platform plugins in Deno.
+  use { "vim-denops/denops.vim" }
+
+  -- -- Jump to fuzzy match word.
+  -- use {
+  --   "yuki-yano/fuzzy-motion.vim",
+  --   after = { "denops.vim" },
+  --   cmd = { "FuzzyMotion" },
+  --   config = function(name, spec)
+  --     require("rc.plugins.denops").register_plugin(name, spec.path)
+  --   end,
+  -- }
+
+  -- Dark deno-powered UI framework for neovim/Vim8.
+  use { "Shougo/ddu-commands.vim", cmd = { "Ddu" } }
+  -- UI
+  use { "Shougo/ddu-ui-ff" }
+  use { "Shougo/ddu-ui-filer" }
+  -- Sources
+  use { "Shougo/ddu-source-file" }
+  use { "Shougo/ddu-source-file_rec" }
+  use { "Shougo/ddu-source-file_old" }
+  use { "Shougo/ddu-source-file_point" }
+  use { "Shougo/ddu-source-line" }
+  use { "Shougo/ddu-source-register" }
+  use { "Shun/ddu-source-buffer" }
+  use { "Shun/ddu-source-rg" }
+  use { "matsui54/ddu-source-file_external" }
+  use { "matsui54/ddu-source-help" }
+  -- Filters
+  use { "Shougo/ddu-filter-matcher_substring" }
+  use { "Shougo/ddu-filter-matcher_relative" }
+  use { "Shougo/ddu-filter-matcher_hidden" }
+  -- Kinds
+  use { "Shougo/ddu-kind-file" }
+  use { "Shougo/ddu-kind-word" }
   use {
-    "nvim-telescope/telescope.nvim",
-    requires = {
-      { "nvim-lua/popup.nvim" },
-      { "nvim-lua/plenary.nvim" },
-      { "kyazdani42/nvim-web-devicons" },
-      { "nvim-telescope/telescope-cheat.nvim" },
-      { "nvim-telescope/telescope-dap.nvim" },
-      { "nvim-telescope/telescope-file-browser.nvim" },
-      {
-        "nvim-telescope/telescope-frecency.nvim",
-        requires = { "tami5/sqlite.lua" },
-        opt = true,
-      },
-      { "nvim-telescope/telescope-fzf-writer.nvim" },
-      { "nvim-telescope/telescope-fzy-native.nvim" },
-      { "nvim-telescope/telescope-hop.nvim" },
-      { "nvim-telescope/telescope-packer.nvim" },
-      {
-        "nvim-telescope/telescope-smart-history.nvim",
-        requires = { "tami5/sqlite.lua" },
-        opt = true,
-      },
-      { "nvim-telescope/telescope-symbols.nvim" },
-      { "nvim-telescope/telescope-ui-select.nvim" },
+    "Shougo/ddu.vim",
+    after = { "denops.vim" },
+    wants = {
+      "ddu-ui-ff",
+      "ddu-ui-filer",
+      "ddu-source-file",
+      "ddu-source-file_rec",
+      "ddu-source-file_old",
+      "ddu-source-file_point",
+      "ddu-source-line",
+      "ddu-source-register",
+      "ddu-source-buffer",
+      "ddu-source-rg",
+      "ddu-source-file_external",
+      "ddu-source-help",
+      "ddu-filter-matcher_substring",
+      "ddu-filter-matcher_relative",
+      "ddu-filter-matcher_hidden",
+      "ddu-kind-file",
+      "ddu-kind-word",
     },
-    cmd = { "Telescope" },
-    module = { "telescope" },
-    setup = [[require("rc.config.telescope").setup()]],
-    config = [[require("rc.config.telescope").config()]],
+    setup = [[require("rc.config.ddu").setup()]],
+    config = [[require("rc.config.ddu").config()]],
   }
 end
 
