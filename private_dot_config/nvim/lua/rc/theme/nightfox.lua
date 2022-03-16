@@ -1,49 +1,46 @@
 -- NightFox colorscheme
 
 -- vim.cmd [[packadd nightfox.nvim]]
-local nightfox = require "nightfox"
-local opts = {
-  fox = "duskfox",
-  styles = {
-    comments = "italic",
-    keywords = "bold",
+require("nightfox").setup {
+  options = {
+    transparent = vim.fn.exists "g:GuiLoaded" == 0 and vim.fn.has "gui" == 0 and vim.fn.exists "$SSH_CONNECTION" == 0,
+    styles = {
+      comments = "italic",
+      keywords = "bold",
+    },
+    -- inverse = {
+    --   visual = true,
+    -- },
   },
-  inverse = {
-    visual = true,
-  },
-  hlgroups = {
+  groups = {
     -- Vi mode
-    StatuslineModeNormal = { fg = "${blue}", bg = "${bg_statusline}", style = "bold" },
-    StatuslineModeInsert = { fg = "${green}", bg = "${bg_statusline}", style = "bold" },
-    StatuslineModeVisual = { fg = "${magenta}", bg = "${bg_statusline}", style = "bold" },
-    StatuslineModeReplace = { fg = "${red}", bg = "${bg_statusline}", style = "bold" },
-    StatuslineModeCommand = { fg = "${yellow}", bg = "${bg_statusline}", style = "bold" },
-    StatuslineModeSelect = { fg = "${cyan}", bg = "${bg_statusline}", style = "bold" },
-    StatuslineModeOther = { fg = "${white}", bg = "${bg_statusline}", style = "bold" },
+    StatuslineModeNormal = { fg = "pallet.blue", bg = "pallet.bg0", style = "bold" },
+    StatuslineModeInsert = { fg = "pallet.green", bg = "pallet.bg0", style = "bold" },
+    StatuslineModeVisual = { fg = "pallet.magenta", bg = "pallet.bg0", style = "bold" },
+    StatuslineModeReplace = { fg = "pallet.red", bg = "pallet.bg0", style = "bold" },
+    StatuslineModeCommand = { fg = "pallet.yellow", bg = "pallet.bg0", style = "bold" },
+    StatuslineModeSelect = { fg = "pallet.cyan", bg = "pallet.bg0", style = "bold" },
+    StatuslineModeOther = { fg = "pallet.white", bg = "pallet.bg0", style = "bold" },
     -- File info
-    StatuslineFileIcon = { fg = "${blue}", bg = "${bg_statusline}" },
-    StatuslineFileName = { fg = "${fg}", bg = "${bg_statusline}", style = "bold" },
-    StatuslineFileModified = { fg = "${orange}", bg = "${bg_statusline}" },
-    StatuslineFileReadonly = { fg = "${red}", bg = "${bg_statusline}" },
-    StatuslineFileSize = { fg = "${cyan}", bg = "${bg_statusline}" },
+    StatuslineFileIcon = { fg = "pallet.blue", bg = "pallet.bg0" },
+    StatuslineFileName = { fg = "pallet.fg1", bg = "pallet.bg0", style = "bold" },
+    StatuslineFileModified = { fg = "pallet.orange", bg = "pallet.bg0" },
+    StatuslineFileReadonly = { fg = "pallet.red", bg = "pallet.bg0" },
+    StatuslineFileSize = { fg = "pallet.cyan", bg = "pallet.bg0" },
     -- Git
-    StatuslineGitBranch = { fg = "${blue_dm}", bg = "${bg_statusline}" },
+    StatuslineGitBranch = { fg = "pallet.blue.dim", bg = "pallet.bg0" },
     -- Diff
-    StatuslineDiffAdded = { fg = "${git.add}", bg = "${bg_statusline}" },
-    StatuslineDiffModified = { fg = "${git.change}", bg = "${bg_statusline}" },
-    StatuslineDiffRemoved = { fg = "${git.delete}", bg = "${bg_statusline}" },
+    StatuslineDiffAdded = { fg = "git.add", bg = "pallet.bg0" },
+    StatuslineDiffModified = { fg = "git.changed", bg = "pallet.bg0" },
+    StatuslineDiffRemoved = { fg = "git.removed", bg = "pallet.bg0" },
     -- LSP
-    StatuslineLspClient = { fg = "${orange}", bg = "${bg_statusline}" },
+    StatuslineLspClient = { fg = "pallet.orange", bg = "pallet.bg0" },
     -- Diagnostics
-    StatuslineDiagnosticError = { fg = "${error}", bg = "${bg_statusline}" },
-    StatuslineDiagnosticWarning = { fg = "${warning}", bg = "${bg_statusline}" },
-    StatuslineDiagnosticInfo = { fg = "${info}", bg = "${bg_statusline}" },
-    StatuslineDiagnosticHint = { fg = "${hint}", bg = "${bg_statusline}" },
+    StatuslineDiagnosticError = { fg = "diag.error", bg = "pallet.bg0" },
+    StatuslineDiagnosticWarning = { fg = "diag.warn", bg = "pallet.bg0" },
+    StatuslineDiagnosticInfo = { fg = "diag.info", bg = "pallet.bg0" },
+    StatuslineDiagnosticHint = { fg = "diag.hint", bg = "pallet.bg0" },
   },
 }
-if vim.fn.exists "g:GuiLoaded" == 0 and vim.fn.has "gui" == 0 and vim.fn.exists "$SSH_CONNECTION" == 0 then
-  opts.transparent = true
-end
 
-nightfox.setup(opts) -- configure
-nightfox.load() -- set colorscheme
+vim.cmd "colorschem duskfox"
