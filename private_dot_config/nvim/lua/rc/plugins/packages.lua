@@ -75,6 +75,7 @@ function M.load_plugins(use, _)
   use {
     "folke/which-key.nvim",
     config = [[require("rc.config.which-key")]],
+    disable = true,
   }
 
   -- A high-performance color highlighter for NeoVim
