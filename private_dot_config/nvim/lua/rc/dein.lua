@@ -1,4 +1,3 @@
-local path = require "rc.core.path"
 local platform = require "rc.core.platform"
 
 local dein = setmetatable({}, {
@@ -7,20 +6,14 @@ local dein = setmetatable({}, {
   end,
 })
 
-dein.min_load_state = vim.fn["dein#min#load_state"]
+dein.min = setmetatable({}, {
+  __index = function(_, key)
+    return vim.fn["dein#min#" .. key]
+  end,
+})
 
 -- ~/.local/share/nvim/dein
-local dein_base_path = path.join(path.cache_home, "dein")
-
--- Ensure dein.vim is installed.
-if not string.find(vim.o.runtimepath, "/dein.vim") then
-  local dein_repo_dir = path.join(dein_base_path, "repos", "Shougo", "dein.vim")
-  if not path.is_dir(dein_repo_dir) then
-    local dein_repo_url = "https://github.com/Shougo/dein.vim"
-    vim.fn.system { "git", "clone", "--depth", "1", dein_repo_url, dein_repo_dir }
-  end
-  vim.opt.runtimepath:prepend(dein_repo_dir)
-end
+local dein_base_path = vim.fn.stdpath("data") .. "/dein"
 
 -- Configure dein
 vim.g["dein#auto_recache"] = not platform.is_windows
@@ -31,9 +24,10 @@ vim.g["dein#install_max_processes"] = 16
 vim.g["dein#install_progress_type"] = "floating"
 -- vim.g["dein#install_log_filename"] = path.joip(path.cache_home, "dein.log")
 
-if dein.min_load_state(dein_base_path) == 1 then
-  local plugins_toml = path.join(path.config_home, "dein", "plugins.toml")
-  local plugins_lazy_toml = path.join(path.config_home, "dein", "plugins_lazy.toml")
+if dein.min.load_state(dein_base_path) == 1 then
+  local config_home = vim.fn.stdpath("config")
+  local plugins_toml = config_home .. "/dein/plugins.toml"
+  local plugins_lazy_toml = config_home .. "/dein/plugins_lazy.toml"
 
   dein.begin(dein_base_path, {
     plugins_toml,
@@ -47,6 +41,6 @@ if dein.min_load_state(dein_base_path) == 1 then
   dein.save_state()
 end
 
-if vim.fn.has "vim_starting" and dein.check_install() ~= 0 then
+if vim.fn.has("vim_starting") == 1 and dein.check_install() ~= 0 then
   dein.install()
 end

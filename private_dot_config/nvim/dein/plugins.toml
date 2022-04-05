@@ -11,16 +11,7 @@ repo = 'Shougo/dein.vim'
 # Speed up loading Lua modules in Neovim to improve startup time.
 [[plugins]]
 repo = 'lewis6991/impatient.nvim'
-hook_add = '''
-lua << EOF
-  local ok, impatient = pcall(require, "impatient")
-  if ok then
-    impatient.enable_profile()
-  else
-    vim.notify(impatient)
-  end
-EOF
-'''
+merged = 0
 
 # EditorConfig
 [[plugins]]
@@ -31,9 +22,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 '''
 
 # Collection of minimal, independent, and fast Lua modules dedicated to improve Neovim experience.
-# [[plugins]]
-# repo = 'echasnovski/mini.nvim',
-# hook_add = 'lua require("rc.config.mini").config()'
+[[plugins]]
+repo = 'echasnovski/mini.nvim',
+hook_add = 'lua require("rc.config.mini").config()'
 
 #==============================================================================
 # Appearance

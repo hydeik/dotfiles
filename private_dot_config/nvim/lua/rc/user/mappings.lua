@@ -16,10 +16,6 @@
 -----------------------------------------------------------------------------
 --]]
 
---- mapleader
-vim.g.mapleader = ";"
-vim.g.localmapleader = ","
-
 --- Basic mappings {{{
 -- Disable Ex-mode, remap to register macros
 vim.keymap.set("n", "Q", "q")

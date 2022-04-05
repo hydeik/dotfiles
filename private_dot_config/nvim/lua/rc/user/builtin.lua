@@ -1,8 +1,6 @@
 -- ~/.config/nvim/rc/user/builtins.lua
 -- [[ Configure NeoVim builtin plugins ]]
 
-local path = require "rc.core.path"
-
 -- Disable some builtin plugins. {{{1
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_getscript = 1
@@ -34,16 +32,6 @@ vim.g.do_filetype_lua = 1
 vim.g.did_load_filetypes = 0
 vim.g.did_indent_on = 1
 vim.g.did_load_ftplugin = 1
---- }}}1
-
---- [[ Providers ]] {{{1
--- python3 interpretor
-vim.g.python3_host_prog = path.join(path.home, ".asdf", "shims", "python3")
--- Disable Nodejs / python2 / ruby / perl providers
-vim.g.loaded_node_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_python_provider = 0
-vim.g.loaded_ruby_provider = 0
 --- }}}1
 
 --- [[ Global variables to customize behaviours of builtin filetype-plugins ]] {{{1
