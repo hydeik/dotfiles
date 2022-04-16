@@ -123,7 +123,9 @@ import:
   # - ~/.config/alacritty/fonts/hackgen.yml
   # - ~/.config/alacritty/fonts/mononoki.yml
   - ~/.config/alacritty/fonts/plemoljp.yml
-  - ~/.config/alacritty/themes/nightfox_duskfox.yml
+  # - ~/.config/alacritty/themes/nightfox_duskfox.yml
+  - ~/.config/alacritty/themes/nightfox_nightfox.yml
+  # - ~/.config/alacritty/themes/nightfox_terafox.yml
   # - ~/.config/alacritty/themes/tokyonight_night.yml
   # - ~/.config/alacritty/themes/sonokai_shusia.yml
 
@@ -212,15 +214,7 @@ live_config_reload: true
 #   - (Linux/macOS) /bin/bash --login
 #   - (Windows) powershell
 shell:
-{{- if (eq .chezmoi.os "darwin") }}
-  {{- if (eq .chezmoi.arch "arm64") }}
-  program: /opt/homebrew/bin/zsh
-  {{- else }}
   program: /usr/local/bin/zsh
-  {{- end }}
-{{- else }}
-  program: /bin/zsh
-{{- end }}
   args:
     - --login
 
@@ -277,7 +271,7 @@ mouse:
   triple_click: {threshold: 300}
 
   # If this is `true`, the cursor is temporarily hidden when typing.
-  hide_when_typing: false
+  {{ .chezmoi.username }}_when_typing: false
 
 # Regex hints
 #
