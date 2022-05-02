@@ -1,0 +1,152 @@
+# === Customize built-in plugins ===
+
+# Global hook_add, which is executed in dein#end(). {{{
+# -----
+hook_add = '''
+" -- Bash
+let g:is_bash = v:true
+let g:sh_fold_enabled = v:true
+
+" -- C++
+let g:cpp_class_scope_highlight = v:true
+
+" -- Markdown
+let g:markdown_fenced_languages = [
+      \ 'css',
+      \ 'javascript',
+      \ 'js=javascript',
+      \ 'json=javascript',
+      \ 'python',
+      \ 'rust',
+      \ 'sh',
+      \ 'sass',
+      \ 'vim',
+      \ 'xml',
+      \ ]
+
+" -- Perl
+let g:perl_fold = v:true
+let g:perl_fold_blocks = v:true
+
+" -- php
+let g:php_folding = v:true
+
+" -- Python
+let g:python_highlight_all = v:true
+
+" -- Ruby
+let g:ruby_fold = v:true
+
+" -- Toml
+" Enable dein toml syntax
+" NOTE: For NeoVim, use nvim-treesitter syntax instead.
+autocmd MyAutoCmd CursorHold */rc/*.toml call dein#toml#syntax()
+
+" -- Vim
+let g:vimsyntax_noerror = v:true
+let g:vimsyn_folding = 'af'
+
+" -- TeX
+let g:tex_stylish = v:true
+let g:tex_conceal = ""
+let g:tex_flavor = "latex"
+let g:tex_isk = "48-57,a-z,A-Z,192-255,:"
+let g:tex_fold_enabled = v:true
+
+" -- XML
+let g:xml_syntax_folding = v:true
+
+" === Disable built-in plugins ===
+let g:loaded_2html_plugin      = v:true
+let g:loaded_getscriptPlugin   = v:true
+let g:loaded_gzip              = v:true
+let g:loaded_gtags             = v:true
+let g:loaded_gtags_cscope      = v:true
+let g:loaded_logiPat           = v:true
+let g:loaded_man               = v:true
+let g:loaded_matchit           = v:true
+let g:loaded_matchparen        = v:true
+let g:loaded_netrwFileHandlers = v:true
+let g:loaded_netrwPlugin       = v:true
+let g:loaded_netrwSettings     = v:true
+let g:loaded_rrhelper          = v:true
+let g:loaded_shada_plugin      = v:true
+let g:loaded_spellfile_plugin  = v:true
+let g:loaded_tarPlugin         = v:true
+let g:loaded_tutor_mode_plugin = v:true
+let g:loaded_vimballPlugin     = v:true
+let g:loaded_zipPlugin         = v:true
+'''
+# }}}
+
+# Hooks on filetypes {{{
+# -----
+[ftplugin]
+_ = '''
+" Disable automatically insert comment.
+setlocal formatoptions-=r
+setlocal formatoptions-=o
+setlocal formatoptions-=a
+setlocal formatoptions+=nlmMj
+
+if !&l:modifiable
+  setlocal nofoldenable
+  setlocal foldcolumn=0
+  setlocal colorcolumn=
+endif
+'''
+
+# C++
+cpp = '''
+setlocal foldignore=#/
+'''
+
+# Fortran
+fortran = '''
+let s:ext = expand("%:e")
+if s:ext ==? "f" || s:ext ==? "for"
+  let b:fortran_free_source  = 0
+  let b:fortran_fixed_source = 1
+else
+  let b:fortran_free_source  = 1
+  let b:fortran_fixed_source = 0
+endif
+
+let b:fortran_fold = 1
+let b:fortran_fold_conditionals = 1
+let b:fortran_fold_multilinecomments = 1
+
+let b:fortran_do_enddo = 1
+'''
+
+# Ruby
+ruby = '''
+setlocal iskeyword+=!
+setlocal iskeyword+=?
+setlocal omnifunc=
+'''
+
+# TOML
+toml = '''
+syntax sync minlines=500
+'''
+
+# VIM script
+vim = '''
+if 5000 < line('$')
+  syntax sync minlines=200
+endif
+setlocal foldmethod=indent
+'''
+
+# VIM help
+help = '''
+setlocal iskeyword+=:
+setlocal iskeyword+=#
+setlocal iskeyword+=-
+'''
+
+# }}}
+
+#-----------------------------------------------------------------------------
+# vim: foldmethod=marker
