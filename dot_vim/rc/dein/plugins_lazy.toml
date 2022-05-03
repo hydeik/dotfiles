@@ -1,0 +1,145 @@
+# === Plugins managed by dein.vim (lazy) ====
+
+#==============================================================================
+# Plugin manager
+#==============================================================================
+# Utility commands for dein.vim
+[[plugins]]
+repo = 'haya14busa/dein-command.vim'
+depends = ['dein.vim']
+on_cmd = ['Dein']
+
+#==============================================================================
+# Libaries
+#==============================================================================
+# An ecosystem of Vim/Neovim which allows developers to write cross-platform
+# plugins in Deno.
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+on_event = 'CursorHold'
+
+#==============================================================================
+# Extensions of standard features
+#==============================================================================
+
+# === Motions ===
+
+# Jump to fuzzy match word
+[[plugins]]
+repo = 'yuki-yano/fuzzy-motion.vim'
+depends = ['denops.vim']
+on_cmd = ['FuzzyMotion']
+hook_add = '''
+nnoremap <silent> ss  <Cmd>FuzzyMotion<CR>
+onoremap <silent> ss  <Cmd>FuzzyMotion<CR>
+xnoremap <silent> ss  <Cmd>FuzzyMotion<CR>
+'''
+
+# === Editting ===
+
+# === Formattoing ===
+# --- Smart Align
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+on_cmd = ['EasyAlign', 'LiveEasyAlign']
+on_map = ['nv', '<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']
+hook_add = '''
+nmap <silent><Leader>a  <Plug>(EasyAlign)
+vmap <silent><Leader>a  <Plug>(EasyAlign)
+'''
+#==============================================================================
+# Coding support
+#==============================================================================
+
+# EditorConfig
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+if = 'executable("editorconfig")'
+on_event = ['BufNewFile', 'BufRead']
+hook_add = '''
+let g:EditorConfig_exclude_patterns = [
+      \ 'fugitive://.*',
+      \ 'scp://.*'
+      \ ]
+'''
+
+# Better whitespace highlighting for Vim
+[[plugins]]
+repo = 'ntpeters/vim-better-whitespace'
+on_event = ['BufNewFile', 'BufRead']
+hook_add = '''
+let g:better_whitespace_enabled = 1
+let g:strip_whitespace_on_save  = 1
+let g:show_spaces_that_precede_tabs = 1
+let g:better_whitespace_filetypes_blacklist = [
+      \ 'diff', 'gitcommit', 'defx', 'denite', 'qf', 'help',
+      \ 'markdown', 'which_key'
+      \ ]
+nnoremap <silent><Leader>x  <Cmd>StripWhitespace<CR>
+'''
+
+#==============================================================================
+# Language server protocol (LSP) client
+#==============================================================================
+# Async language server protocol plugin for vim and neovim.
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+depends = ['vim-lsp-settings']
+on_ft = [
+  'c', 'cpp', 'dockerfile', 'fortran', 'json', 'javascript', 'go', 'lua',
+  'python', 'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
+  ]
+
+hook_source = '''
+  " Options
+  let g:lsp_signs_error       = { 'text': "\uf00d" }
+  let g:lsp_signs_warning     = { 'text': "\uf071" }
+  let g:lsp_signs_hint        = { 'text': "\uf27b" }
+  let g:lsp_signs_information = { 'text': "\uf05a" }
+
+  let g:lsp_diagnostics_enabled = 1
+  let g:lsp_diagnostics_echo_cursor = 1
+  let g:lsp_highlight_references_enabled = 1
+  let g:lsp_text_edit_enabled = 1
+  let g:lsp_log_file = $VIM_CACHE_DIR . '/vim-lsp.log'
+'''
+
+# Auto configurations for Language Server for vim-lsp
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+on_source = ['vim-lsp']
+
+# hook_add = '''
+#   if IsMac()
+#     let g:lsp_settings = {
+#           \ 'clangd': {'cmd': ['/usr/local/opt/llvm/bin/clangd']}
+#           \ }
+#   endif
+# '''
+
+hook_source = '''
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  nmap <buffer> mA  <Plug>(lsp-codeaction)
+  nmap <buffer> md  <Plug>(lsp-definition)
+  nmap <buffer> mD  <Plug>(lsp-declaration)
+  nmap <buffer> mh  <Plug>(lsp-hover)
+  nmap <buffer> mf  <Plug>(lsp-document-format)
+  nmap <buffer> mi  <Plug>(lsp-implementation)
+  nmap <buffer> mr  <Plug>(lsp-references)
+  nmap <buffer> mR  <Plug>(lsp-rename)
+  nmap <buffer> ms  <Plug>(lsp-document-symbol)
+  nmap <buffer> mS  <Plug>(lsp-workspace-symbol)
+  " nmap <buffer> ms  :<C-u>Denite -buffer-name=lsp lsp_document_symbol<CR>
+  " nmap <buffer> mS  :<C-u>Denite -buffer-name=lsp lsp_workspace_symbol<CR>
+  nmap <buffer> mt  <Plug>(lsp-type-definition)
+  nmap <buffer> m?  <Plug>(lsp-document-diagnostics)
+  nmap <buffer> m]  <Plug>(lsp-next-error)
+  nmap <buffer> m[  <Plug>(lsp-previous-error)
+endfunction
+
+augroup lsp_install
+  autocmd!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+'''
