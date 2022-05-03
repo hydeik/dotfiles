@@ -227,7 +227,7 @@ function M.load_plugins(use, _)
   use {
     "mizlan/iswap.nvim",
     after = "nvim-treesitter",
-    -- config = [[require("iswap").setup()]],
+    config = [[require("rc.iswap").config()]],
   }
 
   use {
@@ -571,7 +571,7 @@ function M.load_plugins(use, _)
   -- EditorConfig
   use {
     "editorconfig/editorconfig-vim",
-    event = { "VimEnter" },
+    event = { "BufNewFile", "BufRead" },
   }
 
   -- Indent guides for Neovim

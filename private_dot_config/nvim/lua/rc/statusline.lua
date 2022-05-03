@@ -38,7 +38,7 @@ local function file_icon()
 end
 
 local function file_size()
-  local file = vim.fn.expand "%:p"
+  local file = vim.api.nvim_buf_get_name(0)
   if string.len(file) == 0 then
     return ""
   end
@@ -48,16 +48,19 @@ local function file_size()
     return ""
   end
   local kb = 1024
-  local mb = 1024 * 1024
-  local gb = 1024 * 1024 * 1024
+  local mb = kb * 1024
+  local gb = mb * 1024
+  local tb = gb * 1024
   if size < kb then
     size = size .. "B "
   elseif size < mb then
     size = string.format("%.1f%s", size / kb, "KiB")
   elseif size < gb then
     size = string.format("%.1f%s", size / mb, "MiB")
-  else
+  elseif size < tb then
     size = string.format("%.1f%s", size / gb, "GiB")
+  else
+    size = string.format("%.1f%s", size / tb, "TiB")
   end
   return size
 end
@@ -226,6 +229,7 @@ end
 local function get_diagnostics_count(severity)
   return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity[severity] })
 end
+
 --
 -- local function get_diagnostics_count()
 --   local diagnostics = vim.diagnostic.get(0)
@@ -313,17 +317,25 @@ end
 
 local function set_statusline()
   vim.o.statusline = "%!v:lua.require'rc.statusline'.statusline()"
-  vim.api.nvim_exec(
-    [[
-      augroup MyStatusline
-      autocmd!
-      autocmd WinLeave,BufLeave * lua vim.wo.statusline=require'rc.statusline'.statusline()
-      autocmd BufWinEnter,WinEnter,BufEnter,TermOpen * set statusline<
-      autocmd VimResized,FileChangedShellPost * redrawstatus
-      augroup END
-    ]],
-    false
-  )
+  local group = vim.api.nvim_create_augroup("MyStatusline", { clear = true })
+  vim.api.nvim_create_autocmd({"WinLeave", "BufLeave"}, {
+    group = group,
+    pattern = "*",
+    callback = function()
+      vim.wo.statusline = require("rc.statusline").statusline()
+    end,
+    desc = "Set statusline (window option)",
+  })
+  vim.api.nvim_create_autocmd({"BufWinEnter", "WinEnter", "BufEnter", "TermOpen"}, {
+    group = group,
+    pattern = "*",
+    command = "set statusline<",
+  })
+  vim.api.nvim_create_autocmd({"VimResized", "FileChangedShellPost"}, {
+    group = group,
+    pattern = "*",
+    command = "redrawstatus",
+  })
 end
 
 --- Set option and autocmds for statusline
