@@ -13,8 +13,8 @@ function M.toggle()
 end
 
 function M.format()
-    if M.autoformat then
-    vim.lsp.buf.formatting_sync()
+  if M.autoformat then
+    vim.lsp.buf.format()
   end
 end
 
@@ -28,10 +28,10 @@ function M.setup(client, bufnr)
     enable = not (client.name == "null-ls")
   end
 
-  client.resolved_capabilities.document_formatting = enable
+  client.server_capabilities.document_formatting = enable
 
   -- Format on save
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.document_formatting then
     vim.api.nvim_create_augroup("ConfigLspFormat", { clear = true })
     vim.api.nvim_create_autocmd("BufWritePost", {
       group = "ConfigLspFormat",

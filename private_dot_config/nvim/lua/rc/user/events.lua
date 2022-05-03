@@ -1,13 +1,13 @@
 vim.api.nvim_create_augroup("MyAutoCmd", { clear = true })
 
--- vim.api.nvim_create_autocmd("BufWritePost", {
---   group = "MyAutoCmd",
---   pattern = { "*.lua" },
---   callback = function()
---     require("rc.plugins").auto_compile()
---   end,
---   desc = "Call packer.compile on saving config files written in lua.",
--- })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = "MyAutoCmd",
+  pattern = { "*.lua" },
+  callback = function()
+    require("rc.packer").auto_compile()
+  end,
+  desc = "Call packer.compile on saving config files written in lua.",
+})
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = "MyAutoCmd",

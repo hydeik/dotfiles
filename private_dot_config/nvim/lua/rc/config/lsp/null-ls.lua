@@ -15,7 +15,7 @@ function M.setup(opts)
       null_ls.builtins.formatting.shfmt.with {
         args = { "-ln", "bash", "-i", "2", "-bn", "-ci", "-sr", "-kp" },
       },
-      null_ls.builtins.formatting.stylua,
+      -- null_ls.builtins.formatting.stylua,
       null_ls.builtins.diagnostics.markdownlint,
       null_ls.builtins.diagnostics.shellcheck,
       null_ls.builtins.code_actions.gitsigns,

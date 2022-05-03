@@ -309,14 +309,14 @@ function M.config()
     },
   }
 
-  pcall(telescope.load_extension, "dap")
-  pcall(telescope.load_extension, "file_browser")
-  pcall(telescope.load_extension, "freceny")
-  pcall(telescope.load_extension, "fzy_native")
-  pcall(telescope.load_extension, "gh")
-  pcall(telescope.load_extension, "hop")
-  pcall(telescope.load_extension, "smart_history")
-  pcall(telescope.load_extension, "ui-select")
+  -- pcall(telescope.load_extension, "dap")
+  -- pcall(telescope.load_extension, "file_browser")
+  -- pcall(telescope.load_extension, "freceny")
+  -- pcall(telescope.load_extension, "fzy_native")
+  -- pcall(telescope.load_extension, "gh")
+  -- pcall(telescope.load_extension, "hop")
+  -- pcall(telescope.load_extension, "smart_history")
+  -- pcall(telescope.load_extension, "ui-select")
 end
 
 return M

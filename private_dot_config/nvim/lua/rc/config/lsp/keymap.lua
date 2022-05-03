@@ -26,11 +26,11 @@ function M.setup(client, bufnr)
 
   vim.keymap.set("v", "ma", "<Cmd>lua vim.lsp.buf.range_code_action()<CR>", { buffer = bufnr })
 
-  if client.resolved_capabilities.document_formatting then
-    vim.keymap.set("n", "mF", "<cmd>lua vim.lsp.buf.formatting()<CR>", { buffer = bufnr })
+  if client.server_capabilities.document_formatting then
+    vim.keymap.set("n", "mF", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", { buffer = bufnr })
   end
 
-  if client.resolved_capabilities.document_range_formatting then
+  if client.server_capabilities.document_range_formatting then
     vim.keymap.set("n", "m=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", { buffer = bufnr })
   end
 end

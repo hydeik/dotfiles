@@ -16,6 +16,22 @@
 -----------------------------------------------------------------------------
 --]]
 
+-- Prefix keys {{{
+  vim.g.mapleader = ";"
+  vim.g.maplocalleader = "\\"
+  -- release keymappings for plugins
+  vim.keymap.set("n", "<Space>", "<Nop>")
+  vim.keymap.set("x", "<Space>", "<Nop>")
+  vim.keymap.set("n", ";", "<Nop>")
+  vim.keymap.set("x", ";", "<Nop>")
+  vim.keymap.set("n", ",", "<Nop>")
+  vim.keymap.set("x", ",", "<Nop>")
+  vim.keymap.set("n", "m", "<Nop>")
+  vim.keymap.set("x", "m", "<Nop>")
+  vim.keymap.set("n", "s", "<Nop>")
+  vim.keymap.set("x", "s", "<Nop>")
+--- }}}
+
 --- Basic mappings {{{
 -- Disable Ex-mode, remap to register macros
 vim.keymap.set("n", "Q", "q")

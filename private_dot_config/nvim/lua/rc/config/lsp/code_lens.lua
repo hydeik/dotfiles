@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup(client, bufnr)
-  if client.resolved_capabilities.code_lens then
+  if client.server_capabilities.code_lens then
     vim.api.nvim_create_augroup("ConfigLspCodeLens", { clear = true })
     vim.api.nvim_create_autocmd("BufEnter", {
       group = "ConfigLspCodeLens",
