@@ -1,11 +1,21 @@
 local lspconfig = require "lspconfig"
 
+-- Customize UI
 require "rc.config.lsp.diagnostics"
 require("rc.config.lsp.kind").setup()
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
 
--- custom 'on_attach' function
+-- Setup LSP server installer
+require "rc.config.lsp.installer"
+
+-- Custom on_init callback
+local function on_init(client)
+  client.config.flags = client.config.flags or {}
+  client.config.flags.allow_incremental_sync = true
+end
+
+-- Custom on_attach callback
 local function on_attach(client, bufnr)
   require("rc.config.lsp.formatting").setup(client, bufnr)
   require("rc.config.lsp.keymap").setup(client, bufnr)
@@ -34,10 +44,11 @@ completionItem.resolveSupport = {
 
 -- default options for all servers
 local default_options = {
+  on_init = on_init,
   on_attach = on_attach,
   capabilities = updated_capabilities,
   flags = {
-    debounce_text_changes = 150,
+    debounce_text_changes = nil,
   },
 }
 
@@ -47,23 +58,6 @@ local servers = {
   -- https://github.com/bash-lsp/bash-language-server
   bashls = {
     filetypes = { "sh", "bash", "zsh" },
-  },
-  clangd = {
-    cmd = {
-      "clangd",
-      "--background-index",
-      "--clang-tidy",
-      "--header-insertion=iwyu",
-      "--suggest-missing-includes",
-      "--all-scope-completion",
-      "--completion-style=detailed",
-      "--cross-file-rename",
-    },
-    init_options = {
-      clangdFileStatus = true,
-      usePlaceholders = true,
-      completeUnimported = true,
-    },
   },
   -- https://github.com/regen100/cmake-language-server
   cmake = {},
@@ -97,23 +91,6 @@ local servers = {
   pyright = {
     settings = {
       python = { formatting = { provider = "black" } },
-    },
-  },
-  -- https://github.com/rust-analyzer/rust-analyzer
-  rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        assist = {
-          importGranularity = "module",
-          importPrefix = "by_self",
-        },
-        cargo = {
-          loadOutDirsFromCheck = true,
-        },
-        procMacro = {
-          enable = true,
-        },
-      },
     },
   },
   -- https://solargraph.org/
@@ -150,5 +127,47 @@ local servers = {
 
 -- setup null-ls (https://github.com/jose-elias-alvarez/null-ls.nvim)
 require("rc.config.lsp.null-ls").setup(default_options)
+-- setup clangd
+require("clangd_extensions").setup {
+  server = {
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--clang-tidy",
+      "--header-insertion=iwyu",
+      "--suggest-missing-includes",
+      "--all-scope-completion",
+      "--completion-style=detailed",
+      "--cross-file-rename",
+    },
+    init_options = {
+      clangdFileStatus = true,
+      usePlaceholders = true,
+      completeUnimported = true,
+    },
+  },
+}
+-- setup rust_analyzer
+require("rust-tools").setup {
+  server = {
+    settings = {
+      ["rust-analyzer"] = {
+        assist = {
+          importGranularity = "module",
+          importPrefix = "by_self",
+        },
+        cargo = {
+          loadOutDirsFromCheck = true,
+        },
+        procMacro = {
+          enable = true,
+        },
+      },
+    },
+  },
+}
 -- setup other LSP servers
-require("rc.config.lsp.servers").setup(servers, default_options)
+for server_name, options in pairs(servers) do
+  local server_config = vim.tbl_deep_extend("force", default_options, options)
+  lspconfig[server_name].setup(server_config)
+end
