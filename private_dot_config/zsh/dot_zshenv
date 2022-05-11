@@ -368,8 +368,8 @@ export GOPATH=${HOME}
 ##
 ## asdf-vm
 ##
-source "$HOME/.asdf/asdf.sh"
-fpath=( ${ASDF_DIR}/completions(N-/) $fpath[@] )
+# source "$HOME/.asdf/asdf.sh"
+# fpath=( ${ASDF_DIR}/completions(N-/) $fpath[@] )
 
 ##
 ## Rust, cargo
