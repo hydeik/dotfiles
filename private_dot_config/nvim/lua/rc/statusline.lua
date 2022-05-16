@@ -1,32 +1,76 @@
 local M = {}
 
+-- [[ Wrapper around common buffer/window operations ]]
+-- (I reffer https://github.com/tjdevries/express_line.nvim/blob/master/lua/el/meta.lua)
+local buf_lookup = {
+  -- File type
+  filetype = function(buffer)
+    return vim.api.nvim_buf_get_option(buffer.bufnr, "filetype")
+  end,
+  -- Full file name
+  name = function(buffer)
+    return vim.api.nvim_buf_get_name(buffer.bufnr)
+  end,
+  -- Tail of the file name
+  tail = function(buffer)
+    return vim.fn.fnamemodify(buffer.name, ":t")
+  end,
+  -- Extension of the file name
+  extension = function(buffer)
+    return vim.fn.fnamemodify(buffer.name, ":e")
+  end,
+  -- Check whether the buffer is active.
+  is_active = function(buffer)
+    return buffer.bufnr == vim.api.nvim_get_current_buf()
+  end,
+}
+
+local Buffer = {}
+local buf_mt = {
+  __index = function(t, k)
+    local result = nil
+    if Buffer[k] ~= nil then
+      result = Buffer[k]
+    elseif buf_lookup[k] ~= nil then
+      result = buf_lookup[k](t)
+    end
+    t[k] = result
+    return t[k]
+  end
+}
+
+function Buffer:new(bufnr)
+  if bufnr == 0 then
+    bufnr = vim.api.nvim_buf_get_number(0)
+  end
+  return setmetatable({ bufnr = bufnr }, buf_mt)
+end
+
 -- [[ Components ]]
 
 -- [ File info ]
-local function file_readonly()
-  return vim.bo.readonly and " " or ""
+local function file_readonly(buffer)
+  return vim.api.nvim_buf_get_option(buffer.bufnr, "readonly") and " " or ""
 end
 
-local function file_modified()
-  if vim.tbl_contains({ "help", "denite", "fzf", "tagbar" }, vim.bo.filetype) then
+local function file_modified(buffer)
+  if vim.tbl_contains({ "help", "denite", "fzf", "tagbar" }, buffer.filetype) then
     return ""
   end
-  if vim.bo.modifiable then
-    if vim.bo.modified then
+  if vim.api.nvim_buf_get_option(buffer.bufnr, "modifiable") then
+    if vim.api.nvim_buf_get_option(buffer.bufnr, "modified") then
       return " "
     end
   end
   return ""
 end
 
-local function file_icon()
-  local ft = vim.bo.filetype
+local function file_icon(buffer)
+  local ft = buffer.filetype
   if #ft > 0 then
     local ok, devicons = pcall(require, "nvim-web-devicons")
     if ok then
-      local f_name = vim.fn.expand "%:t"
-      local f_ext = vim.fn.expand "%:e"
-      local icon = devicons.get_icon(f_name, f_ext)
+      local icon = devicons.get_icon(buffer.tail, buffer.extension)
       if icon ~= nil then
         return icon
       elseif ft == "help" then
@@ -37,8 +81,8 @@ local function file_icon()
   return ""
 end
 
-local function file_size()
-  local file = vim.api.nvim_buf_get_name(0)
+local function file_size(buffer)
+  local file = buffer.name
   if string.len(file) == 0 then
     return ""
   end
@@ -65,14 +109,14 @@ local function file_size()
   return size
 end
 
-local function file_name()
+local function file_name(buffer)
   local ft_lean = { "tagbar", "vista", "defx", "coc-explorer", "magit" }
-  local ft = vim.bo.filetype
+  local ft = buffer.filetype
   if vim.tbl_contains(ft_lean, ft) then
     return " "
   end
 
-  local name = vim.api.nvim_buf_get_name(0) -- full path
+  local name = buffer.name -- full path
   if name == "" then
     name = "[No Name]"
   else
@@ -85,16 +129,16 @@ local function file_name()
 end
 
 -- file encoding & format
-local function file_encoding()
-  local fenc = vim.bo.fileencoding
+local function file_encoding(buffer)
+  local fenc = vim.api.nvim_buf_get_option(buffer.bufnr, "fileencoding")
   if fenc == "" then
     fenc = vim.o.encoding
   end
   return fenc
 end
 
-local function file_format()
-  local ff = vim.bo.fileformat
+local function file_format(buffer)
+  local ff = vim.api.nvim_buf_get_option(buffer.bufnr, "fileformat")
   local icon
   if ff == "mac" then
     icon = " "
@@ -214,9 +258,9 @@ end
 
 -- [ LSP status ]
 -- LSP clients names
-local function lsp_client_names()
+local function lsp_client_names(buffer)
   local clients = {}
-  for _, client in pairs(vim.lsp.buf_get_clients(0)) do
+  for _, client in pairs(vim.lsp.buf_get_clients(buffer.bufnr)) do
     clients[#clients + 1] = client.name
   end
   if #clients > 0 then
@@ -226,38 +270,29 @@ local function lsp_client_names()
 end
 
 -- LSP diagnostics info
-local function get_diagnostics_count(severity)
-  return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity[severity] })
+local function get_diagnostics_count(bufnr, severity)
+  return #vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity[severity] })
 end
 
---
--- local function get_diagnostics_count()
---   local diagnostics = vim.diagnostic.get(0)
---   local count = { 0, 0, 0, 0 } -- ERROR, WARN, INFO, HINT
---   for _, diagnostic in ipairs(diagnostics) do
---     count[diagnostic.severity] = count[diagnostic.severity] + 1
---   end
--- end
-
-local function get_diagnostics(severity, icon)
-  local count = get_diagnostics_count(severity)
+local function get_diagnostics(bufnr, severity, icon)
+  local count = get_diagnostics_count(bufnr, severity)
   return count ~= 0 and string.format("%s%d", icon, count) or ""
 end
 
-local function diagnostics_errors()
-  return get_diagnostics("ERROR", " ")
+local function diagnostics_errors(buffer)
+  return get_diagnostics(buffer.bufnr, "ERROR", " ")
 end
 
-local function diagnostics_warnings()
-  return get_diagnostics("WARN", " ")
+local function diagnostics_warnings(buffer)
+  return get_diagnostics(buffer.bufnr, "WARN", " ")
 end
 
-local function diagnostics_info()
-  return get_diagnostics("INFO", " ")
+local function diagnostics_info(buffer)
+  return get_diagnostics(buffer.bufnr, "INFO", " ")
 end
 
-local function diagnostics_hints()
-  return get_diagnostics("HINTS", " ")
+local function diagnostics_hints(buffer)
+  return get_diagnostics(buffer.bufnr, "HINTS", " ")
 end
 
 -- [ Building statusline ]
@@ -290,16 +325,6 @@ local components_active = {
   },
 }
 
-local components_inactive = {
-  left = {
-    { provider = file_name, hl = "StatuslineNC", left_sep = " ", right_sep = " " },
-  },
-  right = {
-    { provider = location, hl = "StatuslineNC", left_sep = " ", right_sep = " " },
-    { provider = progress, hl = "StatuslineNC", left_sep = " ", right_sep = " " },
-  },
-}
-
 local function build_statusline(components)
   local results = {}
   for _, c in ipairs(components) do
@@ -315,47 +340,42 @@ local function build_statusline(components)
   return table.concat(results, "")
 end
 
-local function set_statusline()
-  vim.o.statusline = "%!v:lua.require'rc.statusline'.statusline()"
+--- Set option and autocmds for statusline
+function M.setup()
   local group = vim.api.nvim_create_augroup("MyStatusline", { clear = true })
-  vim.api.nvim_create_autocmd({"WinLeave", "BufLeave"}, {
+  vim.api.nvim_create_autocmd({ "VimEnter" }, {
     group = group,
     pattern = "*",
     callback = function()
-      vim.wo.statusline = require("rc.statusline").statusline()
+      --vim.wo.statusline = require("rc.statusline").statusline()
+      vim.o.statusline = "%!v:lua.require'rc.statusline'.statusline()"
     end,
+    once = true,
     desc = "Set statusline (window option)",
   })
-  vim.api.nvim_create_autocmd({"BufWinEnter", "WinEnter", "BufEnter", "TermOpen"}, {
-    group = group,
-    pattern = "*",
-    command = "set statusline<",
-  })
-  vim.api.nvim_create_autocmd({"VimResized", "FileChangedShellPost"}, {
+  vim.api.nvim_create_autocmd({ "VimResized", "FileChangedShellPost" }, {
     group = group,
     pattern = "*",
     command = "redrawstatus",
   })
 end
 
---- Set option and autocmds for statusline
-function M.setup()
-  set_statusline()
-end
+--- Table to cache status line in each window (key: winid, value: statusline string)
+M._statusline_win = {}
 
 --- Construct strings for the statusline
 function M.statusline()
-  local left, middle, right
-  if vim.g.statusline_winid == vim.fn.win_getid() then
-    left = build_statusline(components_active.left)
-    middle = build_statusline(components_active.middle)
-    right = build_statusline(components_active.right)
-    return left .. "%=" .. middle .. "%=" .. right
-  else
-    left = build_statusline(components_inactive.left)
-    right = build_statusline(components_inactive.right)
-    return left .. "%=" .. right
+  local winid = vim.g.statusline_winid
+  if winid == vim.api.nvim_get_current_win() or M._statusline_win[winid] == nil then
+    local bufnr = vim.api.nvim_win_get_buf(winid)
+    local buffer = Buffer:new(bufnr)
+    local left = build_statusline(components_active.left)
+    local middle = build_statusline(components_active.middle)
+    local right = build_statusline(components_active.right)
+    M._statusline_win[winid] = left .. "%=" .. middle .. "%=" .. right
   end
+
+  return M._statusline_win[winid]
 end
 
 return M

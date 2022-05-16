@@ -227,7 +227,7 @@ function M.load_plugins(use, _)
   use {
     "mizlan/iswap.nvim",
     after = "nvim-treesitter",
-    config = [[require("rc.iswap").config()]],
+    config = [[require("rc.config.iswap").config()]],
   }
 
   use {
@@ -245,7 +245,7 @@ function M.load_plugins(use, _)
 
   --- [ Colorschemes ]
   local colorscheme = "nightfox.nvim"
-  use { "EdenEast/nightfox.nvim", config = [[require("rc.theme.nightfox")]] }
+  use { "EdenEast/nightfox.nvim", config = [[require("rc.config.nightfox")]] }
 
   --- [ Statusline/Tabline/Bufferline ]
 

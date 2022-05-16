@@ -64,11 +64,11 @@ require("nvim-treesitter.configs").setup {
         ["id"] = "@comment.inner",
       },
     },
-    swap = {
-      enable = true,
-      swap_next = { ["<Leader>s"] = "@parameter.inner" },
-      swap_previous = { ["<Leader>S"] = "@parameter.inner" },
-    },
+    -- swap = {
+    --   enable = true,
+    --   swap_next = { ["<Leader>s"] = "@parameter.inner" },
+    --   swap_previous = { ["<Leader>S"] = "@parameter.inner" },
+    -- },
   },
   -- [[ Rainbow ]]
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
