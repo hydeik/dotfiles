@@ -215,7 +215,7 @@ live_config_reload: true
 #   - (Windows) powershell
 shell:
 {{ if eq .chezmoi.os "darwin" }}
-  {{ if eq .chezmoi.arch "arm" }}
+  {{ if eq .chezmoi.arch "arm64" }}
   program: /opt/homebrew/bin/zsh
   {{ else }}
   program: /usr/local/bin/zsh
