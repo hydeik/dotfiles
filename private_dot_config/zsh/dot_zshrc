@@ -20,31 +20,10 @@ if (( ${+commands[tmux]} )); then
     source ${ZDOTDIR}/scripts/tmux_auto.zsh
 fi
 
-
 ##============================================================================
-## Setup Zim (Zsh configuration framework)
+## Setup Zinit plugin manager
 ##============================================================================
-# Use degit tool by default to install modules
-# (This is optional, and only required if you don't have git installed.)
-# zstyle ':zim:zmodule' use 'degit
-
-# Set the directory used by Zim
-ZIM_HOME="${XDG_CACHE_HOME:-$HOME}/.zim"
-
-# Download zimfw plugin manager if missing.
-if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
-      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
-fi
-
-# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or
-# outdated.
-if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-  source ${ZIM_HOME}/zimfw.zsh init -q
-fi
-
-# Initialize modules.
-source ${ZIM_HOME}/init.zsh
+source "${ZDOTDIR}/plugins.zsh"
 
 ##============================================================================
 ## Enable Powerlevel10k instant prompt.
