@@ -26,19 +26,6 @@ function Packer:load_packer()
   end
   packer.reset()
 
-  -- local layers = {
-  --   "fundamental",
-  --   "highlight",
-  --   "treesitter",
-  --   "lsp",
-  --   "completion",
-  --   -- "editor",
-  --   -- "ui",
-  --   -- "packages",
-  -- }
-  -- for _, layer in ipairs(layers) do
-  --   require("rc.packer." .. layer).load_plugins(packer.use, packer.use_rocks)
-  -- end
   require("rc.plugins").load_plugins(packer.use, packer.use_rocks)
 end
 
@@ -163,7 +150,7 @@ end
 function M.auto_compile()
   local file = vim.fn.expand "%:p"
   -- if file:match "nvim/lua/rc/packers.lua" or file:match "nvim/lua/rc/packers/%a+.lua" then
-  if file:match "nvim/lua/rc/packers.lua" or file:match "nvim/lua/rc/plugins.lua" then
+  if file:match "nvim/lua/rc/plugins.lua" or file:match "nvim/lua/rc/plugins/%a+.lua" then
     M.compile()
   end
 end

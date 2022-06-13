@@ -151,16 +151,16 @@ local function file_format(buffer)
 end
 
 -- localtion (line number and column number)
-local function location()
+local function location(_)
   return [[ %l/%L  %-2v]]
 end
 
-local function progress()
+local function progress(_)
   return [[%3P]]
 end
 
 -- [ Git info (using gitsigns.nvim) ]
-local function git_branch()
+local function git_branch(_)
   local branch = vim.b.gitsigns_head or vim.g.gitsigns_head or ""
   if #branch > 0 then
     return string.format(" %s", branch)
@@ -176,15 +176,15 @@ local function git_diff(type, icon)
   return ""
 end
 
-local function git_diff_added()
+local function git_diff_added(_)
   return git_diff("added", " ")
 end
 
-local function git_diff_removed()
+local function git_diff_removed(_)
   return git_diff("removed", " ")
 end
 
-local function git_diff_changed()
+local function git_diff_changed(_)
   return git_diff("changed", " ")
 end
 
@@ -249,7 +249,7 @@ local vi_mode_hlgroup = setmetatable({
   end,
 })
 
-local function vi_mode()
+local function vi_mode(_)
   local mode = vim.api.nvim_get_mode()["mode"]
   local m = string.sub(mode, 1, 1) -- get the leading character of vi mode
   local hl = vi_mode_hlgroup[m]
@@ -325,10 +325,10 @@ local components_active = {
   },
 }
 
-local function build_statusline(components)
+local function build_statusline(components, buffer)
   local results = {}
   for _, c in ipairs(components) do
-    local body = c.provider()
+    local body = c.provider(buffer)
     if #body > 0 then
       if c.hl ~= nil then
         table.insert(results, string.format("%%#%s#%s%s%s", c.hl, c.left_sep, body, c.right_sep))
@@ -369,9 +369,9 @@ function M.statusline()
   if winid == vim.api.nvim_get_current_win() or M._statusline_win[winid] == nil then
     local bufnr = vim.api.nvim_win_get_buf(winid)
     local buffer = Buffer:new(bufnr)
-    local left = build_statusline(components_active.left)
-    local middle = build_statusline(components_active.middle)
-    local right = build_statusline(components_active.right)
+    local left = build_statusline(components_active.left, buffer)
+    local middle = build_statusline(components_active.middle, buffer)
+    local right = build_statusline(components_active.right, buffer)
     M._statusline_win[winid] = left .. "%=" .. middle .. "%=" .. right
   end
 
