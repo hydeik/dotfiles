@@ -1,15 +1,28 @@
--- ~/.config/nvim/init.lua -- NeoVim configuration
+-------------------------------------------------------------------------------
+-- ~/.config/nvim/init.lua
+-- Init file for Neovim
+-------------------------------------------------------------------------------
 
--- Remove unnecessary dirs from `packpath`
-vim.opt.packpath = vim.fn.stdpath "data" .. "/site"
+-- Bootstrap:
+--   Install the plugin manager, and impatient.nvim
+local pack = require("rc.core.pack")
+pack.bootstrap()
 
--- Cache lua modules of plugins/configs
-local ok, impatient = pcall(require, "impatient")
-if ok then
-  impatient.enable_profile()
-else
-  vim.notify(impatient)
-end
+-- Change Neovim's default behavior:
+--   1. Use lua based filetype detection
+--   2. Disable unused providers for remote plugins
+--   3. Disable some built-in Neovim plugins
+--   4. Set global options
+require("rc.core.settings")
 
--- Do all configs in rc/bootstrap.lua so that impatient.nvim can cache them.
-require "rc.bootstrap"
+-- Define augroup and autocmds
+require("rc.core.autocmds")
+
+-- Define key mappings for Neovim built-in functionality
+require("rc.core.mappings")
+
+-- Load and configure plugins
+pack.load_cache()
+
+-- Appearance (theme, statusline, winbar)
+require("rc.core.ui")
