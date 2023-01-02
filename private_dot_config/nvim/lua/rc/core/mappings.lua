@@ -16,22 +16,6 @@
 -----------------------------------------------------------------------------
 --]]
 
--- Prefix keys {{{
-  vim.g.mapleader = ";"
-  vim.g.maplocalleader = "\\"
-  -- release keymappings for plugins
-  vim.keymap.set("n", "<Space>", "<Nop>")
-  vim.keymap.set("x", "<Space>", "<Nop>")
-  vim.keymap.set("n", ";", "<Nop>")
-  vim.keymap.set("x", ";", "<Nop>")
-  vim.keymap.set("n", ",", "<Nop>")
-  vim.keymap.set("x", ",", "<Nop>")
-  vim.keymap.set("n", "m", "<Nop>")
-  vim.keymap.set("x", "m", "<Nop>")
-  vim.keymap.set("n", "s", "<Nop>")
-  vim.keymap.set("x", "s", "<Nop>")
---- }}}
-
 --- Basic mappings {{{
 -- Disable Ex-mode, remap to register macros
 vim.keymap.set("n", "Q", "q")
@@ -123,16 +107,16 @@ vim.keymap.set({ "n", "x", "o" }, "0", "getline('.')[0 : col('.') - 2] =~# '^\\s
 
 --- Open/close folding: {{{
 -- Focus the current fold by closing all others
-vim.keymap.set("n", "<S-Return>", "zMza")
+vim.keymap.set("n", "<S-Return>", "zMza", { desc = "Focus the current fold by closing all others" })
 
 -- Smart open/close fold
 vim.keymap.set("n", "l", function()
   return vim.fn.foldclosed "." ~= -1 and "zo0" or "l"
-end, { expr = true })
+end, { expr = true, desc = "Smart open fold" })
 
 vim.keymap.set("x", "l", function()
   return vim.fn.foldclosed "." ~= -1 and "zogv0" or "l"
-end, { expr = true })
+end, { expr = true, desc = "Smart open fold" })
 
 vim.keymap.set("n", "<C-_>", function()
   if vim.fn.foldlevel "." == 0 then
@@ -149,31 +133,30 @@ vim.keymap.set("n", "<C-_>", function()
   if vim.fn.foldclosed "." == foldc_lnum then
     vim.cmd [[normal! zM]]
   end
-  return
-end, { silent = true })
+end, { silent = true, desc = "Smart close fold" })
 
 --- }}}
 
--- Window/Tabs operation {{{
+--[[ -- Window/Tabs operation {{{
 -- Use 's' key as the prefix to control window/tab
 
 -- new tab
-vim.keymap.set("n", "st", "<Cmd>tabnew<CR>", { silent = true })
+vim.keymap.set("n", "st", "<Cmd>tabnew<CR>", { silent = true, desc = "New Tab" })
 
 -- close window
-vim.keymap.set("n", "sc", "<Cmd>close<CR>", { silent = true })
+vim.keymap.set("n", "sc", "<Cmd>close<CR>", { silent = true, desc = "Close window" })
 
 -- only current window
-vim.keymap.set("n", "so", "<Cmd>only<CR>", { silent = true })
+vim.keymap.set("n", "so", "<Cmd>only<CR>", { silent = true, desc = "Only current window" })
 
 -- split window horizontally
-vim.keymap.set("n", "s-", "<Cmd>split<CR>", { silent = true })
+vim.keymap.set("n", "s-", "<Cmd>split<CR>", { silent = true, desc = "Split window horizontally" })
 
 -- split window virtically
-vim.keymap.set("n", "s|", "<Cmd>vsplit<CR>", { silent = true })
+vim.keymap.set("n", "s|", "<Cmd>vsplit<CR>", { silent = true, desc = "Split window virtically" })
 
 -- equal size window
-vim.keymap.set("n", "s=", "<C-w>=<CR>", { silent = true })
+vim.keymap.set("n", "s=", "<C-w>=<CR>", { silent = true, desc = "Equal size window" })
 
 -- Resize window by Shift+arrow
 vim.keymap.set("n", "<S-Left>", "<C-w><")
@@ -182,46 +165,48 @@ vim.keymap.set("n", "<S-Up>", "<C-w>+")
 vim.keymap.set("n", "<S-Down>", "<C-w>-")
 
 ---  }}}
+]]
 
---- Toggle Editor UI {{{
+--[[ --- Toggle Editor UI {{{
 -- toggle cursorcolumn
 vim.keymap.set("n", "<Space>tc", function()
   vim.wo.cursorcolumn = not vim.wo.cursorcolumn
-end, { silent = true })
+end, { silent = true, desc = "Toggle cursorcolumn" })
 
 -- toggle cursorline
 vim.keymap.set("n", "<Space>tl", function()
   vim.wo.cursorline = not vim.wo.cursorline
-end, { silent = true })
+end, { silent = true, desc = "Toggle cursorline" })
 
 -- toggle line numbers
 vim.keymap.set("n", "<Space>tn", function()
   vim.wo.number = not vim.wo.number
   vim.wo.relativenumber = not vim.wo.relativenumber
-end, { silent = true })
+end, { silent = true, desc = "Toggle number|relativenumber" })
 
 -- toggle spell checking
-vim.keymap.set("n", "<Space>ts", function()
-  vim.wo.spell = not vim.wo.spell
-  if vim.wo.spell then
-    vim.api.nvim_echo({ { "spell-checking " }, { "enabled", "Green" } }, false, {})
-  else
-    vim.api.nvim_echo({ { "spell-checking " }, { "disabled", "Red" } }, false, {})
-  end
-end, { silent = true })
+-- vim.keymap.set("n", "<Space>ts", function()
+--   vim.wo.spell = not vim.wo.spell
+--   if vim.wo.spell then
+--     vim.api.nvim_echo({ { "spell-checking " }, { "enabled", "Green" } }, false, {})
+--   else
+--     vim.api.nvim_echo({ { "spell-checking " }, { "disabled", "Red" } }, false, {})
+--   end
+-- end, { silent = true, desc = "Toggle spell checking" })
 
 -- toggle list char (control characters)
 vim.keymap.set("n", "<Space>th", function()
   vim.wo.list = not vim.wo.list
-end, { silent = true })
+end, { silent = true, desc = "Toggle list char (control characters)" })
 
 -- toggle wrap
 vim.keymap.set("n", "<Space>tw", function()
   vim.wo.wrap = not vim.wo.wrap
   vim.wo.breakindent = not vim.wo.breakindent
-end, { silent = true })
+end, { silent = true, desc = "Toggle wrap|breakindent" })
 
 --- }}}
+]]
 
 --- Leader mappings {{{
 -- ;; to :
@@ -229,14 +214,14 @@ end, { silent = true })
 
 -- Quit
 
-vim.keymap.set("n", "<Leader>q", ":quit<CR>", { silent = true })
-vim.keymap.set("v", "<Leader>q", "<ESC>:quit<CR>", { silent = true })
-vim.keymap.set("n", "<Leader>Q", ":qall!<CR>", { silent = true })
-vim.keymap.set("v", "<Leader>Q", "<ESC>:qall!<CR>", { silent = true })
+vim.keymap.set("n", "<Leader>q", ":quit<CR>", { silent = true, desc = "Quit" })
+vim.keymap.set("v", "<Leader>q", "<ESC>:quit<CR>", { silent = true, desc = "Quit" })
+vim.keymap.set("n", "<Leader>Q", ":qall!<CR>", { silent = true, desc = "Quit all" })
+vim.keymap.set("v", "<Leader>Q", "<ESC>:qall!<CR>", { silent = true, desc = "Quit all" })
 
 -- Fast saving
-vim.keymap.set("n", "<Leader>w", "<Cmd>update<CR>", { silent = true })
-vim.keymap.set("v", "<Leader>w", "<ESC>:update<CR>", { silent = true })
-vim.keymap.set("n", "<Leader>W", "<Cmd>wall!<CR>", { silent = true })
-vim.keymap.set("v", "<Leader>W", "<ESC>:wall!<CR>", { silent = true })
+vim.keymap.set("n", "<Leader>w", "<Cmd>update<CR>", { silent = true, desc = "Update file" })
+vim.keymap.set("v", "<Leader>w", "<ESC>:update<CR>", { silent = true, desc = "Update file" })
+vim.keymap.set("n", "<Leader>W", "<Cmd>wall!<CR>", { silent = true, desc = "Save all" })
+vim.keymap.set("v", "<Leader>W", "<ESC>:wall!<CR>", { silent = true, desc = "Save all" })
 --- }}}
