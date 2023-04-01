@@ -98,11 +98,27 @@ window:
   #   # General application class
   #   general: Alacritty
 
-  # GTK theme variant (Linux/BSD only)
+  # Decorations theme variant
   #
-  # Override the variant of the GTK theme. Commonly supported values are `dark`
-  # and `light`.  Set this to `None` to use the default theme variant.
-  # gtk_theme_variant: None
+  # Override the variant of the System theme/GTK theme/Wayland client side
+  # decorations. Commonly supported values are `Dark`, `Light`, and `None` for
+  # auto pick-up. Set this to `None` to use the default theme variant.
+  #decorations_theme_variant: None
+
+  # Resize increments
+  #
+  # Prefer resizing window by discrete steps equal to cell dimensions.
+  #resize_increments: false
+
+  # Make `Option` key behave as `Alt` (macOS only):
+  #   - OnlyLeft
+  #   - OnlyRight
+  #   - Both
+  #   - None (default)
+  #option_as_alt: None
+{{ if eq .chezmoi.os "darwin" }}
+  option_as_alt: None
+{{ end }}
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -246,9 +262,6 @@ shell:
 # Setting this option to `true` makes Alacritty use the legacy WinPTY backend,
 # even if the ConPTY backend is available.
 # winpty_backend: false
-
-# Send ESC (\x1b) before characters when alt is pressed.
-alt_send_esc: true
 
 debug:
   # Display the time it takes to redraw each frame.
