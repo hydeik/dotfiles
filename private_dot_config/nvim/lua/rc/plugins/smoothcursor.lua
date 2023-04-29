@@ -1,14 +1,9 @@
-local M = {
+return {
   "gen740/SmoothCursor.nvim",
   event = "VeryLazy",
-}
-
-M.config = function()
-  require("smoothcursor").setup {
+  opts = {
     disabled_filetypes = {
       "hydra_hint",
     },
-  }
-end
-
-return M
+  },
+}

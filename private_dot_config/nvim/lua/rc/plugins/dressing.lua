@@ -1,11 +1,8 @@
 -- Neovim plugin to improve the default vim.ui interfaces
-local M = {
+return {
   "stevearc/dressing.nvim",
   event = "VeryLazy",
+  config = function()
+    require("dressing").setup {}
+  end,
 }
-
-M.config = function()
-  require("dressing").setup {}
-end
-
-return M

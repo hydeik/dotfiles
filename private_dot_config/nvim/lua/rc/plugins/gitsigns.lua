@@ -1,47 +1,14 @@
-local M = {
+return {
   "lewis6991/gitsigns.nvim",
-  event = "BufReadPre",
-}
-
-M.config = function()
-  require("gitsigns").setup {
+  event = { "BufReadPre", "BufNewFile" },
+  opts = {
     signs = {
-      add = {
-        hl = "GitSignsAdd",
-        text = "▍",
-        numhl = "GitSignsAddNr",
-        linehl = "GitSignsAddLn",
-      },
-      change = {
-        hl = "GitSignsChange",
-        text = "▍",
-        numhl = "GitSignsChangeNr",
-        linehl = "GitSignsChangeLn",
-      },
-      delete = {
-        hl = "GitSignsDelete",
-        text = "▸",
-        numhl = "GitSignsDeleteNr",
-        linehl = "GitSignsDeleteLn",
-      },
-      topdelete = {
-        hl = "GitSignsDelete",
-        text = "▾",
-        numhl = "GitSignsDeleteNr",
-        linehl = "GitSignsDeleteLn",
-      },
-      changedelete = {
-        hl = "GitSignsChange",
-        text = "▍",
-        numhl = "GitSignsChangeNr",
-        linehl = "GitSignsChangeLn",
-      },
-      untracked = {
-        hl = "GitSignsAdd",
-        text = "▍",
-        numhl = "GitSignsAddNr",
-        linehl = "GitSignsAddLn",
-      },
+      add = { text = "▍" },
+      change = { text = "▍" },
+      delete = { text = "▸" },
+      topdelete = { text = "▾" },
+      changedelete = { text = "▍" },
+      untracked = { text = "▍" },
     },
     numhl = true,
     word_diff = true,
@@ -55,7 +22,7 @@ M.config = function()
       end
 
       -- Navigation
-      map("n", "]c", function()
+      map("n", "]h", function()
         if vim.wo.diff then
           return "]c"
         end
@@ -65,7 +32,7 @@ M.config = function()
         return "<Ignore>"
       end, { expr = true, desc = "Next diff/hunk" })
 
-      map("n", "[c", function()
+      map("n", "[h", function()
         if vim.wo.diff then
           return "[c"
         end
@@ -95,7 +62,5 @@ M.config = function()
       -- Text object
       map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
     end,
-  }
-end
-
-return M
+  },
+}

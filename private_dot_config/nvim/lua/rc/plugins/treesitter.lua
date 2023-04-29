@@ -1,92 +1,78 @@
-local M = {
-  "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
-  event = "BufRead",
-  dependencies = {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    "p00f/nvim-ts-rainbow",
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    "yioneko/nvim-yati",
-    -- { "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" } },
-    "David-Kunz/treesitter-unit",
-  },
-}
-
-M.init = function()
-  -- iswap
-  -- vim.keymap.set("n", "<Leader>s", "<Cmd>ISwapWith<CR>",
-  --   { silent = true, desc = "Select and swap function arguments." })
-  -- treesitter_unit
-  vim.keymap.set("x", "iu", ":lua require('treesitter-unit').select()<CR>", { silent = true })
-  vim.keymap.set("x", "au", ":lua require('treesitter-unit').select(true)<CR>", { silent = true })
-  vim.keymap.set("o", "iu", ":<C-u>lua require('treesitter-unit').select()<CR>", { silent = true })
-  vim.keymap.set("o", "au", ":<C-u>lua require('treesitter-unit').select(true)<CR>", { silent = true })
-end
-
-M.config = function()
-  require("nvim-treesitter.configs").setup {
-    -- one of 'all', 'language', or a list of languages
-    ensure_installed = "all",
-    ignore_install = { "haskell", "elixir", "php", "phpdoc" },
-    -- [[ Highlight ]]
-    highlight = {
-      enable = true,
-      disable = {},
-      custom_captures = {
-        -- ["foo.bar"] = "Identifier"
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    version = false, -- the last release is way too old and doesn't work on Windows
+    build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = {
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        init = function()
+          -- PERF: no need to load the plugin, if we only need its queries for mini.ai
+          local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
+          local opts = require("lazy.core.plugin").values(plugin, "opts", false)
+          local enabled = false
+          if opts.textobjects then
+            for _, mod in ipairs { "move", "select", "swap", "lsp_interop" } do
+              if opts.textobjects[mod] and opts.textobjects[mod].enable then
+                enabled = true
+                break
+              end
+            end
+          end
+          if not enabled then
+            require("lazy.core.loader").disable_rtp_plugin "nvim-treesitter-textobjects"
+          end
+        end,
       },
+      { "mrjones2014/nvim-ts-rainbow" },
+      { "JoosepAlviste/nvim-ts-context-commentstring" },
     },
-    -- [[ Incremental selection ]]
-    incremental_selection = {
-      enable = true,
-      disable = {},
-      keymaps = {
-        -- mappings for incremental selection (visual mappings)
-        init_selection = "<M-v>", -- maps in normal mode to init the node/scope selection
-        node_incremental = "<M-v>", -- increment to the upper named parent
-        scope_incremental = "<C-M-v>", -- increment to the upper scope (as defined in locals.scm)
-        node_decremental = "<M-V>", -- decrement to the previous node
+    ---@type TSConfig
+    opts = {
+      -- one of 'all', 'language', or a list of languages
+      ensure_installed = "all",
+      ignore_install = { "haskell", "elixir", "php", "phpdoc" },
+      -- [[ Highlight ]]
+      highlight = {
+        enable = true,
+        disable = {},
+        custom_captures = {
+          -- ["foo.bar"] = "Identifier"
+        },
       },
-    },
-    -- [[ Text objects ]]
-    textobjects = {
-      select = {
+      -- [[ Incremental selection ]]
+      incremental_selection = {
         enable = true,
         disable = {},
         keymaps = {
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["aC"] = "@class.outer",
-          ["iC"] = "@class.inner",
-          ["ac"] = "@conditional.outer",
-          ["ic"] = "@conditional.inner",
-          ["ae"] = "@block.outer",
-          ["ie"] = "@block.inner",
-          ["al"] = "@loop.outer",
-          ["il"] = "@loop.inner",
-          ["iS"] = "@statement.inner",
-          ["aS"] = "@statement.outer",
-          ["am"] = "@call.outer",
-          ["im"] = "@call.inner",
-          ["ad"] = "@comment.outer",
-          ["id"] = "@comment.inner",
+          -- mappings for incremental selection (visual mappings)
+          init_selection = "<M-v>", -- maps in normal mode to init the node/scope selection
+          node_incremental = "<M-v>", -- increment to the upper named parent
+          scope_incremental = "<C-M-v>", -- increment to the upper scope (as defined in locals.scm)
+          node_decremental = "<M-V>", -- decrement to the previous node
         },
       },
-      -- swap = {
-      --   enable = true,
-      --   swap_next = { ["<Leader>s"] = "@parameter.inner" },
-      --   swap_previous = { ["<Leader>S"] = "@parameter.inner" },
-      -- },
+      -- [[ Rainbow ]]
+      rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
+      -- [[ Context commentstring ]]
+      context_commentstring = { enable = true },
     },
-    -- [[ Rainbow ]]
-    rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
-    -- [[ Context commentstring ]]
-    context_commentstring = { enable = true },
-  }
-
-  -- Code folding with treesitter
-  vim.opt.foldmethod = "expr"
-  vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-end
-
-return M
+    ---@param opts TSConfig
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+      -- Code folding with treesitter
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = { "BufReadPre" },
+    config = true,
+  },
+  {
+    "folke/twilight.nvim",
+    cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
+  },
+}

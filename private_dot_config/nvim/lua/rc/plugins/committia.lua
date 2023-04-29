@@ -1,5 +1,5 @@
- -- A Vim plugin for more pleasant editing on commit messages
 return {
+  -- A Vim plugin for more pleasant editing on commit messages
   "rhysd/committia.vim",
   ft = { "gitcommit" },
   init = function()

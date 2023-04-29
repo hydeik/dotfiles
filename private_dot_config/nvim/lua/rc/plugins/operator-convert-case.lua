@@ -1,5 +1,5 @@
 -- A Vim plugin to provide some operators to convert a word case.
-local M = {
+return {
   "mopp/vim-operator-convert-case",
   dependencies = {
     { "kana/vim-operator-user" },
@@ -10,11 +10,8 @@ local M = {
     { "<Plug>(operator-convert-case-", mode = "n" },
     { "<Plug>(operator-convert-case-", mode = "x" },
   },
+  init = function()
+    vim.keymap.set("n", "~", "<Plug>(operator-convert-case-loop)")
+    vim.keymap.set("x", "~", "<Plug>(operator-convert-case-loop)gv")
+  end,
 }
-
-M.init = function()
-  vim.keymap.set("n", "~", "<Plug>(operator-convert-case-loop)")
-  vim.keymap.set("x", "~", "<Plug>(operator-convert-case-loop)gv")
-end
-
-return M

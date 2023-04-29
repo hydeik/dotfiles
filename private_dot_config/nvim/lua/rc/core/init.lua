@@ -29,20 +29,36 @@ local load_core = function()
   configure_providers()
   init_prefix_keys()
 
-  -- Set global options
-  require("rc.core.options")
-  -- Load plugins
-  require("rc.core.lazy")
+  -- load options here, before lazy init while sourcing plugin modules
+  -- this is needed to make sure options will be correctly applied
+  -- after installing missing plugins
+  require "rc.core.options"
 
-  vim.api.nvim_create_autocmd("User", {
-    pattern = "VeryLazy",
-    callback = function()
-      -- Define augroup and autocmds
-      require("rc.core.autocmds")
-      -- Define key mappings for Neovim built-in functionality
-      require("rc.core.mappings")
-    end,
-  })
+  -- Load plugins
+  require "rc.core.lazy"
+
+  if vim.fn.argc(-1) == 0 then
+    -- autocmds and keymaps can wait to load
+    vim.api.nvim_create_autocmd("User", {
+      group = vim.api.nvim_create_augroup("LazyVim", { clear = true }),
+      pattern = "VeryLazy",
+      callback = function()
+        require "rc.core.autocmds"
+        require "rc.core.keymaps"
+      end,
+    })
+  else
+    -- load them now so they affect the opened buffers
+    require "rc.core.autocmds"
+    require "rc.core.keymaps"
+  end
+
+  local conf = require "rc.core.config"
+  if type(conf.colorscheme) == "function" then
+    conf.colorscheme()
+  else
+    vim.cmd.colorscheme(conf.colorscheme)
+  end
 end
 
 load_core()

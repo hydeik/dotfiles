@@ -1,29 +1,78 @@
 -- Enhanced increment/decrement plugin for Neovim.
-local M = {
+return {
   "monaqa/dial.nvim",
   keys = {
-    { "<Plug>(dial-", mode = { "n", "v" } },
-  },
-}
-
-M.init = function()
-  vim.keymap.set({ "n", "v" }, "<C-a>", "<Plug>(dial-increment)", { desc = "Dial increment" })
-  vim.keymap.set({ "n", "v" }, "<C-x>", "<Plug>(dial-decrement)", { desc = "Dial decrement" })
-  vim.keymap.set("v", "g<C-a>", "<Plug>(dial-increment-additional)", { desc = "Dial increment additional" })
-  vim.keymap.set("v", "g<C-x>", "<Plug>(dial-decrement-additional)", { desc = "Dial decrement additional" })
-end
-
-M.config = function()
-  local augend = require "dial.augend"
-  require("dial.config").augends:register_group {
-    default = {
-      augend.integer.alias.decimal,
-      augend.integer.alias.hex,
-      augend.date.alias["%Y-%m-%d"],
-      augend.constant.alias.bool,
-      augend.semver.alias.semver,
+    {
+      "<C-a>",
+      function()
+        require("dial.map").manipulate("increment", "normal")
+      end,
+      desc = "Dial increment",
     },
-  }
-end
-
-return M
+    {
+      "<C-x>",
+      function()
+        require("dial.map").manipulate("decrement", "normal")
+      end,
+      desc = "Dial decrement",
+    },
+    {
+      "g<C-a>",
+      function()
+        require("dial.map").manipulate("increment", "gnormal")
+      end,
+      desc = "Dial increment",
+    },
+    {
+      "g<C-x>",
+      function()
+        require("dial.map").manipulate("decrement", "gnormal")
+      end,
+      desc = "Dial decrement",
+    },
+    {
+      "<C-a>",
+      function()
+        require("dial.map").manipulate("increment", "visual")
+      end,
+      mode = "v",
+      desc = "Dial increment",
+    },
+    {
+      "<C-x>",
+      function()
+        require("dial.map").manipulate("decrement", "visual")
+      end,
+      mode = "v",
+      desc = "Dial decrement",
+    },
+    {
+      "g<C-a>",
+      function()
+        require("dial.map").manipulate("increment", "gvisual")
+      end,
+      mode = "v",
+      desc = "Dial increment",
+    },
+    {
+      "g<C-x>",
+      function()
+        require("dial.map").manipulate("decrement", "gvisual")
+      end,
+      mode = "v",
+      desc = "Dial decrement",
+    },
+  },
+  config = function(_, _)
+    local augend = require "dial.augend"
+    require("dial.config").augends:register_group {
+      default = {
+        augend.integer.alias.decimal,
+        augend.integer.alias.hex,
+        augend.date.alias["%Y-%m-%d"],
+        augend.constant.alias.bool,
+        augend.semver.alias.semver,
+      },
+    }
+  end,
+}

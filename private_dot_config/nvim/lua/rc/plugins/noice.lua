@@ -3,12 +3,99 @@
 local M = {
   "folke/noice.nvim",
   dependencies = {
-    "MunifTanjim/nui.nvim",
+    { "MunifTanjim/nui.nvim" },
+    {
+      "folke/which-key.nvim",
+      opts = function(_, opts)
+        local defaults = opts.defaults and opts.defaults or {}
+        if require("rc.util").has_plugin "noice.nvim" then
+          defaults["<Space>n"] = { name = "+noice" }
+        end
+        opts.defaults = defaults
+      end,
+    },
   },
   event = "VeryLazy",
+  keys = {
+    {
+      "<S-Enter>",
+      function()
+        require("noice").redirect(vim.fn.getcmdline())
+      end,
+      mode = "c",
+      desc = "Redirect Cmdline",
+    },
+    {
+      "<Space>nl",
+      function()
+        require("noice").cmd "last"
+      end,
+      desc = "Noice Last Message",
+    },
+    {
+      "<Space>nh",
+      function()
+        require("noice").cmd "history"
+      end,
+      desc = "Noice History",
+    },
+    {
+      "<Space>na",
+      function()
+        require("noice").cmd "all"
+      end,
+      desc = "Noice All",
+    },
+    {
+      "<Space>nd",
+      function()
+        require("noice").cmd "dismiss"
+      end,
+      desc = "Dismiss All",
+    },
+    {
+      "<c-f>",
+      function()
+        if not require("noice.lsp").scroll(4) then
+          return "<c-f>"
+        end
+      end,
+      silent = true,
+      expr = true,
+      desc = "Scroll forward",
+      mode = { "i", "n", "s" },
+    },
+    {
+      "<c-b>",
+      function()
+        if not require("noice.lsp").scroll(-4) then
+          return "<c-b>"
+        end
+      end,
+      silent = true,
+      expr = true,
+      desc = "Scroll backward",
+      mode = { "i", "n", "s" },
+    },
+  },
 }
 
-M.config = function()
+M.config = function(_, _)
+  local group = vim.api.nvim_create_augroup("UserNoiceConfig", { clear = true })
+  local focused = true
+  vim.api.nvim_create_autocmd("FocusGained", {
+    group = group,
+    callback = function()
+      focused = true
+    end,
+  })
+  vim.api.nvim_create_autocmd("FocusLost", {
+    group = group,
+    callback = function()
+      focused = false
+    end,
+  })
+
   require("noice").setup {
     lsp = {
       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -25,38 +112,34 @@ M.config = function()
       inc_rename = true,
       cmdline_output_to_split = false,
     },
+    routes = {
+      {
+        filter = {
+          cond = function()
+            return not focused
+          end,
+        },
+        view = "notify_send",
+        opts = { stop = false },
+      },
+      {
+        filter = {
+          event = "msg_show",
+          find = "%d+L, %d+B",
+        },
+        view = "mini",
+      },
+    },
+    commands = {
+      all = {
+        -- options for the message history that you get with `:Noice`
+        view = "split",
+        opts = { enter = true, format = "details" },
+        filter = {},
+      },
+    },
   }
 
-  -- key mappings
-  vim.keymap.set("c", "<S-Enter>", function()
-    require("noice").redirect(vim.fn.getcmdline())
-  end, { desc = "Redirect Cmdline" })
-
-  vim.keymap.set("n", "<Space>nl", function()
-    require("noice").cmd "last"
-  end, { desc = "Noice Last Message" })
-
-  vim.keymap.set("n", "<Space>nh", function()
-    require("noice").cmd "history"
-  end, { desc = "Noice History" })
-
-  vim.keymap.set("n", "<Space>na", function()
-    require("noice").cmd "all"
-  end, { desc = "Noice All" })
-
-  vim.keymap.set("n", "<c-f>", function()
-    if not require("noice.lsp").scroll(4) then
-      return "<c-f>"
-    end
-  end, { silent = true, expr = true })
-
-  vim.keymap.set("n", "<c-b>", function()
-    if not require("noice.lsp").scroll(-4) then
-      return "<c-b>"
-    end
-  end, { silent = true, expr = true })
-
-  local group = vim.api.nvim_create_augroup("NoiceEvent", { clear = true })
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "markdown",
     group = group,

@@ -1,14 +1,16 @@
 -- Indent guides for Neovim
-local M = {
+return {
   "lukas-reineke/indent-blankline.nvim",
-}
-
-M.config = function()
-  require("indent_blankline").setup {
+  event = { "BufReadPost", "BufNewFile" },
+  opts = {
     char = "│",
     buftype_exclude = { "prompt", "terminal", "nofile" },
     filetype_exclude = {
       "help",
+      "man",
+      "lspinfo",
+      "checkhealth",
+      "alpha",
       "startify",
       "dashboard",
       "packer",
@@ -16,12 +18,12 @@ M.config = function()
       "NvimTree",
       "neo-tree",
       "Trouble",
+      "lazy",
+      "",
     },
     use_treesitter = true,
     show_first_indent_level = false,
     show_current_context = true,
     show_end_of_line = true,
-  }
-end
-
-return M
+  },
+}

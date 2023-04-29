@@ -1,24 +1,39 @@
 -- Configure lazy.nvim: a modern plugin manager
 
 -- bootstrap from github
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local path = require "rc.core.path"
+local lazypath = path.join(path.datahome, "lazy", "lazy.nvim")
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
+  vim.fn.system {
     "git",
     "clone",
     "--filter=blob:none",
     "--single-branch",
     "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
     lazypath,
-  })
+  }
 end
 vim.opt.runtimepath:prepend(lazypath)
 
 -- load lazy.nvim
-require("lazy").setup("rc.plugins", {
-  defaults = { lazy = true },
-  install = { colorscheme = { "kanagawa", "habamax" } },
-  checker = { enabled = true },
+require("lazy").setup {
+  spec = {
+    { import = "rc.plugins" },
+    { import = "rc.plugins.extras.lang.json" },
+    { import = "rc.plugins.extras.lang.rust" },
+    { import = "rc.plugins.extras.lang.clangd" },
+    { import = "rc.plugins.extras.lang.python" },
+  },
+  defaults = {
+    lazy = true,
+  },
+  install = {
+    colorscheme = { "kanagawa", "habamax" },
+  },
+  checker = {
+    enabled = true,
+  },
   performance = {
     rtp = {
       disabled_plugins = {
@@ -47,4 +62,4 @@ require("lazy").setup("rc.plugins", {
     },
   },
   debug = true,
-})
+}

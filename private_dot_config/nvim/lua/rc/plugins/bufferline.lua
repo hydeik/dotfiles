@@ -1,24 +1,42 @@
 -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
-local M = {
-  enabled = false,
+return {
   "akinsho/bufferline.nvim",
-  event = "BufAdd",
-}
-
-M.config = function()
-  require("bufferline").setup {
+  event = "VeryLazy",
+  opts = {
     options = {
-      numbers = "ordinal",
+      close_command = function(n)
+        require("mini.bufremove").delete(n, false)
+      end,
+      right_mouse_command = function(n)
+        require("mini.bufremove").delete(n, false)
+      end,
       indicator = {
         icon = "▎",
         style = "icon",
       },
       diagnostics = "nvim_lsp",
+      diagnostics_indicator = function(_, _, diagnostics_dict, _)
+        local icons = require("rc.core.config").icons.diagnostics
+        local tmp = {
+          diagnostics_dict.error and icons.Error .. diagnostics_dict.error or "",
+          diagnostics_dict.warning and icons.Warn .. diagnostics_dict.warning or "",
+        }
+        return table.concat(tmp, " ")
+      end,
       always_show_bufferline = true,
-      show_buffer_close_icons = false,
-      show_close_icon = false,
+      hover = {
+        enabled = true,
+        delay = 200,
+        reveal = { "close" },
+      },
+      offsets = {
+        {
+          filetype = "neo-tree",
+          text = "Neo-tree",
+          highlight = "Directory",
+          text_align = "left",
+        },
+      },
     },
-  }
-end
-
-return M
+  },
+}

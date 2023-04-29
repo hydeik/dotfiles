@@ -43,7 +43,7 @@ M.on_attach = function(client, bufnr)
       group = augroup_formatting,
       buffer = bufnr,
       callback = function()
-        require("rc.plugins.lsp.formatting").format(bufnr)
+        require("rc.plugins.lsp.format").format(bufnr)
       end,
       desc = "[LSP] format on save.",
     })

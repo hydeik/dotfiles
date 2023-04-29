@@ -1,6 +1,7 @@
 --- ~/.config/nvim/lua/rc/core/options.luaoptio
 
 local plat = require "rc.core.platform"
+local path = require "rc.core.path"
 local opt = vim.opt
 
 --- Overwrite nvim default global options {{{1
@@ -57,7 +58,7 @@ opt.shada = { "'200", "<50", "@100", "s10", "h" }
 -- prefer english help
 opt.helplang = { "en", "ja" }
 -- The words list file where words are added by `zw` and `zg` command
-opt.spellfile = table.concat({ plat.data_dir, "spell", "en.utf-8.add" }, plat.sep)
+opt.spellfile = path.join(path.datahome, "spell", "en.utf-8.add")
 -- spell check (ignore on check on Asian characters (China, Japan, Korea))
 opt.spelllang = { "en_us", "cjk" }
 -- opt.spell = false
@@ -115,6 +116,10 @@ opt.showmatch = true -- Jump to matching bracket
 opt.matchtime = 1 -- Tenths of a second to show the matching paren
 opt.matchpairs:append { "<:>", "（:）", "「:」", "【:】", "［:］", "｛:｝", "＜:＞" }
 -- }}}2
+
+-- Mouse {{{2
+opt.mousemoveevent = true
+--- }}}2
 
 -- Timing {{{2
 opt.timeoutlen = 500 -- Time out for a mapped sequence (ms)
@@ -178,7 +183,7 @@ opt.cursorline = true -- Highlight current line
 
 opt.scrolloff = 2 -- Keep at least 2 lines above/below
 opt.sidescrolloff = 5 -- Keep at least 5 lines left/right
-opt.winwidth = 30 -- Minimum width for active window
+opt.winwidth = 10 -- Minimum width for active window
 opt.winminwidth = 10 -- Minimum width for inactive windows
 opt.pumheight = 15 -- Pop-up menu's line height
 opt.helpheight = 12 -- Minimum help window height

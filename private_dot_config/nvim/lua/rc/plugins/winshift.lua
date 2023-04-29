@@ -1,11 +1,7 @@
 -- Rearrange your windows with ease.
-local M = {
+return {
   "sindrets/winshift.nvim",
   cmd = { "WinShift" },
+  config = true,
 }
 
-M.config = function()
-  require("winshift").setup {}
-end
-
-return M
