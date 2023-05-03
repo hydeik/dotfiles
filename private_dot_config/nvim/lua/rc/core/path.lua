@@ -3,11 +3,12 @@ local home = os.getenv "HOME"
 
 local M = {}
 
+-- Path separator
 M.seperator = package.config:sub(1, 1)
 
 -- Join a list of paths together
--- @param ... string list
--- @return string
+---@param ... string list
+---@return string
 M.join = function(...)
   return table.concat({ ... }, M.seperator)
 end
@@ -21,7 +22,7 @@ M.statehome = vim.fn.stdpath "state"
 
 --- Returns if the path exists on disk
 ---@param filename string
----@return uv_fs_t|boolean
+---@return table|boolean
 function M.exists(filename)
   local stat = vim.loop.fs_stat(filename)
   return stat and stat.type or false

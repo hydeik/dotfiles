@@ -4,27 +4,26 @@ local M = {
     "tpope/vim-repeat",
     {
       "ggandor/flit.nvim",
-      keys = { "f", "F", "t", "T" },
+      keys = function()
+        ---@type LazyKeys[]
+        local ret = {}
+        for _, key in ipairs { "f", "F", "t", "T" } do
+          ret[#ret + 1] = { key, mode = { "n", "x", "o" }, desc = key }
+        end
+        return ret
+      end,
       config = {
-        labeled_modes = "nv",
+        labeled_modes = "nx",
       },
     },
   },
   -- event = "VeryLazy",
   keys = {
-    { "<Plug>(leap-", mode = { "n", "x", "o" } },
+    { "ss", "<Plug>(leap-forward-to)", mode = { "n", "x", "o" }, desc = "Leap forward to" },
+    { "sS", "<Plug>(leap-backward-to)", mode = { "n", "x", "o" }, desc = "Leap backward to" },
+    { "SS", "<Plug>(leap-cross-window)", mode = { "n", "x", "o" }, desc = "Leap cross window" },
   },
+  config = true,
 }
-
-M.init = function()
-  vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward-to)")
-  vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward-to)")
-  vim.keymap.set({ "x", "o" }, "x", "<Plug>(leap-forward-till)")
-  vim.keymap.set({ "x", "o" }, "X", "<Plug>(leap-backward-till)")
-  vim.keymap.set({ "n", "x", "o" }, "gs", "<Plug>(leap-cross-window)")
-end
--- M.config = function()
---   require("leap").add_default_mappings()
--- end
 
 return M

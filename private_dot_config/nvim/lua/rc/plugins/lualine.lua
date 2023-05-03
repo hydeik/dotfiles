@@ -38,6 +38,7 @@ M.opts = function()
     lualine_y = {},
     lualine_z = {},
   }
+
   local ins_left = function(component)
     table.insert(statusline.lualine_c, component)
   end
@@ -55,6 +56,15 @@ M.opts = function()
   ins_left { "branch" }
   ins_left { "filetype" }
   ins_left { "diff", symbols = icons.git }
+  ins_left {
+    "diagnostics",
+    symbols = {
+      error = icons.diagnostics.Error,
+      warn = icons.diagnostics.Warn,
+      info = icons.diagnostics.Info,
+      hint = icons.diagnostics.Hint,
+    },
+  }
   ins_left {
     function()
       return "%="
@@ -74,35 +84,7 @@ M.opts = function()
     end,
     color = { fg = util.extract_highlight_colors("Constant", "fg") },
   }
-  ins_left {
-    "diagnostics",
-    symbols = {
-      error = icons.diagnostics.Error,
-      warn = icons.diagnostics.Warn,
-      info = icons.diagnostics.Info,
-      hint = icons.diagnostics.Hint,
-    },
-  }
 
-  -- ins_right {
-  --   function()
-  --     return require("noice").api.status.command.get()
-  --   end,
-  --   cond = function()
-  --     return package.loaded["noice"] and require("noice").api.status.command.has()
-  --   end,
-  --   -- color = fg "Statement",
-  --   color = util.extract_highlight_colors("Statement", "fg"),
-  -- }
-  -- ins_right {
-  --   function()
-  --     return require("noice").api.status.mode.get()
-  --   end,
-  --   cond = function()
-  --     return package.loaded["noice"] and require("noice").api.status.mode.has()
-  --   end,
-  --   color = util.extract_highlight_colors("Constant", "fg"),
-  -- }
   ins_right {
     "filesize",
     color = { fg = util.extract_highlight_colors("String", "fg") },
@@ -128,22 +110,12 @@ M.opts = function()
   return {
     options = {
       theme = "auto",
+      globalstatus = true,
       component_separators = { left = "", right = "" },
       section_separators = { left = "", right = "" },
     },
     sections = statusline,
-    winbar = {
-      lualine_c = {
-        {
-          function()
-            return navic.get_location { highlight = true }
-          end,
-          cond = function()
-            return navic.is_available()
-          end,
-        },
-      },
-    },
+    -- winbar -> use barbecue.nvim
     extensions = { "neo-tree" },
   }
 end

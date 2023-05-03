@@ -5,7 +5,6 @@ local M = {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-cheat.nvim",
     "LinArcX/telescope-env.nvim",
-    "nvim-telescope/telescope-file-browser.nvim",
     {
       "nvim-telescope/telescope-frecency.nvim",
       dependencies = { "kkharji/sqlite.lua" },
@@ -15,9 +14,91 @@ local M = {
     "nvim-telescope/telescope-smart-history.nvim",
     "nvim-telescope/telescope-symbols.nvim",
   },
+  -- key mappings
+  keys = function()
+    local util = require "rc.util"
+    ---@param name string
+    ---@param opts table?
+    local map = function(name, opts)
+      return function()
+        require("telescope.builtin")[name](opts)
+      end
+    end
+
+    -- Vim) pickers
+    return {
+      -- find
+      {
+        "<Space>fb",
+        map("buffers", { shorten_path = false, initial_mode = "normal" }),
+        desc = "Buffers",
+      },
+      {
+        "<Space>fd",
+        function()
+          require("rc.plugins.telescope").project_files { cwd = util.get_root() }
+        end,
+        desc = "Files in Project",
+      },
+      { "<Space>ff", map("find_files", { cwd = util.get_root() }), desc = "Find Files (root dir)" },
+      { "<Space>fF", map "find_files", desc = "Find Files (cwd)" },
+      {
+        "<Space>fr",
+        function()
+          local themes = require "telescope.themes"
+          require("telescope").extensions.frecency.frecency(themes.get_ivy {})
+        end,
+        desc = "Frecency",
+      },
+      -- git
+      { "<Space>gb", map "git_branches", desc = "Branches" },
+      { "<Space>gc", map "git_commits", desc = "Commits" },
+      { "<Space>gC", map "git_commits", desc = "Buffer Commits" },
+      { "<Space>gs", map "git_status", desc = "Status" },
+      { "<Space>gS", map "git_stash", desc = "Stash" },
+      -- search
+      { "<Space>sa", map "autocommands", desc = "Auto Commands" },
+      { "<Space>sc", map "command_history", desc = "Command History" },
+      { "<Space>sC", map "commands", desc = "Commands" },
+      { "<Space>sd", map("diagnostics", { bufnr = 0 }), desc = "Document Diagnostics" },
+      { "<Space>sD", map "diagnostics", desc = "Workspace Diagnostics" },
+      { "<Space>sg", map("live_grep", { cwd = util.get_root() }), desc = "Grep (root dir)" },
+      { "<Space>sG", map "live_grep", desc = "Grep (cwd)" },
+      { "<Space>sh", map("help_tags", { shorten_version = true }), desc = "Help Pages" },
+      { "<Space>sH", map "highlights", desc = "Search Highlight Groups" },
+      { "<Space>sk", map "keymaps", desc = "Key Maps" },
+      { "<Space>sM", map "man_pages", desc = "Man Pages" },
+      { "<Space>sm", map "marks", desc = "Jump to Mark" },
+      { "<Space>so", map "vim_options", desc = "Vim Options" },
+      { "<Space>sR", map "resume", desc = "Resume" },
+      { "<Space>sw", map("grep_string", { cwd = util.get_root() }), desc = "Word (root dir)" },
+      { "<Space>sW", map "grep_string", desc = "Word (cwd)" },
+      -- ui
+      { "<Space>uC", map("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+    }
+  end,
 }
 
-M.init = function()
+M.project_files = function(opts)
+  -- local path = require "rc.core.path"
+  local cwd = opts.cwd or vim.loop.cwd()
+  local builtin = nil
+  if vim.loop.fs_stat(cwd .. "/.git") then
+    opts.show_untracked = true
+    builtin = "git_files"
+  else
+    builtin = "find_files"
+  end
+  require("telescope.builtin")[builtin](opts)
+end
+
+---@class UserTelescopeOptions
+M.opts = function()
+  local actions = require "telescope.actions"
+  local action_layout = require "telescope.actions.layout"
+  local sorters = require "telescope.sorters"
+  local trouble = require "trouble.providers.telescope"
+
   -- find command
   local ignore_globs = {
     ".git",
@@ -31,93 +112,28 @@ M.init = function()
     "img",
     -- "fonts",
   }
-  local find_cmd, find_all_cmd
-  if vim.fn.executable "fd" then
-    find_cmd = { "fd", ".", "--hidden", "--follow", "--type", "f" }
-    find_all_cmd = vim.deepcopy(find_cmd)
-    table.insert(find_all_cmd, "--no-ignore")
-    for _, x in ipairs(ignore_globs) do
-      table.insert(find_cmd, "--exclude")
-      table.insert(find_cmd, x)
-    end
-  elseif vim.fn.executable "rg" then
-    find_cmd = { "rg", "--follow", "--hidden", "--files" }
-    find_all_cmd = vim.deepcopy(find_cmd)
-    table.insert(find_all_cmd, "--no-ignore")
-    for _, x in ipairs(ignore_globs) do
-      table.insert(find_cmd, "--glob=!" .. x)
-    end
+  local vimgrep_args = {
+    unpack(require("telescope.config").values.vimgrep_arguments),
+  }
+  table.insert(vimgrep_args, "--no-ignore-vcs")
+  for _, x in ipairs(ignore_globs) do
+    table.insert(vimgrep_args, "--glob=!" .. x)
   end
 
-  -- Key bindings
-  -- (File pickers)
-  vim.keymap.set("n", "<Space>fd", function()
-    require("telescope.builtin").find_files {
-      find_command = find_cmd,
-    }
-  end, { silent = true, desc = "Find files" })
+  local find_args = nil
+  if vim.fn.executable "fd" == 1 then
+    find_args = { "fd", ".", "--type", "f" }
+    for _, x in ipairs(ignore_globs) do
+      table.insert(find_args, "--exclude")
+      table.insert(find_args, x)
+    end
+  elseif vim.fn.executable "rg" == 1 then
+    find_args = vimgrep_args
+  else
+    vimgrep_args = nil
+  end
 
-  vim.keymap.set("n", "<Space>fD", function()
-    require("telescope.builtin").find_files {
-      find_command = find_all_cmd,
-    }
-  end, { silent = true, desc = "Find all files" })
-
-  vim.keymap.set("n", "<Space>fe", function()
-    local opts = {
-      sorting_strategy = "ascending",
-      scroll_strategy = "cycle",
-    }
-    require("telescope").extensions.file_browser.file_browser(opts)
-  end, { silent = true, desc = "File browser" })
-
-  vim.keymap.set("n", "<Space>fg", function()
-    require("telescope.builtin").live_grep {
-      -- shorten_path = true,
-      previewer = false,
-      fzf_separator = "|>",
-    }
-  end, { silent = true, desc = "Live grep" })
-
-  vim.keymap.set("n", "<Space>fG", function()
-    require("telescope.builtin").grep_string {
-      path_display = { "shorten" },
-      search = vim.fn.input "Grep String > ",
-    }
-  end, { silent = true, desc = "Grep string" })
-
-  -- grep last search
-  vim.keymap.set("n", "<Space>f/", function()
-    local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
-    local opts = { path_display = { "shorten" }, word_match = "-w", search = register }
-    require("telescope.builtin").grep_string(opts)
-  end, { silent = true, desc = "Grep last search" })
-
-  vim.keymap.set("n", "<Space>fo", function()
-    require("telescope").extensions.frecency.frecency()
-  end)
-
-  -- Vim pickers
-  vim.keymap.set("n", "<Space>fb", function()
-    require("telescope.builtin").buffers {
-      shorten_path = false,
-      initial_mode = "normal",
-    }
-  end, { silent = true, desc = "Buffers" })
-
-  vim.keymap.set("n", "<Space>fh", function()
-    require("telescope.builtin").help_tags { shorten_version = true }
-  end, { silent = true, desc = "Help tags" })
-end
-
-M.config = function()
-  local telescope = require "telescope"
-  local actions = require "telescope.actions"
-  local action_layout = require "telescope.actions.layout"
-  local sorters = require "telescope.sorters"
-  local trouble = require "trouble.providers.telescope"
-
-  telescope.setup {
+  return {
     defaults = {
       prompt_prefix = " ",
       selection_caret = " ",
@@ -147,6 +163,7 @@ M.config = function()
       color_devicons = true,
 
       file_sorter = sorters.get_fzy_sorter,
+      vimgrep_arguments = vimgrep_args,
 
       mappings = {
         -- insert mode
@@ -175,6 +192,24 @@ M.config = function()
         num_pickers = 20,
       },
     },
+    pickers = {
+      buffers = {
+        shorten_path = false,
+        initial_mode = "normal",
+        sort_lastused = true,
+        sort_mru = true,
+        mappings = {
+          i = {
+            ["dd"] = actions.delete_buffer,
+          },
+        },
+      },
+      find_files = {
+        follow = true,
+        hidden = true,
+        find_command = find_args,
+      },
+    },
 
     extensions = {
       file_browser = {},
@@ -200,10 +235,13 @@ M.config = function()
       },
     },
   }
-
+end
+---@param opts UserTelescopeOptions
+M.config = function(_, opts)
+  local telescope = require "telescope"
+  telescope.setup(opts)
   telescope.load_extension "cheat"
   telescope.load_extension "env"
-  telescope.load_extension "file_browser"
   telescope.load_extension "frecency"
   telescope.load_extension "fzf_writer"
   telescope.load_extension "fzy_native"

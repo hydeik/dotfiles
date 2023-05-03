@@ -16,6 +16,7 @@
 -----------------------------------------------------------------------------
 --]]
 
+local util = require "rc.util"
 --- Basic mappings {{{
 -- Disable Ex-mode, remap to register macros
 vim.keymap.set("n", "Q", "q")
@@ -98,10 +99,20 @@ vim.keymap.set("n", "q", [[winnr('$') != 1 ? ':<C-u>close<CR>' : ':<C-u>bdelete<
 })
 
 -- Improve the behavior of '0': tobble between '^' and '0'
-vim.keymap.set({ "n", "x", "o" }, "0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
+vim.keymap.set(
+  { "n", "x", "o" },
+  "0",
+  "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
+  { expr = true, desc = "Toggle between '^' and '0'" }
+)
 
 -- Turn off search highlight
--- vim.keymap.set("n", "<ESC><ESC>", [[<Cmd>silent! nohlsearch<CR>]], { silent = true })
+vim.keymap.set(
+  { "n", "i" },
+  "<ESC>",
+  [[<Cmd>silent! nohlsearch<CR><ESC>]],
+  { silent = true, desc = "Escape and clear hlsearch" }
+)
 
 --- }}}
 
@@ -137,76 +148,55 @@ end, { silent = true, desc = "Smart close fold" })
 
 --- }}}
 
---[[ -- Window/Tabs operation {{{
--- Use 's' key as the prefix to control window/tab
+-- Window/Tabs operation {{{
+
+vim.keymap.set("n", "<Space>wd", "<C-w>c", { desc = "Delete window" })
+vim.keymap.set("n", "<Space>ww", "<C-w>p", { desc = "Other window" })
+vim.keymap.set("n", "<Space>w-", "<C-w>s", { desc = "Split window below" })
+vim.keymap.set("n", "<Space>w|", "<C-w>v", { desc = "Split window right" })
+vim.keymap.set("n", "<Space>w=", "<C-w>v", { desc = "Equal size window" })
+
+-- Resize window by Shift+arrow => use smart-splits.nvim
+-- vim.keymap.set("n", "<S-Left>", "<C-w><", { desc = "Decrease window width" })
+-- vim.keymap.set("n", "<S-Right>", "<C-w>>", { desc = "Increase window width" })
+-- vim.keymap.set("n", "<S-Up>", "<C-w>+", { desc = "Increase window height" })
+-- vim.keymap.set("n", "<S-Down>", "<C-w>-", { desc = "Decrease window height" })
 
 -- new tab
-vim.keymap.set("n", "st", "<Cmd>tabnew<CR>", { silent = true, desc = "New Tab" })
-
--- close window
-vim.keymap.set("n", "sc", "<Cmd>close<CR>", { silent = true, desc = "Close window" })
-
--- only current window
-vim.keymap.set("n", "so", "<Cmd>only<CR>", { silent = true, desc = "Only current window" })
-
--- split window horizontally
-vim.keymap.set("n", "s-", "<Cmd>split<CR>", { silent = true, desc = "Split window horizontally" })
-
--- split window virtically
-vim.keymap.set("n", "s|", "<Cmd>vsplit<CR>", { silent = true, desc = "Split window virtically" })
-
--- equal size window
-vim.keymap.set("n", "s=", "<C-w>=<CR>", { silent = true, desc = "Equal size window" })
-
--- Resize window by Shift+arrow
-vim.keymap.set("n", "<S-Left>", "<C-w><")
-vim.keymap.set("n", "<S-Right>", "<C-w>>")
-vim.keymap.set("n", "<S-Up>", "<C-w>+")
-vim.keymap.set("n", "<S-Down>", "<C-w>-")
+vim.keymap.set("n", "<Space><Tab><Tab>", "<Cmd>tabnew<CR>", { desc = "New Tab" })
+vim.keymap.set("n", "<Space><Tab>]", "<Cmd>tabnext<CR>", { desc = "Next Tab" })
+vim.keymap.set("n", "<Space><Tab>[", "<Cmd>tabprevious<CR>", { desc = "Previous Tab" })
+vim.keymap.set("n", "<Space><Tab>d", "<Cmd>tabclose<CR>", { desc = "Close Tab" })
+vim.keymap.set("n", "<Space><Tab>f", "<Cmd>tabfirst<CR>", { desc = "First Tab" })
+vim.keymap.set("n", "<Space><Tab>l", "<Cmd>tablast<CR>", { desc = "Last Tab" })
 
 ---  }}}
-]]
 
---[[ --- Toggle Editor UI {{{
--- toggle cursorcolumn
-vim.keymap.set("n", "<Space>tc", function()
-  vim.wo.cursorcolumn = not vim.wo.cursorcolumn
-end, { silent = true, desc = "Toggle cursorcolumn" })
-
--- toggle cursorline
-vim.keymap.set("n", "<Space>tl", function()
-  vim.wo.cursorline = not vim.wo.cursorline
-end, { silent = true, desc = "Toggle cursorline" })
-
--- toggle line numbers
-vim.keymap.set("n", "<Space>tn", function()
-  vim.wo.number = not vim.wo.number
-  vim.wo.relativenumber = not vim.wo.relativenumber
-end, { silent = true, desc = "Toggle number|relativenumber" })
-
--- toggle spell checking
--- vim.keymap.set("n", "<Space>ts", function()
---   vim.wo.spell = not vim.wo.spell
---   if vim.wo.spell then
---     vim.api.nvim_echo({ { "spell-checking " }, { "enabled", "Green" } }, false, {})
---   else
---     vim.api.nvim_echo({ { "spell-checking " }, { "disabled", "Red" } }, false, {})
---   end
--- end, { silent = true, desc = "Toggle spell checking" })
-
+--- Toggle Editor UI {{{
+-- toggle diagnostics
+vim.keymap.set("n", "<Space>ud", util.toggle_diagnostics, { desc = "Toggle Diagnostics" })
 -- toggle list char (control characters)
-vim.keymap.set("n", "<Space>th", function()
-  vim.wo.list = not vim.wo.list
+vim.keymap.set("n", "<Space>uh", function()
+  util.toggle "list"
+  -- vim.wo.list = not vim.wo.list
 end, { silent = true, desc = "Toggle list char (control characters)" })
-
+-- toggle line numbers
+vim.keymap.set("n", "<Space>ul", function()
+  -- vim.wo.number = not vim.wo.number
+  -- vim.wo.relativenumber = not vim.wo.relativenumber
+  util.toggle("relativenumber", true)
+  util.toggle "number"
+end, { silent = true, desc = "Toggle Line Numbers" })
+-- toggle spell checking
+vim.keymap.set("n", "<Space>us", function()
+  util.toggle "spell"
+end, { silent = true, desc = "Toggle Spelling" })
 -- toggle wrap
-vim.keymap.set("n", "<Space>tw", function()
-  vim.wo.wrap = not vim.wo.wrap
-  vim.wo.breakindent = not vim.wo.breakindent
-end, { silent = true, desc = "Toggle wrap|breakindent" })
+vim.keymap.set("n", "<Space>uw", function()
+  util.toggle "wrap"
+end, { silent = true, desc = "Toggle Word Wrap" })
 
 --- }}}
-]]
 
 --- Leader mappings {{{
 -- ;; to :

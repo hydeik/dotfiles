@@ -21,8 +21,18 @@ return {
       ["<Space>q"] = { name = "+quit/session" },
       ["<Space>s"] = { name = "+search" },
       ["<Space>u"] = { name = "+ui" },
-      -- ["<Space>w"] = { name = "+windows" },
+      ["<Space>w"] = { name = "+windows" },
       ["<Space>x"] = { name = "+diagnostics/quickfix" },
+    },
+    plugins = {
+      registers = false,
+      presets = {
+        windows = false,
+        nav = false,
+      },
+    },
+    icons = {
+      separator = "  ",
     },
   },
   config = function(_, opts)

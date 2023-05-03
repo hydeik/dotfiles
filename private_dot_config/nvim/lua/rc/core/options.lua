@@ -97,7 +97,7 @@ if plat.is_mac then
   }
 elseif plat.is_wsl then
   -- NOTE: Remember to `ln -s /path/in/windows/win32yank.exe /usr/local/bin/win32yank.exe`
-  -- NOTE:  and `chmod +x /usr/local/bin/win32yank.exe`
+  --NOTE: and `chmod +x /usr/local/bin/win32yank.exe`
   vim.g.clipboard = {
     name = "win32yank-wsl",
     copy = {
@@ -229,7 +229,7 @@ opt.fillchars = {
 }
 
 -- Make only the last window have a status line
-opt.laststatus = 3
+-- opt.laststatus = 3
 
 -- Enable folding
 opt.foldenable = true

@@ -7,6 +7,22 @@ local M = {
     "MunifTanjim/nui.nvim",
   },
   cmd = { "Neotree" },
+  keys = {
+    {
+      "<Space>fe",
+      function()
+        require("neo-tree.command").execute { toggle = true, dir = require("rc.util").get_root() }
+      end,
+      desc = "Explorer NeoTree (root dir)",
+    },
+    {
+      "<Space>fE",
+      function()
+        require("neo-tree.command").execute { toggle = true, dir = vim.loop.cwd() }
+      end,
+      desc = "Explorer NeoTree (cwd)",
+    },
+  },
 }
 
 M.init = function()
@@ -50,8 +66,8 @@ M.config = function()
         folder_closed = "",
         folder_open = "",
         folder_empty = "ﰊ",
-        -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-        -- then these will never be used.
+        -- The next two settings are only a fallback, if you use nvim-web-devicons
+        -- and configure default icons there then these will never be used.
         default = "*",
         highlight = "NeoTreeFileIcon",
       },

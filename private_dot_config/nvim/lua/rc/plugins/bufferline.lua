@@ -2,6 +2,12 @@
 return {
   "akinsho/bufferline.nvim",
   event = "VeryLazy",
+  keys = {
+    { "<S-h>", "<cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },
+    { "<S-l>", "<cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
+    { "[b", "<cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },
+    { "]b", "<cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
+  },
   opts = {
     options = {
       close_command = function(n)

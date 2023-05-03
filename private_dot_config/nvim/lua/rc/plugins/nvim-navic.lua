@@ -1,4 +1,5 @@
 return {
+  enable = false,
   -- Simple winbar/statusline plugin that shows your current code context
   "SmiteshP/nvim-navic",
   init = function()

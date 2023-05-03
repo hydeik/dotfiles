@@ -66,7 +66,7 @@ return {
       end
     end,
   },
-  -- buffer remove
+  --lbuffer remove
   {
     "echasnovski/mini.bufremove",
     -- stylua: ignore
@@ -112,13 +112,13 @@ return {
     end,
     opts = {
       mappings = {
-        add = "<Leader>sa", -- Add surrounding in Normal and Visual modes
-        delete = "<Leader>sd", -- Delete surrounding
-        find = "<Leader>sf", -- Find surrounding (to the right)
-        find_left = "<Leader>sF", -- Find surrounding (to the left)
-        jhighlight = "<Leader>sh", -- Highlight surrounding
-        replace = "<Leader>sr", -- Replace surrounding
-        update_n_lines = "<Leader>sn", -- Update `n_lines`
+        add = "sa", -- Add surrounding in Normal and Visual modes
+        delete = "sd", -- Delete surrounding
+        find = "sf", -- Find surrounding (to the right)
+        find_left = "sF", -- Find surrounding (to the left)
+        jhighlight = "sh", -- Highlight surrounding
+        replace = "sr", -- Replace surrounding
+        update_n_lines = "sn", -- Update `n_lines`
         suffix_last = "l", -- Suffix to search with "prev" method
         suffix_next = "n", -- Suffix to search with "next" method
       },

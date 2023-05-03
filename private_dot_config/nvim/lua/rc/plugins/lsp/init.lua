@@ -3,7 +3,8 @@ local M = {
   name = "lsp",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    "folke/neodev.nvim",
+    { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+    { "folke/neodev.nvim", config = true },
     "mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     -- for setting
@@ -13,9 +14,12 @@ local M = {
         return require("rc.util").has_plugin "nvim-cmp"
       end,
     },
-    -- "simrat39/rust-tools.nvim",
-    -- "p00f/clangd_extensions.nvim",
-    -- "jose-elias-alvarez/typescript.nvim",
+    -- better renaem
+    {
+      "smjonas/inc-rename.nvim",
+      cmd = { "IncRename" },
+      config = true,
+    },
   },
   ---@class PluginLspOpts
   opts = {
@@ -54,7 +58,7 @@ local M = {
         settings = {
           Lua = {
             runtime = {
-              version = "luajit",
+              version = "LuaJIT",
               path = vim.split(package.path, ";"),
             },
             workspace = {

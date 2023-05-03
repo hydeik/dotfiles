@@ -13,6 +13,12 @@ vim.api.nvim_create_autocmd("FocusGained", {
   desc = "Check if any buffers were changed outside of (Neo)Vim.",
 })
 
+vim.api.nvim_create_autocmd("VimResized", {
+  group = group_id,
+  command = "tabdo wincmd =",
+  desc = "Resize splits if window got resized",
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = group_id,
   callback = function()
@@ -21,21 +27,33 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight yanked text.",
 })
 
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = group_id,
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+  desc = "Go to last loc when opening a buffer",
+})
+
 vim.api.nvim_create_autocmd("BufEnter", {
   group = group_id,
   callback = function()
     -- A hook after filetypeplugin events
     vim.opt_local.formatoptions = vim.opt_local.formatoptions
-        - "r" -- Don't insert a comment leader after hitting <Enter>.
-        - "o" -- Don't insert a comment leader after hitting 'o' or 'O'.
-        - "a" -- Disable auto-format
-        + "c" -- Auto-wrap comments using text width.
-        + "q" -- Allow formatting of comments with "gq".
-        + "n" -- Recognize numbered list when formatting text.
-        + "l" -- Long lines are not broked in insert mode.
-        + "m" -- Also break at a multibyte character above 255.
-        + "M" -- Don't insert a space before or after a mutibyte character.
-        + "j" -- Where it make sence, remove a comment leader when joining lines.
+      - "r" -- Don't insert a comment leader after hitting <Enter>.
+      - "o" -- Don't insert a comment leader after hitting 'o' or 'O'.
+      - "a" -- Disable auto-format
+      + "c" -- Auto-wrap comments using text width.
+      + "q" -- Allow formatting of comments with "gq".
+      + "n" -- Recognize numbered list when formatting text.
+      + "l" -- Long lines are not broked in insert mode.
+      + "m" -- Also break at a multibyte character above 255.
+      + "M" -- Don't insert a space before or after a mutibyte character.
+      + "j" -- Where it make sence, remove a comment leader when joining lines.
 
     if not vim.bo.modifiable then
       vim.wo.foldenable = false

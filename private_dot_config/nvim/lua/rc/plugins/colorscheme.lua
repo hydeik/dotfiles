@@ -25,35 +25,6 @@ return {
           or {}
       end,
     },
-    config = function(_, opts)
-      require("kanagawa").setup(opts)
-      vim.api.nvim_set_hl(0, "NavicIconsFile", { link = "Directory" })
-      vim.api.nvim_set_hl(0, "NavicIconsModule", { link = "@include" })
-      vim.api.nvim_set_hl(0, "NavicIconsNamespace", { link = "@namespace" })
-      vim.api.nvim_set_hl(0, "NavicIconsPackage", { link = "@include" })
-      vim.api.nvim_set_hl(0, "NavicIconsClass", { link = "@structure" })
-      vim.api.nvim_set_hl(0, "NavicIconsMethod", { link = "@method" })
-      vim.api.nvim_set_hl(0, "NavicIconsProperty", { link = "@property" })
-      vim.api.nvim_set_hl(0, "NavicIconsField", { link = "@field" })
-      vim.api.nvim_set_hl(0, "NavicIconsConstructor", { link = "@constructor" })
-      vim.api.nvim_set_hl(0, "NavicIconsEnum", { link = "@field" })
-      vim.api.nvim_set_hl(0, "NavicIconsInterface", { link = "@type" })
-      vim.api.nvim_set_hl(0, "NavicIconsFunction", { link = "@function" })
-      vim.api.nvim_set_hl(0, "NavicIconsVariable", { link = "@variable" })
-      vim.api.nvim_set_hl(0, "NavicIconsConstant", { link = "@constant" })
-      vim.api.nvim_set_hl(0, "NavicIconsString", { link = "@string" })
-      vim.api.nvim_set_hl(0, "NavicIconsNumber", { link = "@number" })
-      vim.api.nvim_set_hl(0, "NavicIconsBoolean", { link = "@boolean" })
-      vim.api.nvim_set_hl(0, "NavicIconsArray", { link = "@field" })
-      vim.api.nvim_set_hl(0, "NavicIconsObject", { link = "@type" })
-      vim.api.nvim_set_hl(0, "NavicIconsKey", { link = "@keyword" })
-      vim.api.nvim_set_hl(0, "NavicIconsNull", { link = "@comment" })
-      vim.api.nvim_set_hl(0, "NavicIconsEnumMember", { link = "@field" })
-      vim.api.nvim_set_hl(0, "NavicIconsStruct", { link = "@structure" })
-      vim.api.nvim_set_hl(0, "NavicIconsEvent", { link = "@keyword" })
-      vim.api.nvim_set_hl(0, "NavicIconsOperator", { link = "@operator" })
-      vim.api.nvim_set_hl(0, "NavicIconsTypeParameter", { link = "@type" })
-    end,
   },
   -- catppuccin
   {
