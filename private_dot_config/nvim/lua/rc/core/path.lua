@@ -22,7 +22,7 @@ M.statehome = vim.fn.stdpath "state"
 
 --- Returns if the path exists on disk
 ---@param filename string
----@return table|boolean
+---@return string|boolean
 function M.exists(filename)
   local stat = vim.loop.fs_stat(filename)
   return stat and stat.type or false

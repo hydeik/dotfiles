@@ -32,7 +32,7 @@ return {
       },
     },
     icons = {
-      separator = "  ",
+      separator = " 󰁔",
     },
   },
   config = function(_, opts)

@@ -40,6 +40,18 @@ M.icons = {
     modified = " ", -- U+EADE
     removed = " ", -- U+EADF
   },
+  status = {
+    line_number = "",
+    column_number = "",
+    folder = "",
+    root_folder = "",
+    git = "",
+    branch = "",
+    vimode = "",
+    lsp = "",
+    dap = "",
+    treesitter = "",
+  },
   kinds = {
     Array = " ", -- U+EA8A
     Boolean = " ", -- U+EA8F

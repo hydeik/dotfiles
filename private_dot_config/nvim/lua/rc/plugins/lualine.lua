@@ -5,7 +5,6 @@ local M = {
 
 M.opts = function()
   local icons = require("rc.core.config").icons
-  local navic = require "nvim-navic"
 
   local util = require "lualine.utils.utils"
   local lualine = require "lualine.themes.auto"
@@ -53,18 +52,23 @@ M.opts = function()
     color = mode_highlight,
     padding = { right = 1 },
   }
-  ins_left { "branch" }
-  ins_left { "filetype" }
-  ins_left { "diff", symbols = icons.git }
   ins_left {
-    "diagnostics",
-    symbols = {
-      error = icons.diagnostics.Error,
-      warn = icons.diagnostics.Warn,
-      info = icons.diagnostics.Info,
-      hint = icons.diagnostics.Hint,
+    "branch",
+    icon = {
+      icons.status.git,
+      color = { fg = util.extract_highlight_colors("Constant", "fg") },
     },
   }
+  ins_left {
+    function()
+      return vim.fn.fnamemodify(vim.loop.cwd(), ":t")
+    end,
+    icon = {
+      icons.status.folder,
+      color = { fg = util.extract_highlight_colors("Directory", "fg"), gui = "bold" },
+    },
+  }
+  ins_left { "diff", symbols = icons.git }
   ins_left {
     function()
       return "%="
@@ -74,30 +78,80 @@ M.opts = function()
     -- LSP server name
     function()
       local names = {}
-      for _, client in ipairs(vim.lsp.buf_get_clients(0)) do
+      for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
         table.insert(names, client.name)
       end
-      return " [" .. table.concat(names, "|") .. "]"
+      return icons.status.lsp .. " " .. table.concat(names, ",")
     end,
     cond = function()
-      return next(vim.lsp.buf_get_clients()) ~= nil
+      return next(vim.lsp.get_active_clients()) ~= nil
     end,
     color = { fg = util.extract_highlight_colors("Constant", "fg") },
   }
+  ins_left {
+    "diagnostics",
+    symbols = {
+      error = icons.diagnostics.Error,
+      warn = icons.diagnostics.Warn,
+      info = icons.diagnostics.Info,
+      hint = icons.diagnostics.Hint,
+    },
+  }
 
   ins_right {
-    "filesize",
-    color = { fg = util.extract_highlight_colors("String", "fg") },
+    function()
+      return require("noice").api.status.command.get()
+    end,
+    cond = function()
+      return package.loaded["noice"] and require("noice").api.status.command.has()
+    end,
+    color = { fg = util.extract_highlight_colors("Statement", "fg") },
   }
   ins_right {
-    "fileformat",
-    color = { fg = util.extract_highlight_colors("Statement", "fg") },
+    function()
+      return require("noice").api.status.mode.get()
+    end,
+    cond = function()
+      return package.loaded["noice"] and require("noice").api.status.mode.has()
+    end,
+    color = { fg = util.extract_highlight_colors("Constant", "fg") },
+  }
+  ins_right {
+    function()
+      return require("dap").status()
+    end,
+    icon = icons.status.dap,
+    cond = function()
+      return package.loaded["dap"] and require("dap").status() ~= ""
+    end,
+    color = { fg = util.extract_highlight_colors("Debug", "fg") },
+  }
+  ins_right {
+    function()
+      return require("nvim-treesitter.parsers").has_parser() and "TS" or ""
+    end,
+    icon = {
+      icons.status.treesitter,
+      color = { fg = util.extract_highlight_colors("String", "fg") },
+    },
+    color = { fg = util.extract_highlight_colors("StatusLineNC", "fg") },
+    padding = { left = 0, right = 0 },
+  }
+  ins_right {
+    "filetype",
+    color = { fg = util.extract_highlight_colors("StatusLineNC", "fg") },
   }
   ins_right {
     "encoding",
-    color = { fg = util.extract_highlight_colors("Statement", "fg") },
+    -- color = { fg = util.extract_highlight_colors("Statement", "fg") },
+    color = { fg = util.extract_highlight_colors("StatusLineNC", "fg") },
   }
-  ins_right { "location" }
+  ins_right {
+    "fileformat",
+    -- color = { fg = util.extract_highlight_colors("Statement", "fg") },
+    color = { fg = util.extract_highlight_colors("StatusLineNC", "fg") },
+  }
+  ins_right { "location", icon = icons.status.line_number }
   ins_right { "progress" }
   ins_right {
     function()
@@ -111,8 +165,8 @@ M.opts = function()
     options = {
       theme = "auto",
       globalstatus = true,
-      component_separators = { left = "", right = "" },
-      section_separators = { left = "", right = "" },
+      component_separators = "",
+      section_separators = "",
     },
     sections = statusline,
     -- winbar -> use barbecue.nvim

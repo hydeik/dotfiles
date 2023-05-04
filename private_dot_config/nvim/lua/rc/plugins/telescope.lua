@@ -25,14 +25,11 @@ local M = {
       end
     end
 
-    -- Vim) pickers
     return {
+      { "<Space>/", map("live_grep", { cwd = util.get_root() }), desc = "Grep (root dir)" },
+      { "<Space>:", map "command_history", desc = "Command History" },
       -- find
-      {
-        "<Space>fb",
-        map("buffers", { shorten_path = false, initial_mode = "normal" }),
-        desc = "Buffers",
-      },
+      { "<Space>fb", map "buffers", desc = "Buffers" },
       {
         "<Space>fd",
         function()
@@ -73,6 +70,43 @@ local M = {
       { "<Space>sR", map "resume", desc = "Resume" },
       { "<Space>sw", map("grep_string", { cwd = util.get_root() }), desc = "Word (root dir)" },
       { "<Space>sW", map "grep_string", desc = "Word (cwd)" },
+      -- lsp
+      {
+        "<Space>ss",
+        map("lsp_document_symbol", {
+          symbols = {
+            "Class",
+            "Function",
+            "Method",
+            "Constructor",
+            "Interface",
+            "Module",
+            "Struct",
+            "Trait",
+            "Field",
+            "Property",
+          },
+        }),
+        desc = "Goto Symbol",
+      },
+      {
+        "<Space>sS",
+        map("lsp_dynamic_workspace_symbols", {
+          symbols = {
+            "Class",
+            "Function",
+            "Method",
+            "Constructor",
+            "Interface",
+            "Module",
+            "Struct",
+            "Trait",
+            "Field",
+            "Property",
+          },
+        }),
+        desc = "Goto Symbol (workspace)",
+      },
       -- ui
       { "<Space>uC", map("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
     }
