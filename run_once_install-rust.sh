@@ -85,9 +85,7 @@ CARGO_INSTALL_TARGET=(
   zoxide
 )
 
-CARGO_INSTALL_TARGET_NIGHTLY=(
-  racer
-)
+CARGO_INSTALL_TARGET_NIGHTLY=()
 
 for target in "${CARGO_INSTALL_TARGET[@]}"; do
   if ! is_installed "$target"; then
