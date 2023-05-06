@@ -31,6 +31,7 @@ return {
           yaml = {
             format = { enable = true },
             validate = { enable = true },
+            keyOrdering = false,
           },
         },
       },
