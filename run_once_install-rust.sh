@@ -85,7 +85,7 @@ CARGO_INSTALL_TARGET=(
   zoxide
 )
 
-CARGO_INSTALL_TARGET_NIGHTLY=()
+# CARGO_INSTALL_TARGET_NIGHTLY=()
 
 for target in "${CARGO_INSTALL_TARGET[@]}"; do
   if ! is_installed "$target"; then
@@ -93,8 +93,8 @@ for target in "${CARGO_INSTALL_TARGET[@]}"; do
   fi
 done
 
-for target in "${CARGO_INSTALL_TARGET_NIGHTLY[@]}"; do
-  if ! is_installed "$target"; then
-    "$CARGO" +nightly install "$target" || true
-  fi
-done
+# for target in "${CARGO_INSTALL_TARGET_NIGHTLY[@]}"; do
+#   if ! is_installed "$target"; then
+#     "$CARGO" +nightly install "$target" || true
+#   fi
+# done
