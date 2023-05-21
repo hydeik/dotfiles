@@ -1,7 +1,6 @@
 --- ~/.config/nvim/lua/rc/core/options.luaoptio
 
 local plat = require "rc.core.platform"
-local path = require "rc.core.path"
 local opt = vim.opt
 
 --- Overwrite nvim default global options {{{1
@@ -58,7 +57,7 @@ opt.shada = { "'200", "<50", "@100", "s10", "h" }
 -- prefer english help
 opt.helplang = { "en", "ja" }
 -- The words list file where words are added by `zw` and `zg` command
-opt.spellfile = path.join(path.datahome, "spell", "en.utf-8.add")
+opt.spellfile = vim.fs.joinpath(vim.fn.stdpath("data"), "spell", "en.utf-8.add")
 -- spell check (ignore on check on Asian characters (China, Japan, Korea))
 opt.spelllang = { "en_us", "cjk" }
 -- opt.spell = false

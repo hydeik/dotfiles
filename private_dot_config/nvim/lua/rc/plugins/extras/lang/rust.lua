@@ -19,7 +19,6 @@ return {
       },
       setup = {
         rust_analyzer = function(_, server_opts)
-          local path = require "rc.core.path"
           local plat = require "rc.core.platform"
           local dylib_extension = "so"
           if plat.is_mac then
@@ -27,9 +26,9 @@ return {
           elseif plat.is_windowns then
             dylib_extension = "dll"
           end
-          local extenstion_path = path.join(path.datahome, "mason", "packages", "codelldb", "extension")
-          local codelldb_path = path.join(extenstion_path, "adaptor", "codelldb")
-          local liblldb_path = path.join(extenstion_path, "lldb", "lib", "liblldb." .. dylib_extension)
+          local extenstion_path = vim.fs.joinpath(vim.fn.stdpath "data", "mason", "packages", "codelldb", "extension")
+          local codelldb_path = vim.fs.joinpath(extenstion_path, "adaptor", "codelldb")
+          local liblldb_path = vim.fs.joinpath(extenstion_path, "lldb", "lib", "liblldb." .. dylib_extension)
           require("rust-tools").setup {
             tools = {
               inray_hints = {

@@ -1,8 +1,7 @@
 -- Configure lazy.nvim: a modern plugin manager
 
 -- bootstrap from github
-local path = require "rc.core.path"
-local lazypath = path.join(path.datahome, "lazy", "lazy.nvim")
+local lazypath = vim.fs.joinpath(vim.fn.stdpath "data", "lazy", "lazy.nvim")
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
     "git",
