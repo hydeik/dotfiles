@@ -21,6 +21,6 @@ zmodule tldr-pages/tldr-node-client --fpath bin/completion/zsh
 zmodule romkatv/powerlevel10k --use degit
 
 zmodule greymd/tmux-xpanes
-zmodule direnv/direnv --on-pull 'make && ./direnv hook zsh >! init.zsh'
+zmodule direnv/direnv --on-pull 'make && make PREFIX="$HOME/.local" install && ./direnv hook zsh >! init.zsh'
 
 zmodule zsh-users/zsh-history-substring-search
