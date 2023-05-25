@@ -1,0 +1,1172 @@
+#compdef rye
+
+autoload -U is-at-least
+
+_rye() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" \
+'--version[Print the version]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_rye_commands" \
+"*::: :->rye" \
+&& ret=0
+    case $state in
+    (rye)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" \
+'--git=[Install the given package from this git repository]:GIT: ' \
+'(--git --path)--url=[Install the given package from this URL]:URL: ' \
+'(--git --url)--path=[Install the given package from this local path]:PATH:_files' \
+'--tag=[Install a specific tag]:TAG: ' \
+'(--tag --branch)--rev=[Update to a specific git rev]:REV: ' \
+'(--tag --rev)--branch=[Update to a specific git branch]:BRANCH: ' \
+'*--features=[Adds a dependency with a specific feature]:FEATURES: ' \
+'(--dev --excluded)--optional=[Add this to an optional dependency group]:OPTIONAL: ' \
+'--absolute[Force non interpolated absolute paths]' \
+'--dev[Add this as dev dependency]' \
+'(--dev --optional)--excluded[Add this as an excluded dependency that will not be installed even if it'\''s a sub dependency]' \
+'--pre[Include pre-releases when finding a package version]' \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::requirements -- The package to add as PEP 508 requirement string. e.g. '\''flask==2.2.3'\'':' \
+&& ret=0
+;;
+(build)
+_arguments "${_arguments_options[@]}" \
+'*-p+[Build a specific package]:PACKAGE: ' \
+'*--package=[Build a specific package]:PACKAGE: ' \
+'-o+[An output directory (defaults to \`workspace/dist\`)]:OUT:_files' \
+'--out=[An output directory (defaults to \`workspace/dist\`)]:OUT:_files' \
+'--sdist[Build an sdist]' \
+'--wheel[Build a wheel]' \
+'-a[Build all packages]' \
+'--all[Build all packages]' \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(fetch)
+_arguments "${_arguments_options[@]}" \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':version -- The version of Python to fetch:' \
+&& ret=0
+;;
+(init)
+_arguments "${_arguments_options[@]}" \
+'--min-py=[Minimal Python version supported by this project]:MIN_PY: ' \
+'-p+[Python version to use for the virtualenv]:PY: ' \
+'--py=[Python version to use for the virtualenv]:PY: ' \
+'--build-system=[Which build system should be used?]:BUILD_SYSTEM:(hatchling setuptools filt pdm)' \
+'--license=[Which license should be used (SPDX identifier)?]:LICENSE: ' \
+'--name=[The name of the package]:NAME: ' \
+'--no-readme[Do not create a readme]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::path -- Where to place the project (defaults to current path):_files' \
+&& ret=0
+;;
+(install)
+_arguments "${_arguments_options[@]}" \
+'--git=[Install the given package from this git repository]:GIT: ' \
+'(--git --path)--url=[Install the given package from this URL]:URL: ' \
+'(--git --url)--path=[Install the given package from this local path]:PATH:_files' \
+'--tag=[Install a specific tag]:TAG: ' \
+'(--tag --branch)--rev=[Update to a specific git rev]:REV: ' \
+'(--tag --rev)--branch=[Update to a specific git branch]:BRANCH: ' \
+'*--features=[Adds a dependency with a specific feature]:FEATURES: ' \
+'*--include-dep=[Include scripts from a given dependency]:INCLUDE_DEP: ' \
+'-p+[Optionally the Python version to use]:PYTHON: ' \
+'--python=[Optionally the Python version to use]:PYTHON: ' \
+'--absolute[Force non interpolated absolute paths]' \
+'-f[Force install the package even if it'\''s already there]' \
+'--force[Force install the package even if it'\''s already there]' \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':requirement -- The name of the package to install:' \
+&& ret=0
+;;
+(lock)
+_arguments "${_arguments_options[@]}" \
+'*--update=[Update a specific package]:UPDATE: ' \
+'*--features=[Extras/features to enable when locking the workspace]:FEATURES: ' \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'--update-all[Update all packages to the latest]' \
+'--pre[Update to pre-release versions]' \
+'--all-features[Enables all features]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(make-req)
+_arguments "${_arguments_options[@]}" \
+'--git=[Install the given package from this git repository]:GIT: ' \
+'(--git --path)--url=[Install the given package from this URL]:URL: ' \
+'(--git --url)--path=[Install the given package from this local path]:PATH:_files' \
+'--tag=[Install a specific tag]:TAG: ' \
+'(--tag --branch)--rev=[Update to a specific git rev]:REV: ' \
+'(--tag --rev)--branch=[Update to a specific git branch]:BRANCH: ' \
+'*--features=[Adds a dependency with a specific feature]:FEATURES: ' \
+'--absolute[Force non interpolated absolute paths]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::requirements -- The package to add as PEP 508 requirement string. e.g. '\''flask==2.2.3'\'':' \
+&& ret=0
+;;
+(pin)
+_arguments "${_arguments_options[@]}" \
+'--no-update-requires-python[Prevent updating requires-python in the pyproject.toml]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':version -- The version of Python to pin:' \
+&& ret=0
+;;
+(publish)
+_arguments "${_arguments_options[@]}" \
+'-r+[The repository to publish to (defaults to '\''pypi'\'')]:REPOSITORY: ' \
+'--repository=[The repository to publish to (defaults to '\''pypi'\'')]:REPOSITORY: ' \
+'--repository-url=[The repository url to publish to (defaults to https\://upload.pypi.org/legacy/)]:REPOSITORY_URL: ' \
+'--token=[An access token used for the upload]:TOKEN: ' \
+'-i+[GPG identity used to sign files]:IDENTITY: ' \
+'--identity=[GPG identity used to sign files]:IDENTITY: ' \
+'--cert=[Path to alternate CA bundle]:CERT:_files' \
+'--sign[Sign files to upload using GPG]' \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::dist -- The distribution files to upload to the repository (defaults to <workspace-root>/dist/*):_files' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" \
+'(--dev)--optional=[Remove this from an optional dependency group]:OPTIONAL: ' \
+'--dev[Remove this from dev dependencies]' \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::requirements -- The packages to remove:' \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" \
+'-l[List all commands]' \
+'--list[List all commands]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(shell)
+_arguments "${_arguments_options[@]}" \
+'--no-banner[Do not show banner]' \
+'--allow-nested[Allow nested invocations]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(show)
+_arguments "${_arguments_options[@]}" \
+'--installed-deps[Print the installed dependencies from the venv]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" \
+'*--update=[Update a specific package]:UPDATE: ' \
+'*--features=[Extras/features to enable when synching the workspace]:FEATURES: ' \
+'-f[Force the environment to be re-created]' \
+'--force[Force the environment to be re-created]' \
+'--no-dev[Do not include dev dependencies]' \
+'--no-lock[Do not update the lockfile]' \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'--update-all[Update all packages to the latest]' \
+'--pre[Update to pre-release versions]' \
+'--all-features[Enables all features]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(toolchain)
+_arguments "${_arguments_options[@]}" \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_rye__toolchain_commands" \
+"*::: :->toolchain" \
+&& ret=0
+
+    case $state in
+    (toolchain)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-toolchain-command-$line[1]:"
+        case $line[1] in
+            (fetch)
+_arguments "${_arguments_options[@]}" \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':version -- The version of Python to fetch:' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+'--include-downloadable[Also include non installed, but downloadable toolchains]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(register)
+_arguments "${_arguments_options[@]}" \
+'-n+[Name of the toolchain.  If not provided a name is auto detected]:NAME: ' \
+'--name=[Name of the toolchain.  If not provided a name is auto detected]:NAME: ' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':path -- Path to the Python binary:_files' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" \
+'-h[Print help]' \
+'--help[Print help]' \
+':version -- Name and version of the toolchain:' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_rye__toolchain__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-toolchain-help-command-$line[1]:"
+        case $line[1] in
+            (fetch)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(register)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(tools)
+_arguments "${_arguments_options[@]}" \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_rye__tools_commands" \
+"*::: :->tools" \
+&& ret=0
+
+    case $state in
+    (tools)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-tools-command-$line[1]:"
+        case $line[1] in
+            (install)
+_arguments "${_arguments_options[@]}" \
+'--git=[Install the given package from this git repository]:GIT: ' \
+'(--git --path)--url=[Install the given package from this URL]:URL: ' \
+'(--git --url)--path=[Install the given package from this local path]:PATH:_files' \
+'--tag=[Install a specific tag]:TAG: ' \
+'(--tag --branch)--rev=[Update to a specific git rev]:REV: ' \
+'(--tag --rev)--branch=[Update to a specific git branch]:BRANCH: ' \
+'*--features=[Adds a dependency with a specific feature]:FEATURES: ' \
+'*--include-dep=[Include scripts from a given dependency]:INCLUDE_DEP: ' \
+'-p+[Optionally the Python version to use]:PYTHON: ' \
+'--python=[Optionally the Python version to use]:PYTHON: ' \
+'--absolute[Force non interpolated absolute paths]' \
+'-f[Force install the package even if it'\''s already there]' \
+'--force[Force install the package even if it'\''s already there]' \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':requirement -- The name of the package to install:' \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':name -- The package to uninstall:' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+'-i[Also how all the scripts installed by the tools]' \
+'--include-scripts[Also how all the scripts installed by the tools]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_rye__tools__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-tools-help-command-$line[1]:"
+        case $line[1] in
+            (install)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(self)
+_arguments "${_arguments_options[@]}" \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_rye__self_commands" \
+"*::: :->self" \
+&& ret=0
+
+    case $state in
+    (self)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-self-command-$line[1]:"
+        case $line[1] in
+            (completion)
+_arguments "${_arguments_options[@]}" \
+'-s+[The shell to generate a completion script for (defaults to '\''bash'\'')]:SHELL:(bash elvish fish powershell zsh)' \
+'--shell=[The shell to generate a completion script for (defaults to '\''bash'\'')]:SHELL:(bash elvish fish powershell zsh)' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" \
+'--version=[Update to a specific version]:VERSION: ' \
+'--tag=[Update to a specific tag]:TAG: ' \
+'(--tag)--rev=[Update to a specific git rev]:REV: ' \
+'--force[Force reinstallation]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(install)
+_arguments "${_arguments_options[@]}" \
+'-y[Skip prompts]' \
+'--yes[Skip prompts]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" \
+'-y[Skip safety check]' \
+'--yes[Skip safety check]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_rye__self__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-self-help-command-$line[1]:"
+        case $line[1] in
+            (completion)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(install)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" \
+'-v[Enables verbose diagnostics]' \
+'--verbose[Enables verbose diagnostics]' \
+'(-v --verbose)-q[Turns off all output]' \
+'(-v --verbose)--quiet[Turns off all output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':name -- The package to uninstall:' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_rye__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-help-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(build)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(fetch)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(init)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(install)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(lock)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(make-req)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(pin)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(publish)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(shell)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(show)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(toolchain)
+_arguments "${_arguments_options[@]}" \
+":: :_rye__help__toolchain_commands" \
+"*::: :->toolchain" \
+&& ret=0
+
+    case $state in
+    (toolchain)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-help-toolchain-command-$line[1]:"
+        case $line[1] in
+            (fetch)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(register)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(tools)
+_arguments "${_arguments_options[@]}" \
+":: :_rye__help__tools_commands" \
+"*::: :->tools" \
+&& ret=0
+
+    case $state in
+    (tools)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-help-tools-command-$line[1]:"
+        case $line[1] in
+            (install)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(self)
+_arguments "${_arguments_options[@]}" \
+":: :_rye__help__self_commands" \
+"*::: :->self" \
+&& ret=0
+
+    case $state in
+    (self)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rye-help-self-command-$line[1]:"
+        case $line[1] in
+            (completion)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(install)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_rye_commands] )) ||
+_rye_commands() {
+    local commands; commands=(
+'add:Adds a Python package to this project' \
+'build:Builds a package for distribution' \
+'fetch:Fetches a Python interpreter for the local machine' \
+'init:Creates a new python project' \
+'install:Installs a package as global tool' \
+'lock:Updates the lockfiles without installing dependencies' \
+'make-req:Builds and prints a PEP 508 requirement string from parts' \
+'pin:Pins a Python version to this project' \
+'publish:Publish packages to a package repository' \
+'remove:Removes a package from this project' \
+'run:Runs a command installed into this package' \
+'shell:Spawns a shell with the virtualenv activated' \
+'show:Prints the current state of the project' \
+'sync:Updates the virtualenv based on the pyproject.toml' \
+'toolchain:Helper utility to manage Python toolchains' \
+'tools:Helper utility to manage global tools' \
+'self:Rye self management' \
+'uninstall:Uninstalls a global tool' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rye commands' commands "$@"
+}
+(( $+functions[_rye__add_commands] )) ||
+_rye__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye add commands' commands "$@"
+}
+(( $+functions[_rye__help__add_commands] )) ||
+_rye__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help add commands' commands "$@"
+}
+(( $+functions[_rye__build_commands] )) ||
+_rye__build_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye build commands' commands "$@"
+}
+(( $+functions[_rye__help__build_commands] )) ||
+_rye__help__build_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help build commands' commands "$@"
+}
+(( $+functions[_rye__help__self__completion_commands] )) ||
+_rye__help__self__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help self completion commands' commands "$@"
+}
+(( $+functions[_rye__self__completion_commands] )) ||
+_rye__self__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self completion commands' commands "$@"
+}
+(( $+functions[_rye__self__help__completion_commands] )) ||
+_rye__self__help__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self help completion commands' commands "$@"
+}
+(( $+functions[_rye__fetch_commands] )) ||
+_rye__fetch_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye fetch commands' commands "$@"
+}
+(( $+functions[_rye__help__fetch_commands] )) ||
+_rye__help__fetch_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help fetch commands' commands "$@"
+}
+(( $+functions[_rye__help__toolchain__fetch_commands] )) ||
+_rye__help__toolchain__fetch_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help toolchain fetch commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__fetch_commands] )) ||
+_rye__toolchain__fetch_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain fetch commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__help__fetch_commands] )) ||
+_rye__toolchain__help__fetch_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain help fetch commands' commands "$@"
+}
+(( $+functions[_rye__help_commands] )) ||
+_rye__help_commands() {
+    local commands; commands=(
+'add:Adds a Python package to this project' \
+'build:Builds a package for distribution' \
+'fetch:Fetches a Python interpreter for the local machine' \
+'init:Creates a new python project' \
+'install:Installs a package as global tool' \
+'lock:Updates the lockfiles without installing dependencies' \
+'make-req:Builds and prints a PEP 508 requirement string from parts' \
+'pin:Pins a Python version to this project' \
+'publish:Publish packages to a package repository' \
+'remove:Removes a package from this project' \
+'run:Runs a command installed into this package' \
+'shell:Spawns a shell with the virtualenv activated' \
+'show:Prints the current state of the project' \
+'sync:Updates the virtualenv based on the pyproject.toml' \
+'toolchain:Helper utility to manage Python toolchains' \
+'tools:Helper utility to manage global tools' \
+'self:Rye self management' \
+'uninstall:Uninstalls a global tool' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rye help commands' commands "$@"
+}
+(( $+functions[_rye__help__help_commands] )) ||
+_rye__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help help commands' commands "$@"
+}
+(( $+functions[_rye__self__help_commands] )) ||
+_rye__self__help_commands() {
+    local commands; commands=(
+'completion:Generates a completion script for a shell' \
+'update:Performs an update of rye' \
+'install:Triggers the initial installation of Rye' \
+'uninstall:Uninstalls rye again' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rye self help commands' commands "$@"
+}
+(( $+functions[_rye__self__help__help_commands] )) ||
+_rye__self__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self help help commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__help_commands] )) ||
+_rye__toolchain__help_commands() {
+    local commands; commands=(
+'fetch:Fetches a Python interpreter for the local machine' \
+'list:List all registered toolchains' \
+'register:Register a Python binary' \
+'remove:Removes a toolchain' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rye toolchain help commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__help__help_commands] )) ||
+_rye__toolchain__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain help help commands' commands "$@"
+}
+(( $+functions[_rye__tools__help_commands] )) ||
+_rye__tools__help_commands() {
+    local commands; commands=(
+'install:Installs a package as global tool' \
+'uninstall:Uninstalls a global tool' \
+'list:List all registered tools' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rye tools help commands' commands "$@"
+}
+(( $+functions[_rye__tools__help__help_commands] )) ||
+_rye__tools__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye tools help help commands' commands "$@"
+}
+(( $+functions[_rye__help__init_commands] )) ||
+_rye__help__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help init commands' commands "$@"
+}
+(( $+functions[_rye__init_commands] )) ||
+_rye__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye init commands' commands "$@"
+}
+(( $+functions[_rye__help__install_commands] )) ||
+_rye__help__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help install commands' commands "$@"
+}
+(( $+functions[_rye__help__self__install_commands] )) ||
+_rye__help__self__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help self install commands' commands "$@"
+}
+(( $+functions[_rye__help__tools__install_commands] )) ||
+_rye__help__tools__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help tools install commands' commands "$@"
+}
+(( $+functions[_rye__install_commands] )) ||
+_rye__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye install commands' commands "$@"
+}
+(( $+functions[_rye__self__help__install_commands] )) ||
+_rye__self__help__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self help install commands' commands "$@"
+}
+(( $+functions[_rye__self__install_commands] )) ||
+_rye__self__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self install commands' commands "$@"
+}
+(( $+functions[_rye__tools__help__install_commands] )) ||
+_rye__tools__help__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye tools help install commands' commands "$@"
+}
+(( $+functions[_rye__tools__install_commands] )) ||
+_rye__tools__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye tools install commands' commands "$@"
+}
+(( $+functions[_rye__help__toolchain__list_commands] )) ||
+_rye__help__toolchain__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help toolchain list commands' commands "$@"
+}
+(( $+functions[_rye__help__tools__list_commands] )) ||
+_rye__help__tools__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help tools list commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__help__list_commands] )) ||
+_rye__toolchain__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain help list commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__list_commands] )) ||
+_rye__toolchain__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain list commands' commands "$@"
+}
+(( $+functions[_rye__tools__help__list_commands] )) ||
+_rye__tools__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye tools help list commands' commands "$@"
+}
+(( $+functions[_rye__tools__list_commands] )) ||
+_rye__tools__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye tools list commands' commands "$@"
+}
+(( $+functions[_rye__help__lock_commands] )) ||
+_rye__help__lock_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help lock commands' commands "$@"
+}
+(( $+functions[_rye__lock_commands] )) ||
+_rye__lock_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye lock commands' commands "$@"
+}
+(( $+functions[_rye__help__make-req_commands] )) ||
+_rye__help__make-req_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help make-req commands' commands "$@"
+}
+(( $+functions[_rye__make-req_commands] )) ||
+_rye__make-req_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye make-req commands' commands "$@"
+}
+(( $+functions[_rye__help__pin_commands] )) ||
+_rye__help__pin_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help pin commands' commands "$@"
+}
+(( $+functions[_rye__pin_commands] )) ||
+_rye__pin_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye pin commands' commands "$@"
+}
+(( $+functions[_rye__help__publish_commands] )) ||
+_rye__help__publish_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help publish commands' commands "$@"
+}
+(( $+functions[_rye__publish_commands] )) ||
+_rye__publish_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye publish commands' commands "$@"
+}
+(( $+functions[_rye__help__toolchain__register_commands] )) ||
+_rye__help__toolchain__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help toolchain register commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__help__register_commands] )) ||
+_rye__toolchain__help__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain help register commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__register_commands] )) ||
+_rye__toolchain__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain register commands' commands "$@"
+}
+(( $+functions[_rye__help__remove_commands] )) ||
+_rye__help__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help remove commands' commands "$@"
+}
+(( $+functions[_rye__help__toolchain__remove_commands] )) ||
+_rye__help__toolchain__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help toolchain remove commands' commands "$@"
+}
+(( $+functions[_rye__remove_commands] )) ||
+_rye__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye remove commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__help__remove_commands] )) ||
+_rye__toolchain__help__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain help remove commands' commands "$@"
+}
+(( $+functions[_rye__toolchain__remove_commands] )) ||
+_rye__toolchain__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye toolchain remove commands' commands "$@"
+}
+(( $+functions[_rye__help__run_commands] )) ||
+_rye__help__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help run commands' commands "$@"
+}
+(( $+functions[_rye__run_commands] )) ||
+_rye__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye run commands' commands "$@"
+}
+(( $+functions[_rye__help__self_commands] )) ||
+_rye__help__self_commands() {
+    local commands; commands=(
+'completion:Generates a completion script for a shell' \
+'update:Performs an update of rye' \
+'install:Triggers the initial installation of Rye' \
+'uninstall:Uninstalls rye again' \
+    )
+    _describe -t commands 'rye help self commands' commands "$@"
+}
+(( $+functions[_rye__self_commands] )) ||
+_rye__self_commands() {
+    local commands; commands=(
+'completion:Generates a completion script for a shell' \
+'update:Performs an update of rye' \
+'install:Triggers the initial installation of Rye' \
+'uninstall:Uninstalls rye again' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rye self commands' commands "$@"
+}
+(( $+functions[_rye__help__shell_commands] )) ||
+_rye__help__shell_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help shell commands' commands "$@"
+}
+(( $+functions[_rye__shell_commands] )) ||
+_rye__shell_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye shell commands' commands "$@"
+}
+(( $+functions[_rye__help__show_commands] )) ||
+_rye__help__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help show commands' commands "$@"
+}
+(( $+functions[_rye__show_commands] )) ||
+_rye__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye show commands' commands "$@"
+}
+(( $+functions[_rye__help__sync_commands] )) ||
+_rye__help__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help sync commands' commands "$@"
+}
+(( $+functions[_rye__sync_commands] )) ||
+_rye__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye sync commands' commands "$@"
+}
+(( $+functions[_rye__help__toolchain_commands] )) ||
+_rye__help__toolchain_commands() {
+    local commands; commands=(
+'fetch:Fetches a Python interpreter for the local machine' \
+'list:List all registered toolchains' \
+'register:Register a Python binary' \
+'remove:Removes a toolchain' \
+    )
+    _describe -t commands 'rye help toolchain commands' commands "$@"
+}
+(( $+functions[_rye__toolchain_commands] )) ||
+_rye__toolchain_commands() {
+    local commands; commands=(
+'fetch:Fetches a Python interpreter for the local machine' \
+'list:List all registered toolchains' \
+'register:Register a Python binary' \
+'remove:Removes a toolchain' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rye toolchain commands' commands "$@"
+}
+(( $+functions[_rye__help__tools_commands] )) ||
+_rye__help__tools_commands() {
+    local commands; commands=(
+'install:Installs a package as global tool' \
+'uninstall:Uninstalls a global tool' \
+'list:List all registered tools' \
+    )
+    _describe -t commands 'rye help tools commands' commands "$@"
+}
+(( $+functions[_rye__tools_commands] )) ||
+_rye__tools_commands() {
+    local commands; commands=(
+'install:Installs a package as global tool' \
+'uninstall:Uninstalls a global tool' \
+'list:List all registered tools' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rye tools commands' commands "$@"
+}
+(( $+functions[_rye__help__self__uninstall_commands] )) ||
+_rye__help__self__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help self uninstall commands' commands "$@"
+}
+(( $+functions[_rye__help__tools__uninstall_commands] )) ||
+_rye__help__tools__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help tools uninstall commands' commands "$@"
+}
+(( $+functions[_rye__help__uninstall_commands] )) ||
+_rye__help__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help uninstall commands' commands "$@"
+}
+(( $+functions[_rye__self__help__uninstall_commands] )) ||
+_rye__self__help__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self help uninstall commands' commands "$@"
+}
+(( $+functions[_rye__self__uninstall_commands] )) ||
+_rye__self__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self uninstall commands' commands "$@"
+}
+(( $+functions[_rye__tools__help__uninstall_commands] )) ||
+_rye__tools__help__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye tools help uninstall commands' commands "$@"
+}
+(( $+functions[_rye__tools__uninstall_commands] )) ||
+_rye__tools__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye tools uninstall commands' commands "$@"
+}
+(( $+functions[_rye__uninstall_commands] )) ||
+_rye__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye uninstall commands' commands "$@"
+}
+(( $+functions[_rye__help__self__update_commands] )) ||
+_rye__help__self__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye help self update commands' commands "$@"
+}
+(( $+functions[_rye__self__help__update_commands] )) ||
+_rye__self__help__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self help update commands' commands "$@"
+}
+(( $+functions[_rye__self__update_commands] )) ||
+_rye__self__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'rye self update commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_rye" ]; then
+    _rye "$@"
+else
+    compdef _rye rye
+fi

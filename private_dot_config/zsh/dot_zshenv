@@ -337,6 +337,11 @@ export JUPYTER_DATA_DIR="${XDG_DATA_HOME}/jupyter"
 # )
 
 ##
+## Rye
+##
+path=( ${HOME}/.rye/shims(N-/) $path[@] )
+
+##
 ## npm
 ##
 # export NPM_CONFIG_USERCONFIG=${XDG_CONFIG_HOME}/npm/npmrc
