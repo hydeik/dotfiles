@@ -402,6 +402,12 @@ if (( ${+commands[rustc]} )); then
 fi
 
 ##
+## rtx -- Runtime Executor (asdf rust clone)
+##
+# NOTE: just add PATH here. Activation is done via zim-rtx.
+path=( ${XDG_DATA_HOME}/rtx/bin(N-/)  $path[@] )
+
+##
 ## Intel OneAPI -- source on request
 ##
 # if [[ -f /opt/intel/oneapi/setvars.sh ]]; then

@@ -1,10 +1,15 @@
 ##=============================================================================
-## Modules from @zimfw organization
+## Modules from @zimfw organization and community
 ##=============================================================================
+#
+# Set up rtx (runtime executor, asdf rust clone)
+#
+# TIP:  Add this module as early as possible to the .zimrc file. 
+#       This allows other plugins to detect apps installed by rtx. 
+#
+zmodule joke/zim-rtx
 # Provides archive and unarchive functions for easy archive manipulation.
 zmodule archive
-# Sets up asdf, with auto install and optimized usage of the direnv plugin.
-zmodule asdf
 # Adds aliases and better defaults for exa.
 zmodule exa
 # Configures fzf for faster fetching of files and directories names.
