@@ -21,29 +21,29 @@ local M = {
       config = true,
     },
     -- A simple popup display that provides breadcrumbs feature using LSP server
-    {
-      "SmiteshP/nvim-navbuddy",
-      name = "nvim-navbuddy",
-      dependencies = {
-        "SmiteshP/nvim-navic",
-        "MunifTanjim/nui.nvim",
-        "numToStr/Comment.nvim", -- Optional
-        "nvim-telescope/telescope.nvim", -- Optional
-      },
-      cmd = { "Navbuddy" },
-      keys = {
-        { "<Space>sv", "<cmd>Navbuddy<CR>", desc = "Navbuddy" },
-      },
-      opts = {
-        icons = require("rc.core.config").icons.kinds,
-        lsp = {
-          auto_attach = true,
-        },
-      },
-      config = function(_, opts)
-        require("nvim-navbuddy").setup(opts)
-      end,
-    },
+    -- {
+    --   "SmiteshP/nvim-navbuddy",
+    --   name = "nvim-navbuddy",
+    --   dependencies = {
+    --     "SmiteshP/nvim-navic",
+    --     "MunifTanjim/nui.nvim",
+    --     "numToStr/Comment.nvim", -- Optional
+    --     "nvim-telescope/telescope.nvim", -- Optional
+    --   },
+    --   cmd = { "Navbuddy" },
+    --   keys = {
+    --     { "<Space>sv", "<cmd>Navbuddy<CR>", desc = "Navbuddy" },
+    --   },
+    --   opts = {
+    --     icons = require("rc.core.config").icons.kinds,
+    --     lsp = {
+    --       auto_attach = true,
+    --     },
+    --   },
+    --   config = function(_, opts)
+    --     require("nvim-navbuddy").setup(opts)
+    --   end,
+    -- },
   },
   ---@class PluginLspOpts
   opts = {

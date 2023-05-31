@@ -4,6 +4,7 @@ return {
   opts = {
     disabled_filetypes = {
       "hydra_hint",
+      "dropbar_menu",
     },
   },
 }
