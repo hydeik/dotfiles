@@ -115,9 +115,9 @@ local M = {
 
 M.project_files = function(opts)
   -- local path = require "rc.core.path"
-  local cwd = opts.cwd or vim.loop.cwd()
+  local cwd = opts.cwd or vim.uv.cwd()
   local builtin = nil
-  if vim.loop.fs_stat(cwd .. "/.git") then
+  if vim.uv.fs_stat(cwd .. "/.git") then
     opts.show_untracked = true
     builtin = "git_files"
   else

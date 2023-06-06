@@ -1,6 +1,6 @@
 local M = {}
 
-local uname = vim.loop.os_uname()
+local uname = vim.uv.os_uname()
 
 local arch_aliases = {
   ["x86_64"] = "x64",
