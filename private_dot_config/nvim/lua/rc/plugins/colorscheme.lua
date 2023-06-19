@@ -4,13 +4,17 @@ return {
   -- kanagawa
   {
     "rebelot/kanagawa.nvim",
-    lazy = false,
-    priority = 1000,
+    build = ":KanagawaCompile",
     opts = {
+      compile = true,
       dimInactive = true,
       globalStatus = true,
       transparent = transparent,
-      theme = "default",
+      theme = "wave",
+      background = {
+        dark = "dragon",
+        light = "lotus",
+      },
       overrides = function(colors)
         local theme = colors.theme
         return transparent
