@@ -1,6 +1,6 @@
 local M = {}
 
-Mrot_patterns = { ".git", "lua" }
+M.root_patterns = { ".git", "lua" }
 
 ---@param plugin string
 function M.has_plugin(plugin)
