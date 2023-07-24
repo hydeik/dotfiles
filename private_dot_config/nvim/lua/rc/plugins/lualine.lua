@@ -7,7 +7,49 @@ local M = {
 M.opts = function()
   local icons = require("rc.core.config").icons
   local util = require "lualine.utils.utils"
-  local lualine = require "lualine.themes.auto"
+
+  local sep = {
+    left = "\u{E0B6}", -- 
+    right = "\u{E0B4}", -- 
+  }
+
+  local colors = {
+    -- forground colors
+    fg = util.extract_highlight_colors("StatusLine", "fg"),
+    fg_dim = util.extract_highlight_colors("StatusLineNC", "fg"),
+    fg_bright = util.extract_highlight_colors("Flolded", "fg"),
+    -- background colors
+    bg = util.extract_highlight_colors("StatusLine", "bg"),
+    bg_bright = util.extract_highlight_colors("Folded", "bg"),
+    -- terminal colors
+    black = vim.g.terminal_color_0,
+    red = vim.g.terminal_color_1,
+    green = vim.g.terminal_color_2,
+    yellow = vim.g.terminal_color_3,
+    blue = vim.g.terminal_color_4,
+    magenta = vim.g.terminal_color_5,
+    cyan = vim.g.terminal_color_6,
+    white = vim.g.terminal_color_7,
+    black_bright = vim.g.terminal_color_8,
+    red_bright = vim.g.terminal_color_9,
+    green_bright = vim.g.terminal_color_10,
+    yellow_bright = vim.g.terminal_color_11,
+    blue_bright = vim.g.terminal_color_12,
+    magenta_bright = vim.g.terminal_color_13,
+    cyan_bright = vim.g.terminal_color_14,
+    white_bright = vim.g.terminal_color_15,
+    -- diagnostics
+    diag_error = util.extract_highlight_colors("DiagnosticError", "fg"),
+    diag_warn = util.extract_highlight_colors("DiagnosticWarn", "fg"),
+    diag_info = util.extract_highlight_colors("DiagnosticInfo", "fg"),
+    diag_hint = util.extract_highlight_colors("DiagnosticHint", "fg"),
+    diag_ok = util.extract_highlight_colors("DiagnosticOk", "fg"),
+    -- diff
+    diff_add = util.extract_highlight_colors("diffAdded", "fg"),
+    diff_delete = util.extract_highlight_colors("diffDeleted", "fg"),
+    diff_change = util.extract_highlight_colors("diffChanged", "fg"),
+  }
+
   --
   -- local mode_highlight = function()
   --   local mode = vim.api.nvim_get_mode()["mode"]:sub(1, 1)
@@ -31,16 +73,15 @@ M.opts = function()
   --
   local statusline = {
     lualine_a = {
-      {
-        function()
-          return icons.status.vimode
-        end,
-        separator = { left = "" },
-        right_padding = 1,
-      },
+      { "mode", separator = { right = sep.right }, icon = { icons.status.vimode } },
     },
     lualine_b = {
-      { "mode", separator = { right = "" }, left_padding = 1 },
+      {
+        " ",
+        icon = { "█" },
+        separator = { right = sep.right },
+        color = { fg = colors.bg_bright, bg = colors.bg_bright },
+      },
     },
     lualine_c = {},
     lualine_x = {},
@@ -56,26 +97,78 @@ M.opts = function()
     table.insert(statusline.lualine_x, component)
   end
 
-  ins_left {
-    " ",
-    component_separator = "",
-  }
+  -- ins_left {
+  --   function()
+  --     return "▊"
+  --   end,
+  --   color = { fg = colors.fg },
+  --   padding = { right = 1 },
+  -- }
+  -- filetype icon + filename
   ins_left {
     "filetype",
-    separator = { left = "" },
-    component_separator = { left = "" },
-    colored = false,
     icon_only = true,
-    color = {
-      fg = lualine.insert.bg,
-      bg = util.extract_highlight_colors("DiagnosticError", "fg"),
-      gui = "bold",
+  }
+  ins_left {
+    "filename",
+  }
+  -- git
+  ins_left {
+    "branch",
+    icon = {
+      icons.status.git,
+    },
+    color = { fg = colors.fg_dim, bg = colors.bg },
+  }
+  ins_left {
+    "diff",
+    symbols = icons.git,
+    color = { fg = colors.fg_dim, bg = colors.bg },
+  }
+
+  -- Diagnostics
+  ins_right {
+    "diagnostics",
+    symbols = {
+      error = icons.diagnostics.Error,
+      warn = icons.diagnostics.Warn,
+      info = icons.diagnostics.Info,
+      hint = icons.diagnostics.Hint,
     },
   }
 
-  ins_left {
-    "filename",
-    component_separator = { right = "" },
+  -- LSP clients
+  ins_right {
+    -- LSP server name
+    function()
+      local names = {}
+      for _, client in ipairs(vim.lsp.get_active_clients { bufnr = 0 }) do
+        table.insert(names, client.name)
+      end
+      return icons.status.lsp .. " " .. table.concat(names, ",")
+    end,
+    cond = function()
+      return next(vim.lsp.get_active_clients()) ~= nil
+    end,
+    color = { fg = colors.cyan, bg = colors.bg },
+  }
+
+  -- cwd
+  ins_right {
+    function()
+      return vim.fn.fnamemodify(vim.uv.cwd(), ":t")
+    end,
+    color = { fg = colors.red_bright, bg = colors.bg_bright },
+    icon = { icons.status.folder, color = { fg = colors.bg, bg = colors.red_bright } },
+    separator = { left = sep.left, right = "" },
+  }
+
+  -- line/column numbers
+  ins_right {
+    "%l/%c",
+    color = { fg = colors.green_bright, bg = colors.bg_bright },
+    icon = { "\u{E714} ", color = { fg = colors.bg, bg = colors.green_bright } },
+    separator = { left = sep.left, right = "" },
   }
 
   --

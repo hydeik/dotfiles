@@ -2,6 +2,7 @@
 return {
   "luukvbaal/statuscol.nvim",
   event = "VeryLazy",
+  enabled = false,
   opts = {
     relculright = true,
   },

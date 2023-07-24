@@ -10,9 +10,6 @@ local M = {
     -- for setting
     {
       "hrsh7th/cmp-nvim-lsp",
-      cond = function()
-        return require("rc.util").has_plugin "nvim-cmp"
-      end,
     },
     -- better renaem
     {

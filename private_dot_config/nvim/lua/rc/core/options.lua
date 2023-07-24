@@ -57,7 +57,7 @@ opt.shada = { "'200", "<50", "@100", "s10", "h" }
 -- prefer english help
 opt.helplang = { "en", "ja" }
 -- The words list file where words are added by `zw` and `zg` command
-opt.spellfile = vim.fs.joinpath(vim.fn.stdpath("data"), "spell", "en.utf-8.add")
+opt.spellfile = vim.fs.joinpath(vim.fn.stdpath "data", "spell", "en.utf-8.add")
 -- spell check (ignore on check on Asian characters (China, Japan, Korea))
 opt.spelllang = { "en_us", "cjk" }
 -- opt.spell = false
@@ -171,12 +171,13 @@ opt.diffopt = { "filler", "iwhite", "internal", "algorithm:histogram", "indent-h
 
 -- Editor UI Appearances {{{2
 opt.title = true -- Display title on the window (e.g. terminal)
-opt.number = false -- Don't show line numbers
+opt.number = true -- Show line numbers
+opt.relativenumber = true -- Show relative line numbers
 opt.ruler = false -- Disable default status ruler
 opt.list = true -- Show hidden characters
 opt.showmode = false -- Don't display mode in cmd window
 opt.showcmd = false -- Don't show command in status line
-opt.showtabline = 2 -- Always show tabline
+opt.showtabline = 1 -- Show tabline only if there are at least two tabs
 opt.signcolumn = "yes" -- Always draw sign column
 opt.cursorline = true -- Highlight current line
 
@@ -186,7 +187,7 @@ opt.winwidth = 10 -- Minimum width for active window
 opt.winminwidth = 10 -- Minimum width for inactive windows
 opt.pumheight = 15 -- Pop-up menu's line height
 opt.helpheight = 12 -- Minimum help window height
-opt.cmdheight = 2 -- Height of the command line
+opt.cmdheight = 0 -- Height of the command line
 opt.cmdwinheight = 5 -- Command-line lines
 
 opt.equalalways = false -- Don't resize windows on split or close

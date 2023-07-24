@@ -1,6 +1,7 @@
 -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
 return {
   "akinsho/bufferline.nvim",
+  enabled = false,
   event = "VeryLazy",
   keys = {
     { "<S-h>", "<cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },

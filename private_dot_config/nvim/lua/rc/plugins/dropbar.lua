@@ -1,6 +1,7 @@
 return {
   -- IDE-like breadcrumbs, out of the box
   "Bekaboo/dropbar.nvim",
+  enabled = false,
   lazy = false,
   keys = {
     {

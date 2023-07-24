@@ -36,6 +36,7 @@ M.icons = {
     Ok = " ", -- U+EAB2
   },
   git = {
+    branch = " ", -- U+F062C
     added = " ", -- U+EADC
     modified = " ", -- U+EADE
     removed = " ", -- U+EADF
@@ -43,12 +44,13 @@ M.icons = {
   status = {
     line_number = "",
     column_number = "",
-    folder = "",
+    folder = " ",
     root_folder = "",
     git = "",
     branch = "",
     vimode = "",
-    lsp = "",
+    -- lsp = "",
+    lsp = "",
     dap = "",
     treesitter = "",
   },
