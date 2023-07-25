@@ -64,6 +64,12 @@ M.setup_colors = function()
     git_add = utils.get_highlight("diffAdded").fg,
     git_delete = utils.get_highlight("diffDeleted").fg,
     git_change = utils.get_highlight("diffChanged").fg,
+    -- lsp clients
+    lsp = utils.get_highlight("String").fg,
+    -- cwd
+    cwd = utils.get_highlight("Number").fg,
+    -- ruler
+    ruler = utils.get_highlight("Identifier").fg,
   }
 end
 

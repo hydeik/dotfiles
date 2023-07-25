@@ -117,7 +117,7 @@ local FileIcon = {
   provider = function(self)
     return self.icon and (self.icon .. " ")
   end,
-  hl = { fg = "bg", bg = "red_bright" },
+  hl = { fg = "bg", bg = "red" },
 }
 
 local FileName = {
@@ -128,7 +128,7 @@ local FileName = {
     end
     return string.format(" %s ", filename)
   end,
-  hl = { fg = "red_bright", bg = "bg_bright" },
+  hl = { fg = "red", bg = "bg_bright" },
 }
 
 local FileFlags = {
@@ -152,7 +152,7 @@ local FileNameModifer = {
   hl = function()
     if vim.bo.modified then
       -- use `force` because we need to override the child's hl foreground
-      return { fg = "red_bright", bg = "bg_bright", bold = true, force = true }
+      return { fg = "red", bg = "bg_bright", bold = true, force = true }
     end
   end,
 }
@@ -162,7 +162,7 @@ FileNameBlock = utils.insert(
   FileNameBlock,
   {
     provider = "",
-    hl = { fg = "red_bright" },
+    hl = { fg = "red" },
   },
   FileIcon,
   utils.insert(FileNameModifer, FileName), -- a new table where FileName is a child of FileNameModifier
@@ -202,7 +202,8 @@ local Git = {
   {
     provider = function(self)
       local count = self.status_dict.added or 0
-      return count > 0 and (self.add_icon .. count) end,
+      return count > 0 and (self.add_icon .. count)
+    end,
     hl = { fg = "git_add" },
   },
   {
@@ -274,11 +275,11 @@ local LSPActive = {
   update = { "LspAttach", "LspDetach" },
   {
     provider = "",
-    hl = { fg = "green_bright" },
+    hl = { fg = "lsp" },
   },
   {
     provider = require("rc.core.config").icons.status.lsp .. " ",
-    hl = { fg = "bg", bg = "green_bright" },
+    hl = { fg = "bg", bg = "lsp" },
   },
   {
     provider = function(self)
@@ -290,7 +291,7 @@ local LSPActive = {
         :totable()
       return " " .. table.concat(names, " ")
     end,
-    hl = { fg = "green_bright", bg = "bg_bright" },
+    hl = { fg = "lsp", bg = "bg_bright" },
   },
   {
     provider = "",
@@ -305,18 +306,18 @@ local WorkDirIcon = {
     local icon = vim.fn.haslocaldir(0) == 1 and icons.folder or icons.root_folder
     return icon .. " "
   end,
-  hl = { fg = "bg", bg = "red" },
+  hl = { fg = "bg", bg = "cwd" },
 }
 
 local WorkDirBasename = {
   provider = function()
     return string.format(" %s", vim.fs.basename(vim.uv.cwd()))
   end,
-  hl = { fg = "red", bg = "bg_bright" },
+  hl = { fg = "cwd", bg = "bg_bright" },
 }
 
 local Cwd = {
-  { provider = "", hl = { fg = "red" } },
+  { provider = "", hl = { fg = "cwd" } },
   WorkDirIcon,
   WorkDirBasename,
   { provider = "", hl = { fg = "bg_bright" } },
@@ -326,15 +327,15 @@ local Cwd = {
 local Ruler = {
   {
     provider = "",
-    hl = { fg = "yellow", bg = "bg" },
+    hl = { fg = "ruler", bg = "bg" },
   },
   {
     provider = " ",
-    hl = { fg = "bg", bg = "yellow" },
+    hl = { fg = "bg", bg = "ruler" },
   },
   {
     provider = " %l/%c",
-    hl = { fg = "yellow", bg = "bg_bright" },
+    hl = { fg = "ruler", bg = "bg_bright" },
   },
   {
     provider = "",
