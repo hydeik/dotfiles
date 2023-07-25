@@ -1,6 +1,7 @@
 -- Neovim plugin to manage the file system and other tree like structures.
 local M = {
   "nvim-neo-tree/neo-tree.nvim",
+  enabled = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
