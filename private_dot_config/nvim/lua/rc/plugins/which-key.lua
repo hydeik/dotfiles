@@ -7,7 +7,7 @@ return {
     defaults = {
       mode = { "n", "v" },
       -- ["g"] = { name = "+goto" },
-      -- ["gz"] = { name = "+surround" },
+      ["gs"] = { name = "+surround" },
       ["]"] = { name = "+next" },
       ["["] = { name = "+prev" },
       ["<Space><tab>"] = { name = "+tabs" },
@@ -20,6 +20,7 @@ return {
       ["<Space>h"] = { name = "+hunks" },
       ["<Space>q"] = { name = "+quit/session" },
       ["<Space>s"] = { name = "+search" },
+      ["<Space>t"] = { name = "+terminal" },
       ["<Space>u"] = { name = "+ui" },
       ["<Space>w"] = { name = "+windows" },
       ["<Space>x"] = { name = "+diagnostics/quickfix" },

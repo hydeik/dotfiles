@@ -175,6 +175,61 @@ FileNameBlock = utils.insert(
   { provider = "%<" } -- this means that the statusline is cut here when there's not enough space
 )
 
+-- Special file names
+local TerminalName = {
+  -- icon = ' ', -- 
+  {
+    provider = "",
+    hl = { fg = "magenta_bright" },
+  },
+  {
+    provider = function()
+      local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
+      return " " .. tname .. " "
+    end,
+    hl = { fg = "bg", bg = "magenta_bright", bold = true },
+  },
+  {
+    provider = function()
+      return string.format(" %s ", vim.b.term_title)
+    end,
+    hl = { fg = "fg_bright", bg = "bg_bright" },
+  },
+  {
+    provider = function()
+      local id = require("terminal"):current_term_index()
+      return " " .. (id or "Exited")
+    end,
+    hl = { fg = "magenta_bright", bg = "bg_bright", bold = true },
+  },
+  {
+    provider = "",
+    hl = { fg = "bg_bright" },
+  },
+}
+
+local OilFileName = {
+  {
+    provider = "",
+    hl = { fg = "red" },
+  },
+  {
+    provider = "󰏇 ",
+    hl = { fg = "bg", bg = "red" },
+  },
+  {
+    provider = function()
+      local name, _ = vim.api.nvim_buf_get_name(0):gsub("oil://", "")
+      return " " .. name
+    end,
+    hl = { fg = "red", bg = "bg_bright", bold = true },
+  },
+  {
+    provider = "",
+    hl = { fg = "bg_bright" },
+  },
+}
+
 -- Git component
 local Git = {
   condition = conditions.is_git_repo,
@@ -343,7 +398,79 @@ local Ruler = {
   },
 }
 
-local StatusLine = {
+local TerminalStatusline = {
+  condition = function()
+    return conditions.buffer_matches {
+      buftype = { "terminal" },
+    }
+  end,
+  {
+    condition = conditions.is_active,
+    ViMode,
+    Space,
+  },
+  TerminalName,
+  Align,
+}
+
+local TelescopeStatusLine = {
+  condition = function()
+    return conditions.buffer_matches {
+      filetype = { "TelescopePrompt" },
+    }
+  end,
+  -- left
+  ViMode,
+  Space,
+  {
+    {
+      provider = "",
+      hl = { fg = "red", bg = "bg" },
+    },
+    {
+      provider = " ",
+      hl = { fg = "bg", bg = "red" },
+    },
+    {
+      provider = " Telescope ",
+      hl = { fg = "red", bg = "bg_bright" },
+    },
+    {
+      provider = "",
+      hl = { fg = "bg_bright", bg = "bg" },
+    },
+  },
+  Align,
+  -- middle
+  Align,
+  -- right
+  Cwd,
+  Space,
+  Ruler,
+}
+
+local OilStatusLine = {
+  condition = function()
+    return conditions.buffer_matches {
+      filetype = { "oil" },
+    }
+  end,
+  -- left
+  ViMode,
+  Space,
+  OilFileName,
+  Align,
+
+  -- middle
+  Align,
+
+  -- right
+  Cwd,
+  Space,
+  Ruler,
+}
+
+local DefaultStatusLine = {
   -- global setting
   hl = { fg = "fg", bg = "bg" },
   -- left
@@ -373,6 +500,14 @@ local StatusLine = {
   Cwd,
   Space,
   Ruler,
+}
+
+local StatusLine = {
+  fallthrough = false,
+  TerminalStatusline,
+  OilStatusLine,
+  TelescopeStatusLine,
+  DefaultStatusLine,
 }
 
 return StatusLine
