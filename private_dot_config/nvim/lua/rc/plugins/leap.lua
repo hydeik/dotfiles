@@ -3,6 +3,7 @@ return {
     -- Leap is a general-purpose motion plugin for Neovim, with the ultimate goal of establishing
     -- a new standard interface for moving around in the visible area in Vim-like modal editors.
     "ggandor/leap.nvim",
+    enabled = false,
     dependencies = {
       "tpope/vim-repeat",
       {
@@ -31,6 +32,7 @@ return {
   {
     -- Leap onto a specified search pattern.
     "atusy/leap-search.nvim",
+    enabled = false,
     dependencies = {
       "leap.nvim",
       "rapan931/lasterisk.nvim",
