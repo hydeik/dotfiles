@@ -4,6 +4,8 @@ return {
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "lewis6991/gitsigns.nvim",
+    "rebelot/terminal.nvim",
+    "SmiteshP/nvim-navic",
   },
   config = function(_, _)
     vim.opt.laststatus = 3
@@ -24,7 +26,7 @@ return {
           end
           return conditions.buffer_matches({
             buftype = { "nofile", "prompt", "help", "quickfix" },
-            filetype = { "^git.*", "fugitive", "Trouble", "dashboard" },
+            filetype = { "^git.*", "fugitive", "Trouble", "dashboard", "oil" },
           }, args.buf)
         end,
         colors = setup_colors,
