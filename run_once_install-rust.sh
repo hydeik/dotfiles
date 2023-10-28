@@ -74,7 +74,6 @@ CARGO_INSTALL_TARGET=(
   procs
   ripgrep
   rm-improved
-  skim
   tokei
   xcp
   ytop
