@@ -10,6 +10,18 @@ export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 export LSCOLORS=exfxcxdxbxegedabagacad
 # }}}
 
+## --- Editor
+# {{{
+if (( ${+commands[nvim]} )); then
+    export EDITOR="nvim"
+elif (( ${+commands[vim]} )); then
+    export EDITOR="vim"
+else
+    export EDITOR="vi"
+fi
+export VISUAL="${EDITOR}"
+# }}}
+
 ## --- Customize less
 # {{{
 

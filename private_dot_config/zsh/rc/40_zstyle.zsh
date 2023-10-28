@@ -28,11 +28,11 @@ zstyle ':zle:*' word-style unspecified
 # Speed up zsh compinit by only checking cache once a day.
 # This piece of code is taken from
 # https://gist.github.com/ctechols/ca1035271ad13484128
-if [[ -n ${ZDOTDIR:-${HOME}}/.zcompdump(#qN.mh+24) ]]; then
-    compinit;
-else
-    compinit -C;
-fi;
+# if [[ -n ${ZDOTDIR:-${HOME}}/.zcompdump(#qN.mh+24) ]]; then
+#     compinit;
+# else
+#     compinit -C;
+# fi;
 
 # Use caching to make completion for commands such as dpkg and apt usable.
 zstyle ':completion::complete:*' use-cache true

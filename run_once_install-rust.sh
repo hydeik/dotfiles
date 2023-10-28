@@ -57,11 +57,10 @@ CARGO_INSTALL_TARGET=(
   bingrep
   choose
   cpc
-  dotenv-linter
   du-dust
   evcxr_jupyter
   evcxr_repl
-  exa
+  eza
   fd-find
   find-files
   flamegraph
@@ -73,16 +72,13 @@ CARGO_INSTALL_TARGET=(
   jql
   lsd
   procs
-  pyflow
   ripgrep
   rm-improved
   skim
-  stylua
   tokei
   xcp
   ytop
   zellij
-  zoxide
 )
 
 # CARGO_INSTALL_TARGET_NIGHTLY=()

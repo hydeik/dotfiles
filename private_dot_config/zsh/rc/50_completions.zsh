@@ -1,6 +1,55 @@
 ##=====================================================================
 ## rc/50_completions.zsh -- Set up shell completions
 ##=====================================================================
+# rtx -- taken from https://github.com/joke/zim-rtx with modifications
+# (( ${+commands[rtx]} )) && () {
+# local command=${commands[rtx]}
+#
+#     # generating activation file
+#     local activatefile="${ZDOTDIR}/completions/rtx-activate.zsh"
+#     if [[ ! -e $activatefile || $activatefile -ot $command ]]; then
+#         $command activate zsh >| $activatefile
+#         zcompile -UR $activatefile
+#     fi
+#
+#     source $activatefile
+#     builtin source <($command hook-env -s zsh)
+#
+#     # generating completions
+#     local compfile="${ZDOTDIR}/completions/_rtx"
+#     if [[ ! -e $compfile || $compfile -ot $command ]]; then
+#         $command complete --shell zsh >| $compfile
+#         print -u2 -PR "* Detected a new version 'rtx'. Regenerated completions."
+#     fi
+# } ${0:h}
+
+ZSHCOMPLETIONS="${ZDOTDIR}/completions"
+if [[ ! -r "${ZSHCOMPLETIONS}/_deno" || "$( whence -p deno  )" -nt "${ZSHCOMPLETIONS}/_deno" ]]; then
+    deno completions zsh > "${ZSHCOMPLETIONS}/_deno"
+fi
+if [[ ! -r "${ZSHCOMPLETIONS}/_gh" || "$( whence -p gh  )" -nt "${ZSHCOMPLETIONS}/_gh" ]]; then
+    command gh completion -s zsh > "${ZSHCOMPLETIONS}/_gh"
+fi
+if [[ ! -r "${ZSHCOMPLETIONS}/_poetry" || "$( whence -p poetry  )" -nt "${ZSHCOMPLETIONS}/_poetry" ]]; then
+    poetry completions zsh > "${ZSHCOMPLETIONS}/_poetry"
+fi
+if [[ ! -r "${ZSHCOMPLETIONS}/_rtx" || "$( whence -p rtx  )" -nt "${ZSHCOMPLETIONS}/_rtx" ]]; then
+    rtx completion zsh > "${ZSHCOMPLETIONS}/_rtx"
+fi
+if [[ ! -r "${ZSHCOMPLETIONS}/_rustup" || "$( whence -p rustup  )" -nt "${ZSHCOMPLETIONS}/_rustup" ]]; then
+    rustup completions zsh > "${ZSHCOMPLETIONS}/_rustup"
+    rustup completions zsh cargo > "${ZSHCOMPLETIONS}/_cargo"
+fi
+unset ZSHCOMPLETIONS
+
+# Speed up zsh compinit by only checking cache once a day.
+# This piece of code is taken from
+# https://gist.github.com/ctechols/ca1035271ad13484128
+if [[ -n ${ZDOTDIR:-${HOME}}/.zcompdump(#qN.mh+24) ]]; then
+    compinit;
+else
+    compinit -C;
+fi;
 
 # Read Bash completion specification
 bashcompinit

@@ -82,8 +82,8 @@ limit coredumpsize 0
 ##============================================================================
 ## Environment variables
 ##============================================================================
-## HOST
-export HOST=$(uname -n)
+# ## HOST
+# export HOST=$(uname -n)
 
 ## UID
 export UID
@@ -101,19 +101,7 @@ export LC_CTYPE="${LANGUAGE}"
 ##
 export PAGER=less
 
-##
-## EDITOR
-##
-if (( ${+commands[nvim]} )); then
-    export EDITOR="nvim"
-elif (( ${+commands[vim]} )); then
-    export EDITOR="vim"
-else
-    export EDITOR="vi"
-fi
-export VISUAL="${EDITOR}"
-
-# available $INTERACTIVE_FILTER
+## available $INTERACTIVE_FILTER
 export INTERACTIVE_FILTER="fzf:fzf-tmux:peco:percol:gof:pick"
 
 ##
@@ -135,7 +123,7 @@ export XDG_LIB_HOME="${HOME}/.local/lib"
 #export XDG_CONFIG_DIRS=/etc/xdg
 
 ##==============================================================================
-## Environment variables
+## System paths
 ##==============================================================================
 #
 # Note:
@@ -339,7 +327,7 @@ export JUPYTER_DATA_DIR="${XDG_DATA_HOME}/jupyter"
 ##
 ## Rye
 ##
-path=( ${HOME}/.rye/shims(N-/) $path[@] )
+# path=( ${HOME}/.rye/shims(N-/) $path[@] )
 
 ##
 ## npm
@@ -418,15 +406,15 @@ path=( ${XDG_DATA_HOME}/rtx/bin(N-/)  $path[@] )
 ## Computational programs
 ##============================================================================
 
-## rscat
-if [[ -z "${RSCATDIR}" ]]; then
-    case "${HOST}" in
-        freya*) export RSCATDIR="${HOME}/programs/rscat";;
-        saga*)  export RSCATDIR="${HOME}/programs/rscat";;
-             *) export RSCATDIR="${HOME}/src/local/rscat";;
-    esac
-fi
-[[ -r "${RSCATDIR}/rscatvars.sh" ]] && . "${RSCATDIR}/rscatvars.sh"
+# ## rscat
+# if [[ -z "${RSCATDIR}" ]]; then
+#     case "${HOST}" in
+#         freya*) export RSCATDIR="${HOME}/programs/rscat";;
+#         saga*)  export RSCATDIR="${HOME}/programs/rscat";;
+#              *) export RSCATDIR="${HOME}/src/local/rscat";;
+#     esac
+# fi
+# [[ -r "${RSCATDIR}/rscatvars.sh" ]] && . "${RSCATDIR}/rscatvars.sh"
 
 
 # # WIEN2k
