@@ -89,19 +89,6 @@ M.on_attach = function(client, bufnr)
       }
     end, { buffer = bufnr, desc = "Source Action" })
   end
-
-  -- Formatting
-  if client.supports_method "textDocument/formatting" then
-    vim.keymap.set("n", "<Space>cf", function()
-      require("rc.plugins.lsp.format").format(bufnr)
-    end, { buffer = bufnr, desc = "Format Document" })
-  end
-
-  if client.supports_method "textDocument/rangeFormatting" then
-    vim.keymap.set("v", "<Space>cf", function()
-      require("rc.plugins.lsp.format").format(bufnr)
-    end, { buffer = bufnr, desc = "Format Range" })
-  end
 end
 
 return M

@@ -17,30 +17,6 @@ local M = {
       cmd = { "IncRename" },
       config = true,
     },
-    -- A simple popup display that provides breadcrumbs feature using LSP server
-    -- {
-    --   "SmiteshP/nvim-navbuddy",
-    --   name = "nvim-navbuddy",
-    --   dependencies = {
-    --     "SmiteshP/nvim-navic",
-    --     "MunifTanjim/nui.nvim",
-    --     "numToStr/Comment.nvim", -- Optional
-    --     "nvim-telescope/telescope.nvim", -- Optional
-    --   },
-    --   cmd = { "Navbuddy" },
-    --   keys = {
-    --     { "<Space>sv", "<cmd>Navbuddy<CR>", desc = "Navbuddy" },
-    --   },
-    --   opts = {
-    --     icons = require("rc.core.config").icons.kinds,
-    --     lsp = {
-    --       auto_attach = true,
-    --     },
-    --   },
-    --   config = function(_, opts)
-    --     require("nvim-navbuddy").setup(opts)
-    --   end,
-    -- },
   },
   ---@class PluginLspOpts
   opts = {
@@ -63,8 +39,6 @@ local M = {
     },
     -- Add any global capabilities here
     capabilities = {},
-    -- Automatically format on save
-    autoformat = true,
     -- LSP server settings
     ---@type lspconfig.options
     servers = {
@@ -78,14 +52,6 @@ local M = {
         single_file_support = true,
         settings = {
           Lua = {
-            runtime = {
-              version = "LuaJIT",
-              path = vim.split(package.path, ";"),
-            },
-            workspace = {
-              checkThirdParty = false,
-              library = vim.api.nvim_get_runtime_file("", true),
-            },
             completion = {
               workspaceWord = true,
               callSnippet = "Replace",
@@ -95,14 +61,7 @@ local M = {
                 "--log-level=trace",
               },
             },
-            diagnostics = {
-              globals = { "vim" },
-              unusedLocalExclude = { "_*" },
-            },
             format = {
-              enable = false,
-            },
-            telemetry = {
               enable = false,
             },
           },
@@ -136,15 +95,12 @@ local M = {
         local bufnr = ev.buf
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
         require("rc.plugins.lsp.codelens").on_attach(client, bufnr)
-        require("rc.plugins.lsp.format").on_attach(client, bufnr)
+        -- require("rc.plugins.lsp.format").on_attach(client, bufnr)
         require("rc.plugins.lsp.highlight").on_attach(client, bufnr)
         require("rc.plugins.lsp.keymaps").on_attach(client, bufnr)
       end,
       desc = "[LSP] on attach server",
     })
-
-    -- Set autoformat
-    require("rc.plugins.lsp.format").autoformat = opts.autoformat
 
     -- Configure diagnostics
     require("rc.plugins.lsp").setup_diagnostics(opts.diagnostics)
