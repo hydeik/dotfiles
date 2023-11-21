@@ -55,8 +55,6 @@ return {
       },
       -- [[ Rainbow ]]
       rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
-      -- [[ Context commentstring ]]
-      context_commentstring = { enable = true },
     },
     ---@param opts TSConfig
     config = function(_, opts)
@@ -67,8 +65,16 @@ return {
     end,
   },
   {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    opts = {},
+    init = function()
+      vim.g.skip_ts_context_commentstring_module = true
+    end,
+  },
+  {
     "nvim-treesitter/nvim-treesitter-context",
     event = { "BufReadPre" },
+    enabled = false,
     config = true,
   },
   {
