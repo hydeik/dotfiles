@@ -5,10 +5,10 @@ exact = true
 stripComponents = 1
 refreshPeriod = "168h"
 
-[".config/alacritty/alacritty-theme"]
-type = "archive"
-url = "https://github.com/alacritty/alacritty-theme/archive/master.tar.gz"
-exact = true
-stripComponents = 1
-refreshPeriod = "168h"
-include = ["*/themes/**", "*/print_colors.sh", "*/LICENSE", "*/README.md"]
+# [".config/alacritty/alacritty-theme"]
+# type = "archive"
+# url = "https://github.com/alacritty/alacritty-theme/archive/master.tar.gz"
+# exact = true
+# stripComponents = 1
+# refreshPeriod = "168h"
+# include = ["*/themes/**", "*/print_colors.sh", "*/LICENSE", "*/README.md"]
