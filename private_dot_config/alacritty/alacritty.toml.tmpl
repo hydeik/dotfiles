@@ -1,0 +1,72 @@
+import = [
+  "~/.config/alacritty/fonts/plemoljp35.toml",
+  "~/.config/alacritty/themes/kanagawa_dragon.toml",
+]
+live_config_reload = true
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[debug]
+log_level = "Warn"
+persistent_logging = false
+print_events = false
+render_timer = false
+
+[env]
+COLORTERM = "truecolor"
+TERM = "alacritty-direct"
+TERM_PROGRAM = "alacritty"
+
+[mouse]
+hide_when_typing = false
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[selection]
+save_to_clipboard = false
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+[shell]
+args = ["--login"]
+{{ if eq .chezmoi.os "darwin" }}
+  {{ if eq .chezmoi.arch "arm64" }}
+program = "/opt/homebrew/bin/zsh"
+  {{ else }}
+program = "/usr/local/bin/zsh"
+  {{ end }}
+{{ else }}
+program = "/bin/zsh"
+{{ end }}
+
+# TODO: for the future release
+# [terminal]
+# osc52 = "CopyOnly"
+
+[window]
+decorations = "full"
+dynamic_padding = false
+dynamic_title = true
+opacity = 0.9
+{{ if eq .chezmoi.os "darwin" }}
+option_as_alt = "None"
+{{ end }}
+startup_mode = "Maximized"
+
+[window.dimensions]
+columns = 0
+lines = 0
+
+[window.padding]
+x = 2
+y = 2

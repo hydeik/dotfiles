@@ -1,0 +1,28 @@
+[font]
+size = 14.0
+builtin_box_drawing = false
+
+[font.normal]
+family = "PlemolJP35 Console NF"
+style = "Text"
+
+[font.bold]
+family = "PlemolJP35 Console NF"
+style = "Bold"
+
+[font.bold_italic]
+family = "PlemolJP35 Console NF"
+style = "Bold Italic"
+
+[font.italic]
+family = "PlemolJP35 Console NF"
+style = "Text Italic"
+
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0
+
