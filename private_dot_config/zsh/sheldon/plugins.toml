@@ -18,11 +18,11 @@ defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file 
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 hooks.post = '''
-# Activation of rtx can be deferred but should ensure deno is available for zeno.zsh
-function my-rtx-activate-hook () {
-    eval "$( rtx activate zsh )" && eval "$( rtx hook-env -s zsh )"
+# Activation of mise can be deferred but should ensure deno is available for zeno.zsh
+function my-mise-activate-hook () {
+    eval "$( ~/.local/bin/mise activate zsh )"
 }
-zsh-defer my-rtx-activate-hook
+zsh-defer my-mise-activate-hook
 '''
 
 [plugins.powerlevel10k]
