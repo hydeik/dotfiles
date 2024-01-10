@@ -1,0 +1,9 @@
+##
+## Custom shorthand plugin names
+## This is useful if you want to share plugins within an organization.
+##
+#
+# Example:
+#   elixir = "https://github.com/my-org/mise-elixir.git"
+#   node = "https://github.com/my-org/mise-node.git"
+#
