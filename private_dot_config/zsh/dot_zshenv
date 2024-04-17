@@ -1,7 +1,6 @@
 # -*- mode: zsh -*-
 # vim: ft=zsh
-#
-#jk#
+##
 ## .zshenv --- Zsh configuration file
 ##
 
@@ -157,8 +156,6 @@ path=(
     ${XDG_BIN_HOME}(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
-    /usr/local/opt/curl/bin(N-/)
-    /opt/homebrew/opt/curl/bin(N-/)
     # *nix local
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
@@ -241,11 +238,13 @@ case ${OSTYPE} in
                 export HOMEBREW_PREFIX="/opt/homebrew"
                 export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar"
                 export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}"
+                export HOMEBREW_FORCE_BREWED_CURL=1
                 ;;
             x86_64*)
                 export HOMEBREW_PREFIX="/usr/local"
                 export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}"
                 export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}/Homebrew"
+                export HOMEBREW_FORCE_BREWED_CURL=1
                 ;;
         esac
         ;;
@@ -258,6 +257,7 @@ esac
 path=(
     ${HOMEBREW_PREFIX}/bin(N-/)
     ${HOMEBREW_PREFIX}/sbin(N-/)
+    ${HOMEBREW_PREFIX}/opt/curl/bin(N-/)
     ${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin(N-/)
     ${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin(N-/)
     ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin(N-/)
@@ -269,6 +269,7 @@ path=(
 )
 manpath=(
     ${HOMEBREW_PREFIX}/share/man(N-/)
+    ${HOMEBREW_PREFIX}/opt/curl/share/man(N-/)
     ${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnuman(N-/)
     ${HOMEBREW_PREFIX}/opt/findutils/libexec/gnuman(N-/)
     ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnuman(N-/)
