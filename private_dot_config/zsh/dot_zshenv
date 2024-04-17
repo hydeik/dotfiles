@@ -1,6 +1,7 @@
 # -*- mode: zsh -*-
 # vim: ft=zsh
-##
+#
+#jk#
 ## .zshenv --- Zsh configuration file
 ##
 
@@ -156,6 +157,8 @@ path=(
     ${XDG_BIN_HOME}(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
+    /usr/local/opt/curl/bin(N-/)
+    /opt/homebrew/opt/curl/bin(N-/)
     # *nix local
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
