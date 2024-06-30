@@ -5,6 +5,7 @@ return {
     -- A UI for nvim-dap
     {
       "rcarriga/nvim-dap-ui",
+      dependencies = { "nvim-neotest/nvim-nio" },
       keys = {
         {
           "<Space>du",
