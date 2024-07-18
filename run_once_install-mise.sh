@@ -6,7 +6,7 @@ install_mise() {
   install_path="${MISE_INSTALL_PATH:-$HOME/.local/bin/mise}"
 
   if ! [ -x "$install_path" ]; then
-    curl https://mise.jdx.dev/install.sh | sh
+    curl https://mise.run | sh
   fi
 }
 
