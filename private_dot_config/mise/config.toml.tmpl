@@ -5,3 +5,8 @@ deno = ['latest']
 nodejs = ['latest', 'lts']
 python = ['latest']
 rye = ['latest']
+{{ if eq .chezmoi.os "linux" }}
+cmake = ['latest']
+fzf = ['latest']
+ghq = ['latest']
+{{ end }}
