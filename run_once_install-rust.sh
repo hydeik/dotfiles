@@ -58,19 +58,13 @@ CARGO_INSTALL_TARGET=(
   choose
   cpc
   du-dust
-  evcxr_jupyter
-  evcxr_repl
   eza
   fd-find
-  find-files
   flamegraph
-  gitui
   hx
   hyperfine
   inferno
-  jless
   jql
-  lsd
   procs
   ripgrep
   rm-improved
