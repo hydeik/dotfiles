@@ -22,9 +22,8 @@ insert_final_newline = true
 trim_trailing_whitespace = false
 
 # The JSON files contain newlines inconsistently
-[*.json]
-indent_size = 4
-insert_final_newline = ignore
+[*.{json,jsonc}]
+insert_final_newline = false
 
 [*.{yaml,yml}]
 indent_size = 2
@@ -56,8 +55,8 @@ indent_size = 2
 
 # Minified JavaScript files shouldn't be changed
 [**.min.js]
-indent_style = ignore
-insert_final_newline = ignore
+# indent_style = space
+insert_final_newline = false
 
 # Makefile use tabs for indentation
 [{Makefile,makefile,**.mk}]
