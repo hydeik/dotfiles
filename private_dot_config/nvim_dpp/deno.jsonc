@@ -1,0 +1,24 @@
+{
+  "tasks": {
+    "cache": "deno cache --reload dpp/*.ts",
+    "check": "deno check dpp/*.ts",
+    "fix": "deno lint --fix dpp",
+    "upgrade": "deno run -A jsr:@molt/cli dpp/*.ts --write"
+  },
+  "lint": {
+    "include": [
+      "dpp/"
+    ],
+    "rules": {
+      "tags": [
+        "recommended"
+      ]
+    }
+  },
+  "fmt": {
+    "include": [
+      "dpp/"
+    ]
+  },
+  "lock": false
+}

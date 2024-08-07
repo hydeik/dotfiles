@@ -1,0 +1,32 @@
+#=============================================================================
+# Denops library
+#=============================================================================
+# An ecosystem of Vim/Neovim which allows developers to write cross-platform
+# plugins in Deno
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+on_event = ['BufRead', 'CursorHold']
+hook_source = '''
+let g:denops#server#deno_args = ['-q', '--no-lock', '--unstable-kv', '-A']
+'''
+
+#=============================================================================
+# Editor
+#=============================================================================
+## # Search Japanese text in Vim's buffer with Roma-ji by Migemo
+## [[plugins]]
+## repo = 'lambdalisue/kensaku.vim'
+## depends = 'denops.vim'
+## denops_wait = false
+##
+## # SKK implements for Vim/Neovim with denops.vim
+## [[plugins]]
+## repo = 'vim-skk/skkeleton'
+## on_map = { ict = '<Plug>(skkeleton-toggle)' }
+## on_event = ['CursorHold']
+## hooks_file = '$VIM_CONFIG_DIR/dpp/config/skkeleton.lua'
+##
+## # Yet another indicator for Skkeleton.
+## [[plugins]]
+## repo = 'delphinus/skkeleton_indicator.nvim'
+## on_source = 'skkeleton'

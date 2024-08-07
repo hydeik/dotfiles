@@ -1,0 +1,150 @@
+##============================================================================
+## Treesitter
+##============================================================================
+
+# Nvim Treesitter configurations and abstraction layer
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+on_event = ['BufReadPre', 'BufNewFile']
+hook_post_update = 'TSUpdate'
+hooks_file = '$DPP_HOOKS_DIR/treesitter.lua'
+
+# Syntax aware text-objects, select, move, swap, and peek support.
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-textobjects'
+on_source = 'nvim-treesitter'
+
+# Use treesitter to auto close and auto rename html tag.
+[[plugins]]
+repo = 'windwp/nvim-ts-autotag'
+on_event = ['BufReadPre', 'BufNewFile']
+lua_source = '''
+require("nvim-ts-autotag").setup {}
+'''
+
+##============================================================================
+## LSP / Linter / Formatter
+##============================================================================
+
+# Portable package manager for Neovim that runs everywhere Neovim runs.
+# Easily install and manage LSP servers, DAP servers, linters, and formatters.
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+on_cmd = [
+  'Mason',
+  'MasonInstall',
+  'MasonLog',
+  'MasonUpdate',
+  'MasonUninstall',
+  'MasonUninstallAll',
+]
+on_lua = ['mason', 'mason-registry']
+hook_post_update = 'MasonUpdate'
+hooks_file = '$DPP_HOOKS_DIR/mason.lua'
+
+# Extension to mason.nvim that makes it easier to use lspconfig with
+# mason.nvim.
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+depends = ['mason.nvim']
+
+# Quickstart configs for Nvim LSP
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+depends = ['mason.nvim', 'mason-lspconfig.nvim']
+on_event = ['BufReadPre', 'BufNewFile']
+hooks_file = '$DPP_HOOKS_DIR/nvim-lspconfig.lua'
+
+# An unofficial collection of linters and formatters configured for
+# efm-langserver for neovim.
+[[plugins]]
+repo = 'creativenull/efmls-configs-nvim'
+on_source = 'nvim-lspconfig'
+
+# Faster LuaLS setup for Neovim
+[[plugins]]
+repo = 'folke/lazydev.nvim'
+on_ft = ['lua']
+
+# Meta type definitions for the Lua platform Luvit.
+[[plugins]]
+repo = 'Bilal2453/luvit-meta'
+on_source = 'lazydev.nvim'
+hooks_file = '$DPP_HOOKS_DIR/lazydev.lua'
+
+# # Incremental LSP renaming based on Neovim's command-preview feature.
+# [[plugins]]
+# repo = 'smjonas/inc-rename.nvim'
+# on_cmd = 'IncRename'
+# lua_source = 'require("inc_rename").setup()'
+
+# An asynchronous linter plugin for Neovim complementary to the built-in
+# Language Server Protocol support.
+[[plugins]]
+repo = 'mfussenegger/nvim-lint'
+depends = ['mason.nvim']
+on_event = ['BufReadPre', 'BufNewFile']
+hooks_file = '$DPP_HOOKS_DIR/nvim-lint.lua'
+
+# Lightweight yet powerful formatter plugin for Neovim
+[[plugins]]
+repo = 'stevearc/conform.nvim'
+depends = ['mason.nvim']
+on_cmd = 'ConformInfo'
+on_event = 'BufWritePre'
+on_lua = 'conform'
+hooks_file = '$DPP_HOOKS_DIR/conform.lua'
+
+# JSON schemas for Neovim
+[[plugins]]
+repo = 'b0o/SchemaStore.nvim'
+on_source = 'nvim-lspconfig'
+on_ft = ['json', 'yaml']
+
+# # Supercharge your Rust experience in Neovim! A heavily modified fork of
+# # rust-tools.nvim
+# [[plugins]]
+# repo = 'mrcjkb/rustaceanvim'
+# on_ft = ['rust']
+#
+
+##============================================================================
+## Coding
+##============================================================================
+
+# Smart and powerful comment plugin for neovim. Supports treesitter, dot
+# repeat, left-right/up-down motions, hooks, and more
+[[plugins]]
+repo = 'numToStr/Comment.nvim'
+on_map = { n = '<Plug>(comment_', x = '<Plug>(comment_' }
+hooks_file = '$DPP_HOOKS_DIR/Comment.lua'
+
+# Neovim treesitter plugin for setting the commentstring based on the cursor
+# location in a file.
+[[plugins]]
+repo = 'JoosepAlviste/nvim-ts-context-commentstring'
+depends = ['nvim-treesitter']
+on_source = 'Comment.nvim'
+lua_source = '''
+requrire("ts_context_commentstring").setup { enable_autocmd = false }
+'''
+
+#==============================================================================
+# Navigation
+#==============================================================================
+# Smart, seamless, directional navigation and resizing of Neovim + terminal
+# multiplexer splits. Supports tmux, Wezterm, and Kitty.
+[[plugins]]
+repo = 'mrjones2014/smart-splits.nvim'
+on_lua = ['smart-splits']
+hooks_file = '$DPP_HOOKS_DIR/smart-splits.lua'
+
+#==============================================================================
+# UI
+#==============================================================================
+# Display command line text in floating window
+[[plugins]]
+repo = 'Shougo/cmdline.vim'
+on_event = ['CmdlineEnter']
+on_func = ['cmdline#enable', 'cmdline#input']
+hooks_file = '$DPP_HOOKS_DIR/cmdline.lua'

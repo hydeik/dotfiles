@@ -1,0 +1,123 @@
+##=============================================================================
+## Fuzzy finder
+##=============================================================================
+
+# Dark deno-powered UI framework for neovim/Vim
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+depends = 'denops.vim'
+# hooks_file = '$VIM_CONFIG_DIR/dpp/config/ddu.lua'
+
+# Commands for ddu.vim
+[[plugins]]
+repo = 'Shougo/ddu-commands.vim'
+depends = 'ddu.vim'
+on_cmd = 'Ddu'
+
+##
+## UI
+##
+# Fuzzy finder UI for ddu.vim (This UI is standard fuzzy finder)
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+depends = 'ddu.vim'
+# hooks_file = '$VIM_CONFIG_DIR/dpp/config/ddu.lua'
+
+# Replace `vim.ui.select()` with ddu's UI (only for Neovim)
+[[plugins]]
+repo = 'matsui54/ddu-vim-ui-select'
+depends = 'ddu.vim'
+
+##
+## Sources
+##
+# Buffers
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+on_source = 'ddu.vim'
+
+# Files in path
+[[plugins]]
+repo = 'Shougo/ddu-source-file'
+on_source = 'ddu.vim'
+
+# Files in path recursivelly
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+on_source = 'ddu.vim'
+
+# File from v:oldfiles
+[[plugins]]
+repo = 'Shougo/ddu-source-file_old'
+on_source = 'ddu.vim'
+
+# Current line of filename format
+[[plugins]]
+repo = 'Shougo/ddu-source-file_point'
+on_source = 'ddu.vim'
+
+# Current buffer lines
+[[plugins]]
+repo = 'Shougo/ddu-source-line'
+on_source = 'ddu.vim'
+
+# Register
+[[plugins]]
+repo = 'Shougo/ddu-source-register'
+on_source = 'ddu.vim'
+
+# Actions
+[[plugins]]
+repo = 'Shougo/ddu-source-action'
+on_source = 'ddu.vim'
+
+# Path history from current ddu UI
+[[plugins]]
+repo = 'Shougo/ddu-source-path_history'
+on_source = 'ddu.vim'
+
+# Dummy items
+[[plugins]]
+repo = 'Shougo/ddu-source-dummy'
+on_source = 'ddu.vim'
+
+# Vim Ex-command output
+[[plugins]]
+repo = 'Shougo/ddu-source-output'
+on_source = 'ddu.vim'
+
+# File sources using external command
+[[plugins]]
+repo = 'matsui54/ddu-source-file_external'
+on_source = 'ddu.vim'
+
+# Command line history
+[[plugins]]
+repo = 'matsui54/ddu-source-command_history'
+on_source = 'ddu.vim'
+
+# Vim help tags
+[[plugins]]
+repo = 'matsui54/ddu-source-help'
+on_source = 'ddu.vim'
+
+# Ripgrep
+[[plugins]]
+repo = 'shun/ddu-source-rg'
+on_source = 'ddu.vim'
+
+# Markdown headers
+[[plugins]]
+repo = 'mikanIchinose/ddu-source-markdown'
+on_source = 'ddu.vim'
+[[plugins]]
+repo = 'kamecha/ddu-source-jumplist'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'yuki-yano/ddu-source-nvim-notify'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+on_source = 'ddu.vim'
