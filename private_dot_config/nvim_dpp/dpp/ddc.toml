@@ -7,7 +7,7 @@
 repo = 'Shougo/ddc.vim'
 depends = 'denops.vim'
 on_event = 'InsertEnter'
-hooks_file = '$VIM_CONFIG_DIR/dpp/config/ddc.lua'
+hooks_file = '$DPP_HOOKS_DIR/ddc.lua'
 
 ##
 ## UIs for ddc.vim
@@ -16,6 +16,7 @@ hooks_file = '$VIM_CONFIG_DIR/dpp/config/ddc.lua'
 # Original popup completion menu framework library
 [[plugins]]
 repo = 'Shougo/pum.vim'
+hooks_file = '$DPP_HOOKS_DIR/pum.lua'
 
 # Native popup menu UI for ddc.vim
 [[plugins]]
@@ -81,14 +82,35 @@ on_source = 'ddc.vim'
 repo = 'Shougo/ddc-source-lsp'
 on_source = 'ddc.vim'
 
+# Omnifunc completion for ddc.vim
+[[plugins]]
+repo = 'Shougo/ddc-source-omni'
+on_source = 'ddc.vim'
+
 # `rg` completion for ddc.vim
 [[plugins]]
 repo = 'Shougo/ddc-source-rg'
 on_source = 'ddc.vim'
 
+# Shell completion for ddc.vim
+# This source collects items from getcompletion(). It is useful for shell commands.
+[[plugins]]
+repo = 'Shougo/ddc-source-shell'
+on_source = 'ddc.vim'
+
+# Shell native completion for ddc.vim
+[[plugins]]
+repo = 'Shougo/ddc-source-shell-native'
+on_source = 'ddc.vim'
+
+# Additional Vim script completion for ddc.vim
+[[plugins]]
+repo = 'Shougo/ddc-source-vim'
+on_source = 'ddc.vim'
+
 # Buffer source for ddc.vim
 [[plugins]]
-repo = 'matsui54/ddc-buffer'
+repo = 'matsui54/ddc-source-buffer'
 on_source = 'ddc.vim'
 
 # Powerful and performant file name completion for ddc.vim.
@@ -106,52 +128,46 @@ on_source = 'ddc.vim'
 #   xnoremap Y <Cmd>set operatorfunc=ddc#source#yank#register<CR>g@
 # '''
 
-# The Vim Script completion source for neocomplete/deoplete/ddc
- [[plugins]]
- repo = 'Shougo/neco-vim'
- on_ft = ['vim', 'toml', 'markdown']
- depends = 'ddc.vim'
-
 ##
 ## Filters for ddc.vim
 ##
 
- [[plugins]]
- repo = 'Shougo/ddc-filter-matcher_head'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'Shougo/ddc-filter-matcher_head'
+on_source = 'ddc.vim'
 
 # Length matcher for ddc.vim
- [[plugins]]
- repo = 'Shougo/ddc-filter-matcher_length'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'Shougo/ddc-filter-matcher_length'
+on_source = 'ddc.vim'
 
- [[plugins]]
- repo = 'Shougo/ddc-filter-matcher_prefix'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'Shougo/ddc-filter-matcher_prefix'
+on_source = 'ddc.vim'
 
- [[plugins]]
- repo = 'Shougo/ddc-filter-sorter_head'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'Shougo/ddc-filter-sorter_head'
+on_source = 'ddc.vim'
 
- [[plugins]]
- repo = 'Shougo/ddc-filter-sorter_rank'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'Shougo/ddc-filter-sorter_rank'
+on_source = 'ddc.vim'
 
- [[plugins]]
- repo = 'Shougo/ddc-filter-matcher_vimregexp'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'Shougo/ddc-filter-matcher_vimregexp'
+on_source = 'ddc.vim'
 
 # Remove overlapped text converter for ddc.vim
- [[plugins]]
- repo = 'Shougo/ddc-filter-converter_remove_overlap'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'Shougo/ddc-filter-converter_remove_overlap'
+on_source = 'ddc.vim'
 
 # Truncate abbr converter for ddc.vim
- [[plugins]]
- repo = 'Shougo/ddc-filter-converter_truncate_abbr'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'Shougo/ddc-filter-converter_truncate_abbr'
+on_source = 'ddc.vim'
 
 # Fuzzy matcher, sorter, and conveter for ddc.vim
- [[plugins]]
- repo = 'tani/ddc-fuzzy'
- on_source = 'ddc.vim'
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
+on_source = 'ddc.vim'

@@ -3,6 +3,9 @@ local M = {}
 -- Ensure the provided tools are installed via Mason
 ---@param tools string[]
 M.ensure_installed = function(tools)
+  if vim.tbl_isempty(tools) then
+    return
+  end
   -- Auto install tools
   local mr = require "mason-registry"
 
