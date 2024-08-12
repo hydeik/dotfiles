@@ -131,7 +131,7 @@ M.opts = function()
   local actions = require "telescope.actions"
   local action_layout = require "telescope.actions.layout"
   local sorters = require "telescope.sorters"
-  local trouble = require "trouble.providers.telescope"
+  local trouble = require "trouble.sources.telescope"
 
   -- find command
   local ignore_globs = {
@@ -207,7 +207,7 @@ M.opts = function()
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
           ["<M-q>"] = actions.smart_add_to_qflist + actions.open_qflist,
           ["<M-p>"] = action_layout.toggle_preview,
-          ["<C-t>"] = trouble.open_with_trouble,
+          ["<C-t>"] = trouble.open,
         },
         -- normal mode
         n = {
@@ -218,7 +218,7 @@ M.opts = function()
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
           ["<M-q>"] = actions.smart_add_to_qflist + actions.open_qflist,
           ["<M-p>"] = action_layout.toggle_preview,
-          ["<C-t>"] = trouble.open_with_trouble,
+          ["<C-t>"] = trouble.open,
         },
       },
 

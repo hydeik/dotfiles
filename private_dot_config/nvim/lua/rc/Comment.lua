@@ -1,5 +1,3 @@
--- Smart and powerful comment plugin for neovim. Supports treesitter,
--- dot repeat, left-right/up-down motions, hooks, and more
 return {
   "numToStr/Comment.nvim",
   keys = {
@@ -53,7 +51,8 @@ return {
       local type = ctx.ctype == U.ctype.line and "__default" or "__multiline"
 
       -- Determine the location where to calculate commentstring from
-      local location = nil
+      ---@type number[]
+      local location
       if ctx.ctype == U.ctype.block then
         location = require("ts_context_commentstring.utils").get_cursor_location()
       elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then

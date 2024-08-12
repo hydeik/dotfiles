@@ -18,16 +18,16 @@ vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup {
   spec = {
     { import = "rc.plugins" },
-    { import = "rc.plugins.extras.lang.json" },
-    { import = "rc.plugins.extras.lang.rust" },
-    { import = "rc.plugins.extras.lang.clangd" },
-    { import = "rc.plugins.extras.lang.python" },
+    -- { import = "rc.plugins.extras.lang.json" },
+    -- { import = "rc.plugins.extras.lang.rust" },
+    -- { import = "rc.plugins.extras.lang.clangd" },
+    -- { import = "rc.plugins.extras.lang.python" },
   },
   defaults = {
     lazy = true,
   },
   install = {
-    colorscheme = { "kanagawa", "habamax" },
+    colorscheme = { "catppucin", "habamax" },
   },
   checker = {
     enabled = true,

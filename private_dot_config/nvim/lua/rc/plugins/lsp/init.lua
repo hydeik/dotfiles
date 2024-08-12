@@ -1,91 +1,95 @@
 local M = {
   "neovim/nvim-lspconfig",
   name = "lsp",
-  event = { "BufReadPre", "BufNewFile" },
+  event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   dependencies = {
-    { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-    { "folke/neodev.nvim", config = true },
     "mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    -- for setting
     {
-      "hrsh7th/cmp-nvim-lsp",
-    },
-    -- better renaem
-    {
-      "smjonas/inc-rename.nvim",
-      cmd = { "IncRename" },
-      config = true,
+      "williamboman/mason-lspconfig.nvim",
+      config = function()
+        -- setup manually
+      end,
     },
   },
   ---@class PluginLspOpts
-  opts = {
-    -- options for vim.diagnostic.config()
-    diagnostics = {
-      underline = true,
-      virtual_text = {
-        source = "always",
-        prefix = "icons",
+  opts = function()
+    local diagnostic_icons = require("rc.core.config").icons.diagnostics
+    ---@class PluginLspOpts
+    local ret = {
+      -- options for vim.diagnostic.config()
+      diagnostics = {
+        underline = true,
+        virtual_text = {
+          source = "if_many",
+          prefix = "icons",
+        },
+        severity_sort = true,
+        signs = {
+          priority = 20,
+          text = {
+            [vim.diagnostic.severity.ERROR] = diagnostic_icons.Error,
+            [vim.diagnostic.severity.WARN] = diagnostic_icons.Warn,
+            [vim.diagnostic.severity.HINT] = diagnostic_icons.Hint,
+            [vim.diagnostic.severity.INFO] = diagnostic_icons.Info,
+          },
+        },
+        float = {
+          source = "always",
+          border = "single",
+        },
+        update_in_insert = false,
       },
-      signs = {
-        priority = 20,
-      },
-      float = {
-        source = "always",
-        border = "single",
-      },
-      update_in_insert = false,
-      severity_sort = true,
-    },
-    -- Add any global capabilities here
-    capabilities = {},
-    -- LSP server settings
-    ---@type lspconfig.options
-    servers = {
-      bashls = {},
-      cmake = {},
-      cssls = {},
-      fortls = {},
-      html = {},
-      jsonls = {},
-      lua_ls = {
-        single_file_support = true,
-        settings = {
-          Lua = {
-            completion = {
-              workspaceWord = true,
-              callSnippet = "Replace",
-            },
-            misc = {
-              parameters = {
-                "--log-level=trace",
+      -- Add any global capabilities here
+      capabilities = {},
+      -- LSP server settings
+      ---@type lspconfig.options
+      servers = {
+        bashls = {},
+        cmake = {},
+        cssls = {},
+        fortls = {},
+        html = {},
+        jsonls = {},
+        lua_ls = {
+          single_file_support = true,
+          settings = {
+            Lua = {
+              completion = {
+                workspaceWord = true,
+                callSnippet = "Replace",
               },
-            },
-            format = {
-              enable = false,
+              misc = {
+                parameters = {
+                  "--log-level=trace",
+                },
+              },
+              format = {
+                enable = false,
+              },
             },
           },
         },
+        teal_ls = {},
+        texlab = {},
+        tsserver = {},
+        vimls = {},
+        yamlls = {},
       },
-      teal_ls = {},
-      texlab = {},
-      tsserver = {},
-      vimls = {},
-      yamlls = {},
-    },
-    -- you can do any additional lsp server setup here
-    -- return true if you don't want this server to be setup with lspconfig
-    ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-    setup = {
-      -- example to setup with typescript.nvim
-      -- tsserver = function(_, opts)
-      --   require("typescript").setup({ server = opts })
-      --   return true
-      -- end,
-      -- Specify * to use this function as a fallback for any server
-      -- ["*"] = function(server, opts) end,
-    },
-  },
+      -- you can do any additional lsp server setup here
+      -- return true if you don't want this server to be setup with lspconfig
+      ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
+      setup = {
+        -- example to setup with typescript.nvim
+        -- tsserver = function(_, opts)
+        --   require("typescript").setup({ server = opts })
+        --   return true
+        -- end,
+        -- Specify * to use this function as a fallback for any server
+        -- ["*"] = function(server, opts) end,
+      },
+    }
+    return ret
+  end,
   ---@param opts PluginLspOpts
   config = function(_, opts)
     -- Events executed on attach server
@@ -153,11 +157,6 @@ local M = {
 
 ---@param opts table options for vim.diagnostic.config()
 M.setup_diagnostics = function(opts)
-  for name, icon in pairs(require("rc.core.config").icons.diagnostics) do
-    local hl = "DiagnosticSign" .. name
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-  end
-
   opts = opts and opts or {}
   if opts.virtual_text.prefix == "icons" then
     opts.virtual_text.prefix = vim.fn.has "nvim-0.10.0" == 0 and "●"

@@ -3,42 +3,44 @@
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
+  opts_extend = { "spec" },
   opts = {
-    defaults = {
+    defaults = {},
+    spec = {
       mode = { "n", "v" },
-      -- ["g"] = { name = "+goto" },
-      ["gs"] = { name = "+surround" },
-      ["]"] = { name = "+next" },
-      ["["] = { name = "+prev" },
-      ["<Space><tab>"] = { name = "+tabs" },
-      ["<Space>b"] = { name = "+buffer" },
-      ["<Space>c"] = { name = "+code" },
-      ["<Space>d"] = { name = "+debug" },
-      ["<Space>da"] = { name = "+adaptor" },
-      ["<Space>f"] = { name = "+file/find" },
-      ["<Space>g"] = { name = "+git" },
-      ["<Space>h"] = { name = "+hunks" },
-      ["<Space>q"] = { name = "+quit/session" },
-      ["<Space>s"] = { name = "+search" },
-      ["<Space>t"] = { name = "+terminal" },
-      ["<Space>u"] = { name = "+ui" },
-      ["<Space>w"] = { name = "+windows" },
-      ["<Space>x"] = { name = "+diagnostics/quickfix" },
+      { "<Space><tab>", group = "tabs" },
+      { "<Space>c", group = "code" },
+      { "<Space>f", group = "file/find" },
+      { "<Space>g", group = "git" },
+      { "<Space>h", group = "hunks" },
+      { "<Space>q", group = "quit/session" },
+      { "<Space>s", group = "search" },
+      { "<Space>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
+      { "<Space>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
+      { "[", group = "prev" },
+      { "]", group = "next" },
+      { "g", group = "goto" },
+      { "gs", group = "surround" },
+      { "z", group = "fold" },
     },
-    plugins = {
-      registers = false,
-      presets = {
-        windows = false,
-        nav = false,
-      },
+  },
+  keys = {
+    {
+      "<Space>?",
+      function()
+        require("which-key").show { global = false }
+      end,
+      desc = "Buffer Local Keymaps (which-key)",
     },
-    icons = {
-      separator = " 󰁔",
+    {
+      "<c-w><space>",
+      function()
+        require("which-key").show { keys = "<c-w>", loop = true }
+      end,
+      desc = "Window Hydra Mode (which-key)",
     },
   },
   config = function(_, opts)
-    local wk = require "which-key"
-    wk.setup(opts)
-    wk.register(opts.defaults)
+    require("which-key").setup(opts)
   end,
 }

@@ -3,20 +3,11 @@
 local M = {
   "folke/noice.nvim",
   dependencies = {
-    { "MunifTanjim/nui.nvim" },
-    {
-      "folke/which-key.nvim",
-      opts = function(_, opts)
-        local defaults = opts.defaults and opts.defaults or {}
-        if require("rc.util").has_plugin "noice.nvim" then
-          defaults["<Space>n"] = { name = "+noice" }
-        end
-        opts.defaults = defaults
-      end,
-    },
+    { "MunifTanjim/nui.nvim", lazy = true },
   },
   event = "VeryLazy",
   keys = {
+    { "<Space>n", "", desc = "+noice" },
     {
       "<S-Enter>",
       function()

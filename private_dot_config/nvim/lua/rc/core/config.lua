@@ -2,7 +2,7 @@ local M = {}
 
 -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
 ---@type string|fun()
-M.colorscheme = "kanagawa"
+M.colorscheme = "catppuccin"
 
 -- icons used by other plugins
 ---@type table

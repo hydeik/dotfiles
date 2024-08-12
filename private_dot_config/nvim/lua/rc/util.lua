@@ -150,7 +150,7 @@ function M.toggle_diagnostics()
     vim.diagnostic.enable()
     M.info("Enabled diagnostics", { title = "Diagnostics" })
   else
-    vim.diagnostic.disable()
+    vim.diagnostic.enable(false)
     M.warn("Disabled diagnostics", { title = "Diagnostics" })
   end
 end
@@ -168,13 +168,13 @@ function M.get_root()
   ---@type string[]
   local roots = {}
   if path then
-    for _, client in pairs(vim.lsp.get_active_clients { bufnr = 0 }) do
+    for _, client in pairs(vim.lsp.get_clients { bufnr = 0 }) do
       local workspace = client.config.workspace_folders
       local paths = workspace and vim.tbl_map(function(ws)
         return vim.uri_to_fname(ws.uri)
       end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
       for _, p in ipairs(paths) do
-        local r = vim.uv.fs_realpath(p)
+        local r = vim.uv.fs_realpath(p) --[[@as string]]
         if path:find(r, 1, true) then
           roots[#roots + 1] = r
         end
@@ -195,6 +195,21 @@ function M.get_root()
     return root
   end
   return ""
+end
+
+---@generic T
+---@param list T[]
+---@return T[]
+function M.list_unique(list)
+  local ret = {}
+  local seen = {}
+  for _, v in ipairs(list) do
+    if not seen[v] then
+      table.insert(ret, v)
+      seen[v] = true
+    end
+  end
+  return ret
 end
 
 return M

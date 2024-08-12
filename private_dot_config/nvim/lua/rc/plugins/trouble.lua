@@ -8,20 +8,25 @@ return {
     use_diagnostic_signs = true,
   },
   keys = {
-    { "<Space>xx", "<cmd>TroubleToggle document_diagnostics<CR>", desc = "Document Diagnostics (Trouble)" },
-    { "<Space>xX", "<cmd>TroubleToggle workspace_diagnostics<CR>", desc = "Workspace Diagnostics (Trouble)" },
-    { "<Space>xL", "<cmd>TroubleToggle loclist<CR>", desc = "Location List (Trouble)" },
-    { "<Space>xQ", "<cmd>TroubleToggle quickfix<CR>", desc = "Quickfix List (Trouble)" },
+    { "<Space>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+    { "<Space>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+    { "<Space>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (Trouble)" },
+    { "<Space>cS", "<cmd>Trouble lsp toggle<cr>", desc = "LSP references/definitions/... (Trouble)" },
+    { "<Space>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+    { "<Space>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
     {
       "[q",
       function()
         if require("trouble").is_open() then
-          require("trouble").previous { skip_groups = true, jump = true }
+          require("trouble").prev { skip_groups = true, jump = true }
         else
-          vim.cmd.cprev()
+          local ok, err = pcall(vim.cmd.cprev)
+          if not ok then
+            vim.notify(err, vim.log.levels.ERROR)
+          end
         end
       end,
-      desc = "Previous trouble/quickfix item",
+      desc = "Previous Trouble/Quickfix Item",
     },
     {
       "]q",
@@ -29,10 +34,13 @@ return {
         if require("trouble").is_open() then
           require("trouble").next { skip_groups = true, jump = true }
         else
-          vim.cmd.cnext()
+          local ok, err = pcall(vim.cmd.cnext)
+          if not ok then
+            vim.notify(err, vim.log.levels.ERROR)
+          end
         end
       end,
-      desc = "Next trouble/quickfix item",
+      desc = "Next Trouble/Quickfix Item",
     },
   },
 }
