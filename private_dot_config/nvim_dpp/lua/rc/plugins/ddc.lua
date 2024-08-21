@@ -9,7 +9,7 @@ local ddc = {
   map = setmetatable({}, {
     __index = function(_, key)
       return function(...)
-        vim.call("ddc#map" .. key, ...)
+        vim.call("ddc#map#" .. key, ...)
       end
     end,
   }),

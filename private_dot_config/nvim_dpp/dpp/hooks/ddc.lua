@@ -4,56 +4,56 @@
 local group = vim.api.nvim_create_augroup("DdcCustomize", { clear = true })
 local ddc_ = require "rc.plugins.ddc"
 
-local commandline_post = function()
-  if vim.b.prev_buffer_config then
-    ddc_.custom.set_buffer(vim.b.prev_buffer_config)
-    vim.b.prev_buffer_config = nil
-  end
-end
-
-local commandline_pre = function(mode)
-  vim.b.prev_buffer_config = ddc_.custom.get_buffer()
-  -- Overwrite sources
-  if vim.b.prev_buffer_config then
-    if mode == ":" then
-      ddc_.custom.patch_buffer("sourceOptions", {
-        _ = { keywordPattern = "[0-9a-zA-Z_:#-]*" },
-      })
-
-      local line = vim.fn.getcmdline()
-      local opts = vim.fn.stridx(line, "!") == 0
-          and { cmdlineSources = { "shell-native", "cmdline", "cmdline-history", "around" } }
-        or {}
-      ddc_.custom.set_context_buffer("sourceOptions", opts)
-    end
-  end
-
-  vim.api.nvim_create_autocmd("User", {
-    group = group,
-    pattern = "DDCCmdlineLeave",
-    callback = commandline_post,
-    once = true,
-    desc = "A hook on DDCCmdlineLeave",
-  })
-end
-
--- keymaps
-vim.keymap.set({ "n", "x" }, ":", function()
-  commandline_pre ":"
-  return ":"
-end, { desc = "[ddc.vim] Ex commands" })
-
-vim.keymap.set("n", "/", function()
-  commandline_pre "/"
-  return "/"
-end, { desc = "[ddc.vim] search pattern" })
+-- local commandline_post = function()
+--   if vim.b.prev_buffer_config then
+--     ddc_.custom.set_buffer(vim.b.prev_buffer_config)
+--     vim.b.prev_buffer_config = nil
+--   end
+-- end
+--
+-- local commandline_pre = function(mode)
+--   vim.b.prev_buffer_config = ddc_.custom.get_buffer()
+--   -- Overwrite sources
+--   if vim.b.prev_buffer_config then
+--     if mode == ":" then
+--       ddc_.custom.patch_buffer("sourceOptions", {
+--         _ = { keywordPattern = "[0-9a-zA-Z_:#-]*" },
+--       })
+--
+--       local line = vim.fn.getcmdline()
+--       local opts = vim.fn.stridx(line, "!") == 0
+--           and { cmdlineSources = { "shell-native", "cmdline", "cmdline-history", "around" } }
+--         or {}
+--       ddc_.custom.set_context_buffer("sourceOptions", opts)
+--     end
+--   end
+--
+--   vim.api.nvim_create_autocmd("User", {
+--     group = group,
+--     pattern = "DDCCmdlineLeave",
+--     callback = commandline_post,
+--     once = true,
+--     desc = "A hook on DDCCmdlineLeave",
+--   })
+-- end
+--
+-- -- keymaps
+-- vim.keymap.set({ "n", "x" }, ":", function()
+--   commandline_pre ":"
+--   return ":"
+-- end, { desc = "[ddc.vim] Ex commands" })
+--
+-- vim.keymap.set("n", "/", function()
+--   commandline_pre "/"
+--   return "/"
+-- end, { desc = "[ddc.vim] search pattern" })
 
 -- }}}
 
 -- lua_source {{{
 local ddc = require "rc.plugins.ddc"
 local pum = require "rc.plugins.pum"
-ddc.custom.load_config "$VIM_CONFIG_DIR/dpp/ddc.ts"
+ddc.custom.load_config "$DPP_CONFIG_DIR/ddc.ts"
 
 -- Keymaps for completion in Insert mode
 vim.keymap.set("i", "<S-Tab>", function()
@@ -69,11 +69,15 @@ vim.keymap.set("i", "<End>", function()
 end)
 
 vim.keymap.set("i", "<C-n>", function()
-  pum.map.select_relative(1)
+  if pum.visible() then
+    pum.map.select_relative(1)
+  end
 end)
 
 vim.keymap.set("i", "<C-p>", function()
-  pum.map.select_relative(-1)
+  if pum.visible() then
+    pum.map.select_relative(-1)
+  end
 end)
 
 vim.keymap.set("i", "<C-y>", function()

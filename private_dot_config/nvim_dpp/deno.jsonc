@@ -16,6 +16,9 @@
     }
   },
   "fmt": {
+    "useTabs": false,
+    "indentWidth": 2,
+    "lineWidteh": 80,
     "include": [
       "dpp/"
     ]

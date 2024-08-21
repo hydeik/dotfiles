@@ -138,11 +138,7 @@ M.setup_diagnostic = function()
   -- Global diagnostic configurations
 
   -- diagnostic signs
-  for name, icon in pairs(require("rc.settings").icons.diagnostics) do
-    local hl = "DiagnosticSign" .. name
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-  end
-
+  local diagnostic_icons = require("rc.settings").icons.diagnostics
   -- options for vim.diagnostic.config()
   local opts = {
     underline = true,
@@ -162,6 +158,12 @@ M.setup_diagnostic = function()
     },
     signs = {
       priority = 20,
+      text = {
+        [vim.diagnostic.severity.ERROR] = diagnostic_icons.Error,
+        [vim.diagnostic.severity.WARN] = diagnostic_icons.Warn,
+        [vim.diagnostic.severity.HINT] = diagnostic_icons.Hint,
+        [vim.diagnostic.severity.INFO] = diagnostic_icons.Info,
+      },
     },
     float = {
       source = "always",

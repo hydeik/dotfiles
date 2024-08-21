@@ -1,11 +1,9 @@
 import { BaseConfig } from "jsr:@shougo/ddc-vim@~6.0.0/types";
 import { ConfigArguments } from "jsr:@shougo/ddc-vim@~6.0.0/config";
 
-import * as fn from "jsr:@denops/std@~7.0.1/function";
-
 export class Config extends BaseConfig {
     override async config(args: ConfigArguments): Promise<void> {
-        const commonSources = ["around", "file"];
+        const commonSources = ["lsp", "around", "file"];
 
         args.contextBuilder.patchGlobal({
             ui: "pum",
@@ -136,10 +134,106 @@ export class Config extends BaseConfig {
                     enableDisplayDetail: true,
                 },
                 "shell-native": {
-                    shell: "fish",
+                    shell: "zsh",
                 },
             },
-            postFilters: ["sorter_head"],
+            filterParams: {
+                converter_kind_labels: {
+                    kindLabels: {
+                        Text: " Text",
+                        Method: " Method",
+                        Function: " Function",
+                        Constructor: " Constructor",
+                        Field: " Field",
+                        Variable: " Variable",
+                        Class: " Class",
+                        Interface: " Interface",
+                        Module: " Module",
+                        Property: " Property",
+                        Unit: " Unit",
+                        Value: " Value",
+                        Enum: " Enum",
+                        Keyword: "K eyword",
+                        Snippet: " Snippet",
+                        Color: " Color",
+                        File: " File",
+                        Reference: "' Reference",
+                        Folder: " Folder",
+                        EnumMember: " EnumMember",
+                        Constant: " Constant",
+                        Struct: " Struct",
+                        Event: " Event",
+                        Operator: " Operator",
+                        TypeParameter: " TypeParameter",
+                    },
+                    kindHlGroups: {
+                        Text: "String",
+                        Method: "Function",
+                        Function: "Function",
+                        Constructor: "Function",
+                        Field: "Identifier",
+                        Variable: "Identifier",
+                        Class: "Structure",
+                        Interface: "Structure",
+                        Module: "Function",
+                        Property: "Identifier",
+                        Unit: "Identifier",
+                        Value: "String",
+                        Enum: "Structure",
+                        Keyword: "Identifier",
+                        Snippet: "Structure",
+                        Color: "Structure",
+                        File: "Structure",
+                        Reference: "Function",
+                        Folder: "Structure",
+                        EnumMember: "Structure",
+                        Constant: "String",
+                        Struct: "Structure",
+                        Event: "Function",
+                        Operator: "Identifier",
+                        TypeParameter: "Identifier",
+                    },
+                },
+            },
+            // postFilters: ["sorter_head"],
         });
+
+        for (const filetype of ["html", "css"]) {
+            args.contextBuilder.patchFiletype(filetype, {
+                sourceOptions: {
+                    _: {
+                        keywordPattern: "[0-9a-zA-Z_:#-]*",
+                    },
+                },
+            });
+        }
+
+        for (const filetype of ["zsh", "sh", "bash"]) {
+            args.contextBuilder.patchFiletype(filetype, {
+                sourceOptions: {
+                    _: {
+                        keywordPattern: "[0-9a-zA-Z_./#:-]*",
+                    },
+                },
+                sources: ["shell-native", "around"],
+            });
+        }
+
+        // Use "#" as TypeScript keywordPattern
+        for (const filetype of ["typescript"]) {
+            args.contextBuilder.patchFiletype(filetype, {
+                sourceOptions: {
+                    _: {
+                        keywordPattern: "#?[a-zA-Z_][0-9a-zA-Z_]*",
+                    },
+                },
+            });
+        }
+
+        args.contextBuilder.patchFiletype("vim", {
+            sources: ["vim"].concat(commonSources),
+        });
+
+        return Promise.resolve();
     }
 }
