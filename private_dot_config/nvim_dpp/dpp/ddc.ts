@@ -2,7 +2,7 @@ import { BaseConfig } from "jsr:@shougo/ddc-vim@~6.0.0/types";
 import { ConfigArguments } from "jsr:@shougo/ddc-vim@~6.0.0/config";
 
 export class Config extends BaseConfig {
-    override async config(args: ConfigArguments): Promise<void> {
+    override config(args: ConfigArguments): Promise<void> {
         const commonSources = ["lsp", "around", "file"];
 
         args.contextBuilder.patchGlobal({
@@ -16,37 +16,37 @@ export class Config extends BaseConfig {
                 "TextChangedP",
                 "TextChangedT",
             ],
-            cmdlineSources: {
-                ":": ["cmdline", "cmdline-history", "around"],
-                "@": ["cmdline-history", "input", "file", "around"],
-                ">": ["cmdline-history", "input", "file", "around"],
-                "/": ["around", "line"],
-                "?": ["around", "line"],
-                "-": ["around", "line"],
-                "=": ["input"],
-            },
+            // cmdlineSources: {
+            //     ":": ["cmdline", "cmdline-history", "around"],
+            //     "@": ["cmdline-history", "input", "file", "around"],
+            //     ">": ["cmdline-history", "input", "file", "around"],
+            //     "/": ["around", "line"],
+            //     "?": ["around", "line"],
+            //     "-": ["around", "line"],
+            //     "=": ["input"],
+            // },
             sourceOptions: {
                 _: {
                     ignoreCase: true,
                     matchers: ["matcher_fuzzy"],
                     sorters: ["sorter_fuzzy"],
                     converters: ["converter_fuzzy"],
-                    timeout: 1000,
+                    // timeout: 1000,
                 },
                 around: {
                     mark: "A",
                 },
-                buffer: {
-                    mark: "B",
-                },
+                // buffer: {
+                //     mark: "B",
+                // },
                 vim: {
                     mark: "vim",
                     isVolatile: true,
                 },
-                cmdline: {
-                    mark: "cmdline",
-                    forceCompletionPattern: "\\S/\\S*|\\.\\w*",
-                },
+                // cmdline: {
+                //     mark: "cmdline",
+                //     forceCompletionPattern: "\\S/\\S*|\\.\\w*",
+                // },
                 // copilot: {
                 //     mark: "cop",
                 //     matchers: [],
@@ -59,23 +59,24 @@ export class Config extends BaseConfig {
                 //     minAutoCompleteLength: 0,
                 //     isVolatile: true,
                 // },
-                input: {
-                    mark: "input",
-                    forceCompletionPattern: "\\S/\\S*",
-                    isVolatile: true,
-                },
-                line: {
-                    mark: "line",
-                },
+                // input: {
+                //     mark: "input",
+                //     forceCompletionPattern: "\\S/\\S*",
+                //     isVolatile: true,
+                // },
+                // line: {
+                //     mark: "line",
+                // },
                 // mocword: {
                 //     mark: "mocword",
                 //     minAutoCompleteLength: 4,
                 //     isVolatile: true,
                 // },
                 lsp: {
-                    mark: "lsp",
-                    forceCompletionPattern: "\\.\\w*|::\\w*|->\\w*",
-                    dup: "force",
+                    mark: "LSP",
+                    forceCompletionPattern: "\\.|:\\s*|->\\s*",
+                    dup: "keep",
+                    sorters: ["sorter_lsp-kind", "converter_kind_labels"],
                 },
                 // rtags: {
                 //     mark: "R",
@@ -87,28 +88,28 @@ export class Config extends BaseConfig {
                     minAutoCompleteLength: 1000,
                     forceCompletionPattern: "\\S/\\S*",
                 },
-                "cmdline-history": {
-                    mark: "history",
-                    sorters: [],
-                },
-                "shell-history": {
-                    mark: "history",
-                },
-                shell: {
-                    mark: "sh",
-                    isVolatile: true,
-                    forceCompletionPattern: "\\S/\\S*",
-                },
-                "shell-native": {
-                    mark: "sh",
-                    isVolatile: true,
-                    forceCompletionPattern: "\\S/\\S*",
-                },
-                rg: {
-                    mark: "rg",
-                    minAutoCompleteLength: 5,
-                    enabledIf: "finddir('.git', ';') != ''",
-                },
+                // "cmdline-history": {
+                //     mark: "history",
+                //     sorters: [],
+                // },
+                // "shell-history": {
+                //     mark: "history",
+                // },
+                // shell: {
+                //     mark: "sh",
+                //     isVolatile: true,
+                //     forceCompletionPattern: "\\S/\\S*",
+                // },
+                // "shell-native": {
+                //     mark: "sh",
+                //     isVolatile: true,
+                //     forceCompletionPattern: "\\S/\\S*",
+                // },
+                // rg: {
+                //     mark: "rg",
+                //     minAutoCompleteLength: 5,
+                //     enabledIf: "finddir('.git', ';') != ''",
+                // },
                 // skkeleton: {
                 //     mark: "skk",
                 //     matchers: [],
@@ -116,28 +117,57 @@ export class Config extends BaseConfig {
                 //     minAutoCompleteLength: 2,
                 //     isVolatile: true,
                 // },
-                yank: {
-                    mark: "Y",
-                },
+                // yank: {
+                //     mark: "Y",
+                // },
             },
             sourceParams: {
-                buffer: {
-                    requireSameFiletype: false,
-                    limitBytes: 50000,
-                    fromAltBuf: true,
-                    forceCollect: true,
-                },
+                // buffer: {
+                //     requireSameFiletype: false,
+                //     limitBytes: 50000,
+                //     fromAltBuf: true,
+                //     forceCollect: true,
+                // },
                 file: {
                     filenameChars: "[:keyword:].",
                 },
                 lsp: {
                     enableDisplayDetail: true,
                 },
-                "shell-native": {
-                    shell: "zsh",
-                },
+                // "shell-native": {
+                //     shell: "zsh",
+                // },
             },
             filterParams: {
+                "sorter_lsp-kind": {
+                    priority: [
+                        "Snippet",
+                        "Method",
+                        "Function",
+                        "Constructor",
+                        "Field",
+                        "Variable",
+                        "Class",
+                        "Interface",
+                        "Module",
+                        "Property",
+                        "Unit",
+                        "Value",
+                        "Enum",
+                        "Keyword",
+                        "Color",
+                        "File",
+                        "Reference",
+                        "Folder",
+                        "EnumMember",
+                        "Constant",
+                        "Struct",
+                        "Event",
+                        "Operator",
+                        "TypeParameter",
+                        "Text",
+                    ],
+                },
                 converter_kind_labels: {
                     kindLabels: {
                         Text: " Text",
@@ -198,41 +228,41 @@ export class Config extends BaseConfig {
             // postFilters: ["sorter_head"],
         });
 
-        for (const filetype of ["html", "css"]) {
-            args.contextBuilder.patchFiletype(filetype, {
-                sourceOptions: {
-                    _: {
-                        keywordPattern: "[0-9a-zA-Z_:#-]*",
-                    },
-                },
-            });
-        }
-
-        for (const filetype of ["zsh", "sh", "bash"]) {
-            args.contextBuilder.patchFiletype(filetype, {
-                sourceOptions: {
-                    _: {
-                        keywordPattern: "[0-9a-zA-Z_./#:-]*",
-                    },
-                },
-                sources: ["shell-native", "around"],
-            });
-        }
-
-        // Use "#" as TypeScript keywordPattern
-        for (const filetype of ["typescript"]) {
-            args.contextBuilder.patchFiletype(filetype, {
-                sourceOptions: {
-                    _: {
-                        keywordPattern: "#?[a-zA-Z_][0-9a-zA-Z_]*",
-                    },
-                },
-            });
-        }
-
-        args.contextBuilder.patchFiletype("vim", {
-            sources: ["vim"].concat(commonSources),
-        });
+        // for (const filetype of ["html", "css"]) {
+        //     args.contextBuilder.patchFiletype(filetype, {
+        //         sourceOptions: {
+        //             _: {
+        //                 keywordPattern: "[0-9a-zA-Z_:#-]*",
+        //             },
+        //         },
+        //     });
+        // }
+        //
+        // for (const filetype of ["zsh", "sh", "bash"]) {
+        //     args.contextBuilder.patchFiletype(filetype, {
+        //         sourceOptions: {
+        //             _: {
+        //                 keywordPattern: "[0-9a-zA-Z_./#:-]*",
+        //             },
+        //         },
+        //         sources: ["shell-native", "around"],
+        //     });
+        // }
+        //
+        // // Use "#" as TypeScript keywordPattern
+        // for (const filetype of ["typescript"]) {
+        //     args.contextBuilder.patchFiletype(filetype, {
+        //         sourceOptions: {
+        //             _: {
+        //                 keywordPattern: "#?[a-zA-Z_][0-9a-zA-Z_]*",
+        //             },
+        //         },
+        //     });
+        // }
+        //
+        // args.contextBuilder.patchFiletype("vim", {
+        //     sources: ["vim"].concat(commonSources),
+        // });
 
         return Promise.resolve();
     }

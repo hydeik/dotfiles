@@ -2,7 +2,7 @@
 --- Original popup completion menu framework library
 
 -- lua_source {{{
-vim.fn["pum#set_options"] {
+vim.fn["pum#set_option"] {
   max_width = 80,
   preview = true,
   preview_width = 80,
