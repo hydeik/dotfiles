@@ -4,6 +4,7 @@ import { ConfigArguments } from "jsr:@shougo/ddc-vim@~6.0.0/config";
 export class Config extends BaseConfig {
     override config(args: ConfigArguments): Promise<void> {
         const commonSources = ["lsp", "around", "file"];
+        const denops = args.denops;
 
         args.contextBuilder.patchGlobal({
             ui: "pum",
@@ -16,15 +17,15 @@ export class Config extends BaseConfig {
                 "TextChangedP",
                 "TextChangedT",
             ],
-            // cmdlineSources: {
-            //     ":": ["cmdline", "cmdline-history", "around"],
-            //     "@": ["cmdline-history", "input", "file", "around"],
-            //     ">": ["cmdline-history", "input", "file", "around"],
-            //     "/": ["around", "line"],
-            //     "?": ["around", "line"],
-            //     "-": ["around", "line"],
-            //     "=": ["input"],
-            // },
+            cmdlineSources: {
+                ":": ["cmdline", "cmdline-history", "around"],
+                "@": ["cmdline-history", "input", "file", "around"],
+                ">": ["cmdline-history", "input", "file", "around"],
+                "/": ["around", "line"],
+                "?": ["around", "line"],
+                "-": ["around", "line"],
+                "=": ["input"],
+            },
             sourceOptions: {
                 _: {
                     ignoreCase: true,
@@ -36,17 +37,17 @@ export class Config extends BaseConfig {
                 around: {
                     mark: "A",
                 },
-                // buffer: {
-                //     mark: "B",
-                // },
+                buffer: {
+                    mark: "B",
+                },
                 vim: {
                     mark: "vim",
                     isVolatile: true,
                 },
-                // cmdline: {
-                //     mark: "cmdline",
-                //     forceCompletionPattern: "\\S/\\S*|\\.\\w*",
-                // },
+                cmdline: {
+                    mark: "cmdline",
+                    forceCompletionPattern: "\\S/\\S*|\\.\\w*",
+                },
                 // copilot: {
                 //     mark: "cop",
                 //     matchers: [],
@@ -59,14 +60,14 @@ export class Config extends BaseConfig {
                 //     minAutoCompleteLength: 0,
                 //     isVolatile: true,
                 // },
-                // input: {
-                //     mark: "input",
-                //     forceCompletionPattern: "\\S/\\S*",
-                //     isVolatile: true,
-                // },
-                // line: {
-                //     mark: "line",
-                // },
+                input: {
+                    mark: "input",
+                    forceCompletionPattern: "\\S/\\S*",
+                    isVolatile: true,
+                },
+                line: {
+                    mark: "line",
+                },
                 // mocword: {
                 //     mark: "mocword",
                 //     minAutoCompleteLength: 4,
@@ -88,28 +89,28 @@ export class Config extends BaseConfig {
                     minAutoCompleteLength: 1000,
                     forceCompletionPattern: "\\S/\\S*",
                 },
-                // "cmdline-history": {
-                //     mark: "history",
-                //     sorters: [],
-                // },
-                // "shell-history": {
-                //     mark: "history",
-                // },
-                // shell: {
-                //     mark: "sh",
-                //     isVolatile: true,
-                //     forceCompletionPattern: "\\S/\\S*",
-                // },
-                // "shell-native": {
-                //     mark: "sh",
-                //     isVolatile: true,
-                //     forceCompletionPattern: "\\S/\\S*",
-                // },
-                // rg: {
-                //     mark: "rg",
-                //     minAutoCompleteLength: 5,
-                //     enabledIf: "finddir('.git', ';') != ''",
-                // },
+                "cmdline-history": {
+                    mark: "history",
+                    sorters: [],
+                },
+                "shell-history": {
+                    mark: "history",
+                },
+                shell: {
+                    mark: "sh",
+                    isVolatile: true,
+                    forceCompletionPattern: "\\S/\\S*",
+                },
+                "shell-native": {
+                    mark: "sh",
+                    isVolatile: true,
+                    forceCompletionPattern: "\\S/\\S*",
+                },
+                rg: {
+                    mark: "rg",
+                    minAutoCompleteLength: 5,
+                    enabledIf: "finddir('.git', ';') != ''",
+                },
                 // skkeleton: {
                 //     mark: "skk",
                 //     matchers: [],
@@ -117,26 +118,32 @@ export class Config extends BaseConfig {
                 //     minAutoCompleteLength: 2,
                 //     isVolatile: true,
                 // },
-                // yank: {
-                //     mark: "Y",
-                // },
+                yank: {
+                    mark: "Y",
+                },
             },
             sourceParams: {
-                // buffer: {
-                //     requireSameFiletype: false,
-                //     limitBytes: 50000,
-                //     fromAltBuf: true,
-                //     forceCollect: true,
-                // },
+                buffer: {
+                    requireSameFiletype: false,
+                    limitBytes: 50000,
+                    fromAltBuf: true,
+                    forceCollect: true,
+                },
                 file: {
                     filenameChars: "[:keyword:].",
                 },
                 lsp: {
                     enableDisplayDetail: true,
+                    enableResolveItem: true,
+                    enableAdditionalTextEdit: true,
+                    confirmBehavior: "replace",
+                    snippetEngine: async (body: string) => {
+                        await denops.call("denippet#anonymous", body);
+                    },
                 },
-                // "shell-native": {
-                //     shell: "zsh",
-                // },
+                "shell-native": {
+                    shell: "zsh",
+                },
             },
             filterParams: {
                 "sorter_lsp-kind": {
