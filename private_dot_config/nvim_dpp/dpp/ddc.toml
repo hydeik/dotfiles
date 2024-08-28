@@ -172,7 +172,9 @@ on_source = 'ddc.vim'
 repo = 'tani/ddc-fuzzy'
 on_source = 'ddc.vim'
 
-# snippet plugins {{{
+##============================================================================
+## Snippet plugins
+##============================================================================
 # A snippet plugin for Vim/Neovim, powered by TypeScript.
 [[plugins]]
 repo = 'github.com/uga-rosa/denippet.vim'
@@ -187,4 +189,3 @@ repo = 'github.com/ryoppippi/denippet-autoimport-vscode'
 # Set of preconfigured snippets for different languages.
 [[plugins]]
 repo = 'github.com/rafamadriz/friendly-snippets'
-# }}}

@@ -10,11 +10,11 @@ require("catppuccin").setup {
   },
   transparent_background = transparent,
   integrations = {
-    cmp = true,
+    cmp = false,
     gitsigns = true,
+    illuminate = true,
     indent_blankline = {
       enabled = true,
-      scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
       colored_indent_levels = false,
     },
     lsp_trouble = true,
@@ -22,9 +22,26 @@ require("catppuccin").setup {
       enabled = true,
       indentscope_color = "", -- catppuccin color (eg. `lavender`) Default: text
     },
+    native_lsp = {
+      enabled = true,
+      underline = {
+        errors = { "undercurl" },
+        hints = { "undercurl" },
+        warnings = { "undercurl" },
+        information = { "undercurl" },
+      },
+    },
+    navic = {
+      enabled = true,
+      custom_bg = "NONE",
+    },
     noice = true,
     notify = true,
-    telescope = true,
+    telescope = {
+      enable = false,
+    },
+    treesitter = true,
+    treesitter_context = true,
     which_key = true,
   },
 }

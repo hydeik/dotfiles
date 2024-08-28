@@ -13,12 +13,12 @@ let g:denops#server#deno_args = ['-q', '--no-lock', '--unstable-kv', '-A']
 #=============================================================================
 # Editor
 #=============================================================================
-## # Search Japanese text in Vim's buffer with Roma-ji by Migemo
-## [[plugins]]
-## repo = 'lambdalisue/kensaku.vim'
-## depends = 'denops.vim'
-## denops_wait = false
-##
+# Search Japanese text in Vim's buffer with Roma-ji by Migemo
+[[plugins]]
+repo = 'lambdalisue/kensaku.vim'
+depends = ['denops.vim']
+denops_wait = false
+
 ## # SKK implements for Vim/Neovim with denops.vim
 ## [[plugins]]
 ## repo = 'vim-skk/skkeleton'
@@ -30,3 +30,30 @@ let g:denops#server#deno_args = ['-q', '--no-lock', '--unstable-kv', '-A']
 ## [[plugins]]
 ## repo = 'delphinus/skkeleton_indicator.nvim'
 ## on_source = 'skkeleton'
+
+#=============================================================================
+# Filetypes
+#=============================================================================
+# A markdown previewer for Vim and Neovim
+[[plugins]]
+repo = 'github.com/kat0h/bufpreview.vim'
+depends = ['denops.vim']
+build = 'deno task prepare'
+on_cmd = ['PreviewMarkdown', 'PreviewMarkdownToggle']
+# lua_source = '''
+# vim.g.bufpreview_server_port = '11223'
+# '''
+
+# JSON/YAML conversion plugin for Vim/Neovim
+[[plugins]]
+repo = 'github.com/kuuote/jsonyaml.vim'
+depends = ['denops.vim']
+on_cmd = ['JY', 'YJ']
+hooks_file = '$DPP_HOOKS_DIR/jsonyaml.lua'
+
+# JSON/TOML conversion plugin for Vim/Neovim
+[[plugins]]
+repo = 'github.com/yukimemi/jsontoml.vim'
+depends = ['denops.vim']
+on_cmd = ['JT', 'TJ']
+hooks_file = '$DPP_HOOKS_DIR/jsontoml.lua'

@@ -28,7 +28,7 @@ vim.keymap.set("n", "gcO", function()
   require("Comment.api").insert.linewise.above()
 end, { desc = "Comment insert above" })
 vim.keymap.set("n", "gcA", function()
-  require("Comment.api").locked "insert.linewise.eol"()
+  require("Comment.api").locked "insert.linewise.eol"
 end, { desc = "Comment insert end of line" })
 
 -- }}}

@@ -148,3 +148,14 @@ repo = 'Shougo/cmdline.vim'
 on_event = ['CmdlineEnter']
 on_func = ['cmdline#enable', 'cmdline#input']
 hooks_file = '$DPP_HOOKS_DIR/cmdline.lua'
+
+# Create key bindings that stick. WhichKey helps you remember your Neovim
+# keymaps, by showing available keybindings in a popup as you type.
+[[plugins]]
+repo = 'folke/which-key.nvim'
+# on_map = ['<Space>', '[', ']', 'g', 'c', 'v']
+on_event = ['UIEnter']
+on_cmd = ['WhichKey']
+on_lua = ['which-key']
+hooks_file = '$DPP_HOOKS_DIR/which-key.lua'
+

@@ -133,7 +133,7 @@ export class Config extends BaseConfig {
                     filenameChars: "[:keyword:].",
                 },
                 lsp: {
-                    enableDisplayDetail: true,
+                    // enableDisplayDetail: true,
                     enableResolveItem: true,
                     enableAdditionalTextEdit: true,
                     confirmBehavior: "replace",
