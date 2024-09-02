@@ -6,7 +6,7 @@
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 depends = 'denops.vim'
-# hooks_file = '$DPP_HOOKS_DIR/ddu.lua'
+hooks_file = '$DPP_HOOKS_DIR/ddu.lua'
 
 # Commands for ddu.vim
 [[plugins]]
@@ -132,12 +132,8 @@ repo = 'yuki-yano/ddu-source-nvim-notify'
 on_source = 'ddu.vim'
 
 ##
-## Filters
+## Filters (matcher, sorter, converter)
 ##
-[[plugins]]
-repo = 'Shougo/ddu-filter-sorter_alpha'
-on_source = 'ddu.vim'
-
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_files'
 on_source = 'ddu.vim'
@@ -155,15 +151,32 @@ repo = 'Shougo/ddu-filter-matcher_ignores'
 on_source = 'ddu.vim'
 
 [[plugins]]
-repo = 'kuuote/ddu-filter-sorter_mtime'
-on_source = 'ddu.vim'
-
-[[plugins]]
 repo = 'Shougo/ddu-filter-matcher_relative'
 on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-sorter_alpha'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kuuote/ddu-filter-sorter_mtime'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-converter_display_word'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kyoh86/ddu-filter-converter_hl_dir'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Milly/ddu-filter-kensaku'
+depends = 'kensaku.vim'
 on_source = 'ddu.vim'
 
 ##
