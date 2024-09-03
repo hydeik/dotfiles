@@ -1,6 +1,7 @@
 -- lua_ddu-ff {{{
 
 local do_action = vim.fn["ddu#ui#do_action"]
+local multi_actions = vim.fn["ddu#ui#multi_actions"]
 local opts = { buffer = true, silent = true }
 
 vim.keymap.set({ "n", "x" }, "<CR>", function()
@@ -94,12 +95,29 @@ vim.keymap.set("n", "<C-v>", function()
 end, opts)
 
 -- Scroll the preview window
+vim.keymap.set("n", "<C-n>", function()
+  do_action("previewExecute", { command = [[execute "normal! \<C-e>"]] })
+end, opts)
+
 vim.keymap.set("n", "<C-p>", function()
   do_action("previewExecute", { command = [[execute "normal! \<C-y>"]] })
 end, opts)
 
+-- Cursor move
 vim.keymap.set("n", "<C-n>", function()
-  do_action("previewExecute", { command = [[execute "normal! \<C-e>"]] })
+  multi_actions({ "cursorNext", "itemAction" }, "files")
+end, { silent = true })
+
+vim.keymap.set("n", "<C-p>", function()
+  multi_actions({ "cursorPrevious", "itemAction" }, "files")
+end, { silent = true })
+
+vim.keymap.set("n", "<C-j>", function()
+  do_action "cursorNext"
+end, opts)
+
+vim.keymap.set("n", "<C-k>", function()
+  do_action "cursorPrevious"
 end, opts)
 
 -- }}}
@@ -114,10 +132,10 @@ vim.api.nvim_create_autocmd("User", {
   callback = function()
     vim.fn["ddu#ui#ff#save_cmaps"] { "<C-f>", "<C-b>" }
     vim.keymap.set("c", "<C-f>", function()
-      do_action("cursorNext", { loop = true })
+      vim.fn["ddu#ui#do_action"]("cursorNext", { loop = true })
     end)
     vim.keymap.set("c", "<C-f>", function()
-      do_action("cursorPrevious", { loop = true })
+      vim.fn["ddu#ui#do_action"]("cursorPrevious", { loop = true })
     end)
   end,
   desc = "[ddu-ui-ff] A hook before openFilterWindow",

@@ -21,7 +21,7 @@ on_cmd = 'Ddu'
 [[plugins]]
 repo = 'Shougo/ddu-ui-ff'
 on_source = 'ddu.vim'
-# hooks_file = '$DPP_HOOKS_DIR/ddu-ui-ff.lua'
+hooks_file = '$DPP_HOOKS_DIR/ddu-ui-ff.lua'
 
 # File listing UI for ddu.vim
 [[plugins]]

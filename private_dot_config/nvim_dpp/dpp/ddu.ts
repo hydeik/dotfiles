@@ -1,7 +1,14 @@
 import {
+    type ActionArguments,
+    ActionFlags,
+    type DduOptions,
+} from "jsr:@shougo/ddu-vim@~6.1.0/types";
+
+import {
     BaseConfig,
     type ConfigArguments,
 } from "jsr:@shougo/ddu-vim@~6.1.0/config";
+
 import { type ActionData as FileAction } from "jsr:@shougo/ddu-kind-file@~0.9.0";
 import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
 import { type Params as FilerParams } from "jsr:@shougo/ddu-ui-filer@~1.4.0";
@@ -65,13 +72,7 @@ export class Config extends BaseConfig {
                         name: "preview",
                     },
                     filterSplitDirection: "floating",
-                    floatingBorder: "none",
-                    highlights: {
-                        filterText: "Statement",
-                        floating: "Normal",
-                        floatingBorder: "Special",
-                    },
-                    maxHighlightItems: 50,
+                    floatingBorder: "single",
                     onPreview: async (args: {
                         denops: Denops;
                         previewWinId: number;
@@ -84,10 +85,9 @@ export class Config extends BaseConfig {
                     },
                     previewFloating: true,
                     previewFloatingBorder: "single",
-                    //previewSplit: "no",
+                    previewSplit: "horizontal",
                     //startFilter: true,
-                    updateTime: 0,
-                    winWidth: 100,
+                    split: "floating",
                 } as Partial<FfParams>,
                 filer: {
                     previewFloating: true,
@@ -103,12 +103,17 @@ export class Config extends BaseConfig {
                     matchers: ["matcher_substring"],
                     smartCase: true,
                 },
+                buffer: {
+                    converters: ["converter_hl_dir"],
+                    columns: ["icon_filename"],
+                },
                 file_old: {
                     matchers: [
                         "matcher_relative",
                         "matcher_substring",
                     ],
                     converters: ["converter_hl_dir"],
+                    columns: ["icon_filename"],
                 },
                 file_git: {
                     matchers: [
@@ -117,6 +122,7 @@ export class Config extends BaseConfig {
                     ],
                     sorters: ["sorter_mtime"],
                     converters: ["converter_hl_dir"],
+                    columns: ["icon_filename"],
                 },
                 file_rec: {
                     matchers: [
@@ -124,7 +130,26 @@ export class Config extends BaseConfig {
                         "matcher_hidden",
                     ],
                     sorters: ["sorter_mtime"],
+                    converters: [
+                        "converter_hl_dir",
+                    ],
+                    columns: ["icon_filename"],
+                },
+                file_fd: {
+                    matchers: [
+                        "matcher_substring",
+                        "matcher_hidden",
+                    ],
                     converters: ["converter_hl_dir"],
+                    columns: ["icon_filename"],
+                },
+                file_rg: {
+                    matchers: [
+                        "matcher_substring",
+                        "matcher_hidden",
+                    ],
+                    converters: ["converter_hl_dir"],
+                    columns: ["icon_filename"],
                 },
                 file: {
                     matchers: [
@@ -133,6 +158,7 @@ export class Config extends BaseConfig {
                     ],
                     sorters: ["sorter_alpha"],
                     converters: ["converter_hl_dir"],
+                    columns: ["icon_filename"],
                 },
                 dpp: {
                     defaultAction: "cd",
@@ -155,6 +181,9 @@ export class Config extends BaseConfig {
                 },
                 command_args: {
                     defaultAction: "execute",
+                },
+                help: {
+                    defaultAction: "open",
                 },
                 markdown: {
                     sorters: [],
