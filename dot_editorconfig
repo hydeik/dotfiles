@@ -53,6 +53,10 @@ indent_size = 2
 [*.tex]
 indent_size = 2
 
+# Javascript/Typescript
+[*.{js,jsx,ts,tsx}]
+indent_size = 2
+
 # Minified JavaScript files shouldn't be changed
 [**.min.js]
 # indent_style = space
@@ -65,3 +69,4 @@ indent_style = tab
 # Batch file use tabs for indentation
 [*.bat]
 indent_style = tab
+
