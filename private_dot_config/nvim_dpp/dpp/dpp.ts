@@ -1,13 +1,14 @@
 import {
-    BaseConfig,
-    type ConfigReturn,
     type ContextBuilder,
-    type Dpp,
     type ExtOptions,
     type MultipleHook,
     type Plugin,
-} from "jsr:@shougo/dpp-vim@~2.3.0/types";
-import { mergeFtplugins } from "jsr:@shougo/dpp-vim@~2.3.0/utils";
+} from "jsr:@shougo/dpp-vim@~3.0.0-pre2/types";
+import {
+    BaseConfig,
+    type ConfigReturn,
+} from "jsr:@shougo/dpp-vim@~3.0.0-pre2/config";
+import { mergeFtplugins } from "jsr:@shougo/dpp-vim@~3.0.0-pre2/utils";
 
 import type {
     Ext as LazyExt,
@@ -37,7 +38,6 @@ export class Config extends BaseConfig {
         denops: Denops;
         contextBuilder: ContextBuilder;
         basePath: string;
-        dpp: Dpp;
     }): Promise<ConfigReturn> {
         const dppConfigDir = Deno.env.get("DPP_CONFIG_DIR") as string;
         const dppBaseDir = Deno.env.get("DPP_BASE_DIR") as string;
@@ -67,7 +67,7 @@ export class Config extends BaseConfig {
         });
 
         const [context, options] = await args.contextBuilder.get(args.denops);
-        const protocols = await args.dpp.getProtocols(args.denops, options);
+        const protocols = await args.denops.dispatcher.getProtocols();
 
         // --- load plugins listed in toml files
         const recordPlugins: Record<string, Plugin> = {};
@@ -79,9 +79,7 @@ export class Config extends BaseConfig {
             TomlExt | undefined,
             ExtOptions,
             TomlParams,
-        ] = await args.dpp.getExt(
-            args.denops,
-            options,
+        ] = await args.denops.dispatcher.getExt(
             "toml",
         ) as [TomlExt | undefined, ExtOptions, TomlParams];
         if (tomlExt) {
@@ -142,9 +140,7 @@ export class Config extends BaseConfig {
             LocalExt | undefined,
             ExtOptions,
             LocalParams,
-        ] = await args.dpp.getExt(
-            args.denops,
-            options,
+        ] = await args.denops.dispatcher.getExt(
             "local",
         ) as [LocalExt | undefined, ExtOptions, LocalParams];
         if (localExt) {
@@ -195,12 +191,9 @@ export class Config extends BaseConfig {
             PackspecExt | undefined,
             ExtOptions,
             PackspecParams,
-        ] = await args.dpp
-            .getExt(
-                args.denops,
-                options,
-                "packspec",
-            ) as [PackspecExt | undefined, ExtOptions, PackspecParams];
+        ] = await args.denops.dispatcher.getExt(
+            "packspec",
+        ) as [PackspecExt | undefined, ExtOptions, PackspecParams];
         if (packspecExt) {
             const action = packspecExt.actions["load"];
 
@@ -235,14 +228,12 @@ export class Config extends BaseConfig {
             LazyExt | undefined,
             ExtOptions,
             LazyParams,
-        ] = await args.dpp.getExt(
-            args.denops,
-            options,
+        ] = await args.denops.dispatcher.getExt(
             "lazy",
         ) as [LazyExt | undefined, ExtOptions, PackspecParams];
         let lazyResult: LazyMakeStateResult | undefined = undefined;
         if (lazyExt) {
-            const action = lazyExt.actions["makeState"];
+            const action = lazyExt.actions.makeState;
 
             lazyResult = await action.callback({
                 denops: args.denops,

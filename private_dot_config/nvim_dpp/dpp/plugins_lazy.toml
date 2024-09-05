@@ -112,22 +112,30 @@ on_ft = ['json', 'yaml']
 ## Coding
 ##============================================================================
 
-# Smart and powerful comment plugin for neovim. Supports treesitter, dot
-# repeat, left-right/up-down motions, hooks, and more
+# Tiny plugin to enhance Neovim's native comments.
 [[plugins]]
-repo = 'numToStr/Comment.nvim'
-on_map = { n = '<Plug>(comment_', x = '<Plug>(comment_' }
-hooks_file = '$DPP_HOOKS_DIR/Comment.lua'
-
-# Neovim treesitter plugin for setting the commentstring based on the cursor
-# location in a file.
-[[plugins]]
-repo = 'JoosepAlviste/nvim-ts-context-commentstring'
-depends = ['nvim-treesitter']
-on_source = 'Comment.nvim'
+repo = 'folke/ts-comments.nvim'
+on_event = ['BufReadPre', 'BufNewFile', 'CursorHold', 'CursorHoldI']
 lua_source = '''
-requrire("ts_context_commentstring").setup { enable_autocmd = false }
+require("ts-comments").setup {}
 '''
+
+# # Smart and powerful comment plugin for neovim. Supports treesitter, dot
+# # repeat, left-right/up-down motions, hooks, and more
+# [[plugins]]
+# repo = 'numToStr/Comment.nvim'
+# on_map = { n = '<Plug>(comment_', x = '<Plug>(comment_' }
+# hooks_file = '$DPP_HOOKS_DIR/Comment.lua'
+#
+# # Neovim treesitter plugin for setting the commentstring based on the cursor
+# # location in a file.
+# [[plugins]]
+# repo = 'JoosepAlviste/nvim-ts-context-commentstring'
+# depends = ['nvim-treesitter']
+# on_source = 'Comment.nvim'
+# lua_source = '''
+# requrire("ts_context_commentstring").setup { enable_autocmd = false }
+# '''
 
 #==============================================================================
 # Navigation

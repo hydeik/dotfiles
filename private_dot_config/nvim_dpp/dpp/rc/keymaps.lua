@@ -33,8 +33,8 @@ vim.keymap.set("x", ",", "<Nop>")
 vim.keymap.set("n", "s", "<Nop>")
 vim.keymap.set("x", "s", "<Nop>")
 
-vim.keymap.del({ "n", "x", "o" }, "gc")
-vim.keymap.del("n", "gcc")
+-- vim.keymap.del({ "n", "x", "o" }, "gc")
+-- vim.keymap.del("n", "gcc")
 --- }}}
 
 --- Basic mappings {{{

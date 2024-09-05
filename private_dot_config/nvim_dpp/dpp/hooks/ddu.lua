@@ -1,19 +1,20 @@
 -- lua_add {{{
+local ddu = require "rc.plugins.ddu"
 
 vim.keymap.set("n", "<Space>fb", function()
-  vim.fn["ddu#start"] {
+  ddu.start {
     name = "buffer",
     sources = { "buffer" },
   }
 end, { desc = "Buffers" })
 
 vim.keymap.set("n", "<Space>ff", function()
-  vim.fn["ddu#start"] { name = "buffer" }
+  ddu.start { name = "buffer" }
 end, { desc = "Buffers" })
 
 -- Search
 vim.keymap.set("n", "/", function()
-  vim.fn["ddu#start"] {
+  ddu.start {
     name = "search",
     sources = { "line" },
     resume = false,
@@ -22,7 +23,7 @@ vim.keymap.set("n", "/", function()
 end, { desc = "Search Pattern" })
 
 vim.keymap.set("n", "*", function()
-  vim.fn["ddu#start"] {
+  ddu.start {
     name = "search",
     sources = { "line" },
     resume = false,
@@ -31,14 +32,14 @@ vim.keymap.set("n", "*", function()
 end, { desc = "Search <cword>" })
 
 vim.keymap.set("n", "n", function()
-  vim.fn["ddu#start"] {
+  ddu.start {
     name = "search",
     resume = true,
   }
 end, { desc = "Search resume" })
 
 vim.keymap.set("n", "<Space>sh", function()
-  vim.fn["ddu#start"] {
+  ddu.start {
     name = "help",
     sources = { "help" },
   }
@@ -47,9 +48,9 @@ end, { desc = "Help Pages" })
 -- }}}
 
 -- lua_source {{{
-vim.fn["ddu#custom#load_config"](vim.fs.joinpath(vim.env.DPP_CONFIG_DIR, "ddu.ts"))
+require("rc.plugins.ddu").custom.load_config(vim.fs.joinpath(vim.env.DPP_CONFIG_DIR, "ddu.ts"))
 -- }}}
 
 -- lua_post_update {{{
-vim.fn["ddu#set_static_import"]()
+require("rc.plugins.ddu").set_static_import()
 -- }}}

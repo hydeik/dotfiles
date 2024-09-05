@@ -124,7 +124,7 @@ end, opts)
 
 -- lua_source {{{
 
-local group_id = vim.api.nvim_create_augroup("DduUiFfFilterWindow", { clear = true })
+local group_id = vim.api.nvim_create_augroup("ConfigureDduUiFf", { clear = true })
 
 vim.api.nvim_create_autocmd("User", {
   group = group_id,
@@ -141,13 +141,67 @@ vim.api.nvim_create_autocmd("User", {
   desc = "[ddu-ui-ff] A hook before openFilterWindow",
 })
 
-vim.api.vim_create_autocmd("User", {
+vim.api.nvim_create_autocmd("User", {
   group = group_id,
   pattern = "Ddu:ui:ff:closeFilterWindow",
   callback = function()
     vim.fn["ddu#ui#ff#restore_cmaps"]()
   end,
   desc = "[ddu-ui-ff] A hook before closeFilterWindow",
+})
+
+-- set window sizes
+local resize_ddu_ui_window = function()
+  local width_ratio = 0.90
+  local height_ratio = 0.80
+
+  local filter_height = 3
+  local space = 3
+
+  local height = math.floor(vim.o.lines * height_ratio)
+
+  local full_width = math.floor(vim.o.columns * width_ratio)
+  local preview_width = full_width > 200 and math.floor(full_width * 0.4) or math.floor(full_width * 0.6)
+  local width = full_width - preview_width
+
+  local row = math.floor(vim.o.lines * (1 - height_ratio) / 2)
+  local col = math.floor(vim.o.columns * (1 - width_ratio) / 2)
+
+  vim.fn["cmdline#set_option"] {
+    width = width - math.floor(space / 2),
+    col = col,
+    row = row,
+    border = "single",
+    title = "Filter",
+    title_pos = "center",
+  }
+
+  vim.fn["ddu#custom#patch_global"] {
+    uiParams = {
+      ff = {
+        winHeight = height - filter_height,
+        winRow = row + filter_height,
+        winWidth = width - math.floor(space / 2),
+        winCol = col,
+        previewHeight = height,
+        previewRow = row,
+        previewWidth = preview_width,
+        previewCol = col + width + math.floor(space / 2),
+      },
+    },
+  }
+end
+
+resize_ddu_ui_window()
+
+vim.api.nvim_create_autocmd("VimResized", {
+  group = group_id,
+  pattern = "*",
+  callback = function()
+    resize_ddu_ui_window()
+  end,
+  nested = true,
+  desc = "[ddu-ui-ff] Recalculate window sizes for the UI",
 })
 
 -- }}}

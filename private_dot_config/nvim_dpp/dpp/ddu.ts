@@ -71,23 +71,27 @@ export class Config extends BaseConfig {
                     autoAction: {
                         name: "preview",
                     },
-                    filterSplitDirection: "floating",
                     floatingBorder: "single",
-                    onPreview: async (args: {
-                        denops: Denops;
-                        previewWinId: number;
-                    }) => {
-                        await fn.win_execute(
-                            args.denops,
-                            args.previewWinId,
-                            "normal! zt",
-                        );
-                    },
+                    floatingTitle: "Results",
+                    floatingTitlePos: "center",
+                    ignoreEmpty: true,
+                    inputFunc: "cmdline#input",
                     previewFloating: true,
                     previewFloatingBorder: "single",
-                    previewSplit: "horizontal",
-                    //startFilter: true,
+                    previewSplit: "vertical",
+                    previewFloatingTitle: "Preview",
+                    previewFloatingTitlePos: "center",
+                    previewWindowOptions: [
+                        ["&signcolumn", "no"],
+                        ["&foldcolumn", 0],
+                        ["&foldenable", 0],
+                        ["&number", 0],
+                        ["&wrap", 0],
+                        ["&scrolloff", 0],
+                    ],
+                    prompt: "",
                     split: "floating",
+                    startAutoAction: true,
                 } as Partial<FfParams>,
                 filer: {
                     previewFloating: true,
