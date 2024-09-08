@@ -118,6 +118,11 @@ on_source = 'ddc.vim'
 repo = 'LumaKernel/ddc-source-file'
 on_source = 'ddc.vim'
 
+# Powerful and performant file name completion for ddc.vim.
+[[plugins]]
+repo = 'uga-rosa/ddc-source-nvim-lua'
+on_source = 'ddc.vim'
+
 # ddc.vim source that completes from like yanked buffer
 [[plugins]]
 repo = 'kuuote/ddc-source-yank'

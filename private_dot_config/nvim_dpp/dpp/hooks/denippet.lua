@@ -18,17 +18,17 @@ end
 
 vim.keymap.set({ "i", "s" }, "<C-f>", function()
   if vim.fn["denippet#jumpable"](1) then
-    return "<Plug>(denippet-jump-next)"
+    return [[<Plug>(denippet-jump-next)]]
   else
-    return "<C-G>U<Right>"
+    return [[<Right>]]
   end
 end, { expr = true, remap = true })
 
 vim.keymap.set({ "i", "s" }, "<C-b>", function()
   if vim.fn["denippet#jumpable"](-1) then
-    return "<Plug>(denippet-jump-prev)"
+    return [[<Plug>(denippet-jump-prev)]]
   else
-    return "<C-G>U<Left>"
+    return [[<Left>]]
   end
 end, { expr = true, remap = true })
 -- }}}
