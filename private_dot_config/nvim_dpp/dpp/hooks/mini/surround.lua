@@ -19,7 +19,7 @@ require("mini.surround").setup {
   mappings = mappings,
 }
 
-if not vim.tbl_empty(require("dpp").get "which-key.nvim") then
+if not vim.tbl_isempty(require("dpp").get "which-key.nvim") then
   require("which-key").add {
     { mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
     { mappings.delete, desc = "Delete surrounding" },

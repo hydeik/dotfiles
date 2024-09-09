@@ -41,7 +41,7 @@ ai.setup {
   n_lines = 500,
 }
 
-if not vim.tbl_empty(require("dpp").get "which-key.nvim") then
+if not vim.tbl_isempty(require("dpp").get "which-key.nvim") then
   -- register all text objects with which-key
   local objects = {
     { " ", desc = "whitespace" },
