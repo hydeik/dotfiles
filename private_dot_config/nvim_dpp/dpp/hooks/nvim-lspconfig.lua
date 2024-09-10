@@ -47,7 +47,7 @@ mlsp.setup_handlers {
   end,
   lua_ls = require "rc.plugins.lsp.servers.lua_ls",
   vtsls = require "rc.plugins.lsp.servers.vtsls",
-  tsserver = function()
+  ts_ls = function()
     -- disable
   end,
   jsonls = require "rc.plugins.lsp.servers.jsonls",

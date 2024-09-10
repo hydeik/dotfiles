@@ -16,6 +16,7 @@ import { type Params as FilerParams } from "jsr:@shougo/ddu-ui-filer@~1.4.0";
 
 import type { Denops } from "jsr:@denops/std@~7.1.0";
 import * as fn from "jsr:@denops/std@~7.1.0/function";
+import * as autocmd from "jsr:@denops/std/autocmd";
 
 type Params = Record<string, unknown>;
 
@@ -40,350 +41,138 @@ const Filters = {
     sorters: ["sorter_fzf"],
     converters: [],
   },
-  fzf_shuffle: {
+  sorter_alpha_path: {
     matchers: [],
-    sorters: [],
+    sorters: ["sorter_alpha_path"],
+    converters: [],
+  },
+  mtime_substring: {
+    matchers: ["matcher_substring"],
+    sorters: ["sorter_mtime"],
     converters: [],
   },
 } satisfies Filters;
 
-// export class Config extends BaseConfig {
-//     override config(args: ConfigArguments): Promise<void> {
-//         args.setAlias("source", "file_rg", "file_external");
-//         args.setAlias("source", "file_git", "file_external");
-//         args.setAlias(
-//             "filter",
-//             "matcher_ignore_current_buffer",
-//             "matcher_ignores",
-//         );
-//         args.setAlias("action", "tabopen", "open");
-//
-//         args.contextBuilder.patchGlobal({
-//             ui: "ff",
-//             profile: false,
-//             uiOptions: {
-//                 ff: {
-//                     actions: {
-//                         kensaku: async (args: {
-//                             denops: Denops;
-//                             options: DduOptions;
-//                         }) => {
-//                             await args.denops.dispatcher.updateOptions(
-//                                 args.options.name,
-//                                 {
-//                                     sourceOptions: {
-//                                         _: {
-//                                             matchers: ["matcher_kensaku"],
-//                                         },
-//                                     },
-//                                 },
-//                             );
-//                             await args.denops.cmd(
-//                                 "echomsg 'change to kensaku matcher'",
-//                             );
-//
-//                             return ActionFlags.Persist;
-//                         },
-//                     },
-//                 },
-//                 filer: {
-//                     toggle: true,
-//                 },
-//             },
-//             uiParams: {
-//                 ff: {
-//                     autoAction: {
-//                         name: "preview",
-//                     },
-//                     floatingBorder: "single",
-//                     floatingTitle: "Results",
-//                     floatingTitlePos: "center",
-//                     ignoreEmpty: true,
-//                     inputFunc: "cmdline#input",
-//                     previewFloating: true,
-//                     previewFloatingBorder: "single",
-//                     previewSplit: "vertical",
-//                     previewFloatingTitle: "Preview",
-//                     previewFloatingTitlePos: "center",
-//                     previewWindowOptions: [
-//                         ["&signcolumn", "no"],
-//                         ["&foldcolumn", 0],
-//                         ["&foldenable", 0],
-//                         ["&number", 0],
-//                         ["&wrap", 0],
-//                         ["&scrolloff", 0],
-//                     ],
-//                     prompt: "",
-//                     split: "floating",
-//                     startAutoAction: true,
-//                 } as Partial<FfParams>,
-//                 filer: {
-//                     previewFloating: true,
-//                     sort: "filename",
-//                     sortTreesFirst: true,
-//                     split: "no",
-//                     toggle: true,
-//                 } as Partial<FilerParams>,
-//             },
-//             sourceOptions: {
-//                 _: {
-//                     ignoreCase: true,
-//                     matchers: ["matcher_substring"],
-//                     smartCase: true,
-//                 },
-//                 buffer: {
-//                     converters: ["converter_hl_dir"],
-//                     columns: ["icon_filename"],
-//                 },
-//                 file_old: {
-//                     matchers: [
-//                         "matcher_relative",
-//                         "matcher_substring",
-//                     ],
-//                     converters: ["converter_hl_dir"],
-//                     columns: ["icon_filename"],
-//                 },
-//                 file_git: {
-//                     matchers: [
-//                         "matcher_relative",
-//                         "matcher_substring",
-//                     ],
-//                     sorters: ["sorter_mtime"],
-//                     converters: ["converter_hl_dir"],
-//                     columns: ["icon_filename"],
-//                 },
-//                 file_rec: {
-//                     matchers: [
-//                         "matcher_substring",
-//                         "matcher_hidden",
-//                     ],
-//                     sorters: ["sorter_mtime"],
-//                     converters: [
-//                         "converter_hl_dir",
-//                     ],
-//                     columns: ["icon_filename"],
-//                 },
-//                 file_fd: {
-//                     matchers: [
-//                         "matcher_substring",
-//                         "matcher_hidden",
-//                     ],
-//                     converters: ["converter_hl_dir"],
-//                     columns: ["icon_filename"],
-//                 },
-//                 file_rg: {
-//                     matchers: [
-//                         "matcher_substring",
-//                         "matcher_hidden",
-//                     ],
-//                     converters: ["converter_hl_dir"],
-//                     columns: ["icon_filename"],
-//                 },
-//                 file: {
-//                     matchers: [
-//                         "matcher_substring",
-//                         "matcher_hidden",
-//                     ],
-//                     sorters: ["sorter_alpha"],
-//                     converters: ["converter_hl_dir"],
-//                     columns: ["icon_filename"],
-//                 },
-//                 dpp: {
-//                     defaultAction: "cd",
-//                     actions: {
-//                         update: async (args: ActionArguments<Params>) => {
-//                             const names = args.items.map((item) =>
-//                                 (item.action as DppAction).__name
-//                             );
-//
-//                             await args.denops.call(
-//                                 "dpp#async_ext_action",
-//                                 "installer",
-//                                 "update",
-//                                 { names },
-//                             );
-//
-//                             return Promise.resolve(ActionFlags.None);
-//                         },
-//                     },
-//                 },
-//                 command_args: {
-//                     defaultAction: "execute",
-//                 },
-//                 help: {
-//                     defaultAction: "open",
-//                 },
-//                 markdown: {
-//                     sorters: [],
-//                 },
-//                 line: {
-//                     matchers: [
-//                         "matcher_kensaku",
-//                     ],
-//                 },
-//                 path_history: {
-//                     defaultAction: "uiCd",
-//                 },
-//                 rg: {
-//                     matchers: [
-//                         "matcher_substring",
-//                         "matcher_files",
-//                     ],
-//                     sorters: ["sorter_alpha"],
-//                 },
-//             },
-//             sourceParams: {
-//                 file_git: {
-//                     cmd: ["git", "ls-files", "-co", "--exclude-standard"],
-//                 },
-//                 rg: {
-//                     args: [
-//                         "--ignore-case",
-//                         "--column",
-//                         "--no-heading",
-//                         "--color",
-//                         "never",
-//                     ],
-//                 },
-//                 file_rg: {
-//                     cmd: [
-//                         "rg",
-//                         "--files",
-//                         "--glob",
-//                         "!.git",
-//                         "--color",
-//                         "never",
-//                         "--no-messages",
-//                     ],
-//                     updateItems: 50000,
-//                 },
-//             },
-//             filterParams: {
-//                 matcher_kensaku: {
-//                     highlightMatched: "Search",
-//                 },
-//                 matcher_substring: {
-//                     highlightMatched: "Search",
-//                 },
-//                 matcher_ignore_files: {
-//                     ignoreGlobs: ["test_*.vim"],
-//                     ignorePatterns: [],
-//                 },
-//                 converter_hl_dir: {
-//                     hlGroup: ["Directory", "Keyword"],
-//                 },
-//             },
-//             kindOptions: {
-//                 file: {
-//                     defaultAction: "open",
-//                     actions: {
-//                         grep: async (args: ActionArguments<Params>) => {
-//                             const action = args.items[0]?.action as FileAction;
-//
-//                             await args.denops.call("ddu#start", {
-//                                 name: args.options.name,
-//                                 push: true,
-//                                 sources: [
-//                                     {
-//                                         name: "rg",
-//                                         params: {
-//                                             path: action.path,
-//                                             input: await fn.input(
-//                                                 args.denops,
-//                                                 "Pattern: ",
-//                                             ),
-//                                         },
-//                                     },
-//                                 ],
-//                             });
-//
-//                             return Promise.resolve(ActionFlags.None);
-//                         },
-//                     },
-//                 },
-//                 word: {
-//                     defaultAction: "append",
-//                 },
-//                 deol: {
-//                     defaultAction: "switch",
-//                 },
-//                 action: {
-//                     defaultAction: "do",
-//                 },
-//                 readme_viewer: {
-//                     defaultAction: "open",
-//                 },
-//                 url: {
-//                     defaultAction: "browse",
-//                 },
-//             },
-//             kindParams: {},
-//             actionOptions: {
-//                 narrow: {
-//                     quit: false,
-//                 },
-//                 tabopen: {
-//                     quit: false,
-//                 },
-//             },
-//         });
-//
-//         return Promise.resolve();
-//     }
-// }
+const FiltersLocal = {
+  file_hl_dir: {
+    ...Filters.fzf,
+    converters: ["converter_hl_dir"],
+  },
+  file_hl_dir_icons: {
+    ...Filters.fzf,
+    converters: [
+      "converter_hl_dir",
+      "icon_filename",
+    ],
+  },
+  git_status: {
+    ...Filters.fzf,
+    converters: [
+      "converter_hl_dir",
+      "icon_filename",
+      "converter_git_status",
+    ],
+  },
+} satisfies Filters;
 
-async function mainConfig(args: ConfigArguments) {
-  // X<ddu-global>
+const IgnoredDirs = [
+  ".git",
+  ".svn",
+  ".venv",
+  "__pycache__",
+  ".pytest_cache",
+  "node_modules",
+];
+
+function mainConfig(args: ConfigArguments) {
+  args.setAlias("source", "file_fd", "file_external");
+  args.setAlias("source", "file_rg", "file_external");
+  args.setAlias("source", "file_git", "file_external");
+
   args.contextBuilder.patchGlobal({
     actionOptions: {
-      narrow: {
-        quit: false,
-      },
-    },
-    filterParams: {
-      // X<ddu-filter-converter_hl_dir>
-      converter_hl_dir: {
-        hlGroup: "String",
-      },
-      // X<ddu-filter-matcher_fzf>
-      matcher_fzf: {
-        highlightMatched: "DduMatch",
-      },
-      // X<ddu-filter-matcher_kensaku>
-      matcher_kensaku: {
-        highlightMatched: "DduMatch",
-      },
+      narrow: { quit: false },
+      echo: { quit: false },
+      echoDiff: { quit: false },
     },
     kindOptions: {
-      callback: { defaultAction: "call" },
-      // X<ddu-kind-file>
+      callback: {
+        defaultAction: "call",
+      },
       file: {
         defaultAction: "open",
       },
-      help: { defaultAction: "tabopen" },
-      lsp: { defaultAction: "open" },
-      lsp_codeAction: { defaultAction: "apply" },
-      tag: { defaultAction: "jump" },
-    },
-    postFilters: [{
-      name: "converter_color",
-      params: {
-        group: "DduNormal",
+      lsp: {
+        defaultAction: "open",
       },
-    }, "converter_normalize_hl"],
+      lsp_codeAction: {
+        defaultAction: "apply",
+      },
+      tag: {
+        defaultAction: "jump",
+      },
+      url: {
+        defaultAction: "browse",
+      },
+    },
     sourceOptions: {
       _: {
         ignoreCase: true,
+        smartCase: true,
         ...Filters.fzf,
-      },
-      help: {
-        ...Filters.fzf_shuffle,
       },
     },
     sourceParams: {
-      file_external: {
-        cmd: ["fd", ".", "-H", "-I", "-E", ".git", "-t", "f"],
+      file_rec: {
+        ignoredDirectories: IgnoredDirs,
+      },
+      file_fd: {
+        cmd: [
+          "fd",
+          ".",
+          "--hidden",
+          "--no-ignore",
+          "--type",
+          "f",
+          "--color",
+          "never",
+          ...IgnoredDirs.map((x) => {
+            return ["--exclude", x];
+          }).flat(),
+        ],
+      },
+      file_rg: {
+        cmd: [
+          "rg",
+          "--files",
+          "--hidden",
+          "--smart-case",
+          "--no-ignore-vcs",
+          "--color=never",
+          ...IgnoredDirs.map((x) => {
+            return "--glob=!" + x;
+          }),
+        ],
       },
     },
   });
+}
+
+function applyLocalPatch(args: ConfigArguments) {
+  args.contextBuilder.patchLocal("dpp", {
+    sources: ["dpp"],
+  });
+}
+
+export class Config extends BaseConfig {
+  async config(args: ConfigArguments) {
+    await autocmd.group(args.denops, augroup, (helper) => {
+      helper.remove("*");
+      helper.define("User", "RcAutocmd:Ddu:Ready", ":", { once: true });
+    });
+    mainConfig(args);
+    applyLocalPatch(args);
+    // await selectorConfig(args);
+    autocmd.emit(args.denops, "User", "RcAutocmd:Ddu:Ready");
+  }
 }
