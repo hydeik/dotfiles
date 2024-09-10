@@ -11,9 +11,8 @@ import {
   type ConfigArguments,
 } from "jsr:@shougo/ddu-vim@~6.1.0/config";
 
-import { Params as DduUiFfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
+import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
 
-// import { type ActionData as FileAction } from "jsr:@shougo/ddu-kind-file@~0.9.0";
 // import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
 // import { type Params as FilerParams } from "jsr:@shougo/ddu-ui-filer@~1.4.0";
 
@@ -26,29 +25,36 @@ import { is } from "jsr:@core/unknownutil";
 
 const augroup = "RcAutocmd:DduUiFf";
 
-type Filter = {
-  matchers: SourceOptions["matchers"];
-  sorters: SourceOptions["sorters"];
-  converters: SourceOptions["converters"];
-};
+// type Filter = {
+//   matchers: SourceOptions["matchers"];
+//   sorters: SourceOptions["sorters"];
+//   converters: SourceOptions["converters"];
+// };
+//
+// function updateFilter(args: UiActionArguments<BaseParams>, filter: Filter) {
+//   const sources = args.options.sources.map((s) => {
+//     if (is.String(s)) {
+//       s = { name: s };
+//     }
+//     return {
+//       ...s,
+//       options: {
+//         ...s.options,
+//         ...filter,
+//       },
+//     };
+//   });
+//   args.ddu.updateOptions({
+//     sources,
+//   });
+// }
 
-function updateFilter(args: UiActionArguments<BaseParams>, filter: Filter) {
-  const sources = args.options.sources.map((s) => {
-    if (is.String(s)) {
-      s = { name: s };
-    }
-    return {
-      ...s,
-      options: {
-        ...s.options,
-        ...filter,
-      },
-    };
-  });
-  args.ddu.updateOptions({
-    sources,
-  });
-}
+type FfWindowSize = {
+  rowTopLeft: number;
+  colTopLeft: number;
+  width: number;
+  height: number;
+};
 
 type DduUiFfSize = {
   winRow: number;
@@ -63,18 +69,78 @@ type DduUiFfSize = {
   previewWidth: number;
 };
 
-async function calculateUiSize(
+const FILTER_HEIGHT = 3;
+const SPACING = 1; // spacing between result and preview windows
+
+async function calculateWindowSize(
   denops: Denops,
   widthRatio: number,
   heightRatio: number,
-  splitRatio: number,
-): Promise<DduUiFfSize> {
+): Promise<[x: number, y: number, width: number, height: number]> {
   const columns = await option.columns.get(denops);
   const lines = await option.lines.get(denops);
-  const FRAME_SIZE = 2;
+  // Width and height of the floating window
+  const width = Math.floor(columns * widthRatio);
+  const height = Math.floor(lines * heightRatio);
+  // Top-left corner position of the floating window
+  const x = Math.floor((lines - width) / 2);
+  const y = Math.floor((columns - height) / 2);
+  return [x, y, width, height];
+}
 
-  const winWidthTotal = Math.floor(columns * widthRatio);
-  const winHeightTotal = Math.floor(lines * heightRatio);
+async function calculateUiSizeFloatingVertical(
+  denops: Denops,
+  widthRatio: number,
+  heightRatio: number,
+  prevewRatio: number,
+): Promise<DduUiFfSize> {
+  const [row, col, width, height] = await calculateWindowSize(
+    denops,
+    widthRatio,
+    heightRatio,
+  );
+
+  const preview_width = Math.floor(height * prevewRatio);
+
+  return {
+    winRow: row,
+    winCol: col,
+    winWidth: width - preview_width - SPACING,
+    winHeight: height - FILTER_HEIGHT,
+    previewFloating: true,
+    previewSplit: "vertical",
+    previewRow: row,
+    previewCol: col + width - preview_width + SPACING,
+    previewHeight: height - FILTER_HEIGHT,
+    previewWidth: preview_width,
+  };
+}
+
+async function calculateUiSizeFloatingHorizontal(
+  denops: Denops,
+  widthRatio: number,
+  heightRatio: number,
+  prevewRatio: number,
+): Promise<DduUiFfSize> {
+  const [row, col, width, height] = await calculateWindowSize(
+    denops,
+    widthRatio,
+    heightRatio,
+  );
+
+  const preview_height = Math.floor((height - FILTER_HEIGHT) * prevewRatio);
+  return {
+    winRow: row + preview_height + SPACING,
+    winCol: col,
+    winWidth: width,
+    winHeight: height - preview_height,
+    previewFloating: true,
+    previewSplit: "horizontal",
+    previewRow: row,
+    previewCol: col,
+    previewHeight: preview_height - SPACING,
+    previewWidth: width,
+  };
 }
 
 async function setUiSize(args: ConfigArguments) {
@@ -96,9 +162,6 @@ async function setUiSize(args: ConfigArguments) {
 
 export class Config extends BaseConfig {
   async config(args: ConfigArguments) {
-    const nvim = args.denops.meta.host === "nvim";
-    const floating = nvim;
-
     args.contextBuilder.patchGlobal({
       ui: "ff",
       uiParams: {
@@ -106,13 +169,13 @@ export class Config extends BaseConfig {
           autoAction: {
             name: "preview",
           },
-          floatingBorder: "single",
-          previewFloating: floating,
+          floatingBorder: "rounded",
+          previewFloating: true,
           previewFloatingBorder: "single",
           previewFloatingZindex: 100,
           previewSplit: "vertical",
-          split: floating ? "floating" : "tab",
-        } satisfies Partial<DduUiFfParams>,
+          split: "floating",
+        } satisfies Partial<FfParams>,
       },
       uiOptions: {
         ff: {
