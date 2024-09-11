@@ -148,53 +148,107 @@ async function setFileTypeAutocmd(args: ConfigArguments) {
     })<CR>`;
   };
 
-  const keymapTable: Record<string, lambda.Fn> = {
-    // common mappings
-    _: async () => {
-      await mapping.map(denops, "<CR>", action("itemAction"), nno);
-      await mapping.map(denops, "<Space>", action("toggleSelectItem"), {
-        ...opt,
-        mode: ["n", "x"],
-      });
-      await mapping.map(denops, "*", action("toggleAllItems"), nno);
-      await mapping.map(denops, "a", action("chooseAction"), nno);
-      await mapping.map(denops, "A", action("inputAction"), nno);
-      await mapping.map(denops, "i", action("openFilterWindow"), nno);
-      await mapping.map(denops, "K", action("kensaku"), nno);
-      // await mapping.map(
-      //   denops,
-      //   "o",
-      //   action("expandItem", { mode: "toggle" }),
-      //   nno,
-      // );
-      await mapping.map(denops, "O", action("collapseItem"), nno);
-      await mapping.map(denops, "p", action("previewPath"), nno);
-      await mapping.map(denops, "P", action("togglePreview"), nno);
-      await mapping.map(denops, "q", action("quit"), nno);
+  const itemAction = (name: string, params: unknown = {}) => {
+    return action("itemAction", { name, params });
+  };
 
-      await mapping.map(denops, "<C-g>", action("quit"), nno);
-      await mapping.map(denops, "<C-j>", action("cursorNext"), nno);
-      await mapping.map(denops, "<C-k>", action("cursorPrevious"), nno);
-      // await mapping.map(
-      //   denops,
-      //   "<C-l>",
-      //   action("redraw", { method: "refreshItem" }),
-      //   nno,
-      // );
-      await mapping.map(denops, "<C-q>", action("quickfix"), nno);
-    },
+  const actionL = (name: string, params: unknown = {}) => {
+    return (denops: Denops) => {
+      return denops.call("ddu#ui#do_action", name, params);
+    };
+  };
+  const itemActionL = (name: string, params: unknown = {}) => {
+    return actionL("itemAction", { name, params });
   };
 
   const ddu_ff = lambda.register(denops, async () => {
-    await keymapTable["_"]?.();
-    // const name = await b.get(denops, "ddu_ui_name");
-    // if (name != null) {
-    //   await keymapTable[name]?.();
-    // }
+    const ui_name: string | undefined = await b.get(denops, "ddu_ui_name");
+
+    await mapping.map(denops, "<CR>", action("itemAction"), nno);
+    await mapping.map(denops, "<Space>", action("toggleSelectItem"), {
+      ...opt,
+      mode: ["n", "x"],
+    });
+    await mapping.map(denops, "*", action("toggleAllItems"), nno);
+    await mapping.map(denops, "a", action("chooseAction"), nno);
+    await mapping.map(denops, "A", action("inputAction"), nno);
+    await mapping.map(denops, "G", itemAction("grep"), nno);
+    await mapping.map(denops, "i", action("openFilterWindow"), nno);
+    await mapping.map(denops, "K", action("kensaku"), nno);
+    await mapping.map(
+      denops,
+      "o",
+      action("expandItem", { mode: "toggle" }),
+      nno,
+    );
+    await mapping.map(denops, "O", action("collapseItem"), nno);
+    await mapping.map(denops, "q", action("quit"), nno);
+    await mapping.map(denops, "yy", itemAction("yank"), nno);
+
+    await mapping.map(denops, "<C-g>", action("quit"), nno);
+    await mapping.map(denops, "<C-j>", action("cursorNext"), nno);
+    await mapping.map(denops, "<C-k>", action("cursorPrevious"), nno);
+    await mapping.map(
+      denops,
+      "<C-l>",
+      action("redraw", { method: "refreshItem" }),
+      nno,
+    );
+    await mapping.map(denops, "<C-q>", itemAction("quickfix"), nno);
+    await mapping.map(
+      denops,
+      "<C-t>",
+      itemAction("open", { command: "tabedit" }),
+      nno,
+    );
+    await mapping.map(
+      denops,
+      "<C-v>",
+      itemAction("open", { command: "vsplit" }),
+      nno,
+    );
+    await mapping.map(
+      denops,
+      "<C-x>",
+      itemAction("open", { command: "split" }),
+      nno,
+    );
+
+    if (ui_name === "filer") {
+      await mapping.map(denops, "N", itemAction("newFile"), nno);
+    } else {
+      await mapping.map(denops, "N", itemAction("new"), nno);
+    }
+
+    if (ui_name === "filer") {
+      await mapping.map(denops, "X", itemAction("trash"), nno);
+    } else {
+      await mapping.map(denops, "X", itemAction("delete"), nno);
+    }
+
+    if (ui_name === "git_status") {
+      await mapping.map(denops, "c", itemAction("commit"), nno);
+      await mapping.map(denops, "d", itemAction("diff"), nno);
+      await mapping.map(denops, "h", itemAction("add"), nno);
+      await mapping.map(denops, "l", itemAction("reset"), nno);
+    }
+
+    if (ui_name === "git_diff") {
+      const p = lambda.add(denops, async () => {
+        const view = await denops.call("winsaveview");
+        await itemActionL("applyPatch")(denops);
+        await denops.call("winrestview", view);
+      });
+      await mapping.map(denops, "p", `<Cmd>call ${p.request()}<CR>`, nno);
+    }
   });
 
   await autocmd.group(denops, augroup, (helper) => {
-    helper.define("FileType", "ddu-ff", ddu_ff);
+    helper.define(
+      "FileType",
+      "ddu-ff",
+      `call denops#notify("${args.denops.name}", "${ddu_ff}", [])`,
+    );
   });
 }
 
@@ -224,7 +278,7 @@ export class Config extends BaseConfig {
           ],
           prompt: "> ",
           split: "floating",
-          // startAutoAction: true,
+          startAutoAction: true,
         } satisfies Partial<FfParams>,
       },
       uiOptions: {

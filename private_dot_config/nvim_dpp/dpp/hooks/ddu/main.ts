@@ -58,6 +58,10 @@ const FiltersLocal = {
     ...Filters.fzf,
     converters: ["converter_hl_dir"],
   },
+  file_icons: {
+    ...Filters.fzf,
+    converters: ["icon_filename"],
+  },
   file_hl_dir_icons: {
     ...Filters.fzf,
     converters: [
@@ -121,6 +125,18 @@ function mainConfig(args: ConfigArguments) {
         smartCase: true,
         ...Filters.fzf,
       },
+      file: {
+        ...FiltersLocal.file_icons,
+      },
+      file_rec: {
+        ...FiltersLocal.file_hl_dir_icons,
+      },
+      file_fd: {
+        ...FiltersLocal.file_hl_dir_icons,
+      },
+      file_rg: {
+        ...FiltersLocal.file_hl_dir_icons,
+      },
     },
     sourceParams: {
       file_rec: {
@@ -131,6 +147,7 @@ function mainConfig(args: ConfigArguments) {
           "fd",
           ".",
           "--hidden",
+          "--follow",
           "--no-ignore",
           "--type",
           "f",
