@@ -48,7 +48,10 @@ end, { desc = "Help Pages" })
 -- }}}
 
 -- lua_source {{{
-require("rc.plugins.ddu").custom.load_config(vim.fs.joinpath(vim.env.DPP_CONFIG_DIR, "ddu.ts"))
+-- require("rc.plugins.ddu").custom.load_config(vim.fs.joinpath(vim.env.DPP_CONFIG_DIR, "ddu.ts"))
+local ddu_ = require "rc.plugins.ddu"
+ddu_.custom.load_config(vim.fs.joinpath(vim.env.DPP_HOOKS_DIR, "ddu", "main.ts"))
+ddu_.custom.load_config(vim.fs.joinpath(vim.env.DPP_HOOKS_DIR, "ddu", "ff.ts"))
 -- }}}
 
 -- lua_post_update {{{
