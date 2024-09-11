@@ -11,11 +11,9 @@ import {
   type ConfigArguments,
 } from "jsr:@shougo/ddu-vim@~6.1.0/config";
 
-import { Params as DduUiFfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
-
-// import { type ActionData as FileAction } from "jsr:@shougo/ddu-kind-file@~0.9.0";
 import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
-// import { type Params as FilerParams } from "jsr:@shougo/ddu-ui-filer@~1.4.0";
+
+import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
 
 import type { Denops } from "jsr:@denops/std";
 import * as autocmd from "jsr:@denops/std/autocmd";
@@ -227,7 +225,7 @@ export class Config extends BaseConfig {
           prompt: "> ",
           split: "floating",
           // startAutoAction: true,
-        } satisfies Partial<DduUiFfParams>,
+        } satisfies Partial<FfParams>,
       },
       uiOptions: {
         ff: {
