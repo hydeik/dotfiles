@@ -1,9 +1,9 @@
 #=============================================================================
 # Denops library
 #=============================================================================
+[[plugins]] # denops.vim
 # An ecosystem of Vim/Neovim which allows developers to write cross-platform
 # plugins in Deno
-[[plugins]]
 repo = 'vim-denops/denops.vim'
 on_event = ['BufRead', 'CursorHold']
 hook_source = '''
@@ -13,12 +13,16 @@ let g:denops#server#deno_args = ['-q', '--no-lock', '--unstable-kv', '-A']
 #=============================================================================
 # Editor
 #=============================================================================
+[[plugins]] # kensanku.vim
 # Search Japanese text in Vim's buffer with Roma-ji by Migemo
-[[plugins]]
 repo = 'lambdalisue/kensaku.vim'
 depends = ['denops.vim']
 denops_wait = false
 
+[[plugins]] # vim-mr
+# Search Japanese text in Vim's buffer with Roma-ji by Migemo
+repo = 'lambdalisue/vim-mr'
+depends = ['denops.vim']
 ## # SKK implements for Vim/Neovim with denops.vim
 ## [[plugins]]
 ## repo = 'vim-skk/skkeleton'
@@ -32,10 +36,18 @@ denops_wait = false
 ## on_source = 'skkeleton'
 
 #=============================================================================
+# Git
+#=============================================================================
+[[plugins]] # vim-gin
+# Gin makes you drunk on Git
+repo = 'lambdalisue/vim-gin'
+on_cmd = ['Gin']
+
+#=============================================================================
 # Filetypes
 #=============================================================================
+[[plugins]] # bufpreview.vim
 # A markdown previewer for Vim and Neovim
-[[plugins]]
 repo = 'github.com/kat0h/bufpreview.vim'
 depends = ['denops.vim']
 build = 'deno task prepare'
@@ -44,15 +56,15 @@ on_cmd = ['PreviewMarkdown', 'PreviewMarkdownToggle']
 # vim.g.bufpreview_server_port = '11223'
 # '''
 
+[[plugins]] # jsonyaml.vim
 # JSON/YAML conversion plugin for Vim/Neovim
-[[plugins]]
 repo = 'github.com/kuuote/jsonyaml.vim'
 depends = ['denops.vim']
 on_cmd = ['JY', 'YJ']
 hooks_file = '$DPP_HOOKS_DIR/jsonyaml.lua'
 
+[[plugins]] # jsontoml.vim
 # JSON/TOML conversion plugin for Vim/Neovim
-[[plugins]]
 repo = 'github.com/yukimemi/jsontoml.vim'
 depends = ['denops.vim']
 on_cmd = ['JT', 'TJ']

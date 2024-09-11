@@ -31,6 +31,7 @@ type Filter = {
   matchers: SourceOptions["matchers"];
   sorters: SourceOptions["sorters"];
   converters: SourceOptions["converters"];
+  columns: SourceOptions["columns"];
 };
 
 type Filters = Record<string, Filter>;
@@ -40,16 +41,19 @@ const Filters = {
     matchers: ["matcher_fzf"],
     sorters: ["sorter_fzf"],
     converters: [],
+    columns: [],
   },
   sorter_alpha_path: {
     matchers: [],
     sorters: ["sorter_alpha_path"],
     converters: [],
+    columns: [],
   },
   mtime_substring: {
     matchers: ["matcher_substring"],
     sorters: ["sorter_mtime"],
     converters: [],
+    columns: [],
   },
 } satisfies Filters;
 
@@ -60,22 +64,22 @@ const FiltersLocal = {
   },
   file_icons: {
     ...Filters.fzf,
-    converters: ["icon_filename"],
+    columns: ["icon_filename"],
   },
   file_hl_dir_icons: {
     ...Filters.fzf,
     converters: [
       "converter_hl_dir",
-      "icon_filename",
     ],
+    columns: ["icon_filename"],
   },
   git_status: {
     ...Filters.fzf,
     converters: [
       "converter_hl_dir",
-      "icon_filename",
       "converter_git_status",
     ],
+    columns: ["icon_filename"],
   },
 } satisfies Filters;
 
@@ -125,8 +129,11 @@ function mainConfig(args: ConfigArguments) {
         smartCase: true,
         ...Filters.fzf,
       },
+      buffer: {
+        ...FiltersLocal.file_hl_dir_icons,
+      },
       file: {
-        ...FiltersLocal.file_icons,
+        ...FiltersLocal.file_hl_dir_icons,
       },
       file_rec: {
         ...FiltersLocal.file_hl_dir_icons,
@@ -179,6 +186,27 @@ function applyLocalPatch(args: ConfigArguments) {
   args.contextBuilder.patchLocal("dpp", {
     sources: ["dpp"],
   });
+
+  args.contextBuilder.patchLocal("buffer_mru", {
+    sources: [{ name: "buffer" }, { name: "mru" }],
+  });
+
+  for (const type of ["mru", "mrw", "mrr", "mrd"]) {
+    args.contextBuilder.patchLocal(type, {
+      sources: [
+        {
+          name: "mr",
+          options: {
+            converters: ["converter_hl_dir"],
+            columns: ["icon_filename"],
+          },
+          params: {
+            kind: type,
+          },
+        },
+      ],
+    });
+  }
 }
 
 export class Config extends BaseConfig {

@@ -146,6 +146,11 @@ on_source = 'ddu.vim'
 repo = 'mikanIchinose/ddu-source-markdown'
 on_source = 'ddu.vim'
 
+[[plugins]] # ddu-source-mr
+repo = 'kuuote/ddu-source-mr'
+depends = ['vim-mr']
+on_source = 'ddu.vim'
+
 [[plugins]] # ddu-source-jumplist
 repo = 'kamecha/ddu-source-jumplist'
 on_source = 'ddu.vim'
@@ -217,7 +222,7 @@ on_source = 'ddu.vim'
 
 # Icon and filename column for ddu.vim
 [[plugins]] # ddu-column-icon_filename
-repo = 'github.com/ryota2357/ddu-column-icon_filename'
+repo = 'ryota2357/ddu-column-icon_filename'
 on_source = 'ddu.vim'
 
 ##
