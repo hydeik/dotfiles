@@ -168,16 +168,15 @@ on_lua = 'oil'
 hooks_file = '$DPP_HOOKS_DIR/oil.lua'
 
 
-
 #==============================================================================
 # UI
 #==============================================================================
-[[plugins]] # cmdline.vim
-# Display command line text in floating window
-repo = 'Shougo/cmdline.vim'
-on_event = ['CmdlineEnter']
-on_func = ['cmdline#enable', 'cmdline#input']
-hooks_file = '$DPP_HOOKS_DIR/cmdline.lua'
+# [[plugins]] # cmdline.vim
+# # Display command line text in floating window
+# repo = 'Shougo/cmdline.vim'
+# on_event = ['CmdlineEnter']
+# on_func = ['cmdline#enable', 'cmdline#input']
+# hooks_file = '$DPP_HOOKS_DIR/cmdline.lua'
 
 [[plugins]] # mini.icons (mini.nvim)
 # Icon providers.
@@ -189,6 +188,24 @@ hooks_file = '$DPP_HOOKS_DIR/mini/icons.lua'
 repo = 'echasnovski/mini.indentscope'
 on_event = ['BufReadPost', 'BufNewFile']
 hooks_file = '$DPP_HOOKS_DIR/mini/indentscope.lua'
+
+
+[[plugins]] # nui.nvim
+repo = 'MunifTanjim/nui.nvim'
+on_lua = 'nui'
+
+[[plugins]] # nvim-notify
+repo = 'rcarriga/nvim-notify'
+on_lua = 'notify'
+# on_event = ['BufRead']
+hooks_file = '$DPP_HOOKS_DIR/nvim-notify.lua'
+
+[[plugins]] # noice.nvim
+repo = 'folke/noice.nvim'
+on_lua = 'noice'
+on_event = ['BufReadPre', 'BufNewFile', 'CursorHold', 'CursorHoldI']
+depends = ["nui.nvim", "nvim-notify"]
+hooks_file = '$DPP_HOOKS_DIR/noice.lua'
 
 [[plugins]] # which-key.nvim
 # Create key bindings that stick. WhichKey helps you remember your Neovim
