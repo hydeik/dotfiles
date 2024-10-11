@@ -3,12 +3,12 @@ import {
   ActionFlags,
   type DduOptions,
   type SourceOptions,
-} from "jsr:@shougo/ddu-vim@~6.1.0/types";
+} from "jsr:@shougo/ddu-vim@~6.2.0/types";
 
 import {
   BaseConfig,
   type ConfigArguments,
-} from "jsr:@shougo/ddu-vim@~6.1.0/config";
+} from "jsr:@shougo/ddu-vim@~6.2.0/config";
 
 import { type ActionData as FileAction } from "jsr:@shougo/ddu-kind-file@~0.9.0";
 import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
@@ -81,6 +81,15 @@ const FiltersLocal = {
     ],
     columns: ["icon_filename"],
   },
+  rg: {
+    matchers: [
+      "matcher_substring",
+      "matcher_files",
+    ],
+    sorters: ["sorter_alpha"],
+    converters: [],
+    columns: ["icon_filename"],
+  },
 } satisfies Filters;
 
 const IgnoredDirs = [
@@ -144,6 +153,12 @@ function mainConfig(args: ConfigArguments) {
       file_rg: {
         ...FiltersLocal.file_hl_dir_icons,
       },
+      line: {
+        matchers: ["matcher_kensaku"],
+      },
+      rg: {
+        ...FiltersLocal.rg,
+      },
     },
     sourceParams: {
       file_rec: {
@@ -188,7 +203,7 @@ function applyLocalPatch(args: ConfigArguments) {
   });
 
   args.contextBuilder.patchLocal("buffer_mru", {
-    sources: [{ name: "buffer" }, { name: "mru" }],
+    sources: ["buffer", "mru"],
   });
 
   for (const type of ["mru", "mrw", "mrr", "mrd"]) {

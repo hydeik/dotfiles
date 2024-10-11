@@ -4,14 +4,12 @@ import {
   type DduOptions,
   type SourceOptions,
   // type UiActionArguments,
-} from "jsr:@shougo/ddu-vim@~6.1.0/types";
+} from "jsr:@shougo/ddu-vim@~6.2.0/types";
 
 import {
   BaseConfig,
   type ConfigArguments,
-} from "jsr:@shougo/ddu-vim@~6.1.0/config";
-
-import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
+} from "jsr:@shougo/ddu-vim@~6.2.0/config";
 
 import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
 
@@ -22,98 +20,12 @@ import * as mapping from "jsr:@denops/std/mapping";
 import * as option from "jsr:@denops/std/option";
 import { b } from "jsr:@denops/std/variable";
 
-const augroup = "RcAutocmd:DduUiFf";
+import { calculateUiSize } from "./helper.ts";
 
-// type Filter = {
-//   matchers: SourceOptions["matchers"];
-//   sorters: SourceOptions["sorters"];
-//   converters: SourceOptions["converters"];
-// };
-
-type DduUiSize = {
-  winRow: number;
-  winCol: number;
-  winWidth: number;
-  winHeight: number;
-  previewFloating: boolean;
-  previewSplit: "vertical" | "horizontal";
-  previewRow: number;
-  previewCol: number;
-  previewHeight: number;
-  previewWidth: number;
-};
-
-const FILTER_HEIGHT = 2;
-const SPACING = 1;
-
-async function calculateWindowSize(
-  denops: Denops,
-  widthRatio: number,
-  heightRatio: number,
-): Promise<[x: number, y: number, width: number, height: number]> {
-  const columns = await option.columns.get(denops);
-  const lines = await option.lines.get(denops);
-
-  const width = Math.floor(columns * widthRatio);
-  const height = Math.floor(lines * heightRatio);
-  const x = Math.floor((columns - width) / 2);
-  const y = Math.floor((lines - height) / 2);
-
-  return [x, y, width, height];
-}
-
-async function calculateUiSize(
-  denops: Denops,
-  widthRatio: number,
-  heightRatio: number,
-  previewRatio: number,
-  verticalSplit: boolean,
-): Promise<DduUiSize> {
-  const [x, y, width, height] = await calculateWindowSize(
-    denops,
-    widthRatio,
-    heightRatio,
-  );
-
-  if (verticalSplit) {
-    const previewLength = Math.floor(width * previewRatio);
-    const winLength = width - previewLength;
-    return {
-      winRow: x,
-      winCol: y,
-      winWidth: winLength - SPACING,
-      winHeight: height - FILTER_HEIGHT - SPACING,
-      previewFloating: true,
-      previewSplit: "vertical",
-      previewRow: x,
-      previewCol: y + winLength + SPACING,
-      previewWidth: previewLength,
-      previewHeight: height - FILTER_HEIGHT - SPACING,
-    };
-  }
-
-  const previewLength = Math.floor(
-    (height - FILTER_HEIGHT - SPACING) * previewRatio,
-  );
-  const winLength = height - previewLength;
-  return {
-    winRow: x + previewLength + SPACING,
-    winCol: y,
-    winWidth: width,
-    winHeight: winLength - SPACING,
-    previewFloating: true,
-    previewSplit: "horizontal",
-    previewRow: x,
-    previewCol: y,
-    previewWidth: previewLength,
-    previewHeight: previewLength,
-  };
-}
+const augroup = "RcAutocmd:DduUi";
 
 async function setUiSize(args: ConfigArguments) {
   const mayVSplit = await option.columns.get(args.denops) >= 140;
-  const widthRatio = 0.9;
-  const heightRatio = 0.8;
   const previewRatio = 0.5;
 
   args.contextBuilder.patchGlobal({
@@ -121,10 +33,20 @@ async function setUiSize(args: ConfigArguments) {
       ff: {
         ...await calculateUiSize(
           args.denops,
-          widthRatio,
-          heightRatio,
           previewRatio,
           mayVSplit,
+        ),
+      } as Partial<FfParams>,
+    },
+  });
+
+  args.contextBuilder.patchLocal("search", {
+    uiParams: {
+      ff: {
+        ...await calculateUiSize(
+          args.denops,
+          previewRatio,
+          false,
         ),
       } as Partial<FfParams>,
     },
@@ -264,7 +186,7 @@ export class Config extends BaseConfig {
           floatingBorder: "rounded",
           floatingTitle: "Results",
           floatingTitlePos: "center",
-          inputFunc: "cmdline#input",
+          // inputFunc: "cmdline#input",
           previewFloatingBorder: "rounded",
           previewFloatingTitle: "Preview",
           previewFloatingTitlePos: "center",
