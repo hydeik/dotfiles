@@ -1,29 +1,11 @@
-import {
-  type ActionArguments,
-  ActionFlags,
-  type DduOptions,
-  type SourceOptions,
-} from "jsr:@shougo/ddu-vim@~6.2.0/types";
+import { type SourceOptions } from "jsr:@shougo/ddu-vim@~6.2.0/types";
 
 import {
   BaseConfig,
   type ConfigArguments,
 } from "jsr:@shougo/ddu-vim@~6.2.0/config";
 
-import { type ActionData as FileAction } from "jsr:@shougo/ddu-kind-file@~0.9.0";
-import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.4.0";
-import { type Params as FilerParams } from "jsr:@shougo/ddu-ui-filer@~1.4.0";
-
-import type { Denops } from "jsr:@denops/std@~7.1.0";
-import * as fn from "jsr:@denops/std@~7.1.0/function";
 import * as autocmd from "jsr:@denops/std/autocmd";
-
-type Params = Record<string, unknown>;
-
-type DppAction = {
-  path: string;
-  __name: string;
-};
 
 const augroup = "RcAutocmd:Ddu";
 

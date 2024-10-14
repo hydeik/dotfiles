@@ -8,9 +8,19 @@ vim.keymap.set("n", "<Space>fb", function()
   }
 end, { desc = "Buffers" })
 
+vim.keymap.set("n", "<Space>fd", function()
+  ddu.start { name = "file_fd" }
+end, { desc = "Files (fd)" })
+
 vim.keymap.set("n", "<Space>ff", function()
-  ddu.start { name = "buffer" }
-end, { desc = "Buffers" })
+  ddu.start {
+    name = "filer-" .. vim.api.nvim_get_current_win(),
+    sources = { "file" },
+    ui = "filer",
+    resume = true,
+    sync = true,
+  }
+end, { desc = "File explore" })
 
 -- Search
 vim.keymap.set("n", "/", function()
@@ -18,7 +28,7 @@ vim.keymap.set("n", "/", function()
     name = "search",
     sources = { "line" },
     resume = false,
-    input = vim.fn.escape(vim.fn["cmdline#input"] "Pattern: ", " "),
+    input = vim.fn.escape(vim.fn.input "Pattern: ", " "),
   }
 end, { desc = "Search Pattern" })
 
@@ -52,6 +62,7 @@ end, { desc = "Help Pages" })
 local ddu_ = require "rc.plugins.ddu"
 ddu_.custom.load_config(vim.fs.joinpath(vim.env.DPP_HOOKS_DIR, "ddu", "main.ts"))
 ddu_.custom.load_config(vim.fs.joinpath(vim.env.DPP_HOOKS_DIR, "ddu", "ff.ts"))
+ddu_.custom.load_config(vim.fs.joinpath(vim.env.DPP_HOOKS_DIR, "ddu", "filer.ts"))
 -- }}}
 
 -- lua_post_update {{{

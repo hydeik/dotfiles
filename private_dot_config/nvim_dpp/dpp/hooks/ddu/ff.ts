@@ -106,7 +106,6 @@ async function setFileTypeAutocmd(args: ConfigArguments) {
     await mapping.map(denops, "O", action("collapseItem"), nno);
     await mapping.map(denops, "q", action("quit"), nno);
     await mapping.map(denops, "yy", itemAction("yank"), nno);
-
     await mapping.map(denops, "<C-g>", action("quit"), nno);
     await mapping.map(denops, "<C-j>", action("cursorNext"), nno);
     await mapping.map(denops, "<C-k>", action("cursorPrevious"), nno);
@@ -136,17 +135,8 @@ async function setFileTypeAutocmd(args: ConfigArguments) {
       nno,
     );
 
-    if (ui_name === "filer") {
-      await mapping.map(denops, "N", itemAction("newFile"), nno);
-    } else {
-      await mapping.map(denops, "N", itemAction("new"), nno);
-    }
-
-    if (ui_name === "filer") {
-      await mapping.map(denops, "X", itemAction("trash"), nno);
-    } else {
-      await mapping.map(denops, "X", itemAction("delete"), nno);
-    }
+    await mapping.map(denops, "N", itemAction("new"), nno);
+    await mapping.map(denops, "X", itemAction("delete"), nno);
 
     if (ui_name === "git_status") {
       await mapping.map(denops, "c", itemAction("commit"), nno);
@@ -183,10 +173,10 @@ export class Config extends BaseConfig {
           autoAction: {
             name: "preview",
           },
+          displaySourceName: "long",
           floatingBorder: "rounded",
           floatingTitle: "Results",
           floatingTitlePos: "center",
-          // inputFunc: "cmdline#input",
           previewFloatingBorder: "rounded",
           previewFloatingTitle: "Preview",
           previewFloatingTitlePos: "center",
