@@ -12,7 +12,7 @@ vim.keymap.set("n", "<Space>fd", function()
   ddu.start { name = "file_fd" }
 end, { desc = "Files (fd)" })
 
-vim.keymap.set("n", "<Space>ff", function()
+vim.keymap.set("n", "<Space>fe", function()
   ddu.start {
     name = "filer-" .. vim.api.nvim_get_current_win(),
     sources = { "file" },
@@ -21,6 +21,42 @@ vim.keymap.set("n", "<Space>ff", function()
     sync = true,
   }
 end, { desc = "File explore" })
+
+-- Git
+vim.keymap.set("n", "<Space>gb", function()
+  local path = vim.uv.cwd()
+  ddu.start {
+    name = "git_branch",
+    sources = {
+      { name = "git_branch", options = { path = path } },
+    },
+    -- params = { remote = true },
+  }
+end, { desc = "Branches" })
+
+vim.keymap.set("n", "<Space>gl", function()
+  ddu.start {
+    name = "git_log",
+    resume = true,
+    sources = { "git_log" },
+  }
+end, { desc = "Log" })
+
+vim.keymap.set("n", "<Space>gs", function()
+  ddu.start {
+    name = "git_status",
+    resume = true,
+    sources = { "git_status" },
+  }
+end, { desc = "Status" })
+
+vim.keymap.set("n", "<Space>gS", function()
+  ddu.start {
+    name = "git_stash",
+    resume = true,
+    sources = { "git_stash" },
+  }
+end, { desc = "Stash" })
 
 -- Search
 vim.keymap.set("n", "/", function()
@@ -37,7 +73,7 @@ vim.keymap.set("n", "*", function()
     name = "search",
     sources = { "line" },
     resume = false,
-    input = vim.fn.expand "<cword>",
+    input = vim.fn.input(vim.fn.expand "<cword>"),
   }
 end, { desc = "Search <cword>" })
 
@@ -54,6 +90,8 @@ vim.keymap.set("n", "<Space>sh", function()
     sources = { "help" },
   }
 end, { desc = "Help Pages" })
+
+-- LSP
 
 -- }}}
 

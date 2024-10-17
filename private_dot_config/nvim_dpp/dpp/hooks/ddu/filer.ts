@@ -23,7 +23,7 @@ import { calculateUiSize } from "./helper.ts";
 const augroup = "RcAutocmd:DduUiFiler";
 
 async function setUiSize(args: ConfigArguments) {
-  const previewRatio = 0.35;
+  const previewRatio = 0.6;
 
   args.contextBuilder.patchGlobal({
     uiParams: {
@@ -77,7 +77,7 @@ async function setFileTypeAutocmd(args: ConfigArguments) {
     console.log(matchers);
     const idx = matchers.indexOf("matcher_hidden");
     return idx > -1
-      ? matchers.splice(idx, 1)
+      ? matchers.toSpliced(idx, 1)
       : matchers.concat(["matcher_hidden"]);
   };
 
@@ -126,7 +126,7 @@ async function setFileTypeAutocmd(args: ConfigArguments) {
         ["updateOptions", {
           sourceOptions: {
             file: {
-              matchers: toggleHidden("file"),
+              matchers: await toggleHidden("file"),
             },
           },
         }],

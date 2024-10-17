@@ -7,7 +7,7 @@
 repo = 'Shougo/ddu.vim'
 depends = ['denops.vim']
 on_func = 'ddu#start'
-hooks_file = '$DPP_HOOKS_DIR/ddu.lua'
+hooks_file = '$DPP_HOOKS_DIR/ddu/ddu.lua'
 
 # Commands for ddu.vim
 [[plugins]] # ddu-commands.vim
@@ -98,6 +98,10 @@ on_source = 'ddu.vim'
 
 [[plugins]] # ddu-source-git_log
 repo = 'github.com/kyoh86/ddu-source-git_log'
+on_source = 'ddu.vim'
+
+[[plugins]] # ddu-source-git_stash
+repo = 'peacock0803sz/ddu-source-git_stash'
 on_source = 'ddu.vim'
 
 # Path history from current ddu UI

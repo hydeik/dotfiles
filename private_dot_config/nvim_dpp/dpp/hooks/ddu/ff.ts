@@ -1,10 +1,4 @@
-import {
-  ActionFlags,
-  // type BaseParams,
-  type DduOptions,
-  type SourceOptions,
-  // type UiActionArguments,
-} from "jsr:@shougo/ddu-vim@~6.2.0/types";
+import { ActionFlags, type DduOptions } from "jsr:@shougo/ddu-vim@~6.2.0/types";
 
 import {
   BaseConfig,
@@ -173,7 +167,6 @@ export class Config extends BaseConfig {
           autoAction: {
             name: "preview",
           },
-          displaySourceName: "long",
           floatingBorder: "rounded",
           floatingTitle: "Results",
           floatingTitlePos: "center",

@@ -178,6 +178,12 @@ hooks_file = '$DPP_HOOKS_DIR/oil.lua'
 # on_func = ['cmdline#enable', 'cmdline#input']
 # hooks_file = '$DPP_HOOKS_DIR/cmdline.lua'
 
+[[plugins]] # ccc.nvim
+# Color picker and highlighter plugin for Neovim.
+repo = 'uga-rosa/ccc.nvim'
+on_event = ['BufNewFile', 'BufReadPost']
+hooks_file = '$DPP_HOOKS_DIR/ccc.lua'
+
 [[plugins]] # mini.icons (mini.nvim)
 # Icon providers.
 repo = 'echasnovski/mini.icons'
