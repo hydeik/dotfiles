@@ -1,3 +1,4 @@
+[general]
 import = [
   ## -- Font
   "~/.config/alacritty/fonts/explex35.toml",
@@ -43,7 +44,7 @@ multiplier = 3
 save_to_clipboard = false
 semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
 
-[shell]
+[terminal.shell]
 args = ["--login"]
 {{ if eq .chezmoi.os "darwin" }}
   {{ if eq .chezmoi.arch "arm64" }}
