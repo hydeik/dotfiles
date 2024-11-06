@@ -1,5 +1,6 @@
 local conditions = require "heirline.conditions"
 local utils = require "heirline.utils"
+local custom_icons = require "rc.custom_icons"
 
 local Align = { provider = "%=" }
 local Space = { provider = " " }
@@ -111,9 +112,7 @@ local FileNameBlock = {
 
 local FileIcon = {
   init = function(self)
-    local filename = self.filename
-    local extension = vim.fn.fnamemodify(filename, ":e")
-    self.icon = require("nvim-web-devicons").get_icon(filename, extension, { default = true })
+    self.icon, _, _ = require("mini.icons").get("file", self.filename)
   end,
   provider = function(self)
     return self.icon and (self.icon .. " ")
@@ -235,10 +234,10 @@ local OilFileName = {
 local Git = {
   condition = conditions.is_git_repo,
   static = {
-    branch_icon = require("rc.core.config").icons.git.branch,
-    add_icon = require("rc.core.config").icons.git.added,
-    remove_icon = require("rc.core.config").icons.git.removed,
-    change_icon = require("rc.core.config").icons.git.modified,
+    branch_icon = custom_icons.git.branch,
+    add_icon = custom_icons.git.added,
+    remove_icon = custom_icons.git.removed,
+    change_icon = custom_icons.git.modified,
   },
 
   init = function(self)
@@ -283,10 +282,10 @@ local Diagnostics = {
   condition = require("heirline.conditions").has_diagnostics,
 
   static = {
-    error_icon = require("rc.core.config").icons.diagnostics.Error,
-    warn_icon = require("rc.core.config").icons.diagnostics.Warn,
-    info_icon = require("rc.core.config").icons.diagnostics.Info,
-    hint_icon = require("rc.core.config").icons.diagnostics.Hint,
+    error_icon = custom_icons.diagnostics.Error,
+    warn_icon = custom_icons.diagnostics.Warn,
+    info_icon = custom_icons.diagnostics.Info,
+    hint_icon = custom_icons.diagnostics.Hint,
   },
 
   init = function(self)
@@ -334,7 +333,7 @@ local LSPActive = {
     hl = { fg = "lsp" },
   },
   {
-    provider = require("rc.core.config").icons.status.lsp .. " ",
+    provider = custom_icons.status.lsp .. " ",
     hl = { fg = "bg", bg = "lsp" },
   },
   {
@@ -358,7 +357,7 @@ local LSPActive = {
 -- CWD component
 local WorkDirIcon = {
   provider = function()
-    local icons = require("rc.core.config").icons.status
+    local icons = custom_icons.status
     local icon = vim.fn.haslocaldir(0) == 1 and icons.folder or icons.root_folder
     return icon .. " "
   end,

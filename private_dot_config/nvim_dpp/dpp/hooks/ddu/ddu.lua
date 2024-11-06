@@ -9,7 +9,13 @@ vim.keymap.set("n", "<Space>fb", function()
 end, { desc = "Buffers" })
 
 vim.keymap.set("n", "<Space>fd", function()
-  ddu.start { name = "file_fd" }
+  local path = require("rc.utils").get_root()
+  ddu.start {
+    name = "files-" .. vim.api.nvim_get_current_win(),
+    sources = {
+      { name = "file_fd", options = { path = path } },
+    },
+  }
 end, { desc = "Files (fd)" })
 
 vim.keymap.set("n", "<Space>fe", function()

@@ -142,6 +142,13 @@ repo = 'hrsh7th/nvim-insx'
 on_event = ['InsertEnter', 'CmdlineEnter']
 hooks_file = '$DPP_HOOKS_DIR/nvim-insx.lua'
 
+[[plugins]] # terminal.nvim
+repo = 'rebelot/terminal.nvim'
+on_event = ['TermOpen']
+on_cmd = ['TermOpen', 'TermToggle', 'TermRun', 'Lazygit', 'IPython', 'Htop']
+on_lua = ['terminal']
+hooks_file = '$DPP_HOOKS_DIR/terminal.lua'
+
 ##==============================================================================
 ## Git
 ##==============================================================================
@@ -195,6 +202,11 @@ repo = 'echasnovski/mini.indentscope'
 on_event = ['BufReadPost', 'BufNewFile']
 hooks_file = '$DPP_HOOKS_DIR/mini/indentscope.lua'
 
+[[plugins]] # nvim-navic
+repo = 'SmiteshP/nvim-navic'
+on_source = 'nvim-lspconfig'
+on_lua = 'nvim-navic'
+hooks_file = '$DPP_HOOKS_DIR/nvim-navic.lua'
 
 [[plugins]] # nui.nvim
 repo = 'MunifTanjim/nui.nvim'
@@ -221,4 +233,11 @@ on_event = ['UIEnter']
 on_cmd = ['WhichKey']
 on_lua = ['which-key']
 hooks_file = '$DPP_HOOKS_DIR/which-key.lua'
+
+[[plugins]] # heirline.nvim
+# Statusline / Bufferline / Statuscolumn / Winbar
+repo = 'rebelot/heirline.nvim'
+depends = ['gitsigns.nvim', 'terminal.nvim', 'nvim-navic']
+on_event = ['BufNewFile', 'BufReadPost']
+hooks_file = '$DPP_HOOKS_DIR/heirline.lua'
 

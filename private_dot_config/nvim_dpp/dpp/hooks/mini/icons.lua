@@ -1,13 +1,6 @@
 --- [mini.icons](https://github.com/echasnovski/mini.icons)
 -- Icon Provider. Part of 'mini.nvim' library.
 
--- lua_add {{{
-package.preload["nvim-web-devicons"] = function()
-  require("mini.icons").mock_nvim_web_devicons()
-  return package.loaded["nvim-web-devicons"]
-end
--- }}}
-
 -- lua_source {{{
 require("mini.icons").setup {
   file = {

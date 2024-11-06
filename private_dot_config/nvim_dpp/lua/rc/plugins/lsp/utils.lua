@@ -138,14 +138,14 @@ M.setup_diagnostic = function()
   -- Global diagnostic configurations
 
   -- diagnostic signs
-  local diagnostic_icons = require("rc.settings").icons.diagnostics
+  local diagnostic_icons = require("rc.custom_icons").diagnostics
   -- options for vim.diagnostic.config()
   local opts = {
     underline = true,
     virtual_text = {
       source = "always",
       prefix = vim.fn.has "nvim-0.10.0" == 0 and "●" or function(diagnostic)
-        local icons = require("rc.core.config").icons.diagnostics
+        local icons = require("rc.custom_icons").diagnostics
         for d, icon in pairs(icons) do
           if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
             return icon

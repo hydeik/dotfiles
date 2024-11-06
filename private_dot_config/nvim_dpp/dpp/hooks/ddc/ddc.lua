@@ -55,7 +55,7 @@ end, { desc = "[ddc.vim] search pattern" })
 local ddc = require "rc.plugins.ddc"
 local pum = require "rc.plugins.pum"
 
-ddc.custom.load_config(vim.fs.joinpath(vim.env.DPP_CONFIG_DIR, "ddc.ts"))
+ddc.custom.load_config(vim.fs.joinpath(vim.env.DPP_HOOKS_DIR, "ddc", "main.ts"))
 
 -- Keymaps in insert mode
 vim.keymap.set("i", "<S-Tab>", function()

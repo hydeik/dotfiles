@@ -231,6 +231,9 @@ function setupLsp(args: ConfigArguments) {
       lsp_codeAction: {
         defaultAction: "apply",
       },
+      lsp_diagnostic: {
+        defaultAction: "open",
+      },
     },
     sourceOptions: {
       lsp_definition: {
@@ -246,6 +249,163 @@ function setupLsp(args: ConfigArguments) {
         ...FiltersLocal.lsp_symbol,
       },
     },
+  });
+
+  for (
+    const method of [
+      "declaration",
+      "definition",
+      "typeDefinition",
+      "implementation",
+    ]
+  ) {
+    args.contextBuilder.patchLocal(`lsp_${method}`, {
+      sources: [{
+        name: "lsp_definition",
+        params: { method: `textDocument/${method}` },
+      }],
+    });
+  }
+
+  args.contextBuilder.patchLocal("lsp_references", {
+    sources: [{
+      name: "lsp_references",
+    }],
+  });
+
+  args.contextBuilder.patchLocal("lsp_definition_all", {
+    sources: [
+      {
+        name: "dummy",
+        params: {
+          word: ">>Definition<<",
+          hlGroup: "Type",
+        },
+      },
+      {
+        name: "lsp_definition",
+        params: {
+          method: "textDocument/definition",
+        },
+      },
+      {
+        name: "dummy",
+        params: {
+          word: ">>Declaration<<",
+          hlGroup: "Type",
+        },
+      },
+      {
+        name: "lsp_definition",
+        params: {
+          method: "textDocument/declaration",
+        },
+      },
+      {
+        name: "dummy",
+        params: {
+          word: ">>Type Definition<<",
+          hlGroup: "Type",
+        },
+      },
+      {
+        name: "lsp_definition",
+        params: {
+          method: "textDocument/typeDefinition",
+        },
+      },
+      {
+        name: "dummy",
+        params: {
+          word: ">>Implementation<<",
+          hlGroup: "Type",
+        },
+      },
+      {
+        name: "lsp_definition",
+        params: {
+          method: "textDocument/implementation",
+        },
+      },
+    ],
+  });
+
+  args.contextBuilder.patchLocal("lsp_finder", {
+    sources: [
+      {
+        name: "dummy",
+        params: {
+          word: ">>Definition<<",
+          hlGroup: "Type",
+        },
+      },
+      {
+        name: "lsp_definition",
+        params: {
+          method: "textDocument/definition",
+        },
+      },
+      {
+        name: "dummy",
+        params: {
+          word: ">>References<<",
+          hlGroup: "Type",
+        },
+      },
+      {
+        name: "lsp_references",
+        params: {
+          includeDeclaratin: false,
+        },
+      },
+    ],
+  });
+
+  for (
+    const scope of [
+      "document",
+      "workspace",
+    ]
+  ) {
+    args.contextBuilder.patchLocal(`lsp_${scope}Symbol`, {
+      sources: [{
+        name: `lsp_${scope}Symbol`,
+      }],
+    });
+  }
+
+  for (
+    const method of ["incomingCalls", "outgoingCalls"]
+  ) {
+    args.contextBuilder.patchLocal(`lsp_${method}`, {
+      sources: [{
+        name: "lsp_callHierarchy",
+        params: { method: `callHierarchy/${method}` },
+      }],
+    });
+  }
+
+  for (
+    const method of ["supertypes", "subtypes"]
+  ) {
+    args.contextBuilder.patchLocal(`lsp_${method}`, {
+      sources: [{
+        name: "lsp_typeHierarchy",
+        params: { method: `typeHierarchy/${method}` },
+      }],
+    });
+  }
+
+  args.contextBuilder.patchLocal("lsp_codeAction", {
+    sources: [{
+      name: "lsp_codeAction",
+    }],
+  });
+
+  args.contextBuilder.patchLocal("lsp_diagnostic", {
+    sources: [{
+      name: "lsp_diagnostic",
+    }],
   });
 }
 
@@ -325,6 +485,9 @@ function mainConfig(args: ConfigArguments) {
             return Promise.resolve(ActionFlags.None);
           },
         },
+      },
+      help: {
+        defaultAction: "open",
       },
       readme_viewer: {
         defaultAction: "open",
