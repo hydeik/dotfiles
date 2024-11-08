@@ -17,10 +17,6 @@ import type {
   Params as LazyParams,
 } from "jsr:@shougo/dpp-ext-lazy@~1.5.0";
 import type {
-  Ext as LocalExt,
-  Params as LocalParams,
-} from "jsr:@shougo/dpp-ext-local@~1.3.0";
-import type {
   Ext as PackspecExt,
   Params as PackspecParams,
 } from "jsr:@shougo/dpp-ext-packspec@~1.3.0";
@@ -137,93 +133,42 @@ export class Config extends BaseConfig {
       }
     }
 
-    // // --- Load local plugins
-    // const [localExt, localOptions, localParams]: [
-    //   LocalExt | undefined,
-    //   ExtOptions,
-    //   LocalParams,
-    // ] = await args.denops.dispatcher.getExt(
-    //   "local",
-    // ) as [LocalExt | undefined, ExtOptions, LocalParams];
-    // if (localExt) {
-    //   const action = localExt.actions["local"];
+    // --- Load packspec plugins
+    const [packspecExt, packspecOptions, packspecParams]: [
+      PackspecExt | undefined,
+      ExtOptions,
+      PackspecParams,
+    ] = await args.denops.dispatcher.getExt(
+      "packspec",
+    ) as [PackspecExt | undefined, ExtOptions, PackspecParams];
+    if (packspecExt) {
+      const action = packspecExt.actions.load;
 
-    //   const localPlugins = await action.callback({
-    //     denops: args.denops,
-    //     context,
-    //     options,
-    //     protocols,
-    //     extOptions: localOptions,
-    //     extParams: localParams,
-    //     actionParams: {
-    //       directory: "~/work",
-    //       options: {
-    //         frozen: true,
-    //         merged: false,
-    //       },
-    //       includes: [
-    //         "vim*",
-    //         "nvim-*",
-    //         "*.vim",
-    //         "*.nvim",
-    //         "ddc-*",
-    //         "ddu-*",
-    //         "dpp-*",
-    //         "skkeleton",
-    //       ],
-    //     },
-    //   }) as Plugin[];
+      const packSpecPlugins = await action.callback({
+        denops: args.denops,
+        context,
+        options,
+        protocols,
+        extOptions: packspecOptions,
+        extParams: packspecParams,
+        actionParams: {
+          basePath: args.basePath,
+          plugins: Object.values(recordPlugins),
+        },
+      });
 
-    //   if (localPlugins) {
-    //     for (const plugin of localPlugins) {
-    //       if (plugin.name in recordPlugins) {
-    //         recordPlugins[plugin.name] = Object.assign(
-    //           recordPlugins[plugin.name],
-    //           plugin,
-    //         );
-    //       } else {
-    //         recordPlugins[plugin.name] = plugin;
-    //       }
-    //     }
-    //   }
-    // }
-
-    // // --- Load packspec plugins
-    // const [packspecExt, packspecOptions, packspecParams]: [
-    //   PackspecExt | undefined,
-    //   ExtOptions,
-    //   PackspecParams,
-    // ] = await args.denops.dispatcher.getExt(
-    //   "packspec",
-    // ) as [PackspecExt | undefined, ExtOptions, PackspecParams];
-    // if (packspecExt) {
-    //   const action = packspecExt.actions.load;
-
-    //   const packSpecPlugins = await action.callback({
-    //     denops: args.denops,
-    //     context,
-    //     options,
-    //     protocols,
-    //     extOptions: packspecOptions,
-    //     extParams: packspecParams,
-    //     actionParams: {
-    //       basePath: args.basePath,
-    //       plugins: Object.values(recordPlugins),
-    //     },
-    //   });
-
-    //   for (const plugin of packSpecPlugins) {
-    //     if (plugin.name in recordPlugins) {
-    //       recordPlugins[plugin.name] = Object.assign(
-    //         recordPlugins[plugin.name],
-    //         plugin,
-    //       );
-    //     } else {
-    //       recordPlugins[plugin.name] = plugin;
-    //     }
-    //   }
-    //   //console.log(packSpecPlugins);
-    // }
+      for (const plugin of packSpecPlugins) {
+        if (plugin.name in recordPlugins) {
+          recordPlugins[plugin.name] = Object.assign(
+            recordPlugins[plugin.name],
+            plugin,
+          );
+        } else {
+          recordPlugins[plugin.name] = plugin;
+        }
+      }
+      //console.log(packSpecPlugins);
+    }
 
     // --- Lazy load settings
     const [lazyExt, lazyOptions, lazyParams]: [
@@ -232,7 +177,7 @@ export class Config extends BaseConfig {
       LazyParams,
     ] = await args.denops.dispatcher.getExt(
       "lazy",
-    ) as [LazyExt | undefined, ExtOptions, PackspecParams];
+    ) as [LazyExt | undefined, ExtOptions, LazyParams];
     let lazyResult: LazyMakeStateResult | undefined = undefined;
     if (lazyExt) {
       const action = lazyExt.actions.makeState;

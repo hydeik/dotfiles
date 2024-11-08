@@ -1,7 +1,7 @@
 --- [ddc.vim](https://github.com/Shougo/ddc.vim)
 
 -- lua_add {{{
-local group = vim.api.nvim_create_augroup("DdcCustomize", { clear = true })
+local group = vim.api.nvim_create_augroup("RcAutocmd:Ddc", { clear = true })
 local ddc_ = require "rc.plugins.ddc"
 
 local commandline_post = function()
@@ -87,11 +87,13 @@ vim.keymap.set("i", "<C-o>", function()
 end)
 
 vim.keymap.set("i", "<C-g>", function()
-  pum.set_option { preview = not pum._options().preview }
+  pum.map.toggle_preview()
 end)
 
 vim.keymap.set("i", "<C-e>", function()
-  if pum.visible() then
+  if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
+    ddc.map.insert_item(0)
+  elseif pum.visible() then
     pum.map.cancel()
   else
     return "<C-g>U<End>"
@@ -103,7 +105,9 @@ vim.keymap.set("i", "<C-l>", function()
 end)
 
 vim.keymap.set("i", "<Tab>", function()
-  if pum.visible() then
+  if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
+    ddc.map.insert_item(0)
+  elseif pum.visible() then
     pum.map.insert_relative(1, "empty")
   else
     local col = vim.fn.col "."
@@ -133,7 +137,9 @@ vim.keymap.set("c", "<M-p>", function()
 end)
 
 vim.keymap.set("c", "<C-e>", function()
-  if pum.visible() then
+  if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
+    ddc.map.insert_item(0)
+  elseif pum.visible() then
     pum.map.cancel()
   else
     return [[<END>]]
@@ -153,16 +159,9 @@ vim.keymap.set("c", "<C-t>", function()
 end)
 
 vim.keymap.set("c", "<Tab>", function()
-  -- if vim.fn.wildmenumode() then
-  --   return vim.fn.nr2char(vim.o.wildcharm)
-  -- else
-  --   if pum.visible() then
-  --     pum.map.insert_relative(1)
-  --   else
-  --     ddc.map.manual_complete()
-  --   end
-  -- end
-  if pum.visible() then
+  if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
+    ddc.map.insert_item(0)
+  elseif pum.visible() then
     pum.map.insert_relative(1)
   else
     return [[<Tab>]]

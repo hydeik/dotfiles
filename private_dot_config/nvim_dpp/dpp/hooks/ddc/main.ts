@@ -1,4 +1,8 @@
-import { BaseConfig, ConfigArguments } from "jsr:@shougo/ddc-vim@~7.1.0/config";
+import { BaseConfig, ConfigArguments } from "jsr:@shougo/ddc-vim@~8.1.0/config";
+import { type DdcItem } from "jsr:@shougo/ddc-vim@~8.1.0/types";
+
+import type { Denops } from "jsr:@denops/std";
+import * as fn from "jsr:@denops/std/function";
 
 export class Config extends BaseConfig {
   override config(args: ConfigArguments): Promise<void> {
@@ -7,6 +11,13 @@ export class Config extends BaseConfig {
 
     args.contextBuilder.patchGlobal({
       ui: "pum",
+      dynamicUi: async (denops: Denops, args: Record<string, unknown>) => {
+        const uiArgs = args as { items: DdcItem[] };
+        const mode = await fn.mode(denops);
+        return Promise.resolve(
+          mode !== "t" && uiArgs.items.length == 1 ? "inline" : "pum",
+        );
+      },
       sources: commonSources,
       autoCompleteEvents: [
         "CmdlineChanged",
@@ -39,13 +50,13 @@ export class Config extends BaseConfig {
         buffer: {
           mark: "B",
         },
-        vim: {
-          mark: "vim",
-          isVolatile: true,
-        },
         cmdline: {
           mark: "cmdline",
           forceCompletionPattern: "\\S/\\S*|\\.\\w*",
+        },
+        "cmdline-history": {
+          mark: "history",
+          sorters: [],
         },
         // copilot: {
         //     mark: "cop",
@@ -59,6 +70,12 @@ export class Config extends BaseConfig {
         //     minAutoCompleteLength: 0,
         //     isVolatile: true,
         // },
+        file: {
+          mark: "F",
+          isVolatile: true,
+          minAutoCompleteLength: 1000,
+          forceCompletionPattern: "\\S/\\S*",
+        },
         input: {
           mark: "input",
           forceCompletionPattern: "\\S/\\S*",
@@ -67,53 +84,34 @@ export class Config extends BaseConfig {
         line: {
           mark: "line",
         },
-        // mocword: {
-        //     mark: "mocword",
-        //     minAutoCompleteLength: 4,
-        //     isVolatile: true,
-        // },
         lsp: {
           mark: "LSP",
           forceCompletionPattern: "\\.|:\\s*|->\\s*",
           dup: "keep",
           sorters: ["sorter_lsp-kind", "converter_kind_labels"],
         },
-        // rtags: {
-        //     mark: "R",
-        //     forceCompletionPattern: "\\.\\w*|::\\w*|->\\w*",
-        // },
         "nvim-lua": {
           mark: "lua",
           dup: "keep",
           forceCompletionPattern: "\\.\\w*",
         },
-        file: {
-          mark: "F",
-          isVolatile: true,
-          minAutoCompleteLength: 1000,
-          forceCompletionPattern: "\\S/\\S*",
-        },
-        "cmdline-history": {
-          mark: "history",
-          sorters: [],
-        },
-        "shell-history": {
-          mark: "history",
+        rg: {
+          mark: "rg",
+          minAutoCompleteLength: 5,
+          enabledIf: "finddir('.git', ';') != ''",
         },
         shell: {
           mark: "sh",
           isVolatile: true,
           forceCompletionPattern: "\\S/\\S*",
         },
+        "shell-history": {
+          mark: "history",
+        },
         "shell-native": {
           mark: "sh",
           isVolatile: true,
           forceCompletionPattern: "\\S/\\S*",
-        },
-        rg: {
-          mark: "rg",
-          minAutoCompleteLength: 5,
-          enabledIf: "finddir('.git', ';') != ''",
         },
         // skkeleton: {
         //     mark: "skk",
@@ -122,6 +120,10 @@ export class Config extends BaseConfig {
         //     minAutoCompleteLength: 2,
         //     isVolatile: true,
         // },
+        vim: {
+          mark: "vim",
+          isVolatile: true,
+        },
         yank: {
           mark: "Y",
         },
@@ -201,7 +203,7 @@ export class Config extends BaseConfig {
             Reference: "' Reference",
             Folder: " Folder",
             EnumMember: " EnumMember",
-            Constant: " Constant",
+            Constant: " Conjkustant",
             Struct: " Struct",
             Event: " Event",
             Operator: " Operator",
@@ -239,45 +241,46 @@ export class Config extends BaseConfig {
       // postFilters: ["sorter_head"],
     });
 
-    // for (const filetype of ["html", "css"]) {
-    //     args.contextBuilder.patchFiletype(filetype, {
-    //         sourceOptions: {
-    //             _: {
-    //                 keywordPattern: "[0-9a-zA-Z_:#-]*",
-    //             },
-    //         },
-    //     });
-    // }
-    //
-    // for (const filetype of ["zsh", "sh", "bash"]) {
-    //     args.contextBuilder.patchFiletype(filetype, {
-    //         sourceOptions: {
-    //             _: {
-    //                 keywordPattern: "[0-9a-zA-Z_./#:-]*",
-    //             },
-    //         },
-    //         sources: ["shell-native", "around"],
-    //     });
-    // }
-    //
-    // // Use "#" as TypeScript keywordPattern
-    // for (const filetype of ["typescript"]) {
-    //     args.contextBuilder.patchFiletype(filetype, {
-    //         sourceOptions: {
-    //             _: {
-    //                 keywordPattern: "#?[a-zA-Z_][0-9a-zA-Z_]*",
-    //             },
-    //         },
-    //     });
-    // }
-    //
+    for (const filetype of ["html", "css"]) {
+      args.contextBuilder.patchFiletype(filetype, {
+        sourceOptions: {
+          _: {
+            keywordPattern: "[0-9a-zA-Z_:#-]*",
+          },
+        },
+      });
+    }
+
+    for (const filetype of ["zsh", "sh", "bash"]) {
+      args.contextBuilder.patchFiletype(filetype, {
+        sourceOptions: {
+          _: {
+            keywordPattern: "[0-9a-zA-Z_./#:-]*",
+          },
+        },
+        sources: ["shell-native", "around"],
+      });
+    }
+
+    // Use "#" as TypeScript keywordPattern
+    for (const filetype of ["typescript"]) {
+      args.contextBuilder.patchFiletype(filetype, {
+        sourceOptions: {
+          _: {
+            keywordPattern: "#?[a-zA-Z_][0-9a-zA-Z_]*",
+          },
+        },
+      });
+    }
+
     args.contextBuilder.patchFiletype("lua", {
-      sources: ["nvim-lua"].concat(commonSources),
+      sources: ["nvim-lua", ...commonSources],
     });
 
     args.contextBuilder.patchFiletype("vim", {
-      sources: ["vim"].concat(commonSources),
+      sources: ["vim", ...commonSources],
     });
+
     return Promise.resolve();
   }
 }

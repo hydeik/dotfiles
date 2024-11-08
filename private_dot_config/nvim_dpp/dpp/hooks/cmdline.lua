@@ -1,6 +1,7 @@
 -- lua_source {{{
 vim.fn["cmdline#set_option"] {
-  highlight_window = "NONE",
+  border = "rounded",
+  highlight_window = "NormalFloat",
   highlight_cursor = "TermCursor",
 }
 -- }}}

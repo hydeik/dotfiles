@@ -97,7 +97,38 @@ vim.keymap.set("n", "<Space>sh", function()
   }
 end, { desc = "Help Pages" })
 
--- LSP
+-- register
+vim.keymap.set("n", "<Leader>r", function()
+  ddu.start {
+    name = "register",
+    sources = {
+      {
+        name = "register",
+        options = { defaultAction = vim.fn.col "." == 1 and "insert" or "append" },
+      },
+    },
+  }
+end, { desc = "Register" })
+
+vim.keymap.set("x", "<Leader>r", function()
+  if vim.api.nvim_get_mode()["mode"] == "V" then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes([["_R<ESC>]], true, true, true), "n", false)
+  else
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes([["_d]], true, true, true), "n", false)
+  end
+  vim.schedule(function()
+    -- Ensure ddu#start is called after `feedkeys()`
+    ddu.start {
+      name = "register",
+      sources = {
+        {
+          name = "register",
+          options = { defaultAction = "insert" },
+        },
+      },
+    }
+  end)
+end, { desc = "Register" })
 
 -- }}}
 

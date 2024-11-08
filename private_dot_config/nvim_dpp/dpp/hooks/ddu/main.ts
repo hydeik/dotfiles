@@ -2,12 +2,12 @@ import {
   type ActionArguments,
   ActionFlags,
   type SourceOptions,
-} from "jsr:@shougo/ddu-vim@~6.2.0/types";
+} from "jsr:@shougo/ddu-vim@~6.4.0/types";
 
 import {
   BaseConfig,
   type ConfigArguments,
-} from "jsr:@shougo/ddu-vim@~6.2.0/config";
+} from "jsr:@shougo/ddu-vim@~6.4.0/config";
 
 import { type ActionData as FileAction } from "jsr:@shougo/ddu-kind-file@~0.9.0";
 import { type ActionData as GitStatusActionData } from "jsr:@kuuote/ddu-kind-git-status";

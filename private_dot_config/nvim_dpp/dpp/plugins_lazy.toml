@@ -194,6 +194,7 @@ hooks_file = '$DPP_HOOKS_DIR/ccc.lua'
 [[plugins]] # mini.icons (mini.nvim)
 # Icon providers.
 repo = 'echasnovski/mini.icons'
+on_event = ['BufNewFile', 'BufReadPost']
 on_lua = 'mini.icons'
 hooks_file = '$DPP_HOOKS_DIR/mini/icons.lua'
 
