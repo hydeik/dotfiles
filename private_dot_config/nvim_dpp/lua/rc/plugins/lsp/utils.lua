@@ -197,13 +197,36 @@ M.setup_keymap = function(client, bufnr)
   vim.keymap.set("n", "<Space>cl", "<cmd>LspInfo<CR>", { buffer = bufnr, desc = "Lsp Info" })
 
   -- diagnostics
-  vim.keymap.set("n", "<Space>cd", vim.diagnostic.open_float, { buffer = bufnr, desc = "Line Diagnostics" })
   vim.keymap.set("n", "]d", M.diagnostic_goto_next(), { buffer = bufnr, desc = "Next Diagnostic" })
   vim.keymap.set("n", "[d", M.diagnostic_goto_prev(), { buffer = bufnr, desc = "Prev Diagnostic" })
   vim.keymap.set("n", "]e", M.diagnostic_goto_next "ERROR", { buffer = bufnr, desc = "Next Error" })
   vim.keymap.set("n", "[e", M.diagnostic_goto_prev "ERROR", { buffer = bufnr, desc = "Prev Error" })
   vim.keymap.set("n", "]w", M.diagnostic_goto_next "WARN", { buffer = bufnr, desc = "Next Warning" })
   vim.keymap.set("n", "[w", M.diagnostic_goto_prev "WARN", { buffer = bufnr, desc = "Prev Warning" })
+  vim.keymap.set("n", "<Space>cd", vim.diagnostic.open_float, { buffer = bufnr, desc = "Line Diagnostics" })
+  vim.keymap.set("n", "<Space>sd", function()
+    require("rc.plugins.ddu").start {
+      sources = {
+        { name = "lsp_diagnostic", params = { buffer = 0 } },
+      },
+    }
+  end, { buffer = bufnr, desc = "Document Diagnostics" })
+  vim.keymap.set("n", "<Space>sD", function()
+    require("rc.plugins.ddu").start {
+      sources = {
+        { name = "lsp_diagnostic" },
+      },
+    }
+  end, { buffer = bufnr, desc = "Workspace Diagnostics" })
+
+  -- Symbols
+  vim.keymap.set("n", "<Space>ss", function()
+    require("rc.plugins.ddu").start { name = "lsp_documentSymbol" }
+  end, { buffer = bufnr, desc = "Goto Symbol" })
+
+  vim.keymap.set("n", "<Space>sS", function()
+    require("rc.plugins.ddu").start { name = "lsp_workspaceSymbol" }
+  end, { buffer = bufnr, desc = "Goto Symbol (workspace)" })
 
   -- Hover
   vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
@@ -217,34 +240,59 @@ M.setup_keymap = function(client, bufnr)
   -- Goto
   if client.supports_method "textDocument/definition" then
     vim.keymap.set("n", "gd", function()
-      require("telescope.builtin").lsp_definitions()
+      require("rc.plugins.ddu").start { name = "lsp_definition" }
     end, { buffer = bufnr, desc = "Goto Definition" })
   end
 
   if client.supports_method "textDocument/declaration" then
     vim.keymap.set("n", "gD", function()
-      require("telescope.builtin").lsp_declarations()
+      require("rc.plugins.ddu").start { name = "lsp_declaration" }
     end, { buffer = bufnr, desc = "Goto Declarations" })
   end
 
   if client.supports_method "textDocument/referenes" then
     vim.keymap.set("n", "gr", function()
-      require("telescope.builtin").lsp_references()
+      require("rc.plugins.ddu").start { name = "lsp_references" }
     end, { buffer = bufnr, desc = "References" })
   end
 
   if client.supports_method "textDocument/implementation" then
     vim.keymap.set("n", "gI", function()
-      require("telescope.builtin").lsp_implementations()
+      require("rc.plugins.ddu").start { name = "lsp_implementaion" }
     end, { buffer = bufnr, desc = "Goto Implementations" })
   end
 
   if client.supports_method "textDocument/typeDefinition" then
     vim.keymap.set("n", "gy", function()
-      require("telescope.builtin").lsp_type_definitions()
-    end, { buffer = bufnr, desc = "Goto Type Definitions" })
+      require("rc.plugins.ddu").start { name = "lsp_typeDefinition" }
+    end, { buffer = bufnr, desc = "Goto T[y]pe Definitions" })
   end
 
+  -- Call Hierarchy
+  if client.supports_method "callHierarchy/incomingCalls" then
+    vim.keymap.set("n", "<Space>cc", function()
+      require("rc.plugins.ddu").start { name = "lsp_incomingCalls" }
+    end, { buffer = bufnr, desc = "Goto Incoming Calls" })
+  end
+
+  if client.supports_method "callHierarchy/outgoingCalls" then
+    vim.keymap.set("n", "<Space>cC", function()
+      require("rc.plugins.ddu").start { name = "lsp_outgoingCalls" }
+    end, { buffer = bufnr, desc = "Goto Incoming Calls" })
+  end
+
+  -- Type Hierarchy
+  if client.supports_method "typeHierarchy/supertypes" then
+    vim.keymap.set("n", "<Space>ct", function()
+      require("rc.plugins.ddu").start { name = "lsp_supertypes" }
+    end, { buffer = bufnr, desc = "Goto Supertypes" })
+  end
+
+  if client.supports_method "typeHierarchy/subtypes" then
+    vim.keymap.set("n", "<Space>cT", function()
+      require("rc.plugins.ddu").start { name = "lsp_subtypes" }
+    end, { buffer = bufnr, desc = "Goto Subtypes" })
+  end
   -- Rename
   if client.supports_method "textDocument/rename" then
     vim.keymap.set("n", "<Space>cr", function()
@@ -255,7 +303,9 @@ M.setup_keymap = function(client, bufnr)
 
   -- Code action
   if client.supports_method "textDocument/codeAction" then
-    vim.keymap.set({ "n", "v" }, "<Space>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Action" })
+    vim.keymap.set({ "n", "x" }, "<Space>ca", function()
+      require("rc.plugins.ddu").start { name = "lsp_codeAction" }
+    end, { buffer = bufnr, desc = "Code Action" })
     vim.keymap.set("n", "<Space>cA", function()
       vim.lsp.buf.code_action {
         context = {

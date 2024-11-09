@@ -94,7 +94,7 @@ vim.keymap.set("i", "<C-e>", function()
   if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
     ddc.map.insert_item(0)
   elseif pum.visible() then
-    pum.map.cancel()
+    return [[<Cmd>call pum#map#cancel()<CR>]]
   else
     return "<C-g>U<End>"
   end
@@ -108,7 +108,8 @@ vim.keymap.set("i", "<Tab>", function()
   if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
     ddc.map.insert_item(0)
   elseif pum.visible() then
-    pum.map.insert_relative(1, "empty")
+    -- pum.map.insert_relative(1, "empty")
+    return [[<Cmd>call pum#map#insert_relative(+1, "empty")<CR>]]
   else
     local col = vim.fn.col "."
     if col <= 1 then
@@ -137,10 +138,10 @@ vim.keymap.set("c", "<M-p>", function()
 end)
 
 vim.keymap.set("c", "<C-e>", function()
-  if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
+  if vim.fn["ddc#ui#inline#visible"]() then
     ddc.map.insert_item(0)
   elseif pum.visible() then
-    pum.map.cancel()
+    return [[<Cmd>call pum#map#cancel()<CR>]]
   else
     return [[<END>]]
   end
@@ -164,9 +165,10 @@ vim.keymap.set("c", "<Tab>", function()
   elseif pum.visible() then
     pum.map.insert_relative(1)
   else
-    return [[<Tab>]]
+    -- return [[<Tab>]]
+    ddc.map.manual_complete()
   end
-end, { expr = true })
+end)
 
 -- Keymaps in visual & operator pending mode
 vim.keymap.set("x", "<Tab>", [["_R<Cmd>call ddc#map#manual_complete()<CR>]])
@@ -181,4 +183,5 @@ ddc.enable { context_filetype = "treesitter" }
 
 -- lua_post_update {{{
 require("rc.plugins.ddc").set_static_import_path()
+
 -- }}}

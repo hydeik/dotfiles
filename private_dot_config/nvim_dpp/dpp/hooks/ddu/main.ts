@@ -402,11 +402,11 @@ function setupLsp(args: ConfigArguments) {
     }],
   });
 
-  args.contextBuilder.patchLocal("lsp_diagnostic", {
-    sources: [{
-      name: "lsp_diagnostic",
-    }],
-  });
+  // args.contextBuilder.patchLocal("lsp_diagnostic", {
+  //   sources: [{
+  //     name: "lsp_diagnostic",
+  //   }],
+  // });
 }
 
 function applyLocalPatch(args: ConfigArguments) {
