@@ -150,17 +150,14 @@ on_lua = ['terminal']
 hooks_file = '$DPP_HOOKS_DIR/terminal.lua'
 
 ##==============================================================================
-## Git
+## Editor
 ##==============================================================================
-[[plugins]] # gitsigns.nvim
-# Git indicator for buffers
-repo = 'lewis6991/gitsigns.nvim'
-on_event = ['BufReadPre', 'BufNewFile']
-hooks_file = '$DPP_HOOKS_DIR/gitsigns.lua'
+[[plugins]] # terminal.nvim
+# Improved UI and workflow for the Neovim quickfix
+repo = 'stevearc/quicker.nvim'
+on_lua = 'quicker'
+hooks_file = '$DPP_HOOKS_DIR/quicker.lua'
 
-#==============================================================================
-# Navigation
-#==============================================================================
 [[plugins]] # smart-splits.nvim
 # Smart, seamless, directional navigation and resizing of Neovim + terminal
 # multiplexer splits. Supports tmux, Wezterm, and Kitty.
@@ -174,6 +171,14 @@ repo = 'stevearc/oil.nvim'
 on_lua = 'oil'
 hooks_file = '$DPP_HOOKS_DIR/oil.lua'
 
+##==============================================================================
+## Git
+##==============================================================================
+[[plugins]] # gitsigns.nvim
+# Git indicator for buffers
+repo = 'lewis6991/gitsigns.nvim'
+on_event = ['BufReadPre', 'BufNewFile']
+hooks_file = '$DPP_HOOKS_DIR/gitsigns.lua'
 
 #==============================================================================
 # UI
