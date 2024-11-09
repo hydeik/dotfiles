@@ -585,6 +585,18 @@ function mainConfig(args: ConfigArguments) {
           }),
         ],
       },
+      rg: {
+        args: [
+          "--ignore-case",
+          "--column",
+          "--no-heading",
+          "--color",
+          "never",
+        ],
+        highlights: {
+          word: "Search",
+        },
+      },
     },
   });
 

@@ -268,6 +268,10 @@ M.setup_keymap = function(client, bufnr)
     end, { buffer = bufnr, desc = "Goto T[y]pe Definitions" })
   end
 
+  vim.keymap.set("n", "<Space>cD", function()
+    require("rc.plugins.ddu").start { name = "lsp_definition_all" }
+  end, { buffer = bufnr, desc = "Document Diagnostics" })
+
   -- Call Hierarchy
   if client.supports_method "callHierarchy/incomingCalls" then
     vim.keymap.set("n", "<Space>cc", function()

@@ -90,6 +90,46 @@ vim.keymap.set("n", "n", function()
   }
 end, { desc = "Search resume" })
 
+vim.keymap.set("n", "<Space>sg", function()
+  ddu.start {
+    name = "search",
+    sources = {
+      {
+        name = "rg",
+        params = {
+          input = vim.fn.input("Pattern: ", vim.fn.expand "<cword>"),
+        },
+      },
+    },
+    resume = false,
+    uiParams = {
+      ff = { ignoreEmpty = true },
+    },
+  }
+end, { desc = "Grep" })
+
+vim.keymap.set("n", "<Space>sG", function()
+  ddu.start {
+    name = "search",
+    sources = {
+      {
+        name = "rg",
+        params = {
+          input = vim.fn.input("Pattern: ", vim.fn.expand "<cword>"),
+        },
+        optios = {
+          path = vim.fn.input("Directory: ", vim.uv.cwd(), "dir"),
+        },
+      },
+    },
+    resume = false,
+    uiParams = {
+      ff = { ignoreEmpty = true },
+    },
+  }
+end, { desc = "Grep" })
+
+-- Vim Help
 vim.keymap.set("n", "<Space>sh", function()
   ddu.start {
     name = "help",
