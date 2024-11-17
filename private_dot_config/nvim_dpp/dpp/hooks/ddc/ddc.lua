@@ -2,24 +2,23 @@
 
 -- lua_add {{{
 local group = vim.api.nvim_create_augroup("RcAutocmd:Ddc", { clear = true })
-local ddc_ = require "rc.plugins.ddc"
 
 local commandline_post = function()
   if vim.b.prev_buffer_config then
-    ddc_.custom.set_buffer(vim.b.prev_buffer_config)
+    vim.fn["ddc#custom#set_buffer"](vim.b.prev_buffer_config)
     vim.b.prev_buffer_config = nil
   end
 end
 
 local commandline_pre = function(mode)
-  vim.b.prev_buffer_config = ddc_.custom.get_buffer()
+  vim.b.prev_buffer_config = vim.fn["ddc#custom#get_buffer"]()
   -- Overwrite sources
   if mode == ":" then
-    ddc_.custom.patch_buffer("sourceOptions", {
+    vim.fn["ddc#custom#patch_buffer"]("sourceOptions", {
       _ = { keywordPattern = "[0-9a-zA-Z_:#-]*" },
     })
 
-    ddc_.custom.set_context_buffer(function()
+    vim.fn["ddc#custom#set_context_buffer"](function()
       local line = vim.fn.getcmdline()
       return vim.fn.stridx(line, "!") == 0
           and { cmdlineSources = { "shell-native", "cmdline", "cmdline-history", "around" } }
@@ -35,7 +34,7 @@ local commandline_pre = function(mode)
     desc = "A hook on DDCCmdlineLeave",
   })
 
-  ddc_.enable_cmdline_completion()
+  vim.fn["ddc#enable_cmdline_completion"]()
 end
 
 -- keymaps
@@ -52,10 +51,14 @@ end, { desc = "[ddc.vim] search pattern" })
 -- }}}
 
 -- lua_source {{{
-local ddc = require "rc.plugins.ddc"
 local pum = require "rc.plugins.pum"
 
-ddc.custom.load_config(vim.fs.joinpath(vim.env.DPP_HOOKS_DIR, "ddc", "main.ts"))
+local opts_expr = { expr = true, replace_keycodes = false }
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+vim.fn["ddc#custom#load_config"](vim.fs.joinpath(vim.env.DPP_HOOKS_DIR, "ddc", "main.ts"))
 
 -- Keymaps in insert mode
 vim.keymap.set("i", "<S-Tab>", function()
@@ -86,43 +89,42 @@ vim.keymap.set("i", "<C-o>", function()
   pum.map.confirm_word()
 end)
 
-vim.keymap.set("i", "<C-g>", function()
-  pum.map.toggle_preview()
-end)
-
 vim.keymap.set("i", "<C-e>", function()
   if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
-    ddc.map.insert_item(0)
+    return vim.fn["ddc#map#insert_item"](0)
   elseif pum.visible() then
-    return [[<Cmd>call pum#map#cancel()<CR>]]
+    return t [[<Cmd>call pum#map#cancel()<CR>]]
   else
-    return "<C-g>U<End>"
+    return t "<C-g>U<End>"
   end
-end, { expr = true })
+end, opts_expr)
+
+vim.keymap.set({ "i", "c" }, "<C-g>", function()
+  return vim.fn["ddc#map#insert_item"](0)
+end, opts_expr)
 
 vim.keymap.set("i", "<C-l>", function()
-  ddc.map.manual_complete()
+  vim.fn["ddc#map#manual_complete"]()
 end)
 
 vim.keymap.set("i", "<Tab>", function()
   if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
-    ddc.map.insert_item(0)
+    return vim.fn["ddc#map#insert_item"](0)
   elseif pum.visible() then
-    -- pum.map.insert_relative(1, "empty")
-    return [[<Cmd>call pum#map#insert_relative(+1, "empty")<CR>]]
+    return t [[<Cmd>call pum#map#insert_relative(+1, "empty")<CR>]]
   else
     local col = vim.fn.col "."
     if col <= 1 then
-      return "<Tab>"
+      return t "<Tab>"
     else
       if string.match(vim.fn.getline("."):sub(-2, -2), "%s") ~= nil then
-        return "<Tab>"
+        return t "<Tab>"
       else
-        ddc.map.manual_complete()
+        vim.fn["ddc#map#manual_complete"]()
       end
     end
   end
-end, { expr = true })
+end, opts_expr)
 
 -- Keymaps in cmdline mode
 vim.keymap.set("c", "<S-Tab>", function()
@@ -139,13 +141,13 @@ end)
 
 vim.keymap.set("c", "<C-e>", function()
   if vim.fn["ddc#ui#inline#visible"]() then
-    ddc.map.insert_item(0)
+    return vim.fn["ddc#map#insert_item"](0)
   elseif pum.visible() then
-    return [[<Cmd>call pum#map#cancel()<CR>]]
+    return t [[<Cmd>call pum#map#cancel()<CR>]]
   else
-    return [[<END>]]
+    return t [[<END>]]
   end
-end, { expr = true })
+end, opts_expr)
 
 vim.keymap.set("c", "<C-o>", function()
   pum.map.confirm()
@@ -155,33 +157,29 @@ vim.keymap.set("c", "<C-y>", function()
   pum.map.confirm()
 end)
 
-vim.keymap.set("c", "<C-t>", function()
-  ddc.map.insert_item(0)
-end)
-
 vim.keymap.set("c", "<Tab>", function()
   if vim.fn["ddc#ui#inline#visible"]() ~= 0 then
-    ddc.map.insert_item(0)
+    return vim.fn["ddc#map#insert_item"](0)
   elseif pum.visible() then
-    pum.map.insert_relative(1)
+    return t [[<Cmd>call pum#map#insert_relative(+1)<CR>]]
   else
-    -- return [[<Tab>]]
-    ddc.map.manual_complete()
+    vim.fn["ddc#map#manual_complete"]()
   end
-end)
+end, opts_expr)
 
 -- Keymaps in visual & operator pending mode
 vim.keymap.set("x", "<Tab>", [["_R<Cmd>call ddc#map#manual_complete()<CR>]])
 vim.keymap.set("s", "<Tab>", [[<C-o>"_di<Cmd>call ddc#map#manual_complete()<CR>]])
 
 -- Enable terminal completion
-ddc.enable_terminal_completion()
 
-ddc.enable { context_filetype = "treesitter" }
+vim.fn["ddc#enable_terminal_completion"]()
+
+vim.fn["ddc#enable"] { context_filetype = "treesitter" }
 
 -- }}}
 
 -- lua_post_update {{{
-require("rc.plugins.ddc").set_static_import_path()
+vim.fn["ddc#set_static_import_path"]()
 
 -- }}}

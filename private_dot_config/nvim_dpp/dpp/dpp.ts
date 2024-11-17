@@ -2,14 +2,14 @@ import {
   type ContextBuilder,
   type ExtOptions,
   type Plugin,
-} from "jsr:@shougo/dpp-vim@~3.0.0/types";
+} from "jsr:@shougo/dpp-vim@~3.1.0/types";
 import {
   BaseConfig,
   type ConfigReturn,
   type MultipleHook,
-} from "jsr:@shougo/dpp-vim@~3.0.0/config";
-import { Protocol } from "jsr:@shougo/dpp-vim@~3.0.0/protocol";
-import { mergeFtplugins } from "jsr:@shougo/dpp-vim@~3.0.0/utils";
+} from "jsr:@shougo/dpp-vim@~3.1.0/config";
+import { Protocol } from "jsr:@shougo/dpp-vim@~3.1.0/protocol";
+import { mergeFtplugins } from "jsr:@shougo/dpp-vim@~3.1.0/utils";
 
 import type {
   Ext as LazyExt,
@@ -25,7 +25,7 @@ import type {
   Params as TomlParams,
 } from "jsr:@shougo/dpp-ext-toml@~1.3.0";
 
-import { Denops } from "jsr:@denops/std@~7.1.0";
+import { Denops } from "jsr:@denops/std";
 import { expandGlob } from "jsr:@std/fs/expand-glob";
 import { join } from "jsr:@std/path/join";
 

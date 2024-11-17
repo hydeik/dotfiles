@@ -181,7 +181,7 @@ export class Config extends BaseConfig {
             ["&wrap", 0],
             ["&scrolloff", 0],
           ],
-          prompt: "> ",
+          prompt: "Filter",
           split: "floating",
           startAutoAction: true,
         } satisfies Partial<FfParams>,
