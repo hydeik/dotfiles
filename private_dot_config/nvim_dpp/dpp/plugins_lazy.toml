@@ -23,7 +23,7 @@ require("nvim-ts-autotag").setup {}
 '''
 
 ##============================================================================
-## LSP / Linter / Formatter
+## LSP / Linter / Formatter / DAP
 ##============================================================================
 
 [[plugins]] # mason.nvim
@@ -75,7 +75,8 @@ hooks_file = '$DPP_HOOKS_DIR/lazydev.lua'
 [[plugins]] # inc-rename.nvim
 # Incremental LSP renaming based on Neovim's command-preview feature.
 repo = 'smjonas/inc-rename.nvim'
-on_cmd = 'IncRename'
+on_cmd = ['IncRename']
+on_lua = ['inc_rename']
 lua_source = 'require("inc_rename").setup()'
 
 [[plugins]] # nvim-lint
@@ -94,6 +95,28 @@ on_cmd = 'ConformInfo'
 on_event = 'BufWritePre'
 on_lua = 'conform'
 hooks_file = '$DPP_HOOKS_DIR/conform.lua'
+[[plugins]] # nvim-dap
+# Debug Adapter Protocol client implementation for Neovim
+repo = 'mfussenegger/nvim-dap'
+on_lua = 'dap'
+hooks_file = '$DPP_HOOKS_DIR/nvim-dap/core.lua'
+
+[[plugins]] # nvim-nio
+# A library for asynchronous IO in Neovim
+repo = 'nvim-neotest/nvim-nio'
+
+[[plugins]] # nvim-dap-ui
+# A UI for nvim-dap
+repo = 'rcarriga/nvim-dap-ui'
+depends = ['nvim-nio']
+on_lua = ['dapui']
+on_source = ['nvim-dap']
+
+[[plugins]] # nvim-dap-python
+# An extension for nvim-dap, providing default configurations for python and
+# methods to debug individual test methods or classes.
+on_ft = ['rust']
+hooks_file = '$DPP_HOOKS_DIR/nvim-dap/python.lua'
 
 [[plugins]] # SchemaStore.nvim
 # JSON schemas for Neovim
@@ -101,12 +124,20 @@ repo = 'b0o/SchemaStore.nvim'
 on_source = 'nvim-lspconfig'
 on_ft = ['json', 'yaml']
 
-# # rust-tools.nvim
-# # Supercharge your Rust experience in Neovim! A heavily modified fork of
-# [[plugins]]
-# repo = 'mrcjkb/rustaceanvim'
-# on_ft = ['rust']
-#
+[[plugins]] # rustaceanvim
+# Supercharge your Rust experience in Neovim!
+repo = 'mrcjkb/rustaceanvim'
+depends = ['nvim-lspconfig', 'nvim-dap']
+on_ft = ['rust']
+hooks_file = '$DPP_HOOKS_DIR/rustaceanvim.lua'
+
+
+[[plugins]] # crates.nvim
+# A neovim plugin that helps managing crates.io dependencies
+repo = 'saecki/crates.nvim'
+on_event = 'BufRead Cargo.toml'
+hooks_file = '$DPP_HOOKS_DIR/crates.lua'
+
 
 ##============================================================================
 ## Coding
@@ -246,4 +277,3 @@ repo = 'rebelot/heirline.nvim'
 depends = ['gitsigns.nvim', 'terminal.nvim', 'nvim-navic']
 on_event = ['BufNewFile', 'BufReadPost']
 hooks_file = '$DPP_HOOKS_DIR/heirline.lua'
-

@@ -28,8 +28,8 @@ mlsp.setup {
   ensure_installed = {
     "bashls",
     "fortls",
-    "lua_ls",
     "jsonls",
+    "lua_ls",
     "ruff",
     "taplo",
     "texlab",
@@ -51,6 +51,7 @@ mlsp.setup_handlers {
     -- disable
   end,
   jsonls = require "rc.plugins.lsp.servers.jsonls",
+  -- nixd = require "rc.plugins.lsp.servers.jsonls",
   yamlls = require "rc.plugins.lsp.servers.yamlls",
   ruff = require "rc.plugins.lsp.servers.ruff",
   rust_analyzer = function()
