@@ -11,7 +11,7 @@ end, { desc = "Buffers" })
 vim.keymap.set("n", "<Space>fd", function()
   local path = require("rc.utils").get_root()
   ddu.start {
-    name = "files-" .. vim.api.nvim_get_current_win(),
+    name = "files",
     sources = {
       { name = "file_fd", options = { path = path } },
     },
@@ -20,7 +20,7 @@ end, { desc = "Files (fd)" })
 
 vim.keymap.set("n", "<Space>fe", function()
   ddu.start {
-    name = "filer-" .. vim.api.nvim_get_current_win(),
+    name = "files",
     sources = { "file" },
     ui = "filer",
     resume = true,

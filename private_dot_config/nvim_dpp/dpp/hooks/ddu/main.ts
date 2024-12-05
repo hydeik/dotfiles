@@ -2,12 +2,12 @@ import {
   type ActionArguments,
   ActionFlags,
   type SourceOptions,
-} from "jsr:@shougo/ddu-vim@~6.4.0/types";
+} from "jsr:@shougo/ddu-vim@~9.0.0/types";
 
 import {
   BaseConfig,
   type ConfigArguments,
-} from "jsr:@shougo/ddu-vim@~6.4.0/config";
+} from "jsr:@shougo/ddu-vim@~9.0.0/config";
 
 import { type ActionData as FileAction } from "jsr:@shougo/ddu-kind-file@~0.9.0";
 import { type ActionData as GitStatusActionData } from "jsr:@kuuote/ddu-kind-git-status";
@@ -429,10 +429,18 @@ function applyLocalPatch(args: ConfigArguments) {
 }
 
 function mainConfig(args: ConfigArguments) {
-  args.setAlias("source", "file_fd", "file_external");
-  args.setAlias("source", "file_rg", "file_external");
-  args.setAlias("source", "file_git", "file_external");
-  args.setAlias("column", "icon_filename_for_ff", "icon_filename");
+  args.setAlias("files", "source", "file_fd", "file_external");
+  args.setAlias("files", "source", "file_rg", "file_external");
+  args.setAlias("files", "source", "file_git", "file_external");
+  args.setAlias("buffer", "column", "icon_filename_for_ff", "icon_filename");
+  args.setAlias("files", "column", "icon_filename_for_ff", "icon_filename");
+  args.setAlias(
+    "git_status",
+    "column",
+    "icon_filename_for_ff",
+    "icon_filename",
+  );
+  args.setAlias("search", "column", "icon_filename_for_ff", "icon_filename");
 
   args.contextBuilder.patchGlobal({
     actionOptions: {

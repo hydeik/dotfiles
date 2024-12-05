@@ -2,24 +2,26 @@ import {
   type ContextBuilder,
   type ExtOptions,
   type Plugin,
-} from "jsr:@shougo/dpp-vim@~3.1.0/types";
+} from "jsr:@shougo/dpp-vim@~4.1.0/types";
 import {
   BaseConfig,
   type ConfigReturn,
   type MultipleHook,
-} from "jsr:@shougo/dpp-vim@~3.1.0/config";
-import { Protocol } from "jsr:@shougo/dpp-vim@~3.1.0/protocol";
-import { mergeFtplugins } from "jsr:@shougo/dpp-vim@~3.1.0/utils";
+} from "jsr:@shougo/dpp-vim@~4.1.0/config";
+import { Protocol } from "jsr:@shougo/dpp-vim@~4.1.0/protocol";
+import { mergeFtplugins } from "jsr:@shougo/dpp-vim@~4.1.0/utils";
 
 import type {
   Ext as LazyExt,
   LazyMakeStateResult,
   Params as LazyParams,
 } from "jsr:@shougo/dpp-ext-lazy@~1.5.0";
+
 import type {
   Ext as PackspecExt,
   Params as PackspecParams,
 } from "jsr:@shougo/dpp-ext-packspec@~1.3.0";
+
 import type {
   Ext as TomlExt,
   Params as TomlParams,

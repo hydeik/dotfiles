@@ -51,14 +51,14 @@ mlsp.setup_handlers {
     -- disable
   end,
   jsonls = require "rc.plugins.lsp.servers.jsonls",
-  -- nixd = require "rc.plugins.lsp.servers.jsonls",
-  yamlls = require "rc.plugins.lsp.servers.yamlls",
+  nixd = require "rc.plugins.lsp.servers.nixd",
   ruff = require "rc.plugins.lsp.servers.ruff",
   rust_analyzer = function()
     -- Do not use mason.nvim installations of rust-analyzer, as the binary
     -- might be built with a different toolchain than your project.
     -- See, https://github.com/mrcjkb/rustaceanvim/blob/master/doc/mason.txt.
   end,
+  yamlls = require "rc.plugins.lsp.servers.yamlls",
 }
 
 -- I don't use mason.nvim installation of Deno, so need to configure denols separately.
