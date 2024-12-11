@@ -1,14 +1,14 @@
 import {
   BaseConfig,
   type ConfigArguments,
-} from "jsr:@shougo/ddu-vim@~6.4.0/config";
+} from "jsr:@shougo/ddu-vim@~9.0.0/config";
 import {
   type DduOptions,
   type FilterName,
   type UserFilter,
-} from "jsr:@shougo/ddu-vim@~6.4.0/types";
+} from "jsr:@shougo/ddu-vim@~9.0.0/types";
 
-import { type Params as FilerParams } from "jsr:@shougo/ddu-ui-filer@~1.4.0";
+import { type Params as FilerParams } from "jsr:@shougo/ddu-ui-filer@~1.5.0";
 
 import * as autocmd from "jsr:@denops/std/autocmd";
 import * as fn from "jsr:@denops/std/function";
@@ -195,7 +195,7 @@ async function setFileTypeAutocmd(args: ConfigArguments) {
 }
 
 export class Config extends BaseConfig {
-  async config(args: ConfigArguments) {
+  override async config(args: ConfigArguments): Promise<void> {
     args.contextBuilder.patchGlobal({
       uiOptions: {
         filer: {
@@ -248,5 +248,7 @@ export class Config extends BaseConfig {
 
     await setUiSize(args);
     await setFileTypeAutocmd(args);
+
+    return Promise.resolve();
   }
 }

@@ -614,12 +614,13 @@ function mainConfig(args: ConfigArguments) {
 }
 
 export class Config extends BaseConfig {
-  async config(args: ConfigArguments) {
+  override async config(args: ConfigArguments): Promise<void> {
     await autocmd.group(args.denops, augroup, (helper) => {
       helper.remove("*");
       helper.define("User", "RcAutocmd:Ddu:Ready", ":", { once: true });
     });
     mainConfig(args);
     autocmd.emit(args.denops, "User", "RcAutocmd:Ddu:Ready");
+    return Promise.resolve();
   }
 }

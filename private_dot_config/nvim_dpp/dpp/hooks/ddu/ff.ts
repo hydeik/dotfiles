@@ -159,7 +159,7 @@ async function setFileTypeAutocmd(args: ConfigArguments) {
 }
 
 export class Config extends BaseConfig {
-  async config(args: ConfigArguments) {
+  override async config(args: ConfigArguments): Promise<void> {
     args.contextBuilder.patchGlobal({
       ui: "ff",
       uiParams: {
@@ -230,5 +230,7 @@ export class Config extends BaseConfig {
 
     await setUiSize(args);
     await setFileTypeAutocmd(args);
+
+    return Promise.resolve();
   }
 }
