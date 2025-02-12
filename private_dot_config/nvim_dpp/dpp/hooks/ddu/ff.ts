@@ -1,11 +1,11 @@
-import { ActionFlags, type DduOptions } from "jsr:@shougo/ddu-vim@~9.0.0/types";
+import { ActionFlags, type DduOptions } from "jsr:@shougo/ddu-vim@~9.5.0/types";
 
 import {
   BaseConfig,
   type ConfigArguments,
-} from "jsr:@shougo/ddu-vim@~9.0.0/config";
+} from "jsr:@shougo/ddu-vim@~9.5.0/config";
 
-import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.5.0";
+import { type Params as FfParams } from "jsr:@shougo/ddu-ui-ff@~1.6.0";
 
 import type { Denops } from "jsr:@denops/std";
 import * as autocmd from "jsr:@denops/std/autocmd";

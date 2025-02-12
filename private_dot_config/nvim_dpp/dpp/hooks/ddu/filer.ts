@@ -1,12 +1,11 @@
 import {
   BaseConfig,
   type ConfigArguments,
-} from "jsr:@shougo/ddu-vim@~9.0.0/config";
+} from "jsr:@shougo/ddu-vim@~9.5.0/config";
 import {
   type DduOptions,
-  type FilterName,
   type UserFilter,
-} from "jsr:@shougo/ddu-vim@~9.0.0/types";
+} from "jsr:@shougo/ddu-vim@~9.5.0/types";
 
 import { type Params as FilerParams } from "jsr:@shougo/ddu-ui-filer@~1.5.0";
 
