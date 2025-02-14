@@ -16,16 +16,16 @@
 
     ez-configs.url = "github:ehllie/ez-configs";
     ez-configs.inputs.nixpkgs.follows = "nixpkgs";
-    ez-configs.inputs.parts.follows = "flake-parts";
+    ez-configs.inputs.flake-parts.follows = "flake-parts";
 
-    git-hooks.url = "github:hercules-ci/flake-parts";
-    git-hooks.inputs.gitignore.follows = "";
-    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
-    git-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
+    # git-hooks.url = "github:hercules-ci/flake-parts";
+    # git-hooks.inputs.gitignore.follows = "";
+    # git-hooks.inputs.nixpkgs.follows = "nixpkgs";
+    # git-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.flake-parts.follows = "flake-parts";
-    neovim-nightly-overlay.inputs.git-hooks.follows = "git-hooks";
+    # neovim-nightly-overlay.inputs.git-hooks.follows = "git-hooks";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";
@@ -35,7 +35,7 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake
+  outputs = { self, flake-parts, ... }@inputs: flake-parts.lib.mkFlake
     { inherit inputs; }
     {
       imports = [
@@ -57,8 +57,27 @@
             importDefault = false;
           };
         };
-
       };
+
+      perSystem = { config, pkgs, system, ... }: {
+        _module.args.pkgs = import self.inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        devShells = {
+          default = pkgs.mkShell {
+            name = "default-shell";
+            packages = with pkgs; [
+              age
+              nix-fast-build
+              sops
+              ssh-to-age
+            ];
+          };
+        };
+      };
+
     };
 
 }
