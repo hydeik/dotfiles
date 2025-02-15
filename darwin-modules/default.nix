@@ -1,5 +1,22 @@
 { pkgs, inputs, ezModules, ... }: {
 
+  imports = with ezModules; [
+    fonts
+    homebrew
+  ];
+
+  environment = {
+    pathsToLink = [
+      "/share/zsh"
+    ];
+    systemPackages = with pkgs; [
+      coreutils
+      home-manager
+      pam-reattach
+      zsh
+    ];
+  };
+
   nix = {
     extraOptions = "experimental-features = nix-command flakes";
 
@@ -8,7 +25,7 @@
       options = "--delete-older-than 7d";
       interval = {
         Hour = 0;
-        Minite = 0;
+        Minute = 0;
         Weekday = 0;
       };
     };
@@ -38,8 +55,9 @@
       dock = {
         autohide = true;
         show-recents = false;
-        orientation = "left";
+        orientation = "bottom";
       };
     };
   };
 }
+
