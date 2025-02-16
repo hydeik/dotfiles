@@ -139,9 +139,9 @@ export class Config extends BaseConfig {
           filenameChars: "[:keyword:].",
         },
         lsp: {
-          // enableDisplayDetail: true,
-          enableResolveItem: true,
           enableAdditionalTextEdit: true,
+          enableDisplayDetail: true,
+          enableResolveItem: true,
           confirmBehavior: "replace",
           snippetEngine: async (body: string) => {
             await denops.call("denippet#anonymous", body);
