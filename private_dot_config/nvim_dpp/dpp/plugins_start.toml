@@ -39,4 +39,3 @@ repo = 'alker0/chezmoi.vim'
 repo = 'catppuccin/nvim'
 name = 'catppuccin'
 hooks_file = '$DPP_HOOKS_DIR/catppuccin.lua'
-

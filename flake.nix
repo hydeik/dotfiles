@@ -35,11 +35,12 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, flake-parts, ... }@inputs: flake-parts.lib.mkFlake
-    { inherit inputs; }
-    {
+  outputs =
+    { self, flake-parts, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.ez-configs.flakeModule
+        inputs.treefmt-nix.flakeModule
       ];
 
       systems = [
@@ -59,24 +60,48 @@
         };
       };
 
-      perSystem = { config, pkgs, system, ... }: {
-        _module.args.pkgs = import self.inputs.nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-
-        devShells = {
-          default = pkgs.mkShell {
-            name = "default-shell";
-            packages = with pkgs; [
-              age
-              nix-fast-build
-              sops
-              ssh-to-age
+      perSystem =
+        {
+          config,
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          _module.args.pkgs = import self.inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlay = [
+              inputs.neovim-nightly-overlay.overlays.default
+              inputs.sops-nix.overlays.default
             ];
           };
+
+          devShells = {
+            default = pkgs.mkShell {
+              name = "default-shell";
+              packages = with pkgs; [
+                age
+                nix-fast-build
+                sops
+                ssh-to-age
+              ];
+            };
+          };
+
+          treefmt = {
+            projectRootFile = "flake.nix";
+            programs = {
+              biome.enable = true;
+              nixfmt.enable = true;
+              shfmt.enable = true;
+              stylua.enable = true;
+              taplo.enable = true;
+              terraform.enable = true;
+              yamlfmt.enable = true;
+            };
+          };
         };
-      };
 
     };
 

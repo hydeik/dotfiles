@@ -4,4 +4,3 @@ return {
   cmd = { "WinShift" },
   config = true,
 }
-

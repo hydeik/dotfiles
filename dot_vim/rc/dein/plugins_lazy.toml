@@ -86,9 +86,23 @@ nnoremap <silent><Leader>x  <Cmd>StripWhitespace<CR>
 repo = 'prabirshrestha/vim-lsp'
 depends = ['vim-lsp-settings']
 on_ft = [
-  'c', 'cpp', 'dockerfile', 'fortran', 'json', 'javascript', 'go', 'lua',
-  'python', 'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
-  ]
+  'c',
+  'cpp',
+  'dockerfile',
+  'fortran',
+  'json',
+  'javascript',
+  'go',
+  'lua',
+  'python',
+  'ruby',
+  'rust',
+  'sh',
+  'tex',
+  'typescript',
+  'vim',
+  'yaml',
+]
 
 hook_source = '''
   " Options

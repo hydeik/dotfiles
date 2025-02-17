@@ -87,4 +87,3 @@ repo = 'chrisbra/vim-zsh'
 # Advanced syntax highlighting for GNU As
 [[plugins]]
 repo = 'Shirk/vim-gas'
-
