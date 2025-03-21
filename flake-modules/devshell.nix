@@ -10,11 +10,13 @@ _:
             package = "neovim";
           }
         ];
-        decshell.packages = with pkgs; [
+        devshell.packages = with pkgs; [
           bat
           biome
           deadnix
           just
+          lua-language-server
+          nixd
           nixfmt-rfc-style
           shellcheck
           shfmt
