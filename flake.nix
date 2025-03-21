@@ -1,118 +1,134 @@
 {
   description = "Hidekazu Ikeno (hydeik)'s dotfile powered by Nix";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-
-    ez-configs.url = "github:ehllie/ez-configs";
-    ez-configs.inputs.nixpkgs.follows = "nixpkgs";
-    ez-configs.inputs.flake-parts.follows = "flake-parts";
-
-    # git-hooks.url = "github:hercules-ci/flake-parts";
-    # git-hooks.inputs.gitignore.follows = "";
-    # git-hooks.inputs.nixpkgs.follows = "nixpkgs";
-    # git-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
-
-    catppuccin.url = "github:catppuccin/nix";
-    catppuccin.inputs.nixpkgs.follows = "nixpkgs";
-
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    neovim-nightly-overlay.inputs.flake-parts.follows = "flake-parts";
-    # neovim-nightly-overlay.inputs.git-hooks.follows = "git-hooks";
-    neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
-
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+  # A set of nix.conf options to be set when evaluating any part of a flake.
+  nixConfig = {
+    # If set to true, `builtins.warn` will throw an error when logging a warning.
+    abort-on-warn = true;
+    # Allow pipe-operators |> and <|
+    extra-experimental-features = [ "pipe-operators" ];
+    # Disallow import from derivation
+    allow-import-from-derivation = false;
   };
 
-  outputs =
-    {
-      self,
-      flake-parts,
-      catppuccin,
-      ...
-    }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.ez-configs.flakeModule
-        inputs.treefmt-nix.flakeModule
-      ];
+  # Flake inputs
+  inputs = {
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-      systems = [
-        "aarch64-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-      ezConfigs = {
-        root = ./.;
-        globalArgs = {
-          inherit inputs;
-          inherit catppuccin;
-        };
-        home.users = {
-          root = {
-            importDefault = false;
-          };
-        };
+    flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        gitignore.follows = "";
+        nixpkgs.follows = "nixpkgs";
       };
+    };
 
-      perSystem =
-        {
-          config,
-          pkgs,
-          system,
-          ...
-        }:
-        {
-          _module.args.pkgs = import self.inputs.nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            overlay = [
-              inputs.neovim-nightly-overlay.overlays.default
-              inputs.sops-nix.overlays.default
-            ];
-          };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-          devShells = {
-            default = pkgs.mkShell {
-              name = "default-shell";
-              packages = with pkgs; [
-                age
-                nix-fast-build
-                sops
-                ssh-to-age
-              ];
-            };
-          };
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
 
-          treefmt = {
-            projectRootFile = "flake.nix";
-            programs = {
-              biome.enable = true;
-              nixfmt.enable = true;
-              shfmt.enable = true;
-              stylua.enable = true;
-              taplo.enable = true;
-              terraform.enable = true;
-              yamlfmt.enable = true;
-            };
-          };
-        };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
 
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
+
+    import-tree.url = "github:vic/import-tree";
+
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        flake-parts.follows = "flake-parts";
+        git-hooks.follows = "git-hooks";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-homebrew = {
+      url = "github:zhaofengli/nix-homebrew";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nix-darwin.follows = "nix-darwin";
+      };
+    };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
+
+    # skk-dev-dict = {
+    #   url = "github:skk-dev/dict";
+    #   flake = false;
+    # };
+    #
+    # sops-nix = {
+    #   url = "github:Mic92/sops-nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    systems.url = "github:nix-systems/default";
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    vim-overlay = {
+      url = "github:kawarimidoll/vim-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # yaskkserv2-service = {
+    #   url = "github:ttak0422/yaskkserv2-service";
+    #   inputs = {
+    #     nixpkgs.follows = "nixpkgs";
+    #     flake-parts.follows = "flake-parts";
+    #   };
+    # };
+  };
+
+  # Flake outputs
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      inherit (inputs.import-tree ./flake-modules) imports;
+      systems = import inputs.systems;
     };
 }

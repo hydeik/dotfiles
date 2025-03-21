@@ -1,0 +1,4 @@
+{ config, ... }:
+{
+  config.flake.modules = { };
+}
