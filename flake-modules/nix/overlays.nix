@@ -1,4 +1,9 @@
-{ inputs, lib, config, ... }:
+{
+  inputs,
+  lib,
+  config,
+  ...
+}:
 {
   options.nix.nixpkgs = lib.mkOption {
     type = lib.types.lazyAttrsOf lib.types.anything;
