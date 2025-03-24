@@ -4,5 +4,5 @@
     type = with lib.types; lazyAttrsOf anything;
   };
 
-  config.flake.meta.uri = "github:mightyiam/infra";
+  config.flake.meta.uri = "github:hydeik/dotfiles/nix";
 }
