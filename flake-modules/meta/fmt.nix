@@ -26,6 +26,7 @@
         settings = {
           on-unmatched = "fatal";
           global.excludes = [
+            "*.conf"
             "*.md"
             "*.zsh"
             "*/.gitignore"
