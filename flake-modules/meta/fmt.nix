@@ -28,9 +28,11 @@
           global.excludes = [
             "*.conf"
             "*.md"
-            "*.zsh"
             "*/.gitignore"
             "*/.gitkeep"
+            "*/fsh/*"
+            "*/zsh/*"
+            "*.zsh"
             "LICENSE"
             ".editorconfig"
           ];

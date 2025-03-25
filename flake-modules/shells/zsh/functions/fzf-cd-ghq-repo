@@ -1,0 +1,20 @@
+local fzf_options="--no-multi --prompt='Repogitory > ' --query=\"$LBUFFER\""
+if [[ $TMUX && $FZF_TMUX = 1 ]]; then
+    local fzf_command="fzf-tmux ${fzf_options} ${FZF_TMUX_OPTS} ${FZF_DEFAULT_OPTS}"
+else
+    local fzf_command="fzf ${fzf_options} ${FZF_DEFAULT_OPTS}"
+fi
+local ghq_command="ghq list --full-path"
+local command="${ghq_command} | ${fzf_command}"
+local selected_dir=$(eval ${command})
+
+if [ -n "$selected_dir" ]; then
+    BUFFER="builtin cd ${selected_dir}"
+    zle accept-line
+fi
+zle clear-screen
+
+# Local Variables:
+# mode: Shell-Script
+# End:
+# vim: ft=zsh
