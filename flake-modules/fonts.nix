@@ -8,7 +8,7 @@ let
     "liberation_ttf"
     "lmodern" # Latin Modern font
     "lmmath" # Latin Modern Math font
-    "maple-mono"
+    # "maple-mono"
     "material-icons"
     "material-symbols"
     "material-design-icons"
