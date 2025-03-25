@@ -16,6 +16,8 @@
           config.flake.modules.homeManager.base
           config.flake.modules.homeManager.gui or { }
         ];
+        style.windowOpacity = 0.9;
+        style.bellDuration = 0;
       };
     };
   };
