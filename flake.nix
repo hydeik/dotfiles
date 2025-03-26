@@ -8,7 +8,7 @@
     # Allow pipe-operators |> and <|
     extra-experimental-features = [ "pipe-operators" ];
     # Disallow import from derivation
-    allow-import-from-derivation = false;
+    allow-import-from-derivation = true;
   };
 
   # Flake inputs

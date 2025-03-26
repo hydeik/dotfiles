@@ -82,40 +82,35 @@ limit coredumpsize 0
 ##============================================================================
 ## Environment variables
 ##============================================================================
-# ## HOST
-# export HOST=$(uname -n)
 
-## UID
-export UID
-
-##
-## Language, Locale
-##
-export LANGUAGE=en_US.UTF-8
-export LANG="${LANGUAGE}"
-export LC_ALL="${LANGUAGE}"
-export LC_CTYPE="${LANGUAGE}"
-
-##
-## Pager
-##
-export PAGER="less -R"
-
-## available $INTERACTIVE_FILTER
-export INTERACTIVE_FILTER="fzf:fzf-tmux:peco:percol:gof:pick"
-
-##
-## Environment variables
-##
+# Detect home-manager's profile directory
+HM_PROFILE_DIR="/etc/profiles/per-user/${USER}"
+if [[ ! -d $HM_PROFILE_DIR ]]; then
+    HM_PROFILE_DIR="${HOME}/.local/state/nix/profile"
+fi
+export HM_PROFILE_DIR
 
 # Nix home-manager session variables
-. "${HOME}/.nix-profile/etc/profile.d/hm-session-vars.sh"
+if [[ -r "${HM_PROFILE_DIR}/etc/profile.d/hm-session-vars.sh" ]]; then
+    . "${HM_PROFILE_DIR}/etc/profile.d/hm-session-vars.sh"
+fi
 
 # Only source this once
 if [[ -z "$__HM_ZSH_SESS_VARS_SOURCED" ]]; then
     export __HM_ZSH_SESS_VARS_SOURCED=1
     # Declare environment variables for zsh session here.
 
+    # UID
+    export UID
+
+    # Language, Locale
+    export LANGUAGE=en_US.UTF-8
+    export LANG="${LANGUAGE}"
+    export LC_ALL="${LANGUAGE}"
+    export LC_CTYPE="${LANGUAGE}"
+
+    # available $INTERACTIVE_FILTER
+    export INTERACTIVE_FILTER="fzf:fzf-tmux:peco:percol:gof:pick"
 fi
 
 ##==============================================================================
@@ -131,6 +126,25 @@ fi
 #     -U list_name removes duplicated element in the list.
 #
 
+## Call path_helper to set the system paths and manpaths (Darwin)
+if [[ -x /usr/libexec/path_helper ]]; then
+    eval $(/usr/libexec/path_helper -s)
+fi
+
+##  path / PATH
+typeset -gxU path
+path=(
+    ${HOME}/bin(N-/)
+    ${XDG_BIN_HOME}(N-/)
+    # for OSX
+    /Library/Tex/texbin(N-/)
+    # *nix local
+    /usr/local/cuda/bin(N-/)
+    /usr/bin/x11(N-/)
+    /usr/texbin(N-/)
+    $path[@]
+)
+
 ## fpath -- set before compinit
 typeset -gxU fpath
 fpath=(
@@ -138,48 +152,17 @@ fpath=(
     ${ZDOTDIR}/completions(N-/)
     ${ZDOTDIR}/functions(N-/)
     ${ZDOTDIR}/plugins/zsh-completions(N-/)
-    /usr/local/share/zsh/site-functions(N-/)
     /opt/homebrew/share/zsh/site-functions(N-/)
-    /usr/share/zsh/site-functions(N-/)
+    #/usr/local/share/zsh/site-functions(N-/)
     $fpath[@]
 )
 
-##  path / PATH
-typeset -gxU path
-path=(
-    ${HOME}/bin(N-/)
-    # $HOME/.local/bin(N-/) # for pip --user
-    ${XDG_BIN_HOME}(N-/)
-    # for OSX
-    /Library/Tex/texbin(N-/)
-    # *nix local
-    /usr/local/bin(N-/)
-    /usr/local/sbin(N-/)
-    /usr/local/cuda/bin(N-/)
-    # System
-    /usr/bin(N-/)
-    /usr/sbin(N-/)
-    /usr/x11{6,7}/bin(N-/)
-    /usr/bin/x11(N-/)
-    /usr/i18n/bin(N-/)
-    /usr/kerberos/bin(N-/)
-    /usr/kerberos/sbin(N-/)
-    /bin(N-/)
-    /sbin(N-/)
-    /usr/texbin(N-/)
-    $path[@]
-)
 
 ## manpath / MANPATH
 typeset -gxU manpath
 manpath=(
     ${XDG_DATA_HOME}/man(N-/)
     /usr/local/cuda/doc/man(N-/)
-    /usr/local/share/jman(N-/)
-    /usr/local/share/man/ja(N-/)
-    /usr/local/share/man(N-/)
-    /usr/share/man/ja(N-/)
-    /usr/share/man(N-/)
     $manpath[@]
 )
 
@@ -188,8 +171,8 @@ typeset -gxU  infopath INFOPATH
 typeset -gxTU INFOPATH infopath  # tie the new array to the variables
 infopath=(
     ${XDG_DATA_HOME}/info(N-/)
-    /usr/local/share/info(N-/)
-    /usr/share/info(N-/)
+    # /usr/local/share/info(N-/)
+    # /usr/share/info(N-/)
     $infopath[@]
 )
 
@@ -197,12 +180,12 @@ infopath=(
 typeset -gxU  pkg_config_path PKG_CONFIG_PATH
 typeset -gxTU PKG_CONFIG_PATH pkg_config_path
 pkg_config_path=(
+    /opt/X11/lib/pkgconfig(N-/)
     /usr/local/lib/pkgconfig(N-/)
     /usr/local/share/pkgconfig(N-/)
     /usr/lib/x86_64-linux-gnu/pkgconfig(N-/)
     /usr/share/pkgconfig(N-/)
     /usr/lib/pkgconfig(N-/)
-    /opt/X11/lib/pkgconfig(N-/)
     $pkg_config_path[@]
 )
 
@@ -283,9 +266,33 @@ pkg_config_path=(
 )
 
 ##
+## Nix
+##
+for p in ${(z)NIX_PROFILES}; do
+    path=(
+        ${p}/bin(N-/)
+        $path[@]
+    )
+    # fpath=(
+    #     ${p}/share/zsh/site-functions(N-/)
+    #     ${p}/share/zsh/${ZSH_VERSION}/functions(N-/)
+    #     ${p}/share/zsh/vendor-completions(N-/)
+    #     $fpath[@]
+    # )
+    manpath=(
+        ${p}/share/man(N-/)
+        $manpath[@]
+    )
+    infopath=(
+        ${p}/info(N-/)
+        $infopath[@]
+    )
+done
+
+##
 ## RubyGems
 ##
-path=( ${GEM_HOME}/bin $path[@] )
+path=( ${GEM_HOME}/bin(N-/) $path[@] )
 
 ##
 ## Go
@@ -322,6 +329,8 @@ export GOPATH=${HOME}
 # if [[ -f /opt/intel/oneapi/setvars.sh ]]; then
 #     source /opt/intel/oneapi/setvars.sh
 # fi
+
+
 
 ##============================================================================
 ## Computational programs

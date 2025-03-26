@@ -1,5 +1,4 @@
-_:
-{
+_: {
   flake.modules.homeManager.base =
     { config, pkgs, ... }:
     let

@@ -34,6 +34,8 @@
             "*/zsh/*"
             "*.zsh"
             "LICENSE"
+            "*/npmrc"
+            "*/pythonstartup.py"
             ".editorconfig"
           ];
         };

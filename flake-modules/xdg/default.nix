@@ -1,15 +1,14 @@
-{ lib, ... }:
 {
   flake.modules.homeManager.base =
     { config, ... }:
     let
       inherit (config.xdg)
-      cacheHome
-      configHome
-      dataHome
-      ;
+        cacheHome
+        configHome
+        dataHome
+        ;
     in
-      {
+    {
       xdg = {
         enable = true;
         configFile."npm/npmrc".source = ./npmrc;
