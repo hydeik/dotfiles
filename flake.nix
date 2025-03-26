@@ -128,7 +128,7 @@
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      inherit (inputs.import-tree ./flake-modules) imports;
+      inherit (inputs.import-tree ./modules) imports;
       systems = import inputs.systems;
     };
 }
