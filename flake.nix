@@ -14,8 +14,10 @@
   # Flake inputs
   inputs = {
     catppuccin = {
-      url = "github:catppuccin/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # url = "github:catppuccin/nix";
+      # inputs.nixpkgs.follows = "nixpkgs";
+      # https://github.com/catppuccin/nix/issues/289
+      url = "github:catppuccin/nix/5e303e8d7e251868fa79f83bbda69da90aa62402";
     };
 
     devshell = {
