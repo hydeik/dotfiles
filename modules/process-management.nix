@@ -3,18 +3,18 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
+        bottom
         lsof
         procs
-        psmisc
         watchexec
       ];
       programs = {
-        bottom = {
-          enable = true;
-          settings = {
-            rate = 500;
-          };
-        };
+        # bottom = {
+        #   enable = true;
+        #   settings = {
+        #     rate = 500;
+        #   };
+        # };
         btop = {
           enable = true;
           settings = {
