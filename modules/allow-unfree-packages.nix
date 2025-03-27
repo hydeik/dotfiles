@@ -10,6 +10,8 @@
       predicate = pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowUnfreePackages;
     in
     {
+      darwin.desktop.nixpkgs.config.allowUnfreePredicate = predicate;
+
       nixos.desktop.nixpkgs.config.allowUnfreePredicate = predicate;
 
       homeManager.base = args: {
