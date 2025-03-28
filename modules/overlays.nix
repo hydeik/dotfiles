@@ -1,4 +1,4 @@
-{ lib, inputs, ... }:
+{ inputs, ... }:
 let
   overlays = [
     inputs.neovim-nightly-overlay.overlays.default

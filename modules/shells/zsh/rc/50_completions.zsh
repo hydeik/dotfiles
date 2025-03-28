@@ -2,25 +2,27 @@
 ## rc/50_completions.zsh -- Set up shell completions
 ##=====================================================================
 
-# Generate the zsh completion files from command line
-ZSHCOMPLETIONS="${ZDOTDIR}/completions"
-if [[ ! -r "${ZSHCOMPLETIONS}/_deno" || "$( whence -p deno  )" -nt "${ZSHCOMPLETIONS}/_deno" ]]; then
-    deno completions zsh > "${ZSHCOMPLETIONS}/_deno"
-fi
-if [[ ! -r "${ZSHCOMPLETIONS}/_gh" || "$( whence -p gh  )" -nt "${ZSHCOMPLETIONS}/_gh" ]]; then
-    command gh completion -s zsh > "${ZSHCOMPLETIONS}/_gh"
-fi
-if [[ ! -r "${ZSHCOMPLETIONS}/_poetry" || "$( whence -p poetry  )" -nt "${ZSHCOMPLETIONS}/_poetry" ]]; then
-    poetry completions zsh > "${ZSHCOMPLETIONS}/_poetry"
-fi
-if [[ ! -r "${ZSHCOMPLETIONS}/_mise" || "$( whence -p mise  )" -nt "${ZSHCOMPLETIONS}/_mise" ]]; then
-    mise completion zsh > "${ZSHCOMPLETIONS}/_mise"
-fi
-if [[ ! -r "${ZSHCOMPLETIONS}/_rustup" || "$( whence -p rustup  )" -nt "${ZSHCOMPLETIONS}/_rustup" ]]; then
-    rustup completions zsh > "${ZSHCOMPLETIONS}/_rustup"
-    rustup completions zsh cargo > "${ZSHCOMPLETIONS}/_cargo"
-fi
-unset ZSHCOMPLETIONS
+# NOTE: Now those tools are installed via nix
+
+# # Generate the zsh completion files from command line
+# ZSHCOMPLETIONS="${ZDOTDIR}/completions"
+# if [[ ! -r "${ZSHCOMPLETIONS}/_deno" || "$( whence -p deno  )" -nt "${ZSHCOMPLETIONS}/_deno" ]]; then
+#     deno completions zsh > "${ZSHCOMPLETIONS}/_deno"
+# fi
+# if [[ ! -r "${ZSHCOMPLETIONS}/_gh" || "$( whence -p gh  )" -nt "${ZSHCOMPLETIONS}/_gh" ]]; then
+#     command gh completion -s zsh > "${ZSHCOMPLETIONS}/_gh"
+# fi
+# if [[ ! -r "${ZSHCOMPLETIONS}/_poetry" || "$( whence -p poetry  )" -nt "${ZSHCOMPLETIONS}/_poetry" ]]; then
+#     poetry completions zsh > "${ZSHCOMPLETIONS}/_poetry"
+# fi
+# if [[ ! -r "${ZSHCOMPLETIONS}/_mise" || "$( whence -p mise  )" -nt "${ZSHCOMPLETIONS}/_mise" ]]; then
+#     mise completion zsh > "${ZSHCOMPLETIONS}/_mise"
+# fi
+# if [[ ! -r "${ZSHCOMPLETIONS}/_rustup" || "$( whence -p rustup  )" -nt "${ZSHCOMPLETIONS}/_rustup" ]]; then
+#     rustup completions zsh > "${ZSHCOMPLETIONS}/_rustup"
+#     rustup completions zsh cargo > "${ZSHCOMPLETIONS}/_cargo"
+# fi
+# unset ZSHCOMPLETIONS
 
 # Speed up zsh compinit by only checking cache once a day.
 # This piece of code is taken from

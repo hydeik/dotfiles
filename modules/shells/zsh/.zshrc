@@ -16,7 +16,6 @@ function source {
     builtin source $1
 }
 
-
 # ensure .zshrc and .zshenv are zcompiled
 ensure_zcompiled "${ZDOTDIR}/.zshenv"
 ensure_zcompiled "${ZDOTDIR}/.zshrc"
@@ -67,7 +66,16 @@ unset sheldon_cache sheldon_toml
 ## Load configurations
 ##============================================================================
 
+# Direnv
+if [[ $(whence -p direnv) ]]; then
+    if [[ ! -r "${ZDOTDIR}/rc/10_direnv.zsh" ]]; then
+        direnv hook zsh >> "${ZDOTDIR}/rc/10_direnv.zsh"
+    fi
+    source "${ZDOTDIR}/rc/10_direnv.zsh"
+fi
+
 source "${ZDOTDIR}/rc/10_functions.zsh"
+source "${ZDOTDIR}/rc/10_direnv.zsh"
 source "${ZDOTDIR}/rc/20_autoload.zsh"
 source "${ZDOTDIR}/rc/30_options.zsh"
 source "${ZDOTDIR}/rc/40_zstyle.zsh"
