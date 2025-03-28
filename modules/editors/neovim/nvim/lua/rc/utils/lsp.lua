@@ -49,6 +49,7 @@ M.setup = function()
 end
 
 ---@param client vim.lsp.Client
+---@param buffer number
 M._check_methods = function(client, buffer)
   -- don't trigger on invalid buffers
   if not vim.api.nvim_buf_is_valid(buffer) then
@@ -65,7 +66,7 @@ M._check_methods = function(client, buffer)
   for method, clients in pairs(M._supports_method) do
     clients[client] = clients[client] or {}
     if not clients[client][buffer] then
-      if client.supports_method and client.supports_method(method, { bufnr = buffer }) then
+      if client:supports_method(method, buffer) then
         clients[client][buffer] = true
         vim.api.nvim_exec_autocmds("User", {
           pattern = "LspSupportsMethod",

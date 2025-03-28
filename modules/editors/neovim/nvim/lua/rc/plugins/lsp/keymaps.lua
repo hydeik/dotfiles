@@ -148,7 +148,7 @@ M.has_method = function(bufnr, method)
   end
   local clients = vim.lsp.get_clients { bufnr = bufnr }
   return vim.iter(clients):any(function(client)
-    return client.supports_method(method)
+    return client:supports_method(method)
   end)
 end
 
