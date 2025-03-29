@@ -37,6 +37,7 @@
             "*/npmrc"
             "*/pythonstartup.py"
             ".editorconfig"
+            "*/.editorconfig"
           ];
         };
       };
