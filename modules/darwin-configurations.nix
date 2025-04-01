@@ -20,6 +20,7 @@ in
         {
           name = hostName;
           value = inputs.nix-darwin.lib.darwinSystem {
+            system = module.nixpkgs.hostPlatform;
             modules = [
               module
               { networking = { inherit hostName; }; }
