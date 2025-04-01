@@ -16,7 +16,7 @@ in
       };
     };
     homeManager.base = {
-      imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
+      imports = [ inputs.catppuccin.homeModules.catppuccin ];
       options = {
         style = {
           windowOpacity = lib.mkOption {
