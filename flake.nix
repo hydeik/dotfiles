@@ -93,10 +93,6 @@
 
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
 
-    # skk-dev-dict = {
-    #   url = "github:skk-dev/dict";
-    #   flake = false;
-    # };
     #
     # sops-nix = {
     #   url = "github:Mic92/sops-nix";
@@ -115,13 +111,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # yaskkserv2-service = {
-    #   url = "github:ttak0422/yaskkserv2-service";
-    #   inputs = {
-    #     nixpkgs.follows = "nixpkgs";
-    #     flake-parts.follows = "flake-parts";
-    #   };
-    # };
   };
 
   # Flake outputs

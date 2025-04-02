@@ -1,8 +1,7 @@
-_: {
+{
   perSystem =
     { pkgs, ... }:
     {
-
       devshells.default = {
         commands = [
           {

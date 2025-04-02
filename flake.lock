@@ -465,9 +465,27 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
+        "skk-dev-dict": "skk-dev-dict",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix_2",
-        "vim-overlay": "vim-overlay"
+        "vim-overlay": "vim-overlay",
+        "yaskkserv2-src": "yaskkserv2-src"
+      }
+    },
+    "skk-dev-dict": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1724871756,
+        "narHash": "sha256-sWz85Q6Bu2WoKsckSp5SlcuPUQN2mcq+BHMqNXQ/aho=",
+        "owner": "skk-dev",
+        "repo": "dict",
+        "rev": "4eb91a3bbfef70bde940668ec60f3beae291e971",
+        "type": "github"
+      },
+      "original": {
+        "owner": "skk-dev",
+        "repo": "dict",
+        "type": "github"
       }
     },
     "systems": {
@@ -561,6 +579,22 @@
       "original": {
         "owner": "vim",
         "repo": "vim",
+        "type": "github"
+      }
+    },
+    "yaskkserv2-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740322810,
+        "narHash": "sha256-H2keEl2oRNk/oYABqnQtQ0UKdLqq+c/ulqCc94mavmo=",
+        "owner": "wachikun",
+        "repo": "yaskkserv2",
+        "rev": "c468ce943801742ea896a9c63b7167b6507c72d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wachikun",
+        "repo": "yaskkserv2",
         "type": "github"
       }
     }

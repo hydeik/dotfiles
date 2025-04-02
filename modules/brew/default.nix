@@ -29,6 +29,7 @@
           "alacritty"
           "apache-directory-studio"
           "appcleaner"
+          "aquaskk"
           "cog"
           "deepl"
           "discord"
