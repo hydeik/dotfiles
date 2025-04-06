@@ -9,7 +9,7 @@
         Show24Hour = true;
 
         # Show digital clock
-        IsAanlog = false;
+        IsAnalog = false;
 
         # Show the clock with second precision, instead of minutes.
         ShowSeconds = true;

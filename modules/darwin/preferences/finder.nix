@@ -1,6 +1,6 @@
 {
   flake.modules.darwin.desktop = {
-    systems.defaults = {
+    system.defaults = {
       finder = {
         # show the POSIX fullpath in the window title.
         _FXShowPosixPathInTitle = true;
@@ -12,7 +12,7 @@
         AppleShowAllFiles = true;
 
         # disable warning when changing file extension
-        FXEnableExtensionChangeWarining = false;
+        FXEnableExtensionChangeWarning = false;
 
         # show path breadcrumbs
         ShowPathbar = true;

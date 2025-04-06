@@ -38,6 +38,7 @@
             "*/pythonstartup.py"
             ".editorconfig"
             "*/.editorconfig"
+            ".direnv/*"
           ];
         };
       };

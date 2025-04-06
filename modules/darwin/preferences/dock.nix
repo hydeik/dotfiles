@@ -3,7 +3,7 @@
     system.defaults = {
       dock = {
         # display the appswitcher on all displays
-        appswitcher-all-display = true;
+        appswitcher-all-displays = true;
 
         # automatically show and hide the dock.
         autohide = true;
