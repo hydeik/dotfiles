@@ -71,17 +71,25 @@
           ];
 
           # Apps in AppStore
-          masApps = {
-            # Security
-            "Bitwarden" = 1352778147;
-
-            # Utility
-            "The Unarchiver" = 425424353;
-
-            # Communication tools
-            "LINE" = 539883307;
-            "WhatsApp Messenger" = 310633997;
-          };
+          #
+          # FIXME:
+          # nix-darwin reinstall masApps upon darwin-rebuild due to the
+          # following issues (temporarily install these apps manually).
+          #
+          # - https://github.com/nix-darwin/nix-darwin/issues/1323
+          # - https://github.com/mas-cli/mas/issues/724
+          #
+          # masApps = {
+          #   # Security
+          #   "Bitwarden" = 1352778147;
+          #
+          #   # Utility
+          #   "The Unarchiver" = 425424353;
+          #
+          #   # Communication tools
+          #   "LINE" = 539883307;
+          #   "WhatsApp Messenger" = 310633997;
+          # };
         };
       };
 
