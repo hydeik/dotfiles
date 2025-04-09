@@ -1,39 +1,47 @@
-# Dotfiles
+# Dotfiles (powered by Nix)
 
-My dotfiles managed by [chezmoi](https://github.com/twpayne/chezmoi).
-The `chezmoi`'s documentation is available at [chezmoi.io](https://www.chezmoi.io).
+These are my personal, Nix-based dotfiles configured using [Nix flakes](https://nixos.wiki/wiki/Flakes).
 
-## Bootstrapping
+## Overview
 
-[Install chesmoi](https://www.chezmoi.io/quick-start/), then initialize chezmoi
-with the dotfile repo:
+This repository provides a structured and reproducible system configuration for Darwin machines using [nix-darwin](https://github.com/nix-darwin/nix-darwin) and [home-manager](https://github.com/nix-community/home-manager).
 
-```sh
-$ chezmoi init https://github.com/hydeik/dotfiles
-```
+## Installation
 
-Run
+1. **Install Nix with flakes enabled**:
 
-```sh
-$ chezmoi edit-config
-```
+ - [Official Nix Installer](https://nixos.org/download/)
+ - [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer)
 
-and input the data necessary for filling templates, such as:
+> [!WARING]
+> Determinate Nix Installer has the options to install official (planner) Nix, as well as Determinate's own variants (Determinate Nix).
+> Make sure to install the official Nix, otherwise the configurations raise errors coming from the incompatible options.
 
-```toml
-[data]
-    name = "Your Name"
-    email = "your@email.address"
-```
+3. **Clone this repo**:
 
-Check the changes that chezmoi will be made in the home directory:
+   ```bash
+   $ git clone https://github.com/hydeik/dotfiles <path-to-dotfiles> 
+   $ cd <path-to-dotfiles>
+   ```
 
-```sh
-$ chezmoi diff # to check the changes that will be made
-```
+4. **Run Nix flake**:
 
-If it is OK, apply the changes:
+   ```bash
+   $ nix flake lock
+   # Setup darwin system
+   $ nix run flake nix-darwin/nix-darwin/master#darwin-rebuild -- switch --flake .#<hostname> 
+   ```
 
-```sh
-$ chezmoi -v apply # apply
-```
+
+## Update system configurations and packages
+
+   ```bash
+   $ nix flake update
+   # update darwin system
+   $ darwin-rebuild switch --flake .#<hostname>
+   ```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
+

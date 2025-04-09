@@ -1,5 +1,0 @@
-[object]
-body = ["{","\t$0","}"]
-description = "Json basic object snippet."
-prefix = "obj"
-scope = "json"
