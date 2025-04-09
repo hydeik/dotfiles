@@ -51,13 +51,20 @@
           stylua
           ;
       };
-      xdg.configFile.nvim = {
-        recursive = true;
-        source = ./nvim;
-        onChange = ''
-          # Clear Lua cache
-          rm -rf ${config.xdg.cacheHome}/nvim/luac/
-        '';
+      xdg.configFile = {
+        "nvim/init.lua".source = pkgs.substituteAll {
+          src = ./nvim/init.lua;
+          sqlite_clib_path = "${pkgs.sqlite.out}/lib/libsqlite3${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
+        };
+        "nvim/filetype.lua".source = ./nvim/filetype.lua;
+        "nvim/lua" = {
+          recursive = true;
+          source = ./nvim/lua;
+          onChange = ''
+            # Clear Lua cache
+            rm -rf ${config.xdg.cacheHome}/nvim/luac/
+          '';
+        };
       };
     };
 }

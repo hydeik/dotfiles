@@ -30,6 +30,7 @@ github = "romkatv/powerlevel10k"
 use = ["{{ name }}.zsh-theme"]
 hooks.post = '''
 ZLE_RPROMPT_INDENT=0
+zsh-defer source ${ZDOTDIR}/p10k.zsh
 '''
 
 [plugins.zeno]
@@ -49,7 +50,7 @@ apply = ["defer"]
 github = "zdharma-continuum/fast-syntax-highlighting"
 apply = ["defer"]
 hooks.post = '''
-fast-theme XDG:catppuccin-mocha
+zsh-defer fast-theme XDG:catppuccin-mocha
 '''
 
 # zmodule tldr-pages/tldr-node-client --fpath bin/completion/zsh

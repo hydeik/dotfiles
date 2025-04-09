@@ -24,6 +24,15 @@ _: {
         zsh = {
           recursive = true;
           source = ./zsh;
+          onChange = ''
+            # Remove old cache/zwc files
+            rm -rf ${config.xdg.configHome}/zsh/.zshrc.zwc
+            rm -rf ${config.xdg.configHome}/zsh/.zshenv.zwc
+            rm -rf ${config.xdg.configHome}/zsh/*.zwc
+            rm -rf ${config.xdg.configHome}/zsh/**/*.zwc
+            rm -rf ${config.xdg.configHome}/zsh/sheldon/sheldon.zsh
+            rm -rf ${config.xdg.configHome}/zsh/rc/10_direnv.zsh
+          '';
         };
         # zsh-fast-syntax-highlighting
         fsh = {

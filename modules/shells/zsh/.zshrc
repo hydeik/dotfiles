@@ -2,6 +2,9 @@
 ## .zshrc -- Zsh configuration file (for interactive mode)
 ##
 
+# Disable powerlevel10k configuration wizard
+export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
 # source command override technique
 function ensure_zcompiled {
     local compiled="$1.zwc"
@@ -98,7 +101,7 @@ fi
 ##===========================================================================
 ## Prompt
 ##===========================================================================
-zsh-defer source "${ZDOTDIR}/p10k.zsh"
+# zsh-defer source "${ZDOTDIR}/p10k.zsh"
 
 ##===========================================================================
 ## Profiling
