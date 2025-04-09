@@ -1,0 +1,27 @@
+[font]
+size = 14.0
+builtin_box_drawing = false
+
+[font.normal]
+family = "MonaspiceAr Nerd Font Mono"
+style = "Medium"
+
+[font.bold]
+family = "MonaspiceAr Nerd Font Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "MonaspiceAr Nerd Font Mono"
+style = "Bold Italic"
+
+[font.italic]
+family = "MonaspiceAr Nerd Font Mono"
+style = "Medium Italic"
+
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0
