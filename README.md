@@ -13,10 +13,9 @@ This repository provides a structured and reproducible system configuration for 
  - [Official Nix Installer](https://nixos.org/download/)
  - [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer)
 
-:::note warn
-Determinate Nix Installer has the options to install official (planner) Nix, as well as Determinate's own variants (Determinate Nix).
-Make sure to install the official Nix, otherwise the configurations raise errors coming from the incompatible options.
-:::
+> [!WARING]
+> Determinate Nix Installer has the options to install official (planner) Nix, as well as Determinate's own variants (Determinate Nix).
+> Make sure to install the official Nix, otherwise the configurations raise errors coming from the incompatible options.
 
 3. **Clone this repo**:
 
