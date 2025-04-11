@@ -17,6 +17,7 @@
           bash-language-server
           clang-tools
           cmake-language-server
+          copilot-language-server
           deno # builtin server/formatter
           efm-langserver
           fortls
@@ -67,4 +68,8 @@
         };
       };
     };
+
+  nixpkgs.allowUnfreePackages = [
+    "copilot-language-server"
+  ];
 }
