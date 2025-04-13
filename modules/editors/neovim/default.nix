@@ -6,12 +6,15 @@
       home.packages = lib.attrValues {
         inherit (pkgs.luajitPackages) luarocks;
 
+        inherit (pkgs.nodePackages_latest) nodejs;
+
         inherit (pkgs)
           # neovim body
           neovim
 
           # Dependency
           sqlite
+          uv
 
           # Language servers
           bash-language-server

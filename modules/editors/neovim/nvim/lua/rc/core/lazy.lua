@@ -80,6 +80,10 @@ local specs = {
   { import = "rc.plugins.nvim-navic" },
   { import = "rc.plugins.heirline.core" },
 
+  -- [[ AI assistance ]]
+  { import = "rc.plugins.ai.mcphub" },
+  { import = "rc.plugins.ai.copilot" },
+
   -- [[ Program Languages ]]
   { import = "rc.plugins.lang.bash" }, -- for bash, sh, and zsh
   { import = "rc.plugins.lang.biome" },

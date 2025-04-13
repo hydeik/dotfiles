@@ -3,6 +3,10 @@
 -- Autoformat
 vim.g.autoformat = true
 
+-- If the completion engine supports the AI sources, use that instead of
+-- inline suggestion.
+vim.g.vimrc_use_ai_cmp = true
+
 -- Use biome
 vim.g.vimrc_use_biome = true
 
