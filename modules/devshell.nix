@@ -9,6 +9,7 @@
           }
         ];
         devshell.packages = with pkgs; [
+          age
           bat
           biome
           deadnix
@@ -18,6 +19,8 @@
           nixfmt-rfc-style
           shellcheck
           shfmt
+          sops
+          ssh-to-age
           statix
           stylua
           taplo
