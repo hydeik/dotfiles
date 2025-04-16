@@ -13,6 +13,7 @@
           bat
           biome
           deadnix
+          gnupg
           just
           lua-language-server
           nixd
