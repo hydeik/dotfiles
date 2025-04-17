@@ -8,3 +8,9 @@ creation_rules:
           - *admin_ikeno
         age:
           - *host_lenneth
+  - path_regex: modules/sops/secrets.yaml$
+    key_groups:
+      - pgp:
+          - *admin_ikeno
+        age:
+          - *host_lenneth

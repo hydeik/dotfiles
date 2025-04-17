@@ -26,12 +26,12 @@ _: {
           source = ./zsh;
           onChange = ''
             # Remove old cache/zwc files
-            rm -rf ${config.xdg.configHome}/zsh/.zshrc.zwc
-            rm -rf ${config.xdg.configHome}/zsh/.zshenv.zwc
-            rm -rf ${config.xdg.configHome}/zsh/*.zwc
-            rm -rf ${config.xdg.configHome}/zsh/**/*.zwc
-            rm -rf ${config.xdg.configHome}/zsh/sheldon/sheldon.zsh
-            rm -rf ${config.xdg.configHome}/zsh/rc/10_direnv.zsh
+            rm -rf ${zdotdir}/.zshrc.zwc
+            rm -rf ${zdotdir}/.zshenv.zwc
+            rm -rf ${zdotdir}/*.zwc
+            rm -rf ${zdotdir}/**/*.zwc
+            rm -rf ${zdotdir}/sheldon/sheldon.zsh
+            rm -rf ${zdotdir}/rc/10_direnv.zsh
           '';
         };
         # zsh-fast-syntax-highlighting

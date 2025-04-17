@@ -10,7 +10,7 @@ return {
               stream = true,
             },
             env = {
-              api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
+              api_key = vim.env.OPENAI_API_KEY,
             },
             schema = {
               model = {
@@ -22,7 +22,10 @@ return {
           })
         end,
       },
-      strategies = {},
+      strategies = {
+        chat = { adapter = "copilot" },
+        inline = { adapter = "copilot" },
+      },
     },
   },
 }
