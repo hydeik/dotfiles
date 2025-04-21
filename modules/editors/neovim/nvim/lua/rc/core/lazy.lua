@@ -81,8 +81,9 @@ local specs = {
   { import = "rc.plugins.heirline.core" },
 
   -- [[ AI assistance ]]
-  { import = "rc.plugins.ai.mcphub" },
   { import = "rc.plugins.ai.copilot" },
+  { import = "rc.plugins.ai.codecompanion" },
+  { import = "rc.plugins.ai.mcphub" },
 
   -- [[ Program Languages ]]
   { import = "rc.plugins.lang.bash" }, -- for bash, sh, and zsh

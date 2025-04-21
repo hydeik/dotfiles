@@ -97,7 +97,6 @@ return {
       },
       -- [[ Text objects ]]
       textobjects = {
-
         swap = {
           enable = true,
           swap_next = {
