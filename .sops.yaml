@@ -1,6 +1,7 @@
 keys:
   - &admin_ikeno 692C3A45D7E6596AB81ABD715ECFDA6D2E4B4576
   - &host_lenneth age145t2t3vh3jeshw02fajsdxq0fq2m0xqvrnasujzs4zwc7g5j4s8qtwmgtu
+  - &host_silmeria age1ezau9w9n6ae00jana22yhwtn8uxmsdzkt8g365tmfjw6m5ekx4mqwmk3r7
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
@@ -8,9 +9,11 @@ creation_rules:
           - *admin_ikeno
         age:
           - *host_lenneth
+          - *host_silmeria
   - path_regex: modules/sops/secrets.yaml$
     key_groups:
       - pgp:
           - *admin_ikeno
         age:
           - *host_lenneth
+          - *host_silmeria
