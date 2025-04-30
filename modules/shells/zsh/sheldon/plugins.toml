@@ -30,7 +30,7 @@ github = "romkatv/powerlevel10k"
 use = ["{{ name }}.zsh-theme"]
 hooks.post = '''
 ZLE_RPROMPT_INDENT=0
-zsh-defer source ${ZDOTDIR}/p10k.zsh
+source ${ZDOTDIR}/p10k.zsh
 '''
 
 [plugins.zeno]
