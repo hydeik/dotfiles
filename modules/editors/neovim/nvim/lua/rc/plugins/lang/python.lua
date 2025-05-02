@@ -8,17 +8,15 @@ return {
     opts = {
       servers = {
         ruff = {
-          settings = {
-            cmd_env = { RUFF_TRACE = "messages" },
-            init_options = {
-              settings = { logLevel = "error" },
-            },
-            keys = {
-              {
-                "<Space>co",
-                require("rc.utils.lsp").action["source.organizeImports"],
-                desc = "Organize Imports",
-              },
+          cmd_env = { RUFF_TRACE = "messages" },
+          init_options = {
+            settings = { logLevel = "error" },
+          },
+          keys = {
+            {
+              "<Space>co",
+              require("rc.utils.lsp").action["source.organizeImports"],
+              desc = "Organize Imports",
             },
           },
         },

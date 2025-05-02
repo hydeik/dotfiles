@@ -30,8 +30,7 @@
           });
       };
       xdg.configFile = {
-        "tmux/tmux.conf".source = pkgs.substituteAll {
-          src = ./tmux.conf;
+        "tmux/tmux.conf".source = pkgs.replaceVars ./tmux.conf {
           tmux_config_dir = "${config.xdg.configHome}/tmux";
           battery = "${pkgs.tmuxPlugins.battery}";
           copycat = "${pkgs.tmuxPlugins.copycat}";

@@ -56,8 +56,7 @@
           ;
       };
       xdg.configFile = {
-        "nvim/init.lua".source = pkgs.substituteAll {
-          src = ./nvim/init.lua;
+        "nvim/init.lua".source = pkgs.replaceVars ./nvim/init.lua {
           sqlite_clib_path = "${pkgs.sqlite.out}/lib/libsqlite3${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
         };
         "nvim/filetype.lua".source = ./nvim/filetype.lua;

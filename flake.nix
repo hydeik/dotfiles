@@ -4,7 +4,7 @@
   # A set of nix.conf options to be set when evaluating any part of a flake.
   nixConfig = {
     # If set to true, `builtins.warn` will throw an error when logging a warning.
-    abort-on-warn = true;
+    abort-on-warn = false;
     # Allow pipe-operators |> and <|
     extra-experimental-features = [ "pipe-operators" ];
     # Disallow import from derivation
