@@ -2,10 +2,11 @@
 import = [
   ## -- Font
   # "~/.config/alacritty/fonts/explex35.toml",
+  "~/.config/alacritty/fonts/maple-mono.toml",
   # "~/.config/alacritty/fonts/monaspace.toml",
-  # "~/.config/alacritty/fonts/monaspace.toml",
+  # "~/.config/alacritty/fonts/moralerspace.toml",
   # "~/.config/alacritty/fonts/pleckjp.toml",
-  "~/.config/alacritty/fonts/plemoljp35.toml",
+  # "~/.config/alacritty/fonts/plemoljp35.toml",
   ## -- Theme
   "@catppuccin_alacritty@",
 ]

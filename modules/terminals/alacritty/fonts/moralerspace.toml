@@ -1,0 +1,27 @@
+[font]
+size = 18.0
+builtin_box_drawing = false
+
+[font.normal]
+family = "Moralerspace Argon NF"
+style = "Regular"
+
+[font.bold]
+family = "Moralerspace Argon NF"
+style = "Bold"
+
+[font.bold_italic]
+family = "Moralerspace Argon NF"
+style = "BoldItalic"
+
+[font.italic]
+family = "Moralerspace Argon NF"
+style = "Italic"
+
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0

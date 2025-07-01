@@ -3,20 +3,20 @@ size = 14.0
 builtin_box_drawing = false
 
 [font.normal]
-family = "MonaspiceAr Nerd Font Mono"
-style = "Medium"
+family = "Maple Mono NL NF"
+style = "Regular"
 
 [font.bold]
-family = "MonaspiceAr Nerd Font Mono"
+family = "Maple Mono NL NF"
 style = "Bold"
 
 [font.bold_italic]
-family = "MonaspiceAr Nerd Font Mono"
+family = "Maple Mono NL NF"
 style = "Bold Italic"
 
 [font.italic]
-family = "MonaspiceAr Nerd Font Mono"
-style = "Medium Italic"
+family = "Maple Mono NL NF"
+style = "Italic"
 
 [font.offset]
 x = 0
