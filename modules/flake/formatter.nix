@@ -1,6 +1,4 @@
-{ inputs, ... }:
 {
-  imports = [ inputs.treefmt-nix.flakeModule ];
   perSystem =
     { pkgs, ... }:
     {
@@ -26,6 +24,7 @@
         settings = {
           on-unmatched = "fatal";
           global.excludes = [
+            "*.bak"
             "*.conf"
             "*.md"
             "*/.gitignore"
@@ -43,9 +42,9 @@
         };
       };
 
-      pre-commit.settings.hooks.nix-fmt = {
-        enable = true;
-        entry = "nix fmt -- --fail-on-change";
-      };
+      # pre-commit.settings.hooks.nix-fmt = {
+      #   enable = true;
+      #   entry = "nix fmt -- --fail-on-change";
+      # };
     };
 }
