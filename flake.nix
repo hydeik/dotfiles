@@ -39,6 +39,12 @@
       };
     };
 
+    hercules-ci-effects = {
+      url = "github:hercules-ci/hercules-ci-effects";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -67,7 +73,9 @@
         flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
         git-hooks.follows = "git-hooks";
+        hercules-ci-effects.follows = "hercules-ci-effects";
         nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
       };
     };
 
@@ -103,7 +111,10 @@
 
     vim-overlay = {
       url = "github:kawarimidoll/vim-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks.follows = "git-hooks";
+      };
     };
 
   };
