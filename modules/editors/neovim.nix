@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   flake.modules.homeManager.base =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       home.packages = lib.attrValues {
         inherit (pkgs.luajitPackages) luarocks;
@@ -9,11 +9,8 @@
         inherit (pkgs.nodePackages_latest) nodejs;
 
         inherit (pkgs)
-          # neovim body
-          neovim
-
           # Dependency
-          sqlite
+          # sqlite
           uv
 
           # Language servers
@@ -27,6 +24,7 @@
           lua-language-server
           marksman
           nixd
+          nixf-diagnose
           ruff # builtin server/formatter
           taplo
           texlab
@@ -53,21 +51,21 @@
           shfmt
           sql-formatter
           stylua
+          treefmt
           ;
       };
-      xdg.configFile = {
-        "nvim/init.lua".source = pkgs.replaceVars ./nvim/init.lua {
-          sqlite_clib_path = "${pkgs.sqlite.out}/lib/libsqlite3${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
-        };
-        "nvim/filetype.lua".source = ./nvim/filetype.lua;
-        "nvim/lua" = {
-          recursive = true;
-          source = ./nvim/lua;
-          onChange = ''
-            # Clear Lua cache
-            rm -rf ${config.xdg.cacheHome}/nvim/luac/
-          '';
-        };
+
+      programs.neovim = {
+        enable = true;
+        extraPackages = with pkgs; [
+          sqlite
+        ];
+        extraWrapperArgs = [
+          "--prefix"
+          "LD_LIBRARY_PATH"
+          ":"
+          "${pkgs.sqlite}/lib"
+        ];
       };
     };
 
