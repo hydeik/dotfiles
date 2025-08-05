@@ -39,6 +39,7 @@
             ".editorconfig"
             "*/.editorconfig"
             ".direnv/*"
+            "*/lazy-lock.json"
           ];
         };
       };

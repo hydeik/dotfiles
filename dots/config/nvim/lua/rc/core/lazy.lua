@@ -21,6 +21,7 @@ local specs = {
   { "nvim-lua/plenary.nvim", lazy = true },
   { "kkharji/sqlite.lua", lazy = true },
   { "rafamadriz/friendly-snippets", lazy = false },
+  { "brianhuster/unnest.nvim", lazy = false },
   { import = "rc.plugins.snacks.core" },
 
   -- [[ Colorscheme ]]
