@@ -47,6 +47,7 @@ local specs = {
   -- [[ Editor enrichment ]]
   { import = "rc.plugins.gitsigns" },
   { import = "rc.plugins.flash" },
+  { import = "rc.plugins.overlook" },
   { import = "rc.plugins.trouble" },
   { import = "rc.plugins.todo-comments" },
   { import = "rc.plugins.which-key" },

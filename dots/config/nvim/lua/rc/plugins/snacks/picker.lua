@@ -377,14 +377,14 @@ return {
         desc = "Goto T[y]pe Definition",
       },
       {
-        "<leader>ss",
+        "<Space>ss",
         function()
           Snacks.picker.lsp_symbols()
         end,
         desc = "LSP Symbols",
       },
       {
-        "<leader>sS",
+        "<Space>sS",
         function()
           Snacks.picker.lsp_workspace_symbols()
         end,
@@ -464,7 +464,7 @@ return {
           has = "textDocument/documentSymbol",
         },
         {
-          "<leader>sS",
+          "<Space>sS",
           function()
             Snacks.picker.lsp_workspace_symbols()
           end,
@@ -479,14 +479,14 @@ return {
     optional = true,
     keys = {
       {
-        "<leader>st",
+        "<Space>st",
         function()
           Snacks.picker.todo_comments()
         end,
         desc = "Todo",
       },
       {
-        "<leader>sT",
+        "<Space>sT",
         function()
           Snacks.picker.todo_comments { keywords = { "TODO", "FIX", "FIXME" } }
         end,
