@@ -5,7 +5,7 @@
       devshells.default = {
         commands = [
           {
-            package = "neovim";
+            package = "vim";
           }
         ];
         devshell.packages = with pkgs; [
@@ -14,10 +14,10 @@
           biome
           deadnix
           gnupg
-          just
           lua-language-server
           nixd
           nixfmt-rfc-style
+          ripgrep
           shellcheck
           shfmt
           sops
