@@ -9,8 +9,11 @@
         inherit (pkgs.nodePackages_latest) nodejs;
 
         inherit (pkgs)
+          # Body
+          neovim
+
           # Dependency
-          # sqlite
+          sqlite
           uv
 
           # Language servers
@@ -55,17 +58,8 @@
           ;
       };
 
-      programs.neovim = {
-        enable = true;
-        extraPackages = with pkgs; [
-          sqlite
-        ];
-        extraWrapperArgs = [
-          "--prefix"
-          "LD_LIBRARY_PATH"
-          ":"
-          "${pkgs.sqlite}/lib"
-        ];
+      home.sessionVariables = {
+        LIBSQLITE = "${pkgs.sqlite.out}/lib/libsqlite3${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
       };
     };
 
