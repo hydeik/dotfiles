@@ -77,10 +77,6 @@ return {
           vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
       })
-
-      -- Code folding with treesitter
-      vim.opt.foldmethod = "expr"
-      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
     end,
   },
   {

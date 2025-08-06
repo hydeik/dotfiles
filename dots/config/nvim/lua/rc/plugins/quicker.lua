@@ -2,19 +2,19 @@ return {
   "stevearc/quicker.nvim",
   keys = {
     {
-      "n",
       "<leader>q",
       function()
         require("quicker").toggle()
       end,
+      mode = "n",
       desc = "Toggle quickfix (quicker)",
     },
     {
-      "n",
       "<leader>l",
       function()
         require("quicker").toggle { loclist = true }
       end,
+      mode = "n",
       desc = "Toggle quickfix (quicker)",
     },
   },
