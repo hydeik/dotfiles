@@ -39,7 +39,7 @@
             "apache-directory-studio"
             "appcleaner"
             "aquaskk"
-            "cog"
+            "cog-app"
             "deepl"
             "discord"
             "dropbox"
