@@ -9,6 +9,8 @@ return {
     build = ":TSUpdate",
     opts_extend = { "ensure_installed" },
     opts = {
+      -- Directory to install parsers and queries to.
+      install_dir = vim.fs.joinpath(vim.fn.stdpath "data", "site"),
       -- one of 'all', 'language', or a list of languages
       ensure_installed = {
         "asm",
@@ -43,12 +45,17 @@ return {
       },
     },
     config = function(_, opts)
+      -- setup the plugin
+      require("nvim-treesitter").setup {
+        install_dir = opts.install_dir and opts.install_dir or nil,
+      }
+
+      -- auto install
       if type(opts.ensure_installed) == "table" then
         -- remove duplicate entries
         opts.ensure_installed = require("rc.utils").list_unique(opts.ensure_installed)
       end
 
-      -- auto install
       require("nvim-treesitter").install(opts.ensure_installed)
 
       -- highlights

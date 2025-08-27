@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = { ensure_installed = { "ninja", "requirements", "rst" } },
+    opts = { ensure_installed = { "python", "ninja", "requirements", "rst" } },
   },
   {
     "nvim/nvim-lspconfig",
@@ -54,8 +54,8 @@ return {
       "mfussenegger/nvim-dap-python",
         -- stylua: ignore
         keys = {
-          { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
-          { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
+          { "<Space>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
+          { "<Space>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
         },
       config = function()
         require("dap-python").setup "uv"

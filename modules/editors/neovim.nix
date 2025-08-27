@@ -14,12 +14,13 @@
 
           # Dependency
           sqlite
+          tree-sitter
           uv
 
           # Language servers
           bash-language-server
           clang-tools
-          cmake-language-server
+          # cmake-language-server
           copilot-language-server
           deno # builtin server/formatter
           efm-langserver
@@ -41,7 +42,7 @@
           markdownlint-cli2
           shellcheck
           statix
-          vim-vint
+          # vim-vint
 
           # Formatters
           beautysh
