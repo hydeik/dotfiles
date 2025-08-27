@@ -10,6 +10,8 @@ _: {
         deno
         fzf
         sheldon
+        oh-my-posh
+        starship
       ];
 
       home.file.".zshenv".text = ''
