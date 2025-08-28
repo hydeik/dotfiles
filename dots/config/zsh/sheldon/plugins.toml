@@ -33,9 +33,9 @@ ZLE_RPROMPT_INDENT=0
 source ${ZDOTDIR}/p10k.zsh
 '''
 
-# [plugins.zeno]
-# github = "yuki-yano/zeno.zsh"
-# apply = ["defer"]
+[plugins.zeno]
+github = "yuki-yano/zeno.zsh"
+apply = ["defer"]
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"

@@ -38,14 +38,14 @@ bindkey -M emacs '^N' history-substring-search-down
 
 # zeno.zsh
 if [[ -n $ZENO_LOADED ]]; then
-  bindkey ' '  zeno-auto-snippet
+  # bindkey ' '  zeno-auto-snippet
 
   # fallback if snippet not matched (default: self-insert)
   # export ZENO_AUTO_SNIPPET_FALLBACK=self-insert
 
   # if you use zsh's incremental search
   # bindkey -M isearch ' ' self-insert
-  bindkey ' '  zeno-auto-snippet
+  # bindkey ' '  zeno-auto-snippet
   bindkey '^m' zeno-auto-snippet-and-accept-line
 
   bindkey '^i' zeno-completion
