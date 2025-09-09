@@ -15,7 +15,7 @@ let
       material-icons
       material-symbols
       material-design-icons
-      moralerspace-nf
+      moralerspace
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
