@@ -95,6 +95,7 @@ local specs = {
   { import = "rc.plugins.lang.json" },
   { import = "rc.plugins.lang.markdown" },
   { import = "rc.plugins.lang.nix" },
+  { import = "rc.plugins.lang.nushell" },
   { import = "rc.plugins.lang.python" },
   { import = "rc.plugins.lang.rust" },
   { import = "rc.plugins.lang.toml" },

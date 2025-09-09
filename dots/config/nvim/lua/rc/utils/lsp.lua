@@ -3,7 +3,7 @@ local lazy_utils = require "rc.utils.lazy"
 ---@class rc.utils.lsp
 local M = {}
 
----@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?: fun(client: lsp.Client:boolean)}
+---@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?: fun(client: lsp.Client):boolean}
 
 ---@param opts? lsp.Client.filter
 M.get_clients = function(opts)

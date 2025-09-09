@@ -1,7 +1,7 @@
+---@diagnostic disable: missing-fields
 return {
   "neovim/nvim-lspconfig",
-  lazy = true,
-  event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+  lazy = false,
   opts = function()
     local diagnostic_icons = require("rc.core.config").icons.diagnostics
     ---@class PluginLspOpts
@@ -45,6 +45,7 @@ return {
         enabled = false,
       },
       -- Add any global capabilities here
+      ---@type lsp.ClientCapabilities
       capabilities = {
         workspace = {
           didChangeWatchedFiles = {
@@ -57,7 +58,7 @@ return {
         },
       },
       -- LSP Server Settings
-      ---@type lspconfig.options
+      ---@type table<string, vim.lsp.ClientConfig>
       servers = {
         lua_ls = {
           settings = {
@@ -91,18 +92,6 @@ return {
             },
           },
         },
-      },
-      -- you can do any additional lsp server setup here
-      -- return true if you don't want this server to be setup with lspconfig
-      ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-      setup = {
-        -- example to setup with typescript.nvim
-        -- tsserver = function(_, opts)
-        --   require("typescript").setup({ server = opts })
-        --   return true
-        -- end,
-        -- Specify * to use this function as a fallback for any server
-        -- ["*"] = function(server, opts) end,
       },
     }
     return ret
@@ -158,8 +147,7 @@ return {
       end)
     end
 
-    -- server settings
-    local servers = opts.servers
+    -- common configs
     local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
     local has_blink, blink = pcall(require, "blink.cmp")
     local capabilities = vim.tbl_deep_extend(
@@ -171,47 +159,22 @@ return {
       opts.capabilities or {}
     )
 
-    local setup = function(server)
-      local server_opts = vim.tbl_deep_extend("force", {
-        capabilities = vim.deepcopy(capabilities),
-      }, servers[server] or {})
-      if server_opts.enabled == false then
-        return
-      end
+    vim.lsp.config("*", {
+      capabilities = capabilities,
+      root_markers = { ".git" },
+    })
 
-      if opts.setup[server] then
-        -- specific server configuration
-        if opts.setup[server](server, server_opts) then
-          return
-        end
-      elseif opts.setup["*"] then
-        if opts.setup["*"](server, server_opts) then
-          return
-        end
-      end
-
-      require("lspconfig")[server].setup(server_opts)
-    end
+    -- config servers
+    local servers = opts.servers
 
     for server, server_opts in pairs(servers) do
       if server_opts then
         server_opts = server_opts == true and {} or server_opts
         if server_opts.enabled ~= false then
-          setup(server)
+          vim.lsp.config(server, server_opts)
+          vim.lsp.enable(server)
         end
       end
-    end
-
-    -- Avoid conflicts of LSPs
-    if lsp_utils.is_enabled "denols" and lsp_utils.is_enabled "vtsls" then
-      local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-      lsp_utils.disable("vtsls", is_deno)
-      lsp_utils.disable("denols", function(root_dir, config)
-        if not is_deno(root_dir) then
-          config.settings.deno.enable = false
-        end
-        return false
-      end)
     end
   end,
 }
