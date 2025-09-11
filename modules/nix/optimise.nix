@@ -1,4 +1,4 @@
-_: {
+{
   flake.modules.darwin.desktop.nix = {
     gc = {
       automatic = true;
