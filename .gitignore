@@ -1,1 +1,3 @@
 flake.lock
+lazy-lock.json
+.pre-commit-config.yaml
