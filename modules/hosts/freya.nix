@@ -1,6 +1,6 @@
 { config, ... }:
 {
-  flake.modules.darwin."darwinConfigurations/freya" = {
+  configurations.darwin.freya.module = {
     imports = with config.flake.modules.darwin; [
       desktop
       hide

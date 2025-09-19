@@ -1,6 +1,6 @@
 { config, ... }:
 {
-  flake.modules.darwin."darwinConfigurations/silmeria" = {
+  configurations.darwin.silmeria.module = {
     imports = with config.flake.modules.darwin; [
       desktop
       ikeno

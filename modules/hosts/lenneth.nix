@@ -1,6 +1,6 @@
 { config, ... }:
 {
-  flake.modules.darwin."darwinConfigurations/lenneth" = {
+  configurations.darwin.lenneth.module = {
     imports = with config.flake.modules.darwin; [
       desktop
       ikeno
