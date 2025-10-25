@@ -4,17 +4,11 @@
     programs = {
       git = {
         enable = true;
-        userName = config.flake.meta.owner.name;
-        userEmail = config.flake.meta.owner.name;
-        delta = {
-          enable = true;
-          options = {
-            line-numbers = true;
-            navigate = true;
-            side-by-side = true;
+        settings = {
+          user = {
+            inherit (config.flake.meta.owner) name;
+            email = config.flake.meta.owner.name;
           };
-        };
-        extraConfig = {
           diff.algorithm = "histogram";
           init.defaultBranch = "main";
           merge.conflictstyle = "zdiff3";

@@ -38,6 +38,7 @@
             "apache-directory-studio"
             "appcleaner"
             "aquaskk"
+            "chatwork"
             "cog-app"
             "deepl"
             "discord"

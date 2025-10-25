@@ -3,7 +3,7 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        ffmpeg
+        ffmpeg-full
       ];
     };
 }
