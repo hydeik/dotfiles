@@ -18,12 +18,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    den = {
+      url = "github:vic/den";
+    };
+
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
+    flake-aspects = {
+      url = "github:vic/flake-aspects";
+    };
+
+    flake-compat = {
+      url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
+    };
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -65,7 +75,9 @@
       flake = false;
     };
 
-    import-tree.url = "github:vic/import-tree";
+    import-tree = {
+      url = "github:vic/import-tree";
+    };
 
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";

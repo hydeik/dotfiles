@@ -37,6 +37,21 @@
         "type": "github"
       }
     },
+    "den": {
+      "locked": {
+        "lastModified": 1763122094,
+        "narHash": "sha256-JVkBirxsmtIw/SA+52SARBUvZAYGOvQpi57x8bHHAG0=",
+        "owner": "vic",
+        "repo": "den",
+        "rev": "5b49190bc79a0cdf8a6b0f8bca561b13a2e1fe30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "den",
+        "type": "github"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -54,6 +69,21 @@
       "original": {
         "owner": "numtide",
         "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "flake-aspects": {
+      "locked": {
+        "lastModified": 1763164908,
+        "narHash": "sha256-juiDn5yfILfaTSgeXJRQGuZjx6KkFayDTu2k05+p/9I=",
+        "owner": "vic",
+        "repo": "flake-aspects",
+        "rev": "1941f1849bf68ffc9c9cecd5f779e12142716858",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "flake-aspects",
         "type": "github"
       }
     },
@@ -355,7 +385,9 @@
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
+        "den": "den",
         "devshell": "devshell",
+        "flake-aspects": "flake-aspects",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "git-hooks": "git-hooks",
