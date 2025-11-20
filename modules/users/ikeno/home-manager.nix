@@ -18,7 +18,7 @@
         ];
         style.windowOpacity = 0.9;
         style.bellDuration = 0;
-        my.ollama.enable = true;
+        # my.ollama.enable = true;
       };
     };
   };
