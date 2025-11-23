@@ -50,9 +50,6 @@
         };
       };
 
-      # pre-commit.settings.hooks.nix-fmt = {
-      #   enable = true;
-      #   entry = "nix fmt -- --fail-on-change";
-      # };
+      pre-commit.settings.hooks.treefmt.enable = true;
     };
 }
