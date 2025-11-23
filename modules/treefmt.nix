@@ -1,11 +1,19 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
-  imports = [ inputs.treefmt-nix.flakeModule ];
+  flake-file.inputs.treefmt-nix = {
+    url = lib.mkDefault "github:numtide/treefmt-nix";
+    inputs.nixpkgs.follows = lib.mkDefault "nixpkgs";
+  };
+
+  imports = [
+    inputs.treefmt-nix.flakeModule
+  ];
+
   perSystem =
     { pkgs, ... }:
     {
       treefmt = {
-        projectRootFile = "flake.nix";
+        projectRoot = inputs.flake-file;
 
         programs = {
           biome.enable = true;
@@ -16,8 +24,9 @@
         };
 
         settings = {
-          on-unmatched = "fatal";
+          on-unmatched = lib.mkDefault "fatal";
           global.excludes = [
+            "*.bak"
             "modules/*"
             "modules.bak/*"
             "dots/*"
