@@ -9,6 +9,7 @@
 
       <hydeik/direnv>
       <hydeik/editors>
+      <hydeik/fonts>
       <hydeik/git>
     ];
   };
