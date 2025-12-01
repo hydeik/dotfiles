@@ -1,0 +1,27 @@
+[font]
+size = 14.0
+builtin_box_drawing = false
+
+[font.normal]
+family = "Hack Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "Hack Nerd Font Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "Hack Nerd Font Mono"
+style = "Bold Italic"
+
+[font.italic]
+family = "Hack Nerd Font Mono"
+style = "Italic"
+
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0

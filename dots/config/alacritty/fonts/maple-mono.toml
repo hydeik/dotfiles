@@ -1,0 +1,27 @@
+[font]
+size = 14.0
+builtin_box_drawing = false
+
+[font.normal]
+family = "Maple Mono NL NF"
+style = "Regular"
+
+[font.bold]
+family = "Maple Mono NL NF"
+style = "Bold"
+
+[font.bold_italic]
+family = "Maple Mono NL NF"
+style = "Bold Italic"
+
+[font.italic]
+family = "Maple Mono NL NF"
+style = "Italic"
+
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0

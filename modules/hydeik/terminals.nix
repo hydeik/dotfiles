@@ -3,7 +3,7 @@
     darwin =
       { pkgs, ... }:
       {
-        home.package = with pkgs; [
+        environment.systemPackages = with pkgs; [
           iterm2
         ];
       };
@@ -13,10 +13,16 @@
       {
         home.packages = with pkgs; [
           alacritty
-          ghostty
+          # ghostty
           kitty
           wezterm
         ];
+
+        xdg.configFile."alacritty/terminal.toml".text = ''
+          [terminal.shell]
+          program = ${pkgs.zsh}/bin/zsh
+          args = ["--login"]
+        '';
       };
   };
 }

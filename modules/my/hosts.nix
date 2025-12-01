@@ -5,8 +5,15 @@
   den.hosts.aarch64-darwin.silmeria.users.hydeik.aspect = "ikeno";
 
   den.aspects = {
-    hide.includes = [ <my/user> ];
-    ikeno.includes = [ <my/user> ];
+    hide.includes = [
+      <den/primary-user>
+      <my/user>
+    ];
+    ikeno.includes = [
+      <den/primary-user>
+      <my/user>
+    ];
+    freya.includes = [ <hydix/darwin> ];
     lenneth.includes = [ <hydix/darwin> ];
   };
 }

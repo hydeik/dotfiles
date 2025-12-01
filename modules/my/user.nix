@@ -3,7 +3,6 @@
 {
   my.user = <den.lib.parametric> {
     includes = [
-      <den/primary-user>
       <hydix/nix-index>
       <hydix/nix-registry>
 
@@ -14,6 +13,9 @@
       <hydeik/fonts>
       <hydeik/git>
       <hydeik/nix-btw>
+      <hydeik/shells>
+      <hydeik/terminals>
+      <hydeik/tmux>
     ];
   };
 }
