@@ -23,5 +23,5 @@
     #};
   };
 
-  den.default.include = [ den._.home-manager ];
+  den.default.includes = [ den._.home-manager ];
 }

@@ -17,10 +17,13 @@
 
         programs = {
           biome.enable = true;
+          deadnix.enable = true;
+          nixf-diagnose.enable = true;
           nixfmt = {
             enable = true;
             package = pkgs.nixfmt-rfc-style;
           };
+          statix.enable = true;
         };
 
         settings = {
@@ -34,6 +37,7 @@
             "*.toml"
             "*.conf"
             "*.md"
+            "*.yml"
             "*/.gitignore"
             "*/.gitkeep"
             "*/fsh/*"

@@ -30,14 +30,14 @@ let
 
         optimise = pkgs.lib.mkMerge [
           { automatic = true; }
-          (pkgs.lib.mkIf pkgs.stdenvNoCC.isDarwin {
+          (pkgs.lib.attrsets.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {
             interval = {
               Weekday = 7;
               Hour = 4;
               Minute = 15;
             };
           })
-          (pkgs.lib.mkIf pkgs.stdenvNoCC.isLinux {
+          (pkgs.lib.attrsets.optionalAttrs (pkgs.stdenvNoCC.isLinux) {
             date = "weekly";
           })
         ];
@@ -48,14 +48,14 @@ let
               automatic = true;
               options = "--delete-older-than 7d";
             }
-            (pkgs.lib.mkIf pkgs.stdenvNoCC.isDarwin {
+            (pkgs.lib.attrsets.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {
               interval = {
                 Weekday = 7;
                 Hour = 3;
                 Minute = 15;
               };
             })
-            (pkgs.lib.mkIf pkgs.stdenvNoCC.isLinux {
+            (pkgs.lib.attrsets.optionalAttrs (pkgs.stdenvNoCC.isLinux) {
               date = "weekly";
             })
           ]

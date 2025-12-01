@@ -7,10 +7,13 @@
       <hydix/nix-index>
       <hydix/nix-registry>
 
+      <hydeik/catppuccin>
+      <hydeik/cli-tui>
       <hydeik/direnv>
       <hydeik/editors>
       <hydeik/fonts>
       <hydeik/git>
+      <hydeik/nix-btw>
     ];
   };
 }

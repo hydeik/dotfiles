@@ -124,18 +124,19 @@ let
     ];
 in
 {
-  flake.modules.darwin.desktop =
-    { pkgs, ... }:
-    {
-      # fonts.packages = lib.attrsets.attrVals fontNames pkgs;
-      fonts.packages = makeFontSet pkgs;
-    };
-  flake.modules.nixos.desktop =
-    { pkgs, ... }:
-    {
-      fonts = {
-        packages = makeFontSet pkgs;
-        # TODO: add fontconfig settings
+  hydeik.fonts = {
+    darwin =
+      { pkgs, ... }:
+      {
+        fonts.packages = makeFontSet pkgs;
       };
-    };
+    nixos =
+      { pkgs, ... }:
+      {
+        fonts = {
+          packages = makeFontSet pkgs;
+          # TODO: add fontconfig settings
+        };
+      };
+  };
 }
