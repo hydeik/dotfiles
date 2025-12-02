@@ -39,7 +39,7 @@
       {
         xdg.enable = true;
         xdg.configFile = {
-          "alacritty/alactitty.toml".source = dotsLink "config/alacritty/alacritty.toml";
+          "alacritty/alacritty.toml".source = dotsLink "config/alacritty/alacritty.toml";
           "alacritty/themes".source = dotsLink "config/alacritty/themes";
           "alacritty/fonts".source = dotsLink "config/alacritty/fonts";
           "npm/npmrc".source = dotsLink "config/npm/npmrc";
