@@ -23,9 +23,10 @@
             enable = true;
             package = pkgs.nixfmt-rfc-style;
           };
+          shellcheck.enable = true;
+          shfmt.enable = true;
           statix.enable = true;
         };
-
         settings = {
           on-unmatched = lib.mkDefault "fatal";
           global.excludes = [
@@ -33,10 +34,10 @@
             "modules/*"
             "modules.bak/*"
             "dots/*"
-            "*.yaml"
-            "*.toml"
             "*.conf"
             "*.md"
+            "*.toml"
+            "*.yaml"
             "*.yml"
             "*/.gitignore"
             "*/.gitkeep"
@@ -44,12 +45,9 @@
             "*/zsh/*"
             "*.zsh"
             "LICENSE"
-            "*/npmrc"
-            "*/pythonstartup.py"
             ".editorconfig"
             "*/.editorconfig"
             ".direnv/*"
-            "*/lazy-lock.json"
           ];
         };
       };

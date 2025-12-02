@@ -10,7 +10,6 @@
           fd
           ffmpeg-full
           file
-          jq
           gnutar
           gping
           lsof

@@ -51,15 +51,10 @@ let
           pkgs.vscode
           # NeoVim & dependencies
           pkgs.neovim
-          pkgs.sqlite
           pkgs.tree-sitter
           # Vim
           pkgs.vim
         ];
-
-        home.sessionVariables = {
-          LIBSQLITE = "${pkgs.sqlite.out}/lib/libsqlite3${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
-        };
       };
   };
 in

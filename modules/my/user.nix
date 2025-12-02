@@ -4,11 +4,13 @@
   my.user = <den.lib.parametric> {
     includes = [
       <den/primary-user>
+
       <hydix/nix-index>
       <hydix/nix-registry>
 
       <hydeik/catppuccin>
       <hydeik/cli-tui>
+      <hydeik/dev-lang>
       <hydeik/direnv>
       <hydeik/dots>
       <hydeik/editors>

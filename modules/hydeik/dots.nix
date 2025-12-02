@@ -1,14 +1,8 @@
 {
   hydeik.dots = {
     homeManager =
-      { config, pkgs, ... }:
+      { config, ... }:
       let
-        inherit (config.xdg)
-          cacheHome
-          configHome
-          dataHome
-          ;
-
         dotsDir = "${config.home.homeDirectory}/src/github.com/hydeik/dotfiles/dots";
 
         dotsLink = path: config.lib.file.mkOutOfStoreSymlink "${dotsDir}/${path}";
@@ -38,6 +32,9 @@
       in
       {
         xdg.enable = true;
+
+        home.file.".editorconfig".source = dotsLink ".editorconfig";
+
         xdg.configFile = {
           "alacritty/alacritty.toml".source = dotsLink "config/alacritty/alacritty.toml";
           "alacritty/themes".source = dotsLink "config/alacritty/themes";
