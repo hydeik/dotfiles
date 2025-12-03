@@ -10,6 +10,11 @@
           nix-inspect
           nox
         ];
+
+        programs = {
+          home-manager.enable = true;
+          nh.enable = true;
+        };
       };
   };
 }

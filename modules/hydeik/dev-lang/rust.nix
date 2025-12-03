@@ -1,16 +1,19 @@
 {
   hydeik.dev-lang = {
     homeManager =
-      { pkgs, ... }:
+      { config, pkgs, ... }:
       {
         home.packages = with pkgs; [
-          cargo
           cargo-watch
           cargo-outdated
           cargo-feature
-          rustfmt
           rustup
         ];
+
+        home.sessionVariables = {
+          RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+          CARGO_HOME = "${config.xdg.dataHome}/cargo";
+        };
       };
   };
 }

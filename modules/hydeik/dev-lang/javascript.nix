@@ -1,7 +1,7 @@
 {
   hydeik.dev-lang = {
     homeManager =
-      { pkgs, ... }:
+      { config, pkgs, ... }:
       {
         home.packages = with pkgs; [
           # Biome
@@ -17,6 +17,14 @@
           eslint_d
           prettierd
         ];
+
+        home.sessionVariables = {
+          # Deno
+          DENO_DIR = "${config.xdg.cacheHome}/deno";
+          # Node
+          NODE_REPL_HISTORY = "${config.xdg.dataHome}/node_repl_history";
+          NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
+        };
       };
   };
 }

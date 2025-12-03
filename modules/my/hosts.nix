@@ -11,7 +11,11 @@
     ikeno.includes = [
       <my/user>
     ];
-    freya.includes = [ <hydix/darwin> ];
-    lenneth.includes = [ <hydix/darwin> ];
+    freya.includes = [
+      <hydix/darwin>
+    ];
+    lenneth.includes = [
+      <hydix/darwin>
+    ];
   };
 }

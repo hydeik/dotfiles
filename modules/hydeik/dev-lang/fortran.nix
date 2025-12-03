@@ -6,7 +6,7 @@
         home.packages = with pkgs; [
           gfortran
           flang
-          fortitude # Linter
+          # fortitude # Linter
           fortls # LSP
         ];
       };

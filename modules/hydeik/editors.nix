@@ -1,4 +1,4 @@
-{ inputs, __findFile, ... }:
+{ __findFile, inputs, ... }:
 let
   flake-file.inputs = {
     neovim-nightly-overlay = {
@@ -30,12 +30,10 @@ let
   ];
 
   hydeik.editors = {
-    includes = [
-      (<den/unfree> [
-        "cursor"
-        "vscode"
-      ])
-    ];
+    # includes = [
+    #   (<den/unfree> [ "cursor" ])
+    #   (<den/unfree> [ "vscode" ])
+    # ];
 
     homeManager =
       { pkgs, ... }:
@@ -44,20 +42,21 @@ let
           { nixpkgs.overlays = overlays; }
         ];
 
-        home.packages = [
-          pkgs.helix
-          pkgs.code-cursor
-          # pkgs.zed-editor
-          pkgs.vscode
+        home.packages = with pkgs; [
+          helix
+          # code-cursor
+          # zed-editor
+          # vscode
           # NeoVim & dependencies
-          pkgs.neovim
-          pkgs.tree-sitter
+          neovim
+          tree-sitter
           # Vim
-          pkgs.vim
+          vim
         ];
       };
   };
 in
 {
-  inherit flake-file hydeik;
+  inherit flake-file;
+  inherit hydeik;
 }

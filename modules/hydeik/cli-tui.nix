@@ -1,7 +1,7 @@
 {
   hydeik.cli-tui = {
     homeManager =
-      { pkgs, ... }:
+      { config, pkgs, ... }:
       {
         home.packages = with pkgs; [
           bandwhich
@@ -26,6 +26,11 @@
           watchexec
           wget
         ];
+
+        home.sessionVariables = {
+          # less
+          LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
+        };
 
         programs = {
           bat.enable = true;

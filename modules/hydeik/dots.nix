@@ -16,6 +16,7 @@
           "functions/fzf-cd-ghq-repo"
           "functions/fzf-cdr"
           "functions/ranger-cd"
+          "rc/10_direnv.zsh"
           "rc/10_functions.zsh"
           "rc/20_autoload.zsh"
           "rc/30_options.zsh"

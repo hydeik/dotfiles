@@ -18,6 +18,7 @@
       <hydeik/git>
       <hydeik/hm-backup>
       <hydeik/nix-btw>
+      <hydeik/secrets>
       <hydeik/shells>
       <hydeik/terminals>
       <hydeik/tmux>
