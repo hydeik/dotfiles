@@ -17,5 +17,8 @@
     lenneth.includes = [
       <hydix/darwin>
     ];
+    silmeria.includes = [
+      <hydix/darwin>
+    ];
   };
 }
