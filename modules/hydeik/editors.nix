@@ -30,11 +30,6 @@ let
   ];
 
   hydeik.editors = {
-    # includes = [
-    #   (<den/unfree> [ "cursor" ])
-    #   (<den/unfree> [ "vscode" ])
-    # ];
-
     homeManager =
       { pkgs, ... }:
       {
@@ -44,9 +39,9 @@ let
 
         home.packages = with pkgs; [
           helix
-          # code-cursor
+          code-cursor
           # zed-editor
-          # vscode
+          vscode
           # NeoVim & dependencies
           neovim
           tree-sitter

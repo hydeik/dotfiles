@@ -22,6 +22,7 @@
       <hydeik/shells>
       <hydeik/terminals>
       <hydeik/tmux>
+      <hydeik/unfree>
     ];
   };
 }

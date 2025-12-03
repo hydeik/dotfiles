@@ -1,10 +1,6 @@
 { __findFile, ... }:
 {
   hydeik.dev-lang = {
-    includes = [
-      (<den/unfree> [ "copilot-language-server" ])
-    ];
-
     homeManager =
       { pkgs, ... }:
       {
