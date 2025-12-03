@@ -17,6 +17,7 @@
       <hydeik/fonts>
       <hydeik/git>
       <hydeik/hm-backup>
+      <hydeik/homebrew>
       <hydeik/nix-btw>
       <hydeik/secrets>
       <hydeik/shells>

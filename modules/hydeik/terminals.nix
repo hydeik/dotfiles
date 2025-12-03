@@ -1,21 +1,13 @@
 {
   hydeik.terminals = {
-    darwin =
-      { pkgs, ... }:
-      {
-        environment.systemPackages = with pkgs; [
-          iterm2
-        ];
-      };
-
     homeManager =
       { pkgs, ... }:
       {
-        home.packages = with pkgs; [
-          alacritty
-          # ghostty
-          kitty
-          wezterm
+        home.packages = pkgs.lib.mkIf (!pkgs.stdenvNoCC.isDarwin) [
+          pkgs.alacritty
+          pkgs.ghostty
+          pkgs.kitty
+          pkgs.wezterm
         ];
 
         xdg.configFile."alacritty/terminal.toml".text = ''

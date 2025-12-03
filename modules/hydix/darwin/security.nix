@@ -1,12 +1,15 @@
-{ inputs, ... }:
 {
   hydix.darwin.darwin =
     { pkgs, ... }:
     {
-      environment.systemPackages = with inputs.darwin.packages.${pkgs.stdenv.hostPlatform.system}; [
-        pam-reattach
+      environment.systemPackages = [
+        pkgs.pam-reattach
       ];
 
-      security.pam.services.sudo_local.touchIdAuth = true;
+      security.pam.services.sudo_local = {
+        enable = true;
+        reattach = true;
+        touchIdAuth = true;
+      };
     };
 }
