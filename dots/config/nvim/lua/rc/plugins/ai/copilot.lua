@@ -22,43 +22,55 @@ return {
         help = true,
       },
     },
-    -- add ai_accept action
-    {
-      "zbirenbaum/copilot.lua",
-      opts = function()
-        require("rc.utils.cmp").ai_accept = function()
-          if require("copilot.suggestion").is_visible() then
-            require("rc.utils").create_undo()
-            require("copilot.suggestion").accept()
-            return true
-          end
-        end
-      end,
+  },
+
+  -- copilot-language-server
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        -- copilot.lua only works with its own cpilot lsp server
+        copilot = { enabled = false },
+      },
     },
-    -- Completion engine
-    vim.g.vimrc_use_ai_cmp
-        and {
-          -- copilot source for blink.cmp
-          {
-            "saghen/blink.cmp",
-            optional = true,
-            dependencies = { "giuxtaposition/blink-cmp-copilot" },
-            opts = {
-              sources = {
-                default = { "copilot" },
-                providers = {
-                  copilot = {
-                    name = "copilot",
-                    module = "blink-cmp-copilot",
-                    kind = "Copilot",
-                    score_offset = 100,
-                    async = true,
-                  },
+  },
+
+  -- add ai_accept action
+  {
+    "zbirenbaum/copilot.lua",
+    opts = function()
+      require("rc.utils.cmp").ai_accept = function()
+        if require("copilot.suggestion").is_visible() then
+          require("rc.utils").create_undo()
+          require("copilot.suggestion").accept()
+          return true
+        end
+      end
+    end,
+  },
+  -- Completion engine
+  vim.g.vimrc_use_ai_cmp
+      and {
+        -- copilot source for blink.cmp
+        {
+          "saghen/blink.cmp",
+          optional = true,
+          dependencies = { "giuxtaposition/blink-cmp-copilot" },
+          opts = {
+            sources = {
+              default = { "copilot" },
+              providers = {
+                copilot = {
+                  name = "copilot",
+                  module = "blink-cmp-copilot",
+                  kind = "Copilot",
+                  score_offset = 100,
+                  async = true,
                 },
               },
             },
           },
-        }
-      or nil,
-  },
+        },
+      }
+    or nil,
 }

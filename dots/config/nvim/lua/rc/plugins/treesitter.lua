@@ -6,6 +6,7 @@ return {
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     cmd = { "TSInstall", "TSInstallFromGrammar", "TSUpdate", "TSUninstall" },
     branch = "main",
+    version = false, -- last release is way too old
     build = ":TSUpdate",
     opts_extend = { "ensure_installed" },
     opts = {
@@ -89,6 +90,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
+    event = { "VeryLazy" },
     keys = {
       -- swap
       {

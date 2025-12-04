@@ -2,6 +2,7 @@
 return {
   "neovim/nvim-lspconfig",
   lazy = false,
+  opts_extend = { "servers.*.keys" },
   opts = function()
     local diagnostic_icons = require("rc.core.config").icons.diagnostics
     ---@class PluginLspOpts
