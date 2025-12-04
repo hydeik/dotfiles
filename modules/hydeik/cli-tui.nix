@@ -18,6 +18,8 @@
           procs
           ripgrep
           ripgrep-all
+          skim
+          television
           tokei
           unar
           unzip

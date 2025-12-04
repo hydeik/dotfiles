@@ -43,6 +43,7 @@
           "npm/npmrc".source = dotsLink "config/npm/npmrc";
           "nvim".source = dotsLink "config/nvim";
           "python/pythonstartup.py".source = dotsLink "config/python/pythonstartup.py";
+          "wezterm".source = dotsLink "config/wezterm";
           # fast-syntax-highlighting
           "fsh".source = dotsLink "config/fsh";
         }

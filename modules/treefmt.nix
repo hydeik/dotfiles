@@ -32,7 +32,6 @@
           global.excludes = [
             "*.bak"
             "modules/*"
-            "modules.bak/*"
             "dots/*"
             "*.conf"
             "*.md"
