@@ -61,6 +61,7 @@ M.icons = {
     Color = " ", -- U+EB5C
     Constant = " ", -- U+EB5D
     Constructor = " ", -- U+EA8C
+    Copilot = " ", -- U+EC1E
     Enum = " ", -- U+EA95
     EnumMember = " ", -- U+EA95
     Event = " ", -- U+EA86

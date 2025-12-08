@@ -150,8 +150,7 @@ local FileFlags = {
 
 local FileNameModifer = {
   hl = function()
-    if vim.bo.modified then
-      -- use `force` because we need to override the child's hl foreground
+    if vim.bo.modified then -- use `force` because we need to override the child's hl foreground
       return { fg = "red", bg = "bg_bright", bold = true, force = true }
     end
   end,
@@ -194,15 +193,6 @@ local TerminalName = {
       return string.format(" %s ", vim.b.term_title)
     end,
     hl = { fg = "fg_bright", bg = "bg_bright" },
-  },
-  {
-    provider = function()
-      -- local id = require("terminal"):current_term_index()
-      -- return " " .. (id or "Exited")
-      local win, _ = Snacks.terminal.get(nil, { created = false })
-      return " " .. (win.id or "Exited")
-    end,
-    hl = { fg = "magenta_bright", bg = "bg_bright", bold = true },
   },
   {
     provider = "",
@@ -356,6 +346,39 @@ local LSPActive = {
   },
 }
 
+-- Sidekick component
+local SidekickCopilotStatus = {
+  static = {
+    icons = {
+      Error = { " ", "DiagnosticError" },
+      Inactive = { " ", "MsgArea" },
+      Warning = { " ", "DiagnosticWarn" },
+      Normal = { " ", "Special" },
+    },
+  },
+  init = function(self)
+    self.status = require("sidekick.status").get()
+  end,
+  provider = function(self)
+    return self.status and vim.tbl_get(self.icons, self.status.kind, 1)
+  end,
+  hl = function(self)
+    local highlight = self.status
+      and (self.status.busy and "DiagnosticWarn" or vim.tbl_get(self.icons, self.status.kind, 2))
+    return { fg = require("heirline.utils").get_highlight(highlight).fg }
+  end,
+}
+
+local SidekickCLISession = {
+  init = function(self)
+    self.status = require("sidekick.status").cli()
+  end,
+  provider = function(self)
+    return " " .. (#self.status > 1 and #self.status or "")
+  end,
+  hl = { fg = require("heirline.utils").get_highlight("Special").fg },
+}
+
 -- CWD component
 local WorkDirIcon = {
   provider = function()
@@ -413,6 +436,8 @@ local TerminalStatusline = {
   },
   TerminalName,
   Align,
+  SidekickCopilotStatus,
+  SidekickCLISession,
 }
 
 local TelescopeStatusLine = {
