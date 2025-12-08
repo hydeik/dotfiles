@@ -8,6 +8,7 @@
       <hydix/nix-index>
       <hydix/nix-registry>
 
+      <hydeik/ai>
       <hydeik/catppuccin>
       <hydeik/cli-tui>
       <hydeik/dev-lang>

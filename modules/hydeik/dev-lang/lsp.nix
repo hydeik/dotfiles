@@ -6,7 +6,6 @@
       {
         home.packages = with pkgs; [
           vscode-langservers-extracted
-          copilot-language-server
           efm-langserver
         ];
       };
