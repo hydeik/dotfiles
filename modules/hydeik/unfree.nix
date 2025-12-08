@@ -4,6 +4,7 @@
     (<den/unfree> [
       "copilot-language-server"
       "cursor"
+      "github-copilot-cli"
       "vscode"
     ])
   ];

@@ -3,7 +3,7 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        copilot-cli
+        github-copilot-cli
         copilot-language-server
       ];
     };
