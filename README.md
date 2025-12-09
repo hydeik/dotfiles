@@ -36,6 +36,7 @@ This repository provides a structured and reproducible system configuration for 
 ## Update system configurations and packages
 
    ```bash
+   $ nix run .#write-flake
    $ nix flake update
    # update darwin system
    $ darwin-rebuild switch --flake .#<hostname>
