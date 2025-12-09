@@ -7,7 +7,6 @@
           cargo-watch
           cargo-outdated
           cargo-feature
-          rustup
         ];
 
         home.sessionVariables = {

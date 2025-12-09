@@ -3,7 +3,7 @@
   flake-file.inputs.git-hooks = {
     url = "github:cachix/git-hooks.nix";
     inputs = {
-      # flake-compat.follows = "flake-compat";
+      flake-compat.follows = "flake-compat";
       gitignore.follows = "";
       nixpkgs.follows = "nixpkgs";
     };
@@ -16,7 +16,7 @@
   perSystem =
     { config, ... }:
     {
-      devshells.default.devshell.startup.git-hooks.text = config.pre-commit.installationScript;
+      make-shells.default.shellHook = config.pre-commit.installationScript;
       pre-commit.check.enable = false;
     };
 }

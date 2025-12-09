@@ -72,26 +72,6 @@
         "type": "github"
       }
     },
-    "devshell": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764011051,
-        "narHash": "sha256-M7SZyPZiqZUR/EiiBJnmyUbOi5oE/03tCeFrTiUZchI=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "17ed8d9744ebe70424659b0ef74ad6d41fc87071",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "type": "github"
-      }
-    },
     "flake-aspects": {
       "locked": {
         "lastModified": 1763763502,
@@ -110,15 +90,15 @@
     "flake-compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1761588595,
-        "narHash": "sha256-XKUZz9zewJNUj46b4AJdiRZJAvSZ0Dqj2BNfXvFlJC4=",
-        "owner": "edolstra",
+        "lastModified": 1765121682,
+        "narHash": "sha256-4VBOP18BFeiPkyhy9o4ssBNQEvfvv1kXkasAYd0+rrA=",
+        "owner": "NixOS",
         "repo": "flake-compat",
-        "rev": "f387cd2afec9419c8ee37694406ca490c3f34ee5",
+        "rev": "65f23138d8d09a92e30f1e5c87611b23ef451bf3",
         "type": "github"
       },
       "original": {
-        "owner": "edolstra",
+        "owner": "NixOS",
         "repo": "flake-compat",
         "type": "github"
       }
@@ -160,7 +140,9 @@
     },
     "git-hooks": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "flake-compat": [
+          "flake-compat"
+        ],
         "gitignore": [],
         "nixpkgs": [
           "nixpkgs"
@@ -244,6 +226,26 @@
       "original": {
         "owner": "vic",
         "repo": "import-tree",
+        "type": "github"
+      }
+    },
+    "make-shell": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733933815,
+        "narHash": "sha256-9JjM7eT66W4NJAXpGUsdyAFXhBxFWR2Z9LZwUa7Hli0=",
+        "owner": "nicknovitski",
+        "repo": "make-shell",
+        "rev": "ffeceae9956df03571ea8e96ef77c2924f13a63c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nicknovitski",
+        "repo": "make-shell",
         "type": "github"
       }
     },
@@ -346,8 +348,8 @@
         "catppuccin": "catppuccin",
         "darwin": "darwin",
         "den": "den",
-        "devshell": "devshell",
         "flake-aspects": "flake-aspects",
+        "flake-compat": "flake-compat",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "git-hooks": "git-hooks",
@@ -355,6 +357,7 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "import-tree": "import-tree",
+        "make-shell": "make-shell",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-homebrew": "nix-homebrew",
         "nix-index-database": "nix-index-database",

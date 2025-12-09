@@ -1,28 +1,24 @@
 { inputs, lib, ... }:
 {
-  flake-file.inputs.devshell = {
-    url = lib.mkDefault "github:numtide/devshell";
-    inputs.nixpkgs.follows = lib.mkDefault "nixpkgs";
+  flake-file.inputs = {
+    make-shell = {
+      url = lib.mkDefault "github:nicknovitski/make-shell";
+      inputs.flake-compat.follows = lib.mkDefault "flake-compat";
+    };
+    flake-compat = {
+      url = "github:NixOS/flake-compat";
+      flake = false;
+    };
   };
 
   imports = [
-    inputs.devshell.flakeModule
+    inputs.make-shell.flakeModules.default
   ];
 
   perSystem =
     { pkgs, ... }:
     {
-      devshells.default = {
-        commands = [
-          {
-            name = "fmt";
-            command = "nix fmt";
-          }
-          {
-            name = "write-flake";
-            command = "nix run .#write-flake";
-          }
-        ];
+      make-shells.default = {
         packages = with pkgs; [
           bat
           biome
@@ -30,7 +26,7 @@
           gnupg
           lua-language-server
           nixd
-          nixfmt-rfc-style
+          nixfmt
           ripgrep
           shellcheck
           shfmt
@@ -41,6 +37,11 @@
           taplo
           vim
           yamlfmt
+        ];
+        nativeBuildInputs = [ pkgs.cargo ];
+        buildInputs = [
+          pkgs.pkg-config
+          pkgs.libiconv
         ];
       };
     };

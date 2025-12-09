@@ -15,11 +15,11 @@
       url = "github:nix-darwin/nix-darwin";
     };
     den.url = "github:vic/den";
-    devshell = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:numtide/devshell";
-    };
     flake-aspects.url = "github:vic/flake-aspects";
+    flake-compat = {
+      flake = false;
+      url = "github:NixOS/flake-compat";
+    };
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
@@ -27,6 +27,7 @@
     };
     git-hooks = {
       inputs = {
+        flake-compat.follows = "flake-compat";
         gitignore.follows = "";
         nixpkgs.follows = "nixpkgs";
       };
@@ -45,6 +46,10 @@
       url = "github:homebrew/homebrew-core";
     };
     import-tree.url = "github:vic/import-tree";
+    make-shell = {
+      inputs.flake-compat.follows = "flake-compat";
+      url = "github:nicknovitski/make-shell";
+    };
     neovim-nightly-overlay = {
       inputs = {
         flake-parts.follows = "flake-parts";
