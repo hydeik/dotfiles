@@ -1,0 +1,93 @@
+
+#--------------------------------------------
+# Environment variables
+#--------------------------------------------
+
+export-env {
+    let esep_list_converter =  {
+        from_string: { split row (char esep) }
+        to_string: { str join (char esep) }
+    }
+
+    let space_list_converter =  {
+        from_string: { split row (char space) }
+        to_string: { str join (char space) }
+    }
+
+    $env.ENV_CONVERSIONS = {
+        XDG_DATE_DIRS: $esep_list_converter
+        TERMINFO_DIRS: $esep_list_converter
+        NIX_PROFILES: $space_list_converter
+    }
+}
+
+# XDG base directory
+export-env {
+    $env.XDG_CACHE_HOME = $env.XDG_CACHE_HOME? | default ($env.HOME | path join ".cache")
+    $env.XDG_CONFIG_HOME = $env.XDG_CONFIG_HOME? | default ($env.HOME | path join ".config")
+    $env.XDG_DATA_HOME = $env.XDG_DATA_HOME? | default ($env.HOME | path join ".local" "share")
+    $env.XDG_STATE_HOME = $env.XDG_STATE_HOME? | default ($env.HOME | path join ".local" "state")
+}
+
+# nupm -- nushell package manager
+export-env {
+    $env.NUPM_CACHE = ($env.XDG_CACHE_HOME | path join "nupm")
+    $env.NUPM_HOME = ($env.XDG_DATA_HOME | path join "nupm")
+}
+
+# homebrew
+def _default_homebrew_prefix [] {
+    match $nu.os-info.name {
+        "macos" => (if ($nu.os-info.arch == "aarch64") { "/opt/homebrew" } else { "/usr/local" })
+        "linux" => $"$(env.HOME)/.linuxbrew"
+        _ => ""
+    }
+}
+
+export-env {
+    $env.HOMEBREW_PREFIX = $env.HOMEBREW_PREFIX? | default (_default_homebrew_prefix)
+}
+
+$env.EDITOR = "nvim"
+$env.VISUAL = $env.EDITOR
+
+# PATH
+use std "path add"
+path add "/usr/texbin"
+path add ($env.HOMEBREW_PREFIX | path join "bin")
+$env.NIX_PROFILES | each {|e|
+    path add ($e | path join "bin")
+}
+path add ($env.CARGO_HOME | path join "bin")
+path add ($env.NUPM_HOME | path join "bin")
+path add ($env.XDG_BIN_HOME? | default ($env.HOME | path join ".local" "bin"))
+$env.PATH = $env.PATH | uniq | where {|e| $e | path exists }
+
+# LD_LIBRARY_PATH
+$env.LD_LIBRARY_PATH = (
+    $env.LD_LIBRARY_PATH?
+    | default ""
+    | split row (char esep)
+    | prepend "/usr/local/lib"
+    | prepend ($env.XDG_LIB_HOME? | default ($env.HOME | path join ".local" "lib"))
+    | uniq
+    | where {|e| $e | path exists }
+)
+
+$env.NU_LIB_DIRS = [
+    ($env.NUPM_HOME | path join "modules")
+    ($nu.default-config-dir | path join "modules")
+    ($env.HOME | path join ".nix-profile" "share" "nu_scripts")
+    $"/etc/profiles/per-user/($env.USER)/share/nu_scripts"
+] | where {|e| $e | path exists }
+
+$env.NU_PLUGIN_DIRS = [
+    ($env.CARGO_HOME | path join "bin")
+    ($env.NUPM_HOME | path join "plugins" "bin")
+]
+
+$env.SHELL = $nu.current-exe
+
+$env.GPG_TTY = (tty)
+
+
