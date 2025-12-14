@@ -37,6 +37,7 @@
         home.file.".editorconfig".source = dotsLink ".editorconfig";
 
         xdg.configFile = {
+          "starship.toml".source = dotsLink "config/starship.toml";
           "alacritty/alacritty.toml".source = dotsLink "config/alacritty/alacritty.toml";
           "alacritty/themes".source = dotsLink "config/alacritty/themes";
           "alacritty/fonts".source = dotsLink "config/alacritty/fonts";
@@ -45,6 +46,7 @@
           "nushell/env.nu".source = dotsLink "config/nushell/env.nu";
           "nvim".source = dotsLink "config/nvim";
           "python/pythonstartup.py".source = dotsLink "config/python/pythonstartup.py";
+          "television/cable/ghq.toml".source = dotsLink "config/television/cable/ghq.toml";
           "wezterm".source = dotsLink "config/wezterm";
           # fast-syntax-highlighting
           "fsh".source = dotsLink "config/fsh";

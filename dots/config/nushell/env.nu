@@ -1,7 +1,6 @@
-
-#--------------------------------------------
-# Environment variables
-#--------------------------------------------
+#
+# env.nu -- Nushell environment variables
+#
 
 export-env {
     let esep_list_converter =  {
@@ -35,26 +34,18 @@ export-env {
     $env.NUPM_HOME = ($env.XDG_DATA_HOME | path join "nupm")
 }
 
-# homebrew
-def _default_homebrew_prefix [] {
-    match $nu.os-info.name {
-        "macos" => (if ($nu.os-info.arch == "aarch64") { "/opt/homebrew" } else { "/usr/local" })
-        "linux" => $"$(env.HOME)/.linuxbrew"
-        _ => ""
-    }
-}
-
-export-env {
-    $env.HOMEBREW_PREFIX = $env.HOMEBREW_PREFIX? | default (_default_homebrew_prefix)
-}
-
-$env.EDITOR = "nvim"
-$env.VISUAL = $env.EDITOR
-
 # PATH
 use std "path add"
 path add "/usr/texbin"
-path add ($env.HOMEBREW_PREFIX | path join "bin")
+
+if ($nu.os-info.name == "macos") {
+    if ($nu.os-info.arch == "aarch64") {
+        path add "/opt/homebrew/bin"
+    }
+} else if ($nu.os-info.name == "linux") {
+    path add $"$(env.HOME)/.linuxbrew/bin"
+}
+
 $env.NIX_PROFILES | each {|e|
     path add ($e | path join "bin")
 }
@@ -74,9 +65,11 @@ $env.LD_LIBRARY_PATH = (
     | where {|e| $e | path exists }
 )
 
+# nushell library/plugin dirs
 $env.NU_LIB_DIRS = [
     ($env.NUPM_HOME | path join "modules")
     ($nu.default-config-dir | path join "modules")
+    ($env.HOME | path join ".nix-profile" "share" "nushell")
     ($env.HOME | path join ".nix-profile" "share" "nu_scripts")
     $"/etc/profiles/per-user/($env.USER)/share/nu_scripts"
 ] | where {|e| $e | path exists }
@@ -86,8 +79,9 @@ $env.NU_PLUGIN_DIRS = [
     ($env.NUPM_HOME | path join "plugins" "bin")
 ]
 
+# Misc envs
+$env.EDITOR = "nvim"
+$env.VISUAL = $env.EDITOR
 $env.SHELL = $nu.current-exe
-
 $env.GPG_TTY = (tty)
-
 

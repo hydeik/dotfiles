@@ -1,7 +1,7 @@
 
 _direnv_hook() {
   trap -- '' SIGINT
-  eval "$("/Users/ikeno/.nix-profile/bin/direnv" export zsh)"
+  eval "$("$HOME/.nix-profile/bin/direnv" export zsh)"
   trap - SIGINT
 }
 typeset -ag precmd_functions

@@ -1,0 +1,15 @@
+[metadata]
+name = "ghq"
+description = "A channel to select remote repository clones managed by ghq"
+requirements = ["ghq"]
+
+[source]
+command = "ghq list --full-path"
+
+[preview]
+command = "ls -la --color=always '{}'"
+
+# [actions.cd]
+# description = "CD to the selected repository dir"
+# command = "cd k'{0}'"
+# mode = "execute"

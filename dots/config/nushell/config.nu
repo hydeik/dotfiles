@@ -40,23 +40,10 @@ $env.config.hooks.env_change.PWD = (
         | into record
         | load-env
     }
-    | append (use nu-hooks/nu-hooks/startup-times.nu; startup-times setup)
+    | append (use nu-hooks/nu-hooks/startup-times.nu; startup-times)
     | append (
         use nu-hooks/nu-hooks/toolkit.nu;
         toolkit setup --name "tk" --color "yellow_bold"
     )
 )
-
-
-# $env.config.hooks = {
-#     env_change: {
-#         PWD: [
-#             (use nu-hooks/nu-hooks/startup-times.nu; startup-times setup)
-#             # (
-#             #     use nu-hooks/nu-hooks/tookkit.nu
-#             #     toolkit setup --name "tk" --color "yellow_bold"
-#             # )
-#         ]
-#     }
-# }
 
