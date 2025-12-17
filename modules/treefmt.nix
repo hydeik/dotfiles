@@ -19,10 +19,7 @@
           biome.enable = true;
           deadnix.enable = true;
           nixf-diagnose.enable = true;
-          nixfmt = {
-            enable = true;
-            package = pkgs.nixfmt-rfc-style;
-          };
+          nixfmt.enable = true;
           shellcheck.enable = true;
           shfmt.enable = true;
           statix.enable = true;

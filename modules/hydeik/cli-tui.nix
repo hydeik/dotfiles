@@ -12,6 +12,7 @@
           file
           gnutar
           gping
+          imagemagick
           lsof
           nkf
           p7zip
