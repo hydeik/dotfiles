@@ -12,6 +12,7 @@
           (attrValues {
             inherit (pkgs)
               tmux
+              tmux-sessionizer
               tmux-xpanes
               ;
             inherit (pkgs.tmuxPlugins)

@@ -121,6 +121,9 @@ let
       maple-mono.NormalNL-NF-CN
       # Maple Mono Normal NF CN (No-Ligature unhinted)
       maple-mono.NormalNL-NF-CN-unhinted
+
+      # Nerd-fonts
+      nerd-fonts.symbols-only
     ];
 in
 {

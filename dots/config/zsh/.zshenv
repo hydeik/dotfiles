@@ -134,8 +134,7 @@ fi
 ##  path / PATH
 typeset -gxU path
 path=(
-    ${HOME}/bin(N-/)
-    ${XDG_BIN_HOME}(N-/)
+    ${XDG_BIN_HOME:-"$HOME/.local/bin"}(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
     # *nix local
@@ -292,7 +291,7 @@ done
 ##
 ## RubyGems
 ##
-path=( ${GEM_HOME}/bin(N-/) $path[@] )
+path=( ${GEM_HOME:-"$XDG_DATA_HOME/gem"}/bin(N-/) $path[@] )
 
 ##
 ## Go
