@@ -1,11 +1,15 @@
+{ lib, ... }:
 {
   hydeik.dots = {
     homeManager =
-      { config, ... }:
+      { config, pkgs, ... }:
       let
+        inherit (pkgs.stdenv) isDarwin;
+        inherit (lib) optionalAttrs;
+
         dotsDir = "${config.home.homeDirectory}/src/github.com/hydeik/dotfiles/dots";
 
-        dotsLink = path: config.lib.file.mkOutOfStoreSymlink "${dotsDir}/${path}";
+        dotsLink = p: config.lib.file.mkOutOfStoreSymlink "${dotsDir}/${p}";
 
         zshSources = [
           ".zshenv"
@@ -41,6 +45,9 @@
           "alacritty/alacritty.toml".source = dotsLink "config/alacritty/alacritty.toml";
           "alacritty/themes".source = dotsLink "config/alacritty/themes";
           "alacritty/fonts".source = dotsLink "config/alacritty/fonts";
+          "ghostty/config".source = dotsLink "config/ghostty/config";
+          "ghostty/fonts".source = dotsLink "config/ghostty/fonts";
+          "ghostty/keybind.conf".source = dotsLink "config/ghostty/keybind.conf";
           "npm/npmrc".source = dotsLink "config/npm/npmrc";
           "nushell/config.nu".source = dotsLink "config/nushell/config.nu";
           "nushell/env.nu".source = dotsLink "config/nushell/env.nu";
@@ -51,6 +58,9 @@
           "wezterm".source = dotsLink "config/wezterm";
           # fast-syntax-highlighting
           "fsh".source = dotsLink "config/fsh";
+        }
+        // optionalAttrs isDarwin {
+          "ghostty/macos.conf".source = dotsLink "config/ghostty/macos.conf";
         }
         // builtins.foldl' (
           acc: name:
