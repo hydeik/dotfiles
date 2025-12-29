@@ -32,35 +32,152 @@ return {
         update_in_insert = false,
       },
       -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
-      -- Be aware that you also will need to properly configure your LSP server to
-      -- provide the inlay hints.
       inlay_hints = {
         enabled = true,
         -- filetypes for which you don't want to enable inlay hints
         exclude = { "vue" },
       },
       -- Enable this to enable the builtin LSP code lenses on Neovim >= 0.10.0
-      -- Be aware that you also will need to properly configure your LSP server to
-      -- provide the code lenses.
       codelens = {
         enabled = false,
       },
-      -- Add any global capabilities here
-      ---@type lsp.ClientCapabilities
-      capabilities = {
-        workspace = {
-          didChangeWatchedFiles = {
-            dynamicRegistration = false,
-          },
-          fileOperations = {
-            didRename = true,
-            willRename = true,
-          },
-        },
+      -- Enable this to enable the builtin LSP folding on Neovim.
+      folds = {
+        enabled = true,
       },
       -- LSP Server Settings
       ---@type table<string, vim.lsp.ClientConfig>
       servers = {
+        -- Configurations common to all LSP servers
+        ["*"] = {
+          ---@type lsp.ClientCapabilities
+          capabilities = {
+            workspace = {
+              didChangeWatchedFiles = {
+                dynamicRegistration = false,
+              },
+              fileOperations = {
+                didRename = true,
+                willRename = true,
+              },
+            },
+          },
+          keys = {
+            { "<Space>cl", "<cmd>LspInfo<CR>", desc = "Lsp Info" },
+            { "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
+            { "gr", vim.lsp.buf.references, desc = "Goto References", nowait = true, has = "references" },
+            { "gI", vim.lsp.buf.implementation, desc = "Goto Implementation", has = "implementation" },
+            { "gy", vim.lsp.buf.type_definition, desc = "Goto Type Defintiion", has = "typeDefinition" },
+            { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration", has = "declaration" },
+            {
+              "K",
+              function()
+                return vim.lsp.buf.hover()
+              end,
+              desc = "Hover",
+            },
+            {
+              "gK",
+              function()
+                return vim.lsp.buf.signature_help()
+              end,
+              desc = "Signature Help",
+              has = "signatureHelp",
+            },
+            {
+              "<C-k>",
+              function()
+                return vim.lsp.buf.signature_help()
+              end,
+              mode = { "i" },
+              desc = "Signature Help",
+              has = "signatureHelp",
+            },
+            {
+              "<Space>ca",
+              vim.lsp.buf.code_action,
+              mode = { "n", "v" },
+              desc = "Code Action",
+              has = "codeAction",
+            },
+            { "<Space>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
+            {
+              "<Space>cR",
+              function()
+                Snacks.rename.rename_file()
+              end,
+              desc = "Rename File",
+              has = { "workspace/didRenameFiles", "workspace/willRenameFiles" },
+            },
+            {
+              "<Space>cc",
+              vim.lsp.codelens.run,
+              mode = { "n", "v" },
+              desc = "CodeLens",
+              has = "codeLens",
+            },
+            {
+              "<Space>cC",
+              vim.lsp.codelens.refresh,
+              desc = "Refresh & Display CodeLens",
+              mode = { "n" },
+              has = "codeLens",
+            },
+            {
+              "<Space>cA",
+              require("rc.utils.lsp").action.source,
+              desc = "Source Action",
+              has = "codeAction",
+            },
+            {
+              "]]",
+              function()
+                Snacks.words.jump(vim.v.count1)
+              end,
+              desc = "Next Reference",
+              has = "documentHighlight",
+              cond = function()
+                return Snacks.words.is_enabled()
+              end,
+            },
+            {
+              "[[",
+              function()
+                Snacks.words.jump(-vim.v.count1)
+              end,
+              desc = "Prev Reference",
+              has = "documentHighlight",
+              cond = function()
+                return Snacks.words.is_enabled()
+              end,
+            },
+            {
+              "<M-n>",
+              function()
+                Snacks.words.jump(vim.v.count1, true)
+              end,
+              desc = "Next Reference",
+              has = "documentHighlight",
+              cond = function()
+                return Snacks.words.is_enabled()
+              end,
+            },
+            {
+              "<M-p>",
+              function()
+                Snacks.words.jump(-vim.v.count1, true)
+              end,
+              desc = "Prev Reference",
+              has = "documentHighlight",
+              cond = function()
+                return Snacks.words.is_enabled()
+              end,
+            },
+          },
+        },
+        -- disable stylua from nvim-lspconfig
+        stylua = { enabled = false },
+        -- Lua language server
         lua_ls = {
           settings = {
             Lua = {
@@ -101,32 +218,17 @@ return {
   ---@param opts PluginLspOpts
   config = function(_, opts)
     local lsp_utils = require "rc.utils.lsp"
+
     -- setup keymaps
-    lsp_utils.on_attach(function(client, buffer)
-      require("rc.plugins.lsp.keymaps").on_attach(client, buffer)
-    end)
-
-    lsp_utils.setup()
-    lsp_utils.on_dynamic_capability(require("rc.plugins.lsp.keymaps").on_attach)
-
-    -- virtual text
-    if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
-      opts.diagnostics.virtual_text.prefix = vim.fn.has "nvim-0.10.0" == 0 and "●"
-        or function(diagnostic)
-          local icons = require("rc.core.config").icons.diagnostics
-          for d, icon in pairs(icons) do
-            if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-              return icon
-            end
-          end
-        end
+    for server, server_opts in pairs(opts.servers) do
+      if type(server_opts) == "table" and server_opts.keys then
+        require("rc.plugins.lsp.keymaps").set({ name = server ~= "*" and server or nil }, server_opts.keys)
+      end
     end
-
-    vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
     -- inlay hints
     if opts.inlay_hints.enabled then
-      lsp_utils.on_supports_method("textDocument/inlayHint", function(_, buffer)
+      Snacks.util.lsp.on({ method = "textDocument/inlayHint" }, function(buffer)
         if
           vim.api.nvim_buf_is_valid(buffer)
           and vim.bo[buffer].buftype == ""
@@ -139,7 +241,7 @@ return {
 
     -- code lens
     if opts.codelens.enabled and vim.lsp.codelens then
-      lsp_utils.on_supports_method("textDocument/codeLens", function(_, buffer)
+      Snacks.util.lsp.on({ method = "textDocument/codeLens" }, function(buffer)
         vim.lsp.codelens.refresh()
         vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
           buffer = buffer,
@@ -148,32 +250,34 @@ return {
       end)
     end
 
-    -- common configs
-    local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-    local has_blink, blink = pcall(require, "blink.cmp")
-    local capabilities = vim.tbl_deep_extend(
-      "force",
-      {},
-      vim.lsp.protocol.make_client_capabilities(),
-      has_cmp and cmp_nvim_lsp.default_capabilities() or {},
-      has_blink and blink.get_lsp_capabilities() or {},
-      opts.capabilities or {}
-    )
+    -- diagnostics
+    if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
+      opts.diagnostics.virtual_text.prefix = function(diagnostic)
+        local icons = require("rc.core.config").icons.diagnostics
+        for d, icon in pairs(icons) do
+          if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+            return icon
+          end
+        end
+        return "●"
+      end
+    end
 
-    vim.lsp.config("*", {
-      capabilities = capabilities,
-      root_markers = { ".git" },
-    })
+    vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+    if opts.servers["*"] then
+      vim.lsp.config("*", opts.servers["*"])
+    end
 
     -- config servers
-    local servers = opts.servers
-
-    for server, server_opts in pairs(servers) do
-      if server_opts then
-        server_opts = server_opts == true and {} or server_opts
-        if server_opts.enabled ~= false then
-          vim.lsp.config(server, server_opts)
-          vim.lsp.enable(server)
+    for server, server_opts in pairs(opts.servers) do
+      if server ~= "*" then
+        if server_opts then
+          server_opts = server_opts == true and {} or server_opts
+          if server_opts.enabled ~= false then
+            vim.lsp.config(server, server_opts)
+            vim.lsp.enable(server)
+          end
         end
       end
     end

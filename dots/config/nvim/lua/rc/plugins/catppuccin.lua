@@ -9,6 +9,7 @@ return {
       light = "latte",
       dark = "mocha",
     },
+    transparent_background = true,
     integrations = {
       alpha = false,
       cmp = true,

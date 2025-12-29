@@ -1,11 +1,7 @@
-local buffer = require "blink.cmp.sources.buffer"
 local M = {}
 
----@type LazyKeysLspSpec[]|nil
-M._keys = nil
-
----@alias LazyKeysLspSpec LazyKeysSpec|{has?:string|string[], cond?:fun():boolean}
----@alias LazyKeysLsp LazyKeys|{has?:string|string[], cond?:fun():boolean}
+---@alias LazyKeysLspSpec LazyKeysSpec|{has?:string|string[], enabled?:fun():boolean}
+---@alias LazyKeysLsp LazyKeys|{has?:string|string[], enabled?:fun():boolean}
 
 ---@return LazyKeysLspSpec[]
 M.get_keys = function()
@@ -119,54 +115,29 @@ M.get_keys = function()
   return M._keys
 end
 
----@param bufnr number
----@return LazyKeysLsp[]
-M.resolve = function(bufnr)
+---@param filter vim.lsp.get_clients.Filter
+---@param spec LazyKeysLspSpec[]
+M.set = function(filter, spec)
   local Keys = require "lazy.core.handler.keys"
-  local lazy_utils = require "rc.utils.lazy"
-  if not Keys.resolve() then
-    return {}
-  end
-  local spec = vim.tbl_extend("force", {}, M.get_keys())
-  local opts = lazy_utils.get_plugin_opts "nvim-lspconfig"
-  local clients = vim.lsp.get_clients { bufnr = bufnr }
-  for _, client in ipairs(clients) do
-    local maps = opts.servers[client.name] and opts.servers[client.name].keys or {}
-    vim.list_extend(spec, maps)
-  end
-  return Keys.resolve(spec)
-end
-
----@param method string|string[]
----@return boolean
-M.has_method = function(bufnr, method)
-  if type(method) == "table" then
-    for _, m in ipairs(method) do
-      return M.has_method(bufnr, m)
+  for _, keys in pairs(Keys.resolve(spec)) do
+    ---@cast keys LazyKeysLsp
+    local filters = {} ---@type vim.lsp.get_clients.Filter[]
+    if keys.has then
+      local methods = type(keys.has) == "string" and { keys.has } or keys.has --[[@as string[] ]]
+      for _, method in ipairs(methods) do
+        method = method:find "/" and method or ("textDocument/" .. method)
+        filters[#filters + 1] = vim.tbl_extend("force", vim.deepcopy(filter), { method = method })
+      end
+    else
+      filters[#filters + 1] = filter
     end
-    return false
-  end
-  local clients = vim.lsp.get_clients { bufnr = bufnr }
-  return vim.iter(clients):any(function(client)
-    return client:supports_method(method)
-  end)
-end
 
-M.on_attach = function(_, bufnr)
-  local Keys = require "lazy.core.handler.keys"
-  local keymaps = M.resolve(bufnr)
-  for _, key in pairs(keymaps) do
-    local has_method = not key.has or M.has_method(bufnr, key.has)
-    local cond = not (key.cond == false or ((type(key.cond) == "function") and not key.cond()))
-    if has_method and cond then
-      ---@type LazyKeysLsp|vim.keymap.set.Opts
-      local opts = Keys.opts(key)
-      opts.cond = nil
-      opts.has = nil
-      opts.silent = opts.silent ~= false
-      opts.buffer = bufnr
-      ---@cast opts vim.keymap.set.Opts
-      vim.keymap.set(key.mode or "n", key.lhs, key.rhs, opts)
+    for _, f in ipairs(filters) do
+      local opts = Keys.opts(keys)
+      ---@cast opts snacks.keymap.set.Opts
+      opts.lsp = f
+      opts.enabled = keys.enabled
+      Snacks.keymap.set(keys.mode or "n", keys.lhs, keys.rhs, opts)
     end
   end
 end

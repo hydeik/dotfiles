@@ -45,8 +45,8 @@ return {
         },
       },
       formatters_by_ft = {
-        ["markdwon"] = { { "prettierd", "prettier" }, "markdownlint-cli2", "markdwon-toc" },
-        ["markdwon.mdx"] = { { "prettierd", "prettier" }, "markdownlint-cli2", "markdwon-toc" },
+        ["markdwon"] = { "prettier", "markdownlint-cli2", "markdwon-toc" },
+        ["markdwon.mdx"] = { "prettier", "markdownlint-cli2", "markdwon-toc" },
       },
     },
   },

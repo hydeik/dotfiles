@@ -180,6 +180,9 @@ return {
     },
     ---@param opts blink.cmp.Config | { sources: { compat: string[] } }
     config = function(_, opts)
+      -- register blink.cmp lsp capabilities
+      vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities() })
+
       -- setup compat sources
       local enabled = opts.sources.default
       for _, source in ipairs(opts.sources.compat or {}) do

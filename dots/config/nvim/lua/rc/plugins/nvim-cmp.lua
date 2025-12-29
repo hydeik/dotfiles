@@ -26,6 +26,9 @@ return {
       { "ray-x/cmp-treesitter" },
     },
     opts = function()
+      -- Register nvim-cmp lsp capabilities
+      vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
+
       local icons = require("rc.core.config").icons
       local cmp_kinds = icons.kinds
       local cmp_menu = icons.cmp
