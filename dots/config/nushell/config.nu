@@ -47,3 +47,5 @@ $env.config.hooks.env_change.PWD = (
     )
 )
 
+source ./themes/catppuccin_mocha.nu
+source custom-completions/uv/uv-completions.nu

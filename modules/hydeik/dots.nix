@@ -51,6 +51,7 @@
           "npm/npmrc".source = dotsLink "config/npm/npmrc";
           "nushell/config.nu".source = dotsLink "config/nushell/config.nu";
           "nushell/env.nu".source = dotsLink "config/nushell/env.nu";
+          "nushell/themes".source = dotsLink "config/nushell/themes";
           "nvim".source = dotsLink "config/nvim";
           "python/pythonstartup.py".source = dotsLink "config/python/pythonstartup.py";
           "television/cable/ghq.toml".source = dotsLink "config/television/cable/ghq.toml";

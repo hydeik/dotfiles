@@ -1,0 +1,45 @@
+display_full_path = false
+search_submodules = false
+recursive_submodules = false
+switch_filter_unknown = false
+session_sort_order = "Alphabetical"
+excluded_dirs = []
+sessions = []
+bookmarks = ["~/.config/nushell", "~/.config/nvim", "~/.config/zsh"]
+clone_repo_switch = "Always"
+vcs_providers = ["git"]
+
+[[search_dirs]]
+path = "~/src"
+depth = 3
+
+[picker_colors]
+highlight_color = "LightBlue"
+highlight_text_color = "Black"
+border_color = "DarkGray"
+info_color = "LightYellow"
+prompt_color = "LightGreen"
+
+[shortcuts]
+backspace = "backspace"
+ctrl-a = "move_to_line_start"
+ctrl-c = "cancel"
+ctrl-d = "delete"
+ctrl-e = "move_to_line_end"
+ctrl-j = ""
+ctrl-k = "delete_to_line_end"
+ctrl-n = "move_down"
+ctrl-p = "move_up"
+ctrl-u = "delete_to_line_start"
+ctrl-w = "delete_word"
+delete = "delete"
+down = "move_down"
+enter = "confirm"
+esc = "cancel"
+left = "cursor_left"
+right = "cursor_right"
+up = "move_up"
+
+[session_configs]
+
+[marks]

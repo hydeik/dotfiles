@@ -8,7 +8,7 @@
 
       pluginNamesNixpkgs = [
         "formats"
-        "hcl"
+        "hcl" # TODO: wait for update
         "highlight"
         "gstat"
         # "net" # broken
@@ -43,8 +43,9 @@
     {
       home.packages = with pkgs; [
         nushell
-        bash-env-json
+        nufmt
         nu_scripts
+        bash-env-json
       ];
 
       programs.bash.profileExtra = ''
