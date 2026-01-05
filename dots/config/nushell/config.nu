@@ -47,5 +47,13 @@ $env.config.hooks.env_change.PWD = (
     )
 )
 
+# Theme
 source ./themes/catppuccin_mocha.nu
+
+# Prompt -> use starship
+$env.PROMPT_INDICATOR = ""
+$env.PROMPT_INDICATOR_VI_INSERT = ""
+$env.PROMPT_INDICATOR_VI_NORMAL = ""
+
+# Custom completions
 source custom-completions/uv/uv-completions.nu

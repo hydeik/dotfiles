@@ -8,14 +8,14 @@
 
       pluginNamesNixpkgs = [
         "formats"
-        "hcl" # TODO: wait for update
-        "highlight"
+        # "hcl" # TODO: wait for update
+        # "highlight"
         "gstat"
         # "net" # broken
         "polars"
         "query"
-        "semver"
-        "skim"
+        # "semver"
+        # "skim"
         # "units" # broken
       ]
       ++ pkgs.lib.optionals isLinux [
