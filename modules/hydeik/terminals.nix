@@ -11,6 +11,9 @@
         ];
 
         xdg.configFile."alacritty/terminal.toml".text = ''
+          [terminal]
+          osc52 = "CopyPaste"
+
           [terminal.shell]
           program = "${pkgs.zsh}/bin/zsh"
           args = ["-c", "tms start"]

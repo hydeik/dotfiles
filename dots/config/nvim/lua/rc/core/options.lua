@@ -104,35 +104,36 @@ opt.backspace = { "indent", "eol", "start" }
 -- Use system clipboard
 opt.clipboard:append "unnamed"
 opt.clipboard:append "unnamedplus"
-if plat.is_mac then
-  vim.g.clipboard = {
-    name = "macOS-clipboard",
-    copy = {
-      ["+"] = "pbcopy",
-      ["*"] = "pbcopy",
-    },
-    paste = {
-      ["+"] = "pbpaste",
-      ["*"] = "pbpaste",
-    },
-    cache_enabled = 0,
-  }
-elseif plat.is_wsl then
-  -- NOTE: Remember to `ln -s /path/in/windows/win32yank.exe /usr/local/bin/win32yank.exe`
-  -- NOTE: and `chmod +x /usr/local/bin/win32yank.exe`
-  vim.g.clipboard = {
-    name = "win32yank-wsl",
-    copy = {
-      ["+"] = "win32yank.exe -i --crlf",
-      ["*"] = "win32yank.exe -i --crlf",
-    },
-    paste = {
-      ["+"] = "win32yank.exe -o --lf",
-      ["*"] = "win32yank.exe -o --lf",
-    },
-    cache_enabled = 0,
-  }
-end
+vim.g.clipboard = "osc52"
+-- if plat.is_mac then
+--   vim.g.clipboard = {
+--     name = "macOS-clipboard",
+--     copy = {
+--       ["+"] = "pbcopy",
+--       ["*"] = "pbcopy",
+--     },
+--     paste = {
+--       ["+"] = "pbpaste",
+--       ["*"] = "pbpaste",
+--     },
+--     cache_enabled = 0,
+--   }
+-- elseif plat.is_wsl then
+--   -- NOTE: Remember to `ln -s /path/in/windows/win32yank.exe /usr/local/bin/win32yank.exe`
+--   -- NOTE: and `chmod +x /usr/local/bin/win32yank.exe`
+--   vim.g.clipboard = {
+--     name = "win32yank-wsl",
+--     copy = {
+--       ["+"] = "win32yank.exe -i --crlf",
+--       ["*"] = "win32yank.exe -i --crlf",
+--     },
+--     paste = {
+--       ["+"] = "win32yank.exe -o --lf",
+--       ["*"] = "win32yank.exe -o --lf",
+--     },
+--     cache_enabled = 0,
+--   }
+-- end
 
 opt.showmatch = true -- Jump to matching bracket
 opt.matchtime = 1 -- Tenths of a second to show the matching paren
