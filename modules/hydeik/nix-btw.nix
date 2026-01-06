@@ -6,6 +6,7 @@
         home.packages = with pkgs; [
           nix-search-cli
           nixd # LSP server
+          nixfmt
           cachix
           nix-inspect
           nox

@@ -19,6 +19,7 @@
       <hydeik/git>
       <hydeik/hm-backup>
       <hydeik/homebrew>
+      <hydeik/jujutsu>
       <hydeik/nix-btw>
       <hydeik/secrets>
       <hydeik/shells>

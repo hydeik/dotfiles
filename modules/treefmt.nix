@@ -10,7 +10,6 @@
   ];
 
   perSystem =
-    { pkgs, ... }:
     {
       treefmt = {
         projectRoot = inputs.flake-file;
