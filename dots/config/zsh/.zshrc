@@ -33,14 +33,14 @@ if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ]]; then
     source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 fi
 
-## Tmux
-# Attach tmux session automatically if exists, create new session otherwise.
-if (( ${+commands[tmux]} )); then
-    export TMUX_AUTO_START=true
-    export PERCOL=fzf
-    export ZENO_ENABLE_FZF_TMUX=1
-    source ${ZDOTDIR}/scripts/tmux_auto.zsh
-fi
+# ## Tmux
+# # Attach tmux session automatically if exists, create new session otherwise.
+# if (( ${+commands[tmux]} )); then
+#     export TMUX_AUTO_START=true
+#     export PERCOL=fzf
+#     export ZENO_ENABLE_FZF_TMUX=1
+#     source ${ZDOTDIR}/scripts/tmux_auto.zsh
+# fi
 
 # ##============================================================================
 # ## Enable Powerlevel10k instant prompt.

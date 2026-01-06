@@ -3,7 +3,6 @@
   hydeik.shells.homeManager =
     { pkgs, ... }:
     let
-      inherit (lib.strings) concatStringsSep;
       inherit (pkgs.stdenvNoCC) isLinux;
 
       pluginNamesNixpkgs = [
@@ -14,8 +13,8 @@
         # "net" # broken
         "polars"
         "query"
-        # "semver"
-        # "skim"
+        # "semver" # TODO: wait for update
+        # "skim" # TODO: wait for update
         # "units" # broken
       ]
       ++ pkgs.lib.optionals isLinux [
@@ -28,7 +27,7 @@
         destination = "/bin/activateNushellPlugins.nu";
         text = ''
           #!/usr/bin/env nu
-          ${concatStringsSep "\n" (
+          ${builtins.concatStringsSep "\n" (
             map (x: "plugin add ${pkgs.nushellPlugins.${x}}/bin/nu_plugin_${x}") pluginNamesNixpkgs
           )}
         '';

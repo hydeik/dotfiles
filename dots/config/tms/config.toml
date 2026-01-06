@@ -1,13 +1,17 @@
+default_session = "main"
 display_full_path = false
 search_submodules = false
 recursive_submodules = false
 switch_filter_unknown = false
 session_sort_order = "Alphabetical"
 excluded_dirs = []
-sessions = []
 bookmarks = ["~/.config/nushell", "~/.config/nvim", "~/.config/zsh"]
 clone_repo_switch = "Always"
 vcs_providers = ["git"]
+
+[[sessions]]
+name = "main"
+path = "~/"
 
 [[search_dirs]]
 path = "~/src"

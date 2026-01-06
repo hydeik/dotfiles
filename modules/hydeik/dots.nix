@@ -55,6 +55,7 @@
           "nvim".source = dotsLink "config/nvim";
           "python/pythonstartup.py".source = dotsLink "config/python/pythonstartup.py";
           "television/cable/ghq.toml".source = dotsLink "config/television/cable/ghq.toml";
+          "tms/config.toml".source = dotsLink "config/tms/config.toml";
           "tmux".source = dotsLink "config/tmux";
           "wezterm".source = dotsLink "config/wezterm";
           # fast-syntax-highlighting

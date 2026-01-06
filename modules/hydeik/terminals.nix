@@ -13,7 +13,7 @@
         xdg.configFile."alacritty/terminal.toml".text = ''
           [terminal.shell]
           program = "${pkgs.zsh}/bin/zsh"
-          args = ["--login"]
+          args = ["-c", "tms start"]
         '';
       };
   };
