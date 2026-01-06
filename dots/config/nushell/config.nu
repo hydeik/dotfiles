@@ -47,6 +47,25 @@ $env.config.hooks.env_change.PWD = (
     )
 )
 
+# Keybindings
+$env.config.keybindings = ($env.config.keybindings? | default {})
+$env.config.keybindings = (
+    $env.config.keybindings
+    | append {
+        name: move_right_or_take_history_hint
+        modifier: control
+        keycode: char_f
+        mode: [emacs, vi_insert]
+        event: {
+            until: [
+                {send: historyhintcomplete}
+                {send: menuright}
+                {send: right}
+            ]
+        }
+    }
+)
+
 # Theme
 source ./themes/catppuccin_mocha.nu
 
@@ -56,4 +75,5 @@ $env.PROMPT_INDICATOR_VI_INSERT = ""
 $env.PROMPT_INDICATOR_VI_NORMAL = ""
 
 # Custom completions
-source custom-completions/uv/uv-completions.nu
+use ./completions/tms-completions.nu *
+use custom-completions/uv/uv-completions.nu *

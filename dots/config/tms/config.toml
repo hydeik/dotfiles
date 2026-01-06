@@ -5,17 +5,22 @@ recursive_submodules = false
 switch_filter_unknown = false
 session_sort_order = "Alphabetical"
 excluded_dirs = []
-bookmarks = ["~/.config/nushell", "~/.config/nvim", "~/.config/zsh"]
+bookmarks = [
+    "~/.config/nushell",
+    "~/.config/nvim",
+    "~/.config/zsh",
+    "-",
+]
 clone_repo_switch = "Always"
 vcs_providers = ["git"]
-
-[[sessions]]
-name = "main"
-path = "~/"
 
 [[search_dirs]]
 path = "~/src"
 depth = 3
+
+[[sessions]]
+name = "main"
+path = "~/"
 
 [picker_colors]
 highlight_color = "LightBlue"
