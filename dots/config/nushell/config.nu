@@ -76,4 +76,5 @@ $env.PROMPT_INDICATOR_VI_NORMAL = ""
 
 # Custom completions
 use ./completions/tms-completions.nu *
+use ./completions/tv-completions.nu *
 use custom-completions/uv/uv-completions.nu *

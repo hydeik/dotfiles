@@ -7,9 +7,4 @@ requirements = ["ghq"]
 command = "ghq list --full-path"
 
 [preview]
-command = "ls -la --color=always '{}'"
-
-# [actions.cd]
-# description = "CD to the selected repository dir"
-# command = "cd k'{0}'"
-# mode = "execute"
+command = "ls -a '{}'"
