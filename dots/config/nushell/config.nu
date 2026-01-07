@@ -78,3 +78,7 @@ $env.PROMPT_INDICATOR_VI_NORMAL = ""
 use ./completions/tms-completions.nu *
 use ./completions/tv-completions.nu *
 use custom-completions/uv/uv-completions.nu *
+
+# Load ~/.config/nushell/env_secret.nu if present
+const secret_path = ($nu.default-config-dir | path join "env_secret.nu") | path expand
+source (if ($secret_path | path exists) { $secret_path } else { null })

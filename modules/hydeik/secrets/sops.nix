@@ -23,11 +23,19 @@ let
           age.generateKey = false;
           defaultSopsFile = ./secrets.yaml;
           secrets.openai-api-key = { };
-          templates."zshrc_secret" = {
-            content = ''
-              export OPENAI_API_KEY="${config.sops.placeholder.openai-api-key}"
-            '';
-            path = "${config.xdg.configHome}/zsh/.zshrc_secret";
+          templates = {
+            "zshrc_secret" = {
+              content = ''
+                export OPENAI_API_KEY="${config.sops.placeholder.openai-api-key}"
+              '';
+              path = "${config.xdg.configHome}/zsh/.zshrc_secret";
+            };
+            "env_secret.nu" = {
+              content = ''
+                $env.OPENAI_API_KEY = "${config.sops.placeholder.openai-api-key}"
+              '';
+              path = "${config.xdg.configHome}/nushell/env_secret.nu";
+            };
           };
         };
 
