@@ -4,7 +4,7 @@
     {
       home.packages = with pkgs; [
         lazyjj
-        jj-fzf
+        # jj-fzf
       ];
 
       programs.jujutsu = {
