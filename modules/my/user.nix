@@ -23,6 +23,7 @@
       <hydeik/nix-btw>
       <hydeik/secrets>
       <hydeik/shells>
+      <hydeik/skk>
       <hydeik/terminals>
       <hydeik/tmux>
       <hydeik/unfree>

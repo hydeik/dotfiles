@@ -64,6 +64,10 @@
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-lib.follows = "nixpkgs";
+    skk-dev-dict = {
+      flake = false;
+      url = "github:skk-dev/dict";
+    };
     sops-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:Mic92/sops-nix";
@@ -79,6 +83,13 @@
         pre-commit-hooks.follows = "git-hooks";
       };
       url = "github:kawarimidoll/vim-overlay";
+    };
+    yaskkserv2-service = {
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:ttak0422/yaskkserv2-service";
     };
   };
 
