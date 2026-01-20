@@ -5,7 +5,7 @@
       {
         home.packages = with pkgs; [
           gfortran
-          flang
+          # flang     # Build failed on x86_64-darwin
           # fortitude # Linter
           fortls # LSP
         ];
