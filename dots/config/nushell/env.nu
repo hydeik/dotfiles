@@ -4,13 +4,13 @@
 
 export-env {
     let esep_list_converter =  {
-        from_string: { split row (char esep) | path expand --no-symlink }
-        to_string: { path expand --no-symlink | str join (char esep) }
+        from_string: {|s| $s | split row (char esep) | path expand --no-symlink }
+        to_string: {|v| $v |  path expand --no-symlink | str join (char esep) }
     }
 
     let space_list_converter =  {
-        from_string: { split row (char space) | path expand --no-symlink }
-        to_string: { path expand --no-symlink | str join (char space) }
+        from_string: {|s| $s | split row (char space) | path expand --no-symlink }
+        to_string: {|v| $v | path expand --no-symlink | str join (char space) }
     }
 
     $env.ENV_CONVERSIONS = {
@@ -19,9 +19,9 @@ export-env {
         TERMINFO_DIRS: $esep_list_converter
         NIX_PROFILES: $space_list_converter
         "MANPATH": {
-            from_string : { split row (char esep) | path expand --no-symlink }
+            from_string : {|s| $s | split row (char esep) | path expand --no-symlink }
             # NOTE: MANPATH needs a trailing colon to work
-            to_string   : { path expand --no-symlink | str join (char esep) | $"($in):" }
+            to_string   : {|v| $v | path expand --no-symlink | str join (char esep) | $"($in):" }
         }
     }
 }
