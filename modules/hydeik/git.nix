@@ -61,6 +61,24 @@
       programs.difftastic = {
         enable = true;
         git.enable = true;
+        # TODO: use folked version of difftastic that supports alined_lines feature until
+        # https://github.com/Wilfred/difftastic/pull/936 is merged upstream.
+        package = pkgs.difftastic.overrideAttrs (
+          finalAttrs: prevAttrs: {
+            version = "0.68.0";
+            src = pkgs.fetchFromGitHub {
+              owner = "clabby";
+              repo = "difftastic";
+              rev = "cl/add-alined-lines";
+              hash = "sha256-GeJjC/rY+Ywitj9EDUgpEW+ga3uTfXsKMSXhjYsV9Fo=";
+            };
+            cargoHash = "sha256-zcoyqBXu8ZdpNu3VODwj3GdwlBG5RNRLcKwIs4k+cRM=";
+            cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+              inherit (finalAttrs) pname src version;
+              hash = finalAttrs.cargoHash;
+            };
+          }
+        );
       };
 
       # GitHub CLI

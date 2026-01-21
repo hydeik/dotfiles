@@ -22,6 +22,7 @@ local specs = {
   { "kkharji/sqlite.lua", lazy = true },
   { "rafamadriz/friendly-snippets", lazy = false },
   { "brianhuster/unnest.nvim", lazy = false },
+  { "MunifTanjim/nui.nvim", lazy = true },
   { import = "rc.plugins.snacks.core" },
 
   -- [[ Colorscheme ]]
@@ -38,6 +39,9 @@ local specs = {
   { import = "rc.plugins.mini.ai" },
   { import = "rc.plugins.mini.surround" },
   { import = "rc.plugins.dial" },
+  { import = "rc.plugins.diffview" },
+  { import = "rc.plugins.difftastic" },
+  { import = "rc.plugins.jujutsu" },
   { import = "rc.plugins.nvim-insx" },
   { import = "rc.plugins.operator-convert-case" },
   { import = "rc.plugins.quicker" },
@@ -60,7 +64,6 @@ local specs = {
   { import = "rc.plugins.dap.core" },
 
   -- [[ UI ]]
-  { "MunifTanjim/nui.nvim", lazy = true },
   { import = "rc.plugins.mini.icons" },
   { import = "rc.plugins.noice" },
   { import = "rc.plugins.snacks.ui" },

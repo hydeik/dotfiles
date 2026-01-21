@@ -12,8 +12,8 @@ return {
     transparent_background = true,
     integrations = {
       alpha = false,
-      cmp = true,
       dashboard = true,
+      diffview = true,
       flash = true,
       gitsigns = true,
       illuminate = true,
