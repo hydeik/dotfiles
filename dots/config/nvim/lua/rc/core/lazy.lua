@@ -49,8 +49,9 @@ local specs = {
   { import = "rc.plugins.yanky" },
 
   -- [[ Editor enrichment ]]
-  { import = "rc.plugins.gitsigns" },
   { import = "rc.plugins.flash" },
+  { import = "rc.plugins.gitsigns" },
+  { import = "rc.plugins.haunt" },
   { import = "rc.plugins.overlook" },
   { import = "rc.plugins.trouble" },
   { import = "rc.plugins.todo-comments" },

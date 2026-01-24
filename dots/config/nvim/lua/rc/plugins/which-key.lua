@@ -16,7 +16,7 @@ return {
       { "<Space>dp", group = "profiler" },
       { "<Space>f", group = "file/find" },
       { "<Space>g", group = "git" },
-      { "<Space>h", group = "hunks" },
+      { "<Space>h", group = "haunt" },
       { "<Space>q", group = "quit/session" },
       { "<Space>s", group = "search" },
       { "<Space>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },

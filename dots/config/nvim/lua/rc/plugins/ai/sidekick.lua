@@ -14,6 +14,7 @@ return {
   -- sidekick
   {
     "folke/sidekick.nvim",
+    opts_extend = { "cli.prompts" },
     opts = function()
       require("rc.utils.cmp").ai_nes = function()
         local nes = require "sidekick.nes"

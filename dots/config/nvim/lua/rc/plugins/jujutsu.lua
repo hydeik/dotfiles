@@ -23,7 +23,7 @@ return {
       },
     },
   },
-  config = function(opts)
+  config = function(_, opts)
     require("jujutsu-nvim").setup(opts)
   end,
 }
