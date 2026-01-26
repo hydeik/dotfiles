@@ -11,6 +11,9 @@
         ];
 
         xdg.configFile."alacritty/terminal.toml".text = ''
+          [env]
+          SHELL = "${pkgs.zsh}/bin/zsh"
+
           [terminal]
           osc52 = "CopyPaste"
 
