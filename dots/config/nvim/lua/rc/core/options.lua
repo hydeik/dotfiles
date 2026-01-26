@@ -105,35 +105,6 @@ opt.backspace = { "indent", "eol", "start" }
 opt.clipboard:append "unnamed"
 opt.clipboard:append "unnamedplus"
 vim.g.clipboard = "osc52"
--- if plat.is_mac then
---   vim.g.clipboard = {
---     name = "macOS-clipboard",
---     copy = {
---       ["+"] = "pbcopy",
---       ["*"] = "pbcopy",
---     },
---     paste = {
---       ["+"] = "pbpaste",
---       ["*"] = "pbpaste",
---     },
---     cache_enabled = 0,
---   }
--- elseif plat.is_wsl then
---   -- NOTE: Remember to `ln -s /path/in/windows/win32yank.exe /usr/local/bin/win32yank.exe`
---   -- NOTE: and `chmod +x /usr/local/bin/win32yank.exe`
---   vim.g.clipboard = {
---     name = "win32yank-wsl",
---     copy = {
---       ["+"] = "win32yank.exe -i --crlf",
---       ["*"] = "win32yank.exe -i --crlf",
---     },
---     paste = {
---       ["+"] = "win32yank.exe -o --lf",
---       ["*"] = "win32yank.exe -o --lf",
---     },
---     cache_enabled = 0,
---   }
--- end
 
 opt.showmatch = true -- Jump to matching bracket
 opt.matchtime = 1 -- Tenths of a second to show the matching paren
@@ -299,5 +270,33 @@ opt.wildignore = {
   "*.ttf",
   "*.otf",
 }
+-- }}}2
+
+--- Shell: nushell integartsions {{{2
+if vim.fs.basename(vim.env.SHELL) == "nu" then
+  -- WARN: disable the usage of temp files for shell commands
+  -- because Nu doesn't support `input redirection` which Neovim uses to send buffer content to a command:
+  --      `{shell_command} < {temp_file_with_selected_buffer_content}`
+  -- When set to `false` the stdin pipe will be used instead.
+  -- NOTE: some info about `shelltemp`: https://github.com/neovim/neovim/issues/1008
+  vim.opt.shelltemp = false
+
+  -- string to be used to put the output of shell commands in a temp file
+  -- 1. when 'shelltemp' is `true`
+  -- 2. in the `diff-mode` (`nvim -d file1 file2`) when `diffopt` is set
+  --    to use an external diff command: `set diffopt-=internal`
+  vim.opt.shellredir = "out+err> %s"
+
+  -- flags for nu:
+  -- * `--stdin`       redirect all input to -c
+  -- * `--no-newline`  do not append `\n` to stdout
+  -- * `--commands -c` execute a command
+  vim.opt.shellcmdflag = "--stdin --no-newline -c"
+
+  -- disable all escaping and quoting
+  vim.opt.shellxescape = ""
+  vim.opt.shellxquote = ""
+  vim.opt.shellquote = ""
+end
 -- }}}2
 -- }}}1
