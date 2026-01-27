@@ -14,7 +14,7 @@
         zshSources = [
           ".zshenv"
           ".zshrc"
-          "p10k.zsh"
+          # "p10k.zsh"
           "completions/_pip"
           "completions/_pipenv"
           "functions/fzf-cd-ghq-repo"
@@ -29,6 +29,7 @@
           "rc/50_variables.zsh"
           "rc/60_alias.zsh"
           "rc/70_keybindings.zsh"
+          "rc/80_starship.zsh"
           "scripts/executable_24-bit-color.sh"
           "scripts/executable_sort_timings.zsh"
           "scripts/tmux_auto.zsh"

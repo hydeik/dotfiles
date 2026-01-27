@@ -25,14 +25,6 @@ github = "romkatv/zsh-defer"
 # zsh-defer my-mise-activate-hook
 # '''
 
-[plugins.powerlevel10k]
-github = "romkatv/powerlevel10k"
-use = ["{{ name }}.zsh-theme"]
-hooks.post = '''
-ZLE_RPROMPT_INDENT=0
-source ${ZDOTDIR}/p10k.zsh
-'''
-
 [plugins.zeno]
 github = "yuki-yano/zeno.zsh"
 apply = ["defer"]
