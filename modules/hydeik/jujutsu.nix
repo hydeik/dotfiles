@@ -1,8 +1,9 @@
 {
   hydeik.jujutsu.homeManager =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       home.packages = with pkgs; [
+        jjui
         lazyjj
         # jj-fzf
       ];
@@ -41,13 +42,5 @@
             ];
           };
         };
-
-      programs.jjui = {
-        enable = true;
-        configDir = "${config.xdg.configHome}/jjui";
-        settings = {
-          suggest.exec.mode = "fuzzy";
-        };
-      };
     };
 }

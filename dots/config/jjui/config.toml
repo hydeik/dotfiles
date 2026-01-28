@@ -1,0 +1,8 @@
+[suggest]
+[suggest.exec]
+mode = "fuzzy" # Accepted value: "off" (default), "regex", "fuzzy"
+
+[ui]
+[ui.theme]
+light = "base24-catppuccin-latte"
+dark = "base24-catppuccin-mocha"

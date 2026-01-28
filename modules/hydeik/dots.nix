@@ -49,6 +49,8 @@
           "ghostty/config".source = dotsLink "config/ghostty/config";
           "ghostty/fonts".source = dotsLink "config/ghostty/fonts";
           "ghostty/keybind.conf".source = dotsLink "config/ghostty/keybind.conf";
+          "jjui/config.toml".source = dotsLink "config/jjui/config.toml";
+          "jjui/themes".source = dotsLink "config/jjui/themes";
           "npm/npmrc".source = dotsLink "config/npm/npmrc";
           "nushell/config.nu".source = dotsLink "config/nushell/config.nu";
           "nushell/env.nu".source = dotsLink "config/nushell/env.nu";
