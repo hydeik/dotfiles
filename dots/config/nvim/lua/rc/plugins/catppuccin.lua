@@ -1,61 +1,30 @@
 return {
   -- Colorscheme: catppuccin
   "catppuccin/nvim",
-  lazy = true,
   name = "catppuccin",
+  lazy = false,
+  priority = 1000,
   opts = {
-    flavour = "mocha",
+    flavour = "auto",
     background = {
       light = "latte",
       dark = "mocha",
     },
     transparent_background = true,
-    integrations = {
-      alpha = false,
-      dashboard = true,
-      diffview = true,
-      flash = true,
-      gitsigns = true,
-      illuminate = true,
-      indent_blankline = {
-        enabled = true,
-        colored_indent_levels = false,
+    -- sets terminal colors (e.g. `g:terminal_color_0`)
+    term_colors = true,
+    -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
+    lsp_styles = {
+      underlines = {
+        errors = { "undercurl" },
+        hints = { "undercurl" },
+        warnings = { "undercurl" },
+        information = { "undercurl" },
       },
-      leap = false,
-      lsp_trouble = true,
-      mason = false,
-      markdown = true,
-      mini = {
-        enabled = true,
-        indentscope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-      },
-      native_lsp = {
-        enabled = true,
-        underline = {
-          errors = { "undercurl" },
-          hints = { "undercurl" },
-          warnings = { "undercurl" },
-          information = { "undercurl" },
-        },
-      },
-      navic = {
-        enabled = true,
-        custom_bg = "lualine",
-      },
-      neotest = true,
-      neotree = true,
-      noice = true,
-      notify = true,
-      snacks = {
-        enabled = true,
-        indent_scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-      },
-      telescope = {
-        enable = true,
-      },
-      treesitter = true,
-      treesitter_context = true,
-      which_key = true,
     },
+    default_integrations = false,
+    -- If you use lazy.nvim as your package manager, you can use the auto_integrations option
+    -- to let catppuccin automatically detect installed plugins and enable their respective integrations.
+    auto_integrations = true,
   },
 }
