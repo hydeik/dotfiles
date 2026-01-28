@@ -3,6 +3,8 @@
 return {
   "mrjones2014/smart-splits.nvim",
   lazy = true,
+  event = { "VeryLazy" },
+  opts = {},
   init = function()
     -- moving between splits
     vim.keymap.set("n", "<M-h>", function()
@@ -31,5 +33,4 @@ return {
       require("smart-splits").resize_right()
     end, { desc = "Resize Window Left" })
   end,
-  config = true,
 }
