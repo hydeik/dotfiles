@@ -3,7 +3,7 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        gemini
+        gemini-cli-bin
       ];
     };
 }
