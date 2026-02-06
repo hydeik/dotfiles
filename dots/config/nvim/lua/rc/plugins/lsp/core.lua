@@ -118,7 +118,9 @@ return {
             },
             {
               "<Space>cC",
-              vim.lsp.codelens.refresh,
+              function()
+                vim.lsp.codelens.enable(true)
+              end,
               desc = "Refresh & Display CodeLens",
               mode = { "n" },
               has = "codeLens",
@@ -217,8 +219,6 @@ return {
 
   ---@param opts PluginLspOpts
   config = function(_, opts)
-    local lsp_utils = require "rc.utils.lsp"
-
     -- setup keymaps
     for server, server_opts in pairs(opts.servers) do
       if type(server_opts) == "table" and server_opts.keys then
@@ -242,10 +242,12 @@ return {
     -- code lens
     if opts.codelens.enabled and vim.lsp.codelens then
       Snacks.util.lsp.on({ method = "textDocument/codeLens" }, function(buffer)
-        vim.lsp.codelens.refresh()
+        vim.lsp.codelens.enable(true)
         vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
           buffer = buffer,
-          callback = vim.lsp.codelens.refresh,
+          callback = function()
+            vim.lsp.codelens.enable(true)
+          end,
         })
       end)
     end

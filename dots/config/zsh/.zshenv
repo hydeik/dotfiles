@@ -161,6 +161,9 @@ fpath=(
 typeset -gxU manpath
 manpath=(
     ${XDG_DATA_HOME}/man(N-/)
+    ${HM_PROFILE_DIR}/share/man(N-/)
+    ${NIX_USER_PROFILE_DIR}/share/man(N-/)
+    /run/current-system/sw/share/man(N-/)
     /usr/local/cuda/doc/man(N-/)
     $manpath[@]
 )
@@ -197,6 +200,10 @@ ld_library_path=(
     ${HOME}/lib(N-/)
     ${HOME}/opt/lib(N-/)
     ${XDG_LIB_HOME}(N-/)
+    ${HM_PROFILE_DIR}/lib(N-/)
+    ${NIX_USER_PROFILE_DIR}/lib(N-/)
+    /run/current-system/sw/lib(N-/)
+    /nix/var/nix/profiles/default/lib(N-/)
     /usr/local/lib(N-/)
     /usr/local/lib32(N-/)
     /usr/local/cuda/lib64(N-)
@@ -299,10 +306,10 @@ path=( ${GEM_HOME:-"$XDG_DATA_HOME/gem"}/bin(N-/) $path[@] )
 export GOPATH=${HOME}
 # path=( ${GOPATH}/bin(N-/) $path[@] )
 
-# ##
-# ## Rust, cargo
-# ##
-# path=( ${HOME}/.cargo/bin(N-/) $path[@] )
+##
+## Rust, cargo
+##
+path=( ${CARGO_HOME:-"$HOME/.cargo"}/bin(N-/) $path[@] )
 # if (( ${+commands[rustc]} )); then
 #     RUST_SYS_ROOT=""
 #     case ${OSTYPE} in

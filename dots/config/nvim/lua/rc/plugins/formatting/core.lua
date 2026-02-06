@@ -34,6 +34,7 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         fish = { "fish_indent" },
+        -- nu = { "nufmt" },
         sh = { "shfmt" },
       },
       ---@param bufnr number

@@ -28,10 +28,10 @@ export-env {
 
 export-env {
     # XDG base directory
-    $env.XDG_CACHE_HOME = $env.XDG_CACHE_HOME? | default ($nu.home-path | path join ".cache")
-    $env.XDG_CONFIG_HOME = $env.XDG_CONFIG_HOME? | default ($nu.home-path | path join ".config")
-    $env.XDG_DATA_HOME = $env.XDG_DATA_HOME? | default ($nu.home-path | path join ".local" "share")
-    $env.XDG_STATE_HOME = $env.XDG_STATE_HOME? | default ($nu.home-path | path join ".local" "state")
+    $env.XDG_CACHE_HOME = $env.XDG_CACHE_HOME? | default ($nu.home-dir | path join ".cache")
+    $env.XDG_CONFIG_HOME = $env.XDG_CONFIG_HOME? | default ($nu.home-dir | path join ".config")
+    $env.XDG_DATA_HOME = $env.XDG_DATA_HOME? | default ($nu.home-dir | path join ".local" "share")
+    $env.XDG_STATE_HOME = $env.XDG_STATE_HOME? | default ($nu.home-dir | path join ".local" "state")
     # nupm -- nushell package manager
     $env.NUPM_CACHE = ($env.XDG_CACHE_HOME | path join "nupm")
     $env.NUPM_HOME = ($env.XDG_DATA_HOME | path join "nupm")
@@ -46,7 +46,7 @@ if ($nu.os-info.name == "macos") {
         path add "/opt/homebrew/bin"
     }
 } else if ($nu.os-info.name == "linux") {
-    path add ($nu.home-path | path join ".linuxbrew" "bin")
+    path add ($nu.home-dir | path join ".linuxbrew" "bin")
 }
 
 $env.NIX_PROFILES | each {|e|

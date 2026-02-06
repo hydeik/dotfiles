@@ -14,9 +14,10 @@
         zshSources = [
           ".zshenv"
           ".zshrc"
-          # "p10k.zsh"
+          "completions/_cargo"
           "completions/_pip"
           "completions/_pipenv"
+          "completions/_rustup"
           "functions/fzf-cd-ghq-repo"
           "functions/fzf-cdr"
           "functions/ranger-cd"
