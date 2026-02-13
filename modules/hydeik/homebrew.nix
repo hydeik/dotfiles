@@ -43,7 +43,7 @@
               HOMEBREW_NO_ENV_HINTS = "0";
             };
             # Add homebrew to the PATH
-            systemPath = [ config.homebrew.brewPrefix ];
+            systemPath = [ "${config.homebrew.prefix}/bin" ];
           };
 
           homebrew = {
