@@ -11,6 +11,7 @@
           uv-sort
           # Language server / Linter / Formatter
           ruff
+          ty
         ];
       };
   };
