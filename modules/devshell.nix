@@ -1,9 +1,9 @@
 { inputs, lib, ... }:
 {
   flake-file.inputs = {
-    make-shell = {
-      url = lib.mkDefault "github:nicknovitski/make-shell";
-      inputs.flake-compat.follows = lib.mkDefault "flake-compat";
+    devshell = {
+      url = lib.mkDefault "github:numtide/devshell";
+      inputs.nixpkgs.follows = lib.mkDefault "nixpkgs";
     };
     flake-compat = {
       url = "github:NixOS/flake-compat";
@@ -12,37 +12,41 @@
   };
 
   imports = [
-    inputs.make-shell.flakeModules.default
+    inputs.devshell.flakeModule
   ];
 
   perSystem =
     { pkgs, ... }:
     {
-      make-shells.default = {
-        packages = with pkgs; [
-          bat
-          biome
-          deadnix
-          gnupg
-          lua-language-server
-          nixd
-          nixfmt
-          ripgrep
-          shellcheck
-          shfmt
-          sops
-          ssh-to-age
-          statix
-          stylua
-          taplo
-          vim
-          yamlfmt
-        ];
-        nativeBuildInputs = [ pkgs.cargo ];
-        buildInputs = [
-          pkgs.pkg-config
-          pkgs.libiconv
-        ];
+      devshells = {
+        default = {
+          imports = [
+            "${inputs.devshell}/extra/language/rust.nix"
+          ];
+          language.rust = {
+            enableDefaultToolchain = true;
+          };
+          devshell.packages = with pkgs; [
+            age
+            bat
+            deadnix
+            gnupg
+            lua-language-server
+            nixd
+            nixfmt
+            ripgrep
+            shellcheck
+            shfmt
+            sops
+            ssh-to-age
+            statix
+            stylua
+            taplo
+            yamlfmt
+            libiconv
+            apple-sdk
+          ];
+        };
       };
     };
 }
