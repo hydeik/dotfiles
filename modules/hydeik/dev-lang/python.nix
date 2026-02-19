@@ -10,6 +10,8 @@
           uv
           uv-sort
           # Language server / Linter / Formatter
+          basedpyright
+          pyrefly
           ruff
           ty
         ];
