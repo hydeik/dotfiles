@@ -1,4 +1,4 @@
-{ __findFile, ... }:
+{ ... }:
 {
   hydeik.dev-lang = {
     homeManager =

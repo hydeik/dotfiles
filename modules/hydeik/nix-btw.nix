@@ -9,7 +9,7 @@
           nixfmt
           cachix
           nix-inspect
-          nox
+          # nox  # TODO: tmporaliry disabled due to build error
         ];
 
         programs = {

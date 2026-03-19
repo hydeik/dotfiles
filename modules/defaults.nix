@@ -1,9 +1,14 @@
-{ __findFile, ... }:
+{ den, ... }:
 {
-  den.default.includes = [
-    <den/define-user>
-    <hydix/hostname>
-    <my/nix-settings>
-    <my/state-version>
-  ];
+  den.default = {
+    nixos.system.stateVersion = "25.11";
+    homeManager.home.stateVersion = "25.11";
+    darwin.system.stateVersion = 6;
+
+    includes = [
+      den.provides.define-user
+      den.provides.hostname
+      den.provides.inputs'
+    ];
+  };
 }

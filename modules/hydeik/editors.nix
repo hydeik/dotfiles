@@ -1,4 +1,4 @@
-{ __findFile, inputs, ... }:
+{ inputs, ... }:
 let
   flake-file.inputs = {
     neovim-nightly-overlay = {
@@ -20,7 +20,7 @@ let
 
   overlays = [
     inputs.neovim-nightly-overlay.overlays.default
-    (inputs.vim-overlay.overlays.features {
+    (inputs.vim-overlay.lib.features {
       cscope = true;
       lua = true;
       python3 = true;

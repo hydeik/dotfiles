@@ -7,90 +7,88 @@
 
   inputs = {
     catppuccin = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     den.url = "github:vic/den";
     devshell = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-aspects.url = "github:vic/flake-aspects";
     flake-compat = {
-      flake = false;
       url = "github:NixOS/flake-compat";
+      flake = false;
     };
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
-      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
       url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
     };
     git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs = {
         flake-compat.follows = "flake-compat";
         gitignore.follows = "";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:cachix/git-hooks.nix";
     };
     home-manager = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     homebrew-cask = {
-      flake = false;
       url = "github:homebrew/homebrew-cask";
+      flake = false;
     };
     homebrew-core = {
-      flake = false;
       url = "github:homebrew/homebrew-core";
+      flake = false;
     };
     import-tree.url = "github:vic/import-tree";
     neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:nix-community/neovim-nightly-overlay";
     };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     nix-index-database = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
     nixpkgs-lib.follows = "nixpkgs";
     skk-dev-dict = {
-      flake = false;
       url = "github:skk-dev/dict";
+      flake = false;
     };
     sops-nix = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:Mic92/sops-nix";
-    };
-    systems.url = "github:nix-systems/default";
-    treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    treefmt-nix = {
       url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     vim-overlay = {
+      url = "github:kawarimidoll/vim-overlay";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         pre-commit-hooks.follows = "git-hooks";
       };
-      url = "github:kawarimidoll/vim-overlay";
     };
     yaskkserv2-service = {
+      url = "github:ttak0422/yaskkserv2-service";
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:ttak0422/yaskkserv2-service";
     };
   };
-
 }

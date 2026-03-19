@@ -22,6 +22,4 @@
     #  inputs.flake-compat.follows = "";
     #};
   };
-
-  den.default.includes = [ den._.home-manager ];
 }
