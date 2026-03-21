@@ -13,7 +13,7 @@ let
       url = "github:kawarimidoll/vim-overlay";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        pre-commit-hooks.follows = "git-hooks";
+        git-hooks.follows = "git-hooks";
       };
     };
   };
@@ -21,7 +21,7 @@ let
   overlays = [
     inputs.neovim-nightly-overlay.overlays.default
     (inputs.vim-overlay.lib.features {
-      cscope = true;
+      cscope = false;
       lua = true;
       python3 = true;
       ruby = true;

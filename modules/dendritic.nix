@@ -3,8 +3,12 @@
   flake-file = {
     description = "Hidekazu Ikeno (hydeik)'s dotfile powered by Nix";
     inputs = {
-      den.url = lib.mkDefault "github:vic/den";
-      flake-file.url = lib.mkDefault "github:vic/flake-file";
+      den.url = "github:vic/den";
+      flake-file.url = "github:vic/flake-file";
+      home-manager = {
+        url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
   };
   imports = [

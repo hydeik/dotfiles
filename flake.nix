@@ -79,8 +79,8 @@
     vim-overlay = {
       url = "github:kawarimidoll/vim-overlay";
       inputs = {
+        git-hooks.follows = "git-hooks";
         nixpkgs.follows = "nixpkgs";
-        pre-commit-hooks.follows = "git-hooks";
       };
     };
     yaskkserv2-service = {

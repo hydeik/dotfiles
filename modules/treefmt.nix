@@ -9,44 +9,45 @@
     inputs.treefmt-nix.flakeModule
   ];
 
-  perSystem =
-    {
-      treefmt = {
-        projectRoot = inputs.flake-file;
+  perSystem = {
+    treefmt = {
+      projectRoot = inputs.flake-file;
 
-        programs = {
-          biome.enable = true;
-          deadnix.enable = true;
-          nixf-diagnose.enable = true;
-          nixfmt.enable = true;
-          shellcheck.enable = true;
-          shfmt.enable = true;
-          statix.enable = true;
-        };
-        settings = {
-          on-unmatched = lib.mkDefault "fatal";
-          global.excludes = [
-            "*.bak"
-            "modules/*"
-            "dots/*"
-            "*.conf"
-            "*.md"
-            "*.toml"
-            "*.yaml"
-            "*.yml"
-            "*/.gitignore"
-            "*/.gitkeep"
-            "*/fsh/*"
-            "*/zsh/*"
-            "*.zsh"
-            "LICENSE"
-            ".editorconfig"
-            "*/.editorconfig"
-            ".direnv/*"
-          ];
-        };
+      programs = {
+        biome.enable = true;
+        deadnix.enable = true;
+        nixf-diagnose.enable = true;
+        nixfmt.enable = true;
+        shellcheck.enable = true;
+        shfmt.enable = true;
+        statix.enable = true;
       };
-
-      pre-commit.settings.hooks.treefmt.enable = true;
+      settings = {
+        on-unmatched = lib.mkDefault "fatal";
+        global.excludes = [
+          "*.bak"
+          "modules/*"
+          "dots/*"
+          "*.conf"
+          "*.md"
+          "*.toml"
+          "*.yaml"
+          "*.yml"
+          "*/.gitignore"
+          "*/.gitkeep"
+          "*/fsh/*"
+          "*/zsh/*"
+          "*.zsh"
+          "LICENSE"
+          ".editorconfig"
+          "*/.editorconfig"
+          ".direnv/*"
+          "*.png"
+          "*.svg"
+        ];
+      };
     };
+
+    pre-commit.settings.hooks.treefmt.enable = true;
+  };
 }

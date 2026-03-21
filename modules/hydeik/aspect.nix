@@ -32,8 +32,9 @@
       hydeik.terminals
       hydeik.tmux
 
-      (den.lib.perHost hydix.nix-index)
-      (den.lib.perHost hydix.nix-registry)
+      hydix.nix-index
+      hydix.nix-registry
+      hydix.nix-settings
     ];
   };
 }

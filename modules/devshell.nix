@@ -32,6 +32,7 @@
             deadnix
             gnupg
             lua-language-server
+            nh
             nixd
             nixfmt
             ripgrep
