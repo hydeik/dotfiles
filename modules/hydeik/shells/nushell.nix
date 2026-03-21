@@ -9,8 +9,8 @@
         with pkgs;
         [
           nushell-plugin-formats
-          nushell-plugin-hcl
-          nushell-plugin-highlight
+          # nushell-plugin-hcl # FIXME: waiting for update to 0.111
+          # nushell-plugin-highlight # FIXME: waiting for update to 0.111
           nushell-plugin-gstat
           # nushell-plugin-net # broken
           nushell-plugin-polars
