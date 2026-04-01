@@ -9,7 +9,7 @@
           # Deno
           deno
           # Nodejs
-          nodePackages.nodejs
+          nodejs_latest
           # Language servers
           typescript-language-server
           vtsls
