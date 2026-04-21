@@ -15,8 +15,8 @@
           # nushell-plugin-net # broken
           nushell-plugin-polars
           nushell-plugin-query
-          nushell-plugin-semver
-          nushell-plugin-skim
+          # nushell-plugin-semver # TODO: waiting for update to 0.112.2
+          # nushell-plugin-skim # TODO: waiting for update to 0.112.2
           # nushell-plugin-units # broken
         ]
         ++ lib.optionals isLinux [
