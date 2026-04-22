@@ -49,6 +49,14 @@
       flake = false;
     };
     import-tree.url = "github:vic/import-tree";
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs = {

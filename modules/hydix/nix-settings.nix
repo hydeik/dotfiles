@@ -5,9 +5,11 @@ let
       "flakes"
     ];
     extra-substituters = [
+      "https://cache.numtide.com"
       "https://yazi.cachix.org"
     ];
     extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
     ];
     substituters = [
