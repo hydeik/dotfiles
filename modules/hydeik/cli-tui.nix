@@ -8,7 +8,7 @@
           curl
           dust
           fd
-          ffmpeg-full
+          # ffmpeg-full # FIXME: enable after https://github.com/NixOS/nixpkgs/issues/511265 is solved
           file
           gnutar
           gping

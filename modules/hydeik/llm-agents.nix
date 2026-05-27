@@ -27,7 +27,6 @@
         ccstatusline
         # Usage Analytics
         ccusage
-        ccusage-codex
         # Utilities
         copilot-language-server
       ];
