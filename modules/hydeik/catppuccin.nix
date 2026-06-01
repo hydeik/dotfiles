@@ -13,6 +13,7 @@ let
     ];
     catppuccin = {
       enable = true;
+      autoEnable = true;
       inherit flavor;
     };
   };
