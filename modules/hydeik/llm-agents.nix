@@ -22,11 +22,15 @@
         copilot-cli
         gemini-cli
         # AI Assistants
-        hermes-agent
+        # hermes-agent
         # Claude Code Ecosystems
         ccstatusline
         # Usage Analytics
         ccusage
+        # Workflow & Project management
+        cc-sdd
+        openspec
+        spec-kit
         # Utilities
         copilot-language-server
       ];
