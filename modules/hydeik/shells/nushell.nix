@@ -47,11 +47,11 @@
         bash-env-json
       ];
 
-      programs.bash.profileExtra = ''
-        if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
-          exec nu
-        fi
-      '';
+      # programs.bash.profileExtra = ''
+      #   if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+      #     exec nu
+      #   fi
+      # '';
 
       xdg.configFile."nushell/plugin.msgPackz".source = "${msgPackz}/plugin.msgpackz";
     };
