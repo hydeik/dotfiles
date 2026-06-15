@@ -135,6 +135,7 @@ fi
 typeset -gxU path
 path=(
     ${XDG_BIN_HOME:-"$HOME/.local/bin"}(N-/)
+    ${XDG_DATA_HOME}/npm/bin(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
     # *nix local
