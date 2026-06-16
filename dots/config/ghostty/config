@@ -50,5 +50,8 @@ shell-integration-features = cursor,sudo,title
 config-file = keybind.conf
 
 # --- Command
-command = /run/current-system/sw/bin/bash -lc "nu --login"
-initial-command = /run/current-system/sw/bin/bash -lc "nu --env-config ~/.config/nushell/env.nu --commands 'tms start'"
+# command = /run/current-system/sw/bin/bash -lc "nu --login"
+# initial-command = /run/current-system/sw/bin/bash -lc "nu --env-config ~/.config/nushell/env.nu --commands 'tms start'"
+command = ~/.local/state/nix/profile/bin/zsh --login
+initial-command = ~/.local/state/nix/profile/bin/zsh -c "tms start"
+
