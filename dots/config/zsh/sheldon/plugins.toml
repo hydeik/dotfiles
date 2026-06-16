@@ -25,9 +25,9 @@ github = "romkatv/zsh-defer"
 # zsh-defer my-mise-activate-hook
 # '''
 
-[plugins.zeno]
-github = "yuki-yano/zeno.zsh"
-apply = ["defer"]
+# [plugins.zeno]
+# github = "yuki-yano/zeno.zsh"
+# apply = ["defer"]
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"

@@ -35,34 +35,5 @@ bindkey -M emacs '^N' history-substring-search-down
 #     bindkey '^]'  fzf-cdr
 # fi
 
-
-# zeno.zsh
-if [[ -n $ZENO_LOADED ]]; then
-  # bindkey ' '  zeno-auto-snippet
-
-  # fallback if snippet not matched (default: self-insert)
-  # export ZENO_AUTO_SNIPPET_FALLBACK=self-insert
-
-  # if you use zsh's incremental search
-  # bindkey -M isearch ' ' self-insert
-  # bindkey ' '  zeno-auto-snippet
-  bindkey '^m' zeno-auto-snippet-and-accept-line
-
-  bindkey '^i' zeno-completion
-
-  bindkey '^x '  zeno-insert-space
-  bindkey '^x^m' accept-line
-  bindkey '^x^z' zeno-toggle-auto-snippet
-
-  # fallback if completion not matched
-  # (default: fzf-completion if exists; otherwise expand-or-complete)
-  # export ZENO_COMPLETION_FALLBACK=expand-or-complete
-
-  # ZLE widget
-  bindkey '^r'   zeno-history-selection
-  bindkey '^x^s' zeno-insert-snippet
-  bindkey '^x^f' zeno-ghq-cd
-fi
-
 # ----- End of zshrc -----
 # vim: foldmethod=marker

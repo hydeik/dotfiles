@@ -109,39 +109,6 @@ WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 ## --- Vim respect XDG Base Directory Specification
 # export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 
-## --- junegunn/fzf
-# {{{
-
-if (( ${+commands[fzf]} )); then
-    # Default options passed to `fzf`
-    export FZF_DEFAULT_OPTS='--height=50% --border'
-    # fzf on Tmux split pane
-    export FZF_TMUX=1
-    export FZF_TMUX_OPTS='-p'
-
-    # Trigger sequence for fuzzy completion [default: '**']
-    export FZF_COMPLETION_TRIGGER=','
-
-    # Use fd instead of the default find command for listing path candidates.
-    if (( ${+commands[fd]} )); then
-        export FZF_DEFAULT_COMMAND='fd --type f'
-        export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
-        export FZF_CTRL_T_OPT="--multi --preview 'head -$LINES {}'"
-        export FZF_ALT_C_COMMAND='fd --type d'
-
-        # Path completion
-        _fzf_compgen_path() {
-            fd --hidden --follow --exclude ".git" . "$1"
-        }
-
-        # Directory completion
-        _fzf_compgen_dir() {
-            fd --type d --hidden --follow --exclude ".git" . "$1"
-        }
-    fi
-fi
-
-# }}}
 
 # ----- End of file -----
 # vim: foldmethod=marker
