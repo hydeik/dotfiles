@@ -2,6 +2,8 @@
 ## rc/80_fzf.zsh -- Configurations for FZF
 ##=====================================================================
 
+## --- Environment variables for controling fzf behaviors
+
 # Default options passed to `fzf`
 export FZF_DEFAULT_OPTS='--height=50% --border'
 # fzf on Tmux popup window
@@ -29,29 +31,36 @@ if (( ${+commands[fd]} )); then
     }
 fi
 
-# Nix home-manager
-if [[ -r $HM_PROFILE_DIR/share/fzf/key-bindings.zsh ]]; then
-    source $HM_PROFILE_DIR/share/fzf/key-bindings.zsh
-    source $HM_PROFILE_DIR/share/fzf/completion.zsh
+## --- Enable FZF's builtin key-bindings and tab completion
+if [[ -r $ZDOTDIR/rc/_fzf.zsh ]]; then
+    # NOTE: create cache via `fzf --zsh > $ZDOTDIR/rc/_fzf.zsh`
+    source $ZDOTDIR/rc/_fzf.zsh
 fi
 
-# macOS / Homebrew (Apple Silicon)
-if [[ -r /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]]; then
-    source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-    source /opt/homebrew/opt/fzf/shell/completion.zsh
-fi
+## --- Custom scripts / key-bindings
 
-# macOS / Homebrew (Intel)
-if [[ -r /usr/local/opt/fzf/shell/key-bindings.zsh ]]; then
-    source /usr/local/opt/fzf/shell/key-bindings.zsh
-    source /usr/local/opt/fzf/shell/completion.zsh
-fi
+function fzf-cdr() {
+    local fzf_options="--no-multi --prompt='Directory > ' --query=\"$LBUFFER\""
+    if [[ $TMUX && $FZF_TMUX = 1 ]]; then
+        local fzf_command="fzf-tmux ${fzf_options} ${FZF_TMUX_OPTS} ${FZF_DEFAULT_OPTS}"
+    else
+        local fzf_command="fzf ${fzf_options} ${FZF_DEFAULT_OPTS}"
+    fi
 
-# Custom scripts / key-bindings
+    local cdr_command="cdr -l | sed 's/^[^ ][^ ]*  *//'"
+    local command="${cdr_command} | ${fzf_command}"
 
+    local selected_dir=$(eval $command)
+    if [ -n "${selected_dir}" ]; then
+        BUFFER="builtin cd ${selected_dir}"
+        zle accept-line
+    fi
+
+    zle clear-screen
+}
 
 function fzf-cd-ghq-repo() {
-    local fzf_options="--no-multi --prompt='Repogitory > ' --query=\"$LBUFFER\""
+    local fzf_options="--no-multi --prompt='Repogitory > ' --query=\"$LBUFFER\" --preview='eza -lga --color=always --icons=auto {}'"
     if [[ $TMUX && $FZF_TMUX = 1 ]]; then
         local fzf_command="fzf-tmux ${fzf_options} ${FZF_TMUX_OPTS} ${FZF_DEFAULT_OPTS}"
     else
@@ -68,8 +77,6 @@ function fzf-cd-ghq-repo() {
     zle clear-screen
 }
 
-# Load custom functions
-# autoload -Uz fzf-cd-ghq-repo
 zle -N fzf-cd-ghq-repo
 bindkey '^G'  fzf-cd-ghq-repo
 
