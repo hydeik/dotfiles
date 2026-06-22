@@ -1,0 +1,1 @@
+/nix/store/3c2bzz82xqxd61i78wnd759b9isl3zk2-home-manager-files/.claude/hooks/workflow-reminders.py

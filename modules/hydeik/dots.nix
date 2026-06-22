@@ -41,7 +41,13 @@
       {
         xdg.enable = true;
 
-        home.file.".editorconfig".source = dotsLink ".editorconfig";
+        home.file = {
+          # ".claude/settings.json".source = dotsLink ".claude/settings.json";
+          ".claude/hooks/enforce-uv.py".source = dotsLink ".claude/hooks/enforce-uv.py";
+          ".claude/hooks/ruff-after-edit.sh".source = dotsLink ".claude/hooks/ruff-after-edit.sh";
+          ".claude/hooks/workflow-reminders.py".source = dotsLink ".claude/hooks/workflow-reminders.py";
+          ".editorconfig".source = dotsLink ".editorconfig";
+        };
 
         xdg.configFile = {
           "starship.toml".source = dotsLink "config/starship.toml";
