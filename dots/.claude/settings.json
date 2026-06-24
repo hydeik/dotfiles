@@ -6,6 +6,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "bash ~/.claude/hooks/block-dangerous-git.sh"
+          },
+          {
+            "type": "command",
             "command": "python3 ~/.claude/hooks/enforce-uv.py"
           }
         ]

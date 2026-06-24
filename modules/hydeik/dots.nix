@@ -42,7 +42,8 @@
         xdg.enable = true;
 
         home.file = {
-          # ".claude/settings.json".source = dotsLink ".claude/settings.json";
+          ".claude/settings.json".source = dotsLink ".claude/settings.json";
+          ".claude/hooks/block-dangerous-git.sh".source = dotsLink ".claude/hooks/block-dangerous-git.sh";
           ".claude/hooks/enforce-uv.py".source = dotsLink ".claude/hooks/enforce-uv.py";
           ".claude/hooks/ruff-after-edit.sh".source = dotsLink ".claude/hooks/ruff-after-edit.sh";
           ".claude/hooks/workflow-reminders.py".source = dotsLink ".claude/hooks/workflow-reminders.py";
