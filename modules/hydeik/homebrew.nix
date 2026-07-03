@@ -66,6 +66,7 @@
               "appcleaner"
               "aquaskk"
               "chatwork"
+              "claude"
               # "cog-app"
               "deepl"
               "discord"

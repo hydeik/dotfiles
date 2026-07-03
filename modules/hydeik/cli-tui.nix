@@ -57,13 +57,16 @@
               "--height=50%"
               "--border"
             ];
-            changeDirWidgetCommand = "fd --type d";
-            fileWidgetCommand = "fd --type f";
-            fileWidgetOptions = [
-              "--multi"
-              "--preview"
-              "'head -$LINES {}'"
-            ];
+            changeDirWidget.command = "fd --type d";
+            fileWidget = {
+              command = "fd --type f";
+              options = [
+                "--multi"
+                "--preview"
+                "'head -$LINES {}'"
+              ];
+            };
+            historyWidget.bash.command = "";
             tmux = {
               enableShellIntegration = true;
               shellIntegrationOptions = [ "-p" ];
