@@ -1,27 +1,50 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/block-dangerous-git.sh"
-          },
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/enforce-uv.py"
-          }
-        ]
-      }
-    ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
         "hooks": [
           {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/ruff-after-edit.sh"
+            "command": "bash ~/.claude/hooks/ruff-after-edit.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Write|Edit"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/block-dangerous-git.sh",
+            "type": "command"
+          },
+          {
+            "command": "python3 ~/.claude/hooks/enforce-uv.py",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/hide/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "uv run ty check >&2 || exit 2",
+            "timeout": 30,
+            "type": "command"
           }
         ]
       }
@@ -30,19 +53,8 @@
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/workflow-reminders.py"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "uv run ty check >&2 || exit 2",
-            "timeout": 30
+            "command": "python3 ~/.claude/hooks/workflow-reminders.py",
+            "type": "command"
           }
         ]
       }

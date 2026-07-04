@@ -29,6 +29,7 @@
         ccusage
         # Workflow & Project management
         cc-sdd
+        herdr
         openspec
         spec-kit
         # Utilities
