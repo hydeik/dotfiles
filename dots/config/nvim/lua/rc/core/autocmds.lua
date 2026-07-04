@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("VimResized", {
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = group_id,
   callback = function()
-    vim.hl.on_yank { timeout = 500 }
+    vim.hl.hl_op { timeout = 500 }
   end,
   desc = "Highlight yanked text.",
 })
@@ -43,17 +43,16 @@ vim.api.nvim_create_autocmd("BufEnter", {
   group = group_id,
   callback = function()
     -- A hook after filetypeplugin events
-    vim.opt_local.formatoptions = vim.opt_local.formatoptions
-      - "r" -- Don't insert a comment leader after hitting <Enter>.
-      - "o" -- Don't insert a comment leader after hitting 'o' or 'O'.
-      - "a" -- Disable auto-format
-      + "c" -- Auto-wrap comments using text width.
-      + "q" -- Allow formatting of comments with "gq".
-      + "n" -- Recognize numbered list when formatting text.
-      + "l" -- Long lines are not broked in insert mode.
-      + "m" -- Also break at a multibyte character above 255.
-      + "M" -- Don't insert a space before or after a mutibyte character.
-      + "j" -- Where it make sence, remove a comment leader when joining lines.
+    vim.opt_local.formatoptions:remove "r" -- Don't insert a comment leader after hitting <Enter>.
+    vim.opt_local.formatoptions:remove "o" -- Don't insert a comment leader after hitting 'o' or 'O'.
+    vim.opt_local.formatoptions:remove "a" -- Disable auto-format
+    vim.opt_local.formatoptions:append "c" -- Auto-wrap comments using text width.
+    vim.opt_local.formatoptions:append "q" -- Allow formatting of comments with "gq".
+    vim.opt_local.formatoptions:append "n" -- Recognize numbered list when formatting text.
+    vim.opt_local.formatoptions:append "l" -- Long lines are not broked in insert mode.
+    vim.opt_local.formatoptions:append "m" -- Also break at a multibyte character above 255.
+    vim.opt_local.formatoptions:append "M" -- Don't insert a space before or after a mutibyte character.
+    vim.opt_local.formatoptions:append "j" -- Where it make sence, remove a comment leader when joining lines.
 
     if not vim.bo.modifiable then
       vim.wo.foldenable = false
