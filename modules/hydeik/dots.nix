@@ -55,6 +55,7 @@
           "alacritty/alacritty.toml".source = dotsLink "config/alacritty/alacritty.toml";
           "alacritty/themes".source = dotsLink "config/alacritty/themes";
           "alacritty/fonts".source = dotsLink "config/alacritty/fonts";
+          "herdr/config.toml".source = dotsLink "config/herdr/config.toml";
           "ghostty/config".source = dotsLink "config/ghostty/config";
           "ghostty/fonts".source = dotsLink "config/ghostty/fonts";
           "ghostty/keybind.conf".source = dotsLink "config/ghostty/keybind.conf";

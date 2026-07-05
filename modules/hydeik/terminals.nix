@@ -19,7 +19,7 @@
 
           [terminal.shell]
           program = "${pkgs.zsh}/bin/zsh"
-          args = ["-c", "tms start"]
+          args = ["-c", "herdr"]
         '';
       };
   };
