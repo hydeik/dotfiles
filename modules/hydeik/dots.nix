@@ -15,6 +15,7 @@
           ".zshenv"
           ".zshrc"
           "completions/_cargo"
+          "completions/_herdr"
           "completions/_pip"
           "completions/_pipenv"
           "completions/_rustup"
