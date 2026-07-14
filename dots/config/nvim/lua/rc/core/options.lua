@@ -104,7 +104,25 @@ opt.backspace = { "indent", "eol", "start" }
 -- Use system clipboard
 opt.clipboard:append "unnamed"
 opt.clipboard:append "unnamedplus"
-vim.g.clipboard = "osc52"
+-- vim.g.clipboard = "osc52"
+local function paste()
+  return {
+    vim.fn.split(vim.fn.getreg "", "\n"),
+    vim.fn.getregtype "",
+  }
+end
+
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy "+",
+    ["*"] = require("vim.ui.clipboard.osc52").copy "*",
+  },
+  paste = {
+    ["+"] = paste,
+    ["*"] = paste,
+  },
+}
 
 opt.showmatch = true -- Jump to matching bracket
 opt.matchtime = 1 -- Tenths of a second to show the matching paren
