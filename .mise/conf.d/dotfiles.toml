@@ -1,0 +1,34 @@
+##
+## Dotfiles
+##
+[settings]
+# Root directory used for implied dotfile sources.
+dotfiles.root = "~/src/github.com/hydeik/dotfiles/home"
+
+[dotfiles]
+# self-managing mise config
+"~/.config/mise" = { source = "~/src/github.com/hydeik/dotfiles/.mise", mode = "symlink-each" }
+"~/.config/mise/miserc.toml" = { source = "~/src/github.com/hydeik/dotfiles/.miserc.toml" }
+# -- Files under $HOME
+"~/.claude" = { mode = "symlink-each" }
+"~/.editorconfig" = { mode = "symlink" }
+"~/.zshenv" = { mode = "symlink" }
+# -- Files under $XDG_CONFIG_HOME
+"~/.config/alacritty" = { mode = "symlink-each" }
+"~/.config/alacritty/terminal.toml" = { source = "~/src/github.com/hydeik/dotfiles/templates/alacritty/terminal.toml.tmpl", mode = "template" }
+"~/.config/atuin" = { mode = "symlink-each" }
+"~/.config/bat" = { mode = "symlink-each" }
+"~/.config/fnox/config.toml" = { source = "~/src/github.com/hydeik/dotfiles/fnox.toml", mode = "symlink" }
+"~/.config/ghostty" = { mode = "symlink-each" }
+"~/.config/git" = { mode = "symlink-each" }
+"~/.config/herdr" = { mode = "symlink-each" }
+"~/.config/iris/config.toml" = { mode = "symlink" }
+"~/.config/iris/theme.toml" = { source = "~/src/github.com/hydeik/dotfiles/home/.config/iris/themes/catppuccin-mocha.toml", mode = "symlink" }
+"~/.config/nvim" = { mode = "symlink" }
+"~/.config/npm" = { mode = "symlink" }
+"~/.config/python" = { mode = "symlink" }
+"~/.config/starship.toml" = { mode = "copy" }
+"~/.config/tms" = { mode = "symlink" }
+"~/.config/tmux" = { mode = "symlink-each" }
+"~/.config/zsh" = { mode = "symlink-each" }
+"~/.config/zsh-patina" = { mode = "symlink-each" }

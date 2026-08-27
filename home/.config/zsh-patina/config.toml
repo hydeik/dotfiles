@@ -1,0 +1,31 @@
+[highlighting]
+# Either the name of a built-in theme (e.g. `"simple"`, `"patina"`) or a string
+# in the form `"file:/path/mytheme.toml"` pointing to a custom theme toml file.
+theme = "catppuccin-mocha"
+
+# Enable or disable dynamic highlighting. Can be `true` or `false` ...
+dynamic = true
+
+# ... or a table with the keys `callables` and `paths`.
+# dynamic = { callables = true, paths = "complete" }
+#
+# Valid values for `paths` are:
+# "none"     - disable dynamic highlighting for paths
+# "partial"  - dynamically highlight paths even if only a prefix has been
+#              entered
+# "complete" - dynamically highlight paths only if they have been entered
+#              completely (default)
+
+# For performance reasons, highlighting is disabled for very long lines. This
+# option specifies the maximum length of a line (in bytes) up to which
+# highlighting is applied.
+max_line_length = 20000
+
+# The maximum time (in milliseconds) to spend on highlighting a command. If
+# highlighting takes longer, it will be aborted and the command will be
+# partially highlighted.
+#
+# Note that the timeout only applies to multi-line commands. Highlighting cannot
+# be aborted in the middle of a line. If you often deal with long lines that
+# take longer to highlight than the timeout, consider reducing `max_line_length`.
+timeout_ms = 500

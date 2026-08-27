@@ -1,0 +1,17 @@
+.DS_Store
+.aider*
+.crush*
+.direnv
+.envrc
+.envrc.local
+.env
+.env.local
+.ipynb_checkpoints
+.mise.local.toml
+.pre-commit-config.yaml
+.vscode/
+.worktree
+__pycache__/
+mise.local.toml
+*.swp
+*~

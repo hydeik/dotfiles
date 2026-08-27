@@ -1,0 +1,11 @@
+# The minimum supported version of mise required for the configuration file.
+min_version = "2026.8.10"
+
+## ----------------------------------------------
+## Settings
+## ----------------------------------------------
+[settings]
+# Enable experimental features
+experimental = true
+# Restrict mise to only install versions released before a certain date or duration.
+minimum_release_age = "3d"

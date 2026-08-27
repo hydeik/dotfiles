@@ -1,0 +1,184 @@
+## ----------------------------------------------
+## System packages
+## ----------------------------------------------
+[bootstrap.packages]
+# -- Git/Shells (brew)
+"brew:bash" = "latest"
+"brew:fish" = "latest"
+"brew:git" = "latest"
+"brew:nushell" = "latest"
+"brew:zsh" = "latest"
+# -- Apps (brew cask)
+"brew-cask:alacritty" = "latest"
+"brew-cask:appcleaner" = "latest"
+"brew-cask:claude" = "latest"
+"brew-cask:deepl" = "latest"
+"brew-cask:discord" = "latest"
+"brew-cask:dropbox" = "latest"
+"brew-cask:firefox" = "latest"
+"brew-cask:ghostty" = "latest"
+"brew-cask:google-chrome" = "latest"
+"brew-cask:kap" = "latest"
+"brew-cask:karabiner-elements" = "latest"
+"brew-cask:keycastr" = "latest"
+"brew-cask:macskk" = "latest"
+"brew-cask:nextcloud" = "latest"
+"brew-cask:obs" = "latest"
+"brew-cask:raycast" = "latest"
+"brew-cask:slack" = "latest"
+"brew-cask:vesta" = "latest"
+"brew-cask:zoom" = "latest"
+# -- Fonts (brew cask)
+"brew-cask:font-biz-udgothic" = "latest"
+"brew-cask:font-biz-udmincho" = "latest"
+"brew-cask:font-biz-udpgothic" = "latest"
+"brew-cask:font-biz-udpmincho" = "latest"
+"brew-cask:font-hackgen-nerd" = "latest"
+"brew-cask:font-latin-modern" = "latest"
+"brew-cask:font-latin-modern-math" = "latest"
+"brew-cask:font-maple-mono-nf" = "latest"
+"brew-cask:font-maple-mono-nl-nf" = "latest"
+"brew-cask:font-moralerspace" = "latest"
+"brew-cask:font-moralerspace-hw" = "latest"
+"brew-cask:font-plemol-jp-nf" = "latest"
+"brew-cask:font-source-han-code-jp" = "latest"
+"brew-cask:font-source-han-sans-vf" = "latest"
+"brew-cask:font-source-han-serif-vf" = "latest"
+"brew-cask:font-udev-gothic-nf" = "latest"
+
+## ----------------------------------------------
+## macOS user defaults (preferences)
+## ----------------------------------------------
+# -- Dock
+[bootstrap.macos.dock]
+# automatically show and hide the dock
+autohide = true
+# dock position
+orientation = "bottom"
+# disable showing recent applications
+show_recents = false
+# disable recent spaces
+mru_spaces = false
+
+[bootstrap.macos.defaults."com.apple.dock"]
+# display the appswitcher on all displays
+"appswitcher-all-displays" = true
+# autohide animation duration
+"autohide-delay" = 0.0
+# enable highlight hover effect for the grid view of a stack
+"mouse-over-hilite-stack" = true
+# show only open applications
+"static-only" = true
+
+# -- Finder
+[bootstrap.macos.finder]
+# show hidden files
+show_all_files = true
+# show path breadcrumbs
+show_pathbar = true
+# show status bar
+show_status_bar = true
+# disable warning when changing file extension
+show_extensions_warning = false
+# preffered view style (icon|list|column|gallery)
+preferred_view_style = "column"
+
+[bootstrap.macos.defaults."com.apple.finder"]
+# show all file extensions
+AppleShowAllExtensions = true
+# show the POSIX fullpath in the window title
+_FXShowPosixPathInTitle = true
+
+# -- Keyboard
+[bootstrap.macos.keyboard]
+# This sets how long you must hold down the key before it starts repeating.
+# [normal minimum is 15 (225 ms), maximum is 120 (1800 ms).]
+initial_key_repeat = 15
+# This sets how fast it repeats once it starts
+key_repeat = 3
+# Whether to enable the press-and-hold feature. The default is true.
+# true => Holding a keyboard key down will bring up a character modification menu.
+# false => When holging a keyboard key down, the key's character brings to repeat.
+press_and_hold = false
+# Use F1, F2, etc. keys as standard function keys
+fn_state = true
+
+# -- Trackpad
+[bootstrap.macos.trackpad]
+# Enable tap to click
+tap_to_click = true
+# Enable three finger drag
+three_finger_drag = true
+
+# Enable two finger right click
+[bootstrap.macos.defaults."com.apple.AppleMultitouchTrackpad"]
+TrackpadRightClick = true
+[bootstrap.macos.defaults."com.apple.driver.BluetoothMultitouch.trackpad"]
+TrackpadRightClick = true
+
+# -- Desktop services
+[bootstrap.macos.defaults."com.apple.desktopservices"]
+# Avoid creating .DS_Store files on network or USB volumes
+DSDontWriteNetworkStores = true
+DSDontWriteUSBStores = true
+
+# -- Window manager
+[bootstrap.macos.defaults."com.apple.WindowManager"]
+# Click wallpaper to reveal desktop
+EnableStandardClickToShowDesktop = true
+# Show items on desktop
+StandardHideDesktopIcons = false
+# Do not hide items on desktop & stage manager
+HideDesktop = false
+StageManagerHideWidgets = false
+StandardHideWidgets = false
+
+# -- Clock
+[bootstrap.macos.defaults."com.apple.menuextra.clock"]
+# Show a 24-hour clock, instead of a 12-hour clock.
+Show24Hour = true
+# Show digital clock
+IsAnalog = false
+# Show the clock with second precision, instead of minutes.
+ShowSeconds = true
+
+# -- ImageCapture
+[bootstrap.macos.defaults."com.apple.ImageCapture"]
+# Prevent Photos from opening automatically when devices are plugged in.
+disableHotPlug = true
+
+# -- Screensaver
+[bootstrap.macos.defaults."com.apple.screensaver"]
+# Require password immediately after sleep or screen saver begins.
+askForPassword = 1
+askForPasswordDelay = 0
+
+# -- Screencapture
+[bootstrap.macos.defaults."com.apple.screencapture"]
+# default path to store screenshots
+location = "~/Pictures/screenshots"
+# file type for screenshots
+type = "png"
+
+# -- Misc
+[bootstrap.macos.defaults."NSGlobalDomain"]
+# theme
+AppleInterfaceStyle = "Dark"
+# keyboard (extra) -- mode 3 enable full keyboard control
+AppleKeyboardUIMode = 3
+# disable auto capitalization
+NSAutomaticCapitalizationEnabled = false
+# disable auto dash substitution
+NSAutomaticDashSubstitutionEnabled = false
+# disable auto period substitution
+NSAutomaticPeriodSubstitutionEnabled = false
+# disable auto quote substitusion
+NSAutomaticQuoteSubstitutionEnabled = false
+# expand save panel by default
+NSNavPanelExpandedStateForSaveMode = true
+NSNavPanelExpandedStateForSaveMode2 = true
+
+## ----------------------------------------------
+## macOS user LaunchAgents
+## ----------------------------------------------
+[bootstrap.macos.launchd.agents]

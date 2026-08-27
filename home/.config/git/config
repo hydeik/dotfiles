@@ -1,0 +1,45 @@
+[aliases]
+	fap = "fetch --all --prune"
+	recents = "for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
+
+[core]
+	editor = "vim"
+
+[credential "https://gist.github.com"]
+    helper =
+	helper = !gh auth git-credential
+
+[credential "https://github.com"]
+    helper =
+	helper = !gh auth git-credential
+
+[diff]
+	external = "difft "
+
+[filter "lfs"]
+	clean = "git-lfs clean -- %f"
+	process = "git-lfs filter-process"
+	required = true
+	smudge = "git-lfs smudge -- %f"
+
+[ghq]
+	root = "~/src"
+
+[github]
+	user = "hydeik"
+
+[gitlab]
+	user = "hydeik"
+
+[init]
+	defaultBranch = "main"
+
+[pager]
+	difftool = true
+
+[push]
+	useForceIfIncludes = true
+
+[user]
+	email = "hide.ikeno@gmail.com"
+	name = "Hidekazu Ikeno"

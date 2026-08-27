@@ -1,0 +1,38 @@
+## ----------------------------------------------
+## Bootstrap
+## ----------------------------------------------
+##
+## Git repositories
+##
+[bootstrap.repos]
+# -- dotfiles repo
+"~/src/github.com/hydeik/dotfiles" = { url = "https://github.com/hydeik/dotfiles.git", ref = "mise" }
+
+# -- Zsh plugins
+"~/.local/share/zsh/repos/github.com/zsh-users/zsh-completions" = { url = "https://github.com/zsh-users/zsh-completions.git" }
+"~/.local/share/zsh/repos/github.com/zsh-users/zsh-history-substring-search" = { url = "https://github.com/zsh-users/zsh-history-substring-search.git" }
+"~/.local/share/zsh/repos/github.com/romkatv/zsh-defer" = { url = "https://github.com/romkatv/zsh-defer.git" }
+"~/.local/share/zsh/repos/github.com/marlonrichert/zsh-autocomplete" = { url = "https://github.com/marlonrichert/zsh-autocomplete.git" }
+"~/.local/share/zsh/repos/github.com/aloxaf/fzf-tab" = { url = "https://github.com/aloxaf/fzf-tab.git" }
+"~/.local/share/zsh/repos/github.com/greymd/tmux-xpanes" = { url = "https://github.com/greymd/tmux-xpanes.git" }
+
+# -- Tmux plugins
+"~/.local/share/tmux/plugins/battery" = { url = "https://github.com/tmux-plugins/tmux-battery.git" }
+"~/.local/share/tmux/plugins/copycat" = { url = "https://github.com/tmux-plugins/tmux-copycat.git" }
+"~/.local/share/tmux/plugins/cpu" = { url = "https://github.com/tmux-plugins/tmux-cpu.git" }
+"~/.local/share/tmux/plugins/open" = { url = "https://github.com/tmux-plugins/tmux-open.git" }
+"~/.local/share/tmux/plugins/prefix-highlight" = { url = "https://github.com/tmux-plugins/tmux-prefix-highlight.git" }
+"~/.local/share/tmux/plugins/resurrect" = { url = "https://github.com/tmux-plugins/tmux-resurrect.git" }
+"~/.local/share/tmux/plugins/catppuccin" = { url = "https://github.com/catppuccin/tmux.git" }
+
+##
+## User Login Shell
+##
+[bootstrap.user]
+login_shell = "/bin/zsh"
+
+##
+## Hooks
+##
+[bootstrap.hooks.post-tools]
+run = "./scripts/setup-zsh.zsh"

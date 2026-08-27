@@ -1,0 +1,25 @@
+[env]
+{% if os() == "macos" %}
+{% if arch() == "arm64" %}
+SHELL = "/opt/homebrew/bin/zsh"
+{% else %}
+SHELL = "/usr/local/bin/zsh"
+{% endif %}
+{% elif os() == "linux" %}
+SHELL = "/bin/zsh"
+{% endif %}
+
+[terminal]
+osc52 = "CopyPaste"
+
+[terminal.shell]
+{% if os() == "macos" %}
+{% if arch() == "arm64" %}
+program = "/opt/homebrew/bin/zsh"
+{% else %}
+program = "/usr/local/bin/zsh"
+{% endif %}
+{% elif os() == "linux" %}
+program = "/bin/zsh"
+{% endif %}
+args = ["-c", "mise exec -- herdr"]

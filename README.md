@@ -1,48 +1,116 @@
-# Dotfiles (powered by Nix)
+# Dotfiles (powered by mise)
 
-These are my personal, Nix-based dotfiles configured using [Nix flakes](https://nixos.wiki/wiki/Flakes).
+These are my personal dotfiles for macOS and Linux, managed primarily with [mise-en-place](https://mise.jdx.dev/).
+
+The repository uses mise not only for development tools, but also for machine bootstrapping, package installation, dotfile deployment, repository setup, and platform-specific configuration. 
 
 ## Overview
 
-This repository provides a structured and reproducible system configuration for Darwin machines using [nix-darwin](https://github.com/nix-darwin/nix-darwin) and [home-manager](https://github.com/nix-community/home-manager).
+The configuration is organized around mise's declarative bootstrap features:
+
+- **Tools** — command-line tools and language runtimes are managed by mise.
+- **System packages** — macOS packages and applications are installed via mise's builtin Homebrew installer on bootstrap.
+- **Dotfiles** — configuration files under `$HOME` and `$XDG_CONFIG_HOME` are deployed by mise using symlinks, copies, or templates.
+- **Repositories** — required Git repositories, including shell and tmux plugins, are cloned automatically.
+- **Platform-specific settings** — macOS defaults and other OS-specific configuration are separated into environment-specific mise config files.
+- **Shell setup** — Zsh configuration and the login shell are configured during bootstrap.
+
+The main mise configuration lives under `.mise/`, with additional configuration split into `.mise/conf.d/`.
+
+## Requirements
+
+Before bootstrapping a new machine, the following commands must be available:
+
+- `git`
+- `curl`
+
+The bootstrap script installs the required package managers when they are missing:
+
+- **macOS:** Homebrew and mise
+- **Linux:** mise
+
+mise is installed using its official installer on both platforms.
 
 ## Installation
 
-1. **Install Nix with flakes enabled**:
+### 1. Clone this repository
 
- - [Official Nix Installer](https://nixos.org/download/)
- - [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer)
+The configuration expects the repository at `~/src/github.com/hydeik/dotfiles`, so clone it there:
 
-> [!WARING]
-> Determinate Nix Installer has the options to install official (planner) Nix, as well as Determinate's own variants (Determinate Nix).
-> Make sure to install the official Nix, otherwise the configurations raise errors coming from the incompatible options.
+```bash
+git clone --branch mise https://github.com/hydeik/dotfiles.git \
+  ~/src/github.com/hydeik/dotfiles
+cd ~/src/github.com/hydeik/dotfiles
+```
 
-3. **Clone this repo**:
+### 2. Install package managers
 
-   ```bash
-   $ git clone https://github.com/hydeik/dotfiles <path-to-dotfiles> 
-   $ cd <path-to-dotfiles>
-   ```
+Run the bootstrap script:
 
-4. **Run Nix flake**:
+```bash
+./scripts/bootstrap-package-managers.sh
+```
 
-   ```bash
-   $ nix flake lock
-   # Setup darwin system
-   $ nix run flake nix-darwin/nix-darwin/master#darwin-rebuild -- switch --flake .#<hostname> 
-   ```
+If mise has just been installed and is not yet available in the current shell, add its default install location to `PATH`:
 
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
 
-## Update system configurations and packages
+### 3. Trust the mise configuration
 
-   ```bash
-   $ nix run .#write-flake
-   $ nix flake update
-   # update darwin system
-   $ darwin-rebuild switch --flake .#<hostname>
-   ```
+```bash
+mise trust
+```
+
+### 4. Bootstrap the machine
+
+```bash
+mise bootstrap --yes
+```
+
+`mise bootstrap` applies the machine configuration in dependency order, including system packages, Git repositories, dotfiles, platform-specific settings, the login shell, and mise-managed tools.
+
+After bootstrap completes, start a new shell session so that the updated shell configuration is loaded.
+
+## Updating the environment
+
+Pull the latest dotfiles and re-run bootstrap:
+
+```bash
+cd ~/src/github.com/hydeik/dotfiles
+git pull
+mise bootstrap --yes
+```
+
+To update repositories declared in the mise bootstrap configuration explicitly, use:
+
+```bash
+mise bootstrap repos update --yes
+```
+
+To install or reconcile mise-managed tools without applying the full machine bootstrap:
+
+```bash
+mise install
+```
+
+## Dotfile management
+
+Dotfiles are declared in `.mise/conf.d/dotfiles.toml` and are applied as part of `mise bootstrap`.
+
+To inspect their current state:
+
+```bash
+mise bootstrap dotfiles status
+```
+
+To apply only the dotfiles configuration:
+
+```bash
+mise bootstrap dotfiles apply --yes
+```
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
-
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

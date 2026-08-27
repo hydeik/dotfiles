@@ -1,0 +1,10 @@
+# ~/.config/mise/miserc.toml
+
+# Automatically activate the config environment baensed on the current platform.
+auto_env = true
+
+# Make files in .mise/conf.d and .config/mise/conf.d use environment suffixes
+env_conf_d = true
+
+# Stop config search at $HOME
+ceiling_paths = ["{{ env.HOME }}"]

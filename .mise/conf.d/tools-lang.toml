@@ -1,0 +1,87 @@
+##
+## Settings
+##
+[settings]
+# Package manager to use for installing npm packages.
+npm.package_manager = "pnpm"
+# Use uvx instead of pipx if uv is installed and on PATH
+pipx.uvx = true
+
+##
+## Environment variables
+##
+[env]
+# -- Rust
+RUSTUP_HOME = "{{ env.HOME }}/.local/share/rustup"
+CARGO_HOME = "{{ env.HOME }}/.local/share/cargo"
+
+##
+## Dev langs/tools
+##
+[tools]
+# -- Clang
+clang = "latest"
+clang-format = "latest"
+
+# -- Go lang
+go = "latest"
+
+# -- javascript/typescript
+deno = "latest"
+node = "lts"
+biome = "latest"
+bun = "latest"
+pnpm = "latest"
+# "npm:vtsls" = "latest"
+
+# -- Python
+python = "latest"
+pixi = "latest"
+ruff = "latest"
+ty = "latest"
+uv = "latest"
+
+# -- Rust
+rust = { version = "latest", components = ["rust-src", "llvm-tools"] }
+rust-analyzer = "latest"
+cargo-binstall = "latest"
+cargo-dist = "latest"
+cargo-make = "latest"
+cargo-msrv = "latest"
+cargo-release = "latest"
+
+# -- Bash
+shellcheck = "latest"
+shfmt = "latest"
+"npm:bash-language-server" = "latest"
+"cargo:shuck-cli" = "latest"
+
+# -- CMake
+cmake = "latest"
+"pipx:cmakelang" = "latest"
+"pipx:cmake-language-server" = "latest"
+
+# -- Lua
+luajit = "latest"
+lua-language-server = "latest"
+stylua = "latest"
+
+# -- Markdown
+github-markdown-toc = "latest"
+markdownlint-cli2 = "latest"
+marksman = "latest"
+"github:Feel-ix-343/markdown-oxide" = "latest"
+
+# -- Toml
+taplo = "latest"
+
+# -- YAML
+yamlfmt = "latest"
+yamllint = "latest"
+"npm:yaml-language-server" = "latest"
+"pipx:ryl" = "latest"
+
+# -- SQLite
+sqlite = "latest"
+"npm:sql-formatter" = "latest"
+"github:sqls-server/sqls" = "latest"
