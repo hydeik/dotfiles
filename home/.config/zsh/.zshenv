@@ -203,14 +203,6 @@ path=(
     # Homebrew packages
     ${HOMEBREW_PREFIX}/bin(N-/)
     ${HOMEBREW_PREFIX}/sbin(N-/)
-    ${HOMEBREW_PREFIX}/opt/curl/bin(N-/)
-    ${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin(N-/)
-    ${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin(N-/)
-    ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin(N-/)
-    ${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin(N-/)
-    ${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin(N-/)
-    ${HOMEBREW_PREFIX}/opt/llvm/bin(N-/)
-    ${HOMEBREW_PREFIX}/opt/sqlite/bin(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
     # *nix local

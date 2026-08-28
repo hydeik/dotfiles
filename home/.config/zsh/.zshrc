@@ -28,13 +28,12 @@ ensure_zcompiled "${ZDOTDIR}/.zshrc"
 ##============================================================================
 ## Package Manager
 ##============================================================================
-# cached results of `mise activate zsh`
-source "${ZDATADIR}/vendor/mise.zsh"
+# Activate mise
+eval "$(mise activate zsh)"
 
 ##============================================================================
 ## Load basic configurations
 ##============================================================================
-
 source "${ZDOTDIR}/rc/10_functions.zsh"
 source "${ZDOTDIR}/rc/20_autoload.zsh"
 source "${ZDOTDIR}/rc/30_options.zsh"

@@ -1,13 +1,26 @@
 ## ----------------------------------------------
+## Envs regarding boostraap packages.
+## ----------------------------------------------
+[env]
+_.path = [
+  # Paths for Keg-only packages
+  "/opt/homebrew/opt/ffmpeg-full/bin",
+  "/opt/homebrew/opt/imagemagick-full/bin",
+]
+## ----------------------------------------------
 ## System packages
 ## ----------------------------------------------
 [bootstrap.packages]
-# -- Git/Shells (brew)
+# -- Git/Shells (brew, use latest version)
 "brew:bash" = "latest"
 "brew:fish" = "latest"
 "brew:git" = "latest"
 "brew:nushell" = "latest"
 "brew:zsh" = "latest"
+# -- Multimedia (brew)
+"brew:ffmpeg-full" = "latest"
+"brew:imagemagick-full" = "latest"
+"brew:texlive" = "latest"
 # -- Apps (brew cask)
 "brew-cask:alacritty" = "latest"
 "brew-cask:appcleaner" = "latest"

@@ -8,9 +8,9 @@ mkdir -p "${ZSH_DATA_DIR}/vendor"
 
 # -- mise
 if (( ${+commands[mise]} )); then
-    mise activate zsh > "${ZSH_DATA_DIR}/vendor/mise.zsh"
+    # mise activate zsh > "${ZSH_DATA_DIR}/vendor/mise.zsh"
+    # zcompile "${ZSH_DATA_DIR}/vendor/mise.zsh"
     mise completion zsh > "${ZSH_DATA_DIR}/completions/_mise"
-    zcompile "${ZSH_DATA_DIR}/vendor/mise.zsh"
 fi
 
 # -- atuin
