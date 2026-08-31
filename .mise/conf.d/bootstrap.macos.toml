@@ -47,6 +47,7 @@ _.path = [
 "brew-cask:slack" = "latest"
 "brew-cask:vesta" = "latest"
 "brew-cask:zoom" = "latest"
+"brew-cask:zotero" = "latest"
 # -- Fonts (brew cask)
 "brew-cask:font-biz-udgothic" = "latest"
 "brew-cask:font-biz-udmincho" = "latest"
