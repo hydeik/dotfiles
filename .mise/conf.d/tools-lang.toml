@@ -3,7 +3,7 @@
 ##
 [settings]
 # Package manager to use for installing npm packages.
-npm.package_manager = "pnpm"
+# npm.package_manager = "pnpm"
 # Use uvx instead of pipx if uv is installed and on PATH
 pipx.uvx = true
 
@@ -29,6 +29,7 @@ go = "latest"
 # -- javascript/typescript
 deno = "latest"
 node = "lts"
+aube = "latest"
 biome = "latest"
 bun = "latest"
 pnpm = "latest"
@@ -71,6 +72,7 @@ github-markdown-toc = "latest"
 markdownlint-cli2 = "latest"
 marksman = "latest"
 "github:Feel-ix-343/markdown-oxide" = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest"
 
 # -- Toml
 taplo = "latest"
