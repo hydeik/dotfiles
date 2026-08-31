@@ -49,3 +49,10 @@ yq = "latest"
 ##
 age = "latest"
 fnox = "latest"
+
+##
+## Coding agents
+##
+claude = "latest"
+codex = "latest"
+gemini-cli = "latest"
