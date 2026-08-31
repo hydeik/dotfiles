@@ -7,6 +7,13 @@ _.path = [
   "/opt/homebrew/opt/ffmpeg-full/bin",
   "/opt/homebrew/opt/imagemagick-full/bin",
 ]
+
+## ----------------------------------------------
+## Dotfiles (macOS only)
+## ----------------------------------------------
+[dotfiles]
+"~/.config/fnox/config.toml" = { source = "~/src/github.com/hydeik/dotfiles/fnox.toml", mode = "symlink" }
+
 ## ----------------------------------------------
 ## System packages
 ## ----------------------------------------------
@@ -23,7 +30,6 @@ _.path = [
 "brew:texlive" = "latest"
 # -- Apps (brew cask)
 "brew-cask:alacritty" = "latest"
-"brew-cask:appcleaner" = "latest"
 "brew-cask:claude" = "latest"
 "brew-cask:deepl" = "latest"
 "brew-cask:discord" = "latest"

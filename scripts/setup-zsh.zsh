@@ -26,11 +26,11 @@ if (( ${+commands[carapace]} )); then
     zcompile "${ZSH_DATA_DIR}/vendor/carapace.zsh"
 fi
 
-# -- deja
-if (( ${+commands[deja]} )); then
-    deja init zsh > "${ZSH_DATA_DIR}/vendor/deja.zsh"
-    zcompile "${ZSH_DATA_DIR}/vendor/deja.zsh"
-fi
+# # -- deja
+# if (( ${+commands[deja]} )); then
+#     deja init zsh > "${ZSH_DATA_DIR}/vendor/deja.zsh"
+#     zcompile "${ZSH_DATA_DIR}/vendor/deja.zsh"
+# fi
 
 # -- fnox
 if (( ${+commands[fnox]} )); then

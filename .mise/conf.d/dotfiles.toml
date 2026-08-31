@@ -18,7 +18,6 @@ dotfiles.root = "~/src/github.com/hydeik/dotfiles/home"
 "~/.config/alacritty/terminal.toml" = { source = "~/src/github.com/hydeik/dotfiles/templates/alacritty/terminal.toml.tmpl", mode = "template" }
 "~/.config/atuin" = { mode = "symlink-each" }
 "~/.config/bat" = { mode = "symlink-each" }
-"~/.config/fnox/config.toml" = { source = "~/src/github.com/hydeik/dotfiles/fnox.toml", mode = "symlink" }
 "~/.config/ghostty" = { mode = "symlink-each" }
 "~/.config/git" = { mode = "symlink-each" }
 "~/.config/herdr" = { mode = "symlink-each" }
